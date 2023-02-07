@@ -1,0 +1,13 @@
+###Login
+POST http://172.168.0.38/api/v1/login
+content-type: application/json
+DeviceID: xxxxxxx
+
+{
+  "username":"developer",
+  "password":"dev123"
+}
+
+###Get mentee
+GET http://172.168.0.38/api/v1/mentee-profile
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6ImRldmVsb3BlciIsImV4cCI6MTY2Mjk5Mjc1NX0.dI8PBshFkVCJU9L3Sh9sCK-v9JNDHAiMRJBV7ZGwf8K8iQHuuSk5sfwp17E4yJCA8ngC91qBuQMUq26aTK71iQ
