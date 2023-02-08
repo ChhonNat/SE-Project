@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, TableCell, TableRow } from "@mui/material";
 
 const CandidateRow = ({
