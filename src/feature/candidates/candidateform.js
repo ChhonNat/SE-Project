@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../App.css";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Unstable_Grid2";
+import {
+  TextField,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Button,
+  Grid,
+} from "@mui/material";
+import { useSelector } from "react-redux";
 
 export default function BasicTextFields() {
-  const [gender, setGender] = React.useState("");
-  const [position, setPosition] = React.useState("");
-  const [department, setDepartment] = React.useState("");
-  const [business, setBusiness] = React.useState("");
-  const [receivedFr, setReFr] = React.useState("");
-  const [shortlistWeek, setShWe] = React.useState("");
-  const [shortlistedReesult, setShRe] = React.useState("");
+  const [gender, setGender] = useState("");
+  const [position, setPosition] = useState("");
+  const [department, setDepartment] = useState("");
+  const [business, setBusiness] = useState("");
+  const [receivedFr, setReFr] = useState("");
+  const [shortlistWeek, setShWe] = useState("");
+  const [shortlistedReesult, setShRe] = useState("");
+
+  const user = useSelector((state) => state.userAuthendicated);
 
   const handleChangeGe = (event) => {
     setGender(event.target.value);
@@ -69,6 +74,7 @@ export default function BasicTextFields() {
       noValidate
       autoComplete="off"
     >
+      <h1>{user.userName}</h1>
       <Grid xs={6} style={{ border: "none" }}>
         Candidate From
       </Grid>

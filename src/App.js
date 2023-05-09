@@ -1,25 +1,26 @@
-import React, { useEffect } from 'react';
-import Dashboard from './page/dashboard';
-import AllTime from './page/allTime';
-import Leave from './page/leave';
-import Layout from './page/layout';
-import MissAction from './page/missAction';
-import CandidateInfo from './feature/candidates/candidateInfo';
-import InterviewRecord from './feature/interviews/interviewRecord';
-import { Routes, Route } from 'react-router-dom';
-import CandidateForm from './feature/candidates/candidateform';
-import InterviewForm from './feature/interviews/interviewform';
-import Login from './feature/authentication/login';
-import { useDispatch, useSelector } from 'react-redux';
-import { isLogin } from './store/authentication/authenticationService';
+import React, { useEffect } from "react";
+import Dashboard from "./page/dashboard";
+import AllTime from "./page/allTime";
+import Leave from "./page/leave";
+import Layout from "./page/layout";
+import MissAction from "./page/missAction";
+import CandidateInfo from "./feature/candidates/candidateInfo";
+import InterviewRecord from "./feature/interviews/interviewRecord";
+import { Routes, Route } from "react-router-dom";
+import CandidateForm from "./feature/candidates/candidateform";
+import InterviewForm from "./feature/interviews/interviewform";
+import Login from "./feature/authentication/login";
+import { useDispatch, useSelector } from "react-redux";
+import { isLogin } from "./store/authentication/authenticationService";
 // import { loading, data, error, sendRequest } from "./hooks";
 
 const App = () => {
   const user = useSelector((state) => state.userAuthendicated);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(isLogin());
-  }, []);
+  }, [dispatch]);
 
   const Screen = () => {
     return (
