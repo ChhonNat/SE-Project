@@ -74,7 +74,7 @@ export default function BasicTextFields() {
       noValidate
       autoComplete="off"
     >
-      <h1>{user.userName}</h1>
+      {/* <h1>{user.userName}</h1> */}
       <Grid xs={6} style={{ border: "none" }}>
         Candidate From
       </Grid>
