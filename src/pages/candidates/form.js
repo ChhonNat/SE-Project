@@ -104,8 +104,8 @@ export default function BasicTextFields() {
           label="Gender"
           onChange={handleChangeGe}
         >
-          {columnGender.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnGender.map((cName, index) => {
+            return <MenuItem value={cName} key={index} >{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -134,8 +134,8 @@ export default function BasicTextFields() {
           label="Position"
           onChange={handleChangePo}
         >
-          {columnPosition.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnPosition.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -148,8 +148,8 @@ export default function BasicTextFields() {
           label="Department"
           onChange={handleChangeDe}
         >
-          {columnDepartment.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnDepartment.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -162,8 +162,8 @@ export default function BasicTextFields() {
           label="Business"
           onChange={handleChangeBu}
         >
-          {columnBusiness.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnBusiness.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -176,8 +176,8 @@ export default function BasicTextFields() {
           label="Received From"
           onChange={handleChangeReFr}
         >
-          {columnReceived.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnReceived.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -190,8 +190,8 @@ export default function BasicTextFields() {
           label="ShortlistWeek"
           onChange={handleChangeShWe}
         >
-          {columnShortlistWe.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnShortlistWe.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -204,8 +204,8 @@ export default function BasicTextFields() {
           label="shortlisted_result_id"
           onChange={handleChangeShRe}
         >
-          {columnShortlistRe.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnShortlistRe.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>

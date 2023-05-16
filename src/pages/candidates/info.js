@@ -1,10 +1,8 @@
-//===============sideBar=======================================================================================================
-import "../App.css";
-import * as React from "react";
+import "../../App.css";
+import React from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import SortIcon from "@mui/icons-material/Sort";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -14,16 +12,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Table from "@mui/material/Table";
-import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
-import TableFooter from "@mui/material/TableFooter";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import TablePagination from "@mui/material/TablePagination";
-import user from "./Max-R_Headshot.jpg";
+import CandidateRow from "./candidateRow";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -94,25 +90,48 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
-
-const rows = [
-  createData("Cupcake", 305, 3.7),
-  createData("Donut", 452, 25.0),
-  createData("Eclair", 262, 16.0),
-  createData("Frozen yoghurt", 159, 6.0),
-  createData("Gingerbread", 356, 16.0),
-  createData("Honeycomb", 408, 3.2),
-  createData("Ice cream sandwich", 237, 9.0),
-  createData("Jelly Bean", 375, 0.0),
-  createData("KitKat", 518, 26.0),
-  createData("Lollipop", 392, 0.2),
-  createData("Marshmallow", 318, 0),
-  createData("Nougat", 360, 19.0),
-  createData("Oreo", 437, 18.0),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+const candidateInfo = [
+  {
+    first_name: "Neang",
+    last_name: "Chheng",
+    phone_number: "098765432",
+    position_id: "Web Developer",
+    department_id: "IT",
+    shortlist_date: "01/Jan/2023",
+    shortlisted_result_id: "Pass",
+    recruiter_id: "4567",
+  },
+  {
+    first_name: "Rotha",
+    last_name: "KIV",
+    phone_number: "098765432",
+    position_id: "Web Developer",
+    department_id: "IT",
+    shortlist_date: "01/Jan/2023",
+    shortlisted_result_id: "Pass",
+    recruiter_id: "4567",
+  },
+  {
+    first_name: "Sang",
+    last_name: "Hang",
+    phone_number: "098765432",
+    position_id: "Web Developer",
+    department_id: "IT",
+    shortlist_date: "01/Jan/2023",
+    shortlisted_result_id: "Pass",
+    recruiter_id: "4567",
+  },
+  {
+    first_name: "vit",
+    last_name: "Chum",
+    phone_number: "098765432",
+    position_id: "Web Developer",
+    department_id: "IT",
+    shortlist_date: "01/Jan/2023",
+    shortlisted_result_id: "Pass",
+    recruiter_id: "4567",
+  },
+];
 
 export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
@@ -120,7 +139,7 @@ export default function CustomPaginationActionsTable() {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - candidateInfo.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -133,7 +152,7 @@ export default function CustomPaginationActionsTable() {
 
   return (
     <Box
-      style={{ marginTop: "4%", width: "80%", float: "right" }}
+      style={{ marginTop: "4%", width: "85%", float: "right" }}
       component="main"
       sx={{ flexGrow: 1, p: 3 }}
     >
@@ -155,7 +174,7 @@ export default function CustomPaginationActionsTable() {
         }}
       >
         <Grid xs={6} style={{ border: "none" }}>
-          ALL TIME
+          Candidate Info
         </Grid>
         <Grid xs={6} style={{ border: "none", textAlign: "right" }}>
           <span className="supDescr material-symbols-outlined">
@@ -181,97 +200,40 @@ export default function CustomPaginationActionsTable() {
         >
           <TableHead>
             <TableRow>
-              <TableCell>User</TableCell>
-              <TableCell></TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell></TableCell>
+              <TableCell>First Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell>Phone Number</TableCell>
+              <TableCell>Position id</TableCell>
+              <TableCell>Department id</TableCell>
+              <TableCell>Shortlist date</TableCell>
+              <TableCell>Shortlisted result id</TableCell>
+              <TableCell>Recruiter id</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow className="tableHover">
-              <TableCell style={{ width: "30px" }}>
-                <img src={user} className="w-10 bord_rad_img" alt="user1" />
-              </TableCell>
-              <TableCell>
-                Contact Email not Linked <br></br>
-                <p className="supDescr">Updated 1 day ago</p>
-              </TableCell>
-              <TableCell>
-                Tom Cruise<br></br>
-                <p className="supDescr">on 24.05.2019</p>
-              </TableCell>
-              <TableCell>
-                May 26, 2019<br></br>
-                <p className="supDescr">6:30 PM</p>
-              </TableCell>
-              <TableCell>
-                <Button variant="contained" color="error" size="small">
-                  High
-                </Button>
-              </TableCell>
-              <TableCell>
-                <MoreVertIcon className="supDescr threedot" />
-              </TableCell>
-            </TableRow>
-            <TableRow className="tableHover">
-              <TableCell style={{ width: "30px" }}>
-                <img src={user} className="w-10 bord_rad_img" alt="facebook" />
-              </TableCell>
-              <TableCell>
-                Adding Images to Featured Posts<br></br>
-                <p className="supDescr">Updated 1 day ago</p>
-              </TableCell>
-              <TableCell>
-                Tom Cruise<br></br>
-                <p className="supDescr">on 24.05.2019</p>
-              </TableCell>
-              <TableCell>
-                May 26, 2019<br></br>
-                <p className="supDescr">6:30 PM</p>
-              </TableCell>
-              <TableCell>
-                <Button variant="contained" className="yellow" size="small">
-                  low
-                </Button>
-              </TableCell>
-              <TableCell>
-                <MoreVertIcon className="supDescr threedot" />
-              </TableCell>
-            </TableRow>
-            <TableRow className="tableHover">
-              <TableCell style={{ width: "30px" }}>
-                <img src={user} className="w-10 bord_rad_img" alt="facebook" />
-              </TableCell>
-              <TableCell>
-                Adding Images to Featured Posts<br></br>
-                <p className="supDescr">Updated 1 day ago</p>
-              </TableCell>
-              <TableCell>
-                Tom Cruise<br></br>
-                <p className="supDescr">on 24.05.2019</p>
-              </TableCell>
-              <TableCell>
-                May 26, 2019<br></br>
-                <p className="supDescr">6:30 PM</p>
-              </TableCell>
-              <TableCell>
-                <Button variant="contained" color="success" size="small">
-                  Normal
-                </Button>
-              </TableCell>
-              <TableCell>
-                <MoreVertIcon className="supDescr threedot" />
-              </TableCell>
-            </TableRow>
+            {candidateInfo.map((ir,index) => {
+              return (
+                <CandidateRow
+                  key={index}
+                  first_name={ir.first_name}
+                  last_name={ir.last_name}
+                  phone_number={ir.phone_number}
+                  position_id={ir.position_id}
+                  department_id={ir.department_id}
+                  shortlist_date={ir.shortlist_date}
+                  shortlisted_result_id={ir.shortlisted_result_id}
+                  recruiter_id={ir.recruiter_id}
+                />
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rows.length}
+        count={candidateInfo.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
