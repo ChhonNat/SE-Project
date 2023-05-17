@@ -212,9 +212,10 @@ export default function CustomPaginationActionsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {candidateInfo.map((ir) => {
+            {candidateInfo.map((ir,index) => {
               return (
                 <CandidateRow
+                  key={index}
                   first_name={ir.first_name}
                   last_name={ir.last_name}
                   phone_number={ir.phone_number}

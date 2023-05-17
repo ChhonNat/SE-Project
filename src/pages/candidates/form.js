@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../App.css";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Unstable_Grid2";
+import {
+  TextField,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Button,
+  Grid,
+} from "@mui/material";
+import { useSelector } from "react-redux";
 
 export default function BasicTextFields() {
-  const [gender, setGender] = React.useState("");
-  const [position, setPosition] = React.useState("");
-  const [department, setDepartment] = React.useState("");
-  const [business, setBusiness] = React.useState("");
-  const [receivedFr, setReFr] = React.useState("");
-  const [interviewWeek, setInWe] = React.useState("");
-  const [shortlistedReesult, setShRe] = React.useState("");
-  const [headDepartment, setHede] = React.useState("");
+  const [gender, setGender] = useState("");
+  const [position, setPosition] = useState("");
+  const [department, setDepartment] = useState("");
+  const [business, setBusiness] = useState("");
+  const [receivedFr, setReFr] = useState("");
+  const [shortlistWeek, setShWe] = useState("");
+  const [shortlistedReesult, setShRe] = useState("");
+
+  const user = useSelector((state) => state.userAuthendicated);
 
   const handleChangeGe = (event) => {
     setGender(event.target.value);
@@ -34,14 +38,11 @@ export default function BasicTextFields() {
   const handleChangeReFr = (event) => {
     setReFr(event.target.value);
   };
-  const handleChangeInWe = (event) => {
-    setInWe(event.target.value);
+  const handleChangeShWe = (event) => {
+    setShWe(event.target.value);
   };
   const handleChangeShRe = (event) => {
     setShRe(event.target.value);
-  };
-  const handleChangeHeDe = (event) => {
-    setHede(event.target.value);
   };
 
   const columnGender = ["Male", "Female"];
@@ -56,7 +57,6 @@ export default function BasicTextFields() {
     "Four Week",
   ];
   const columnShortlistRe = ["Pass", "Fail"];
-  const columnHeadDepa = ["Tang Sam Eng", "Eav Huy", "Sam Engleang"];
 
   // const [firstName, setUserfirstName] = useState("");
 
@@ -74,8 +74,9 @@ export default function BasicTextFields() {
       noValidate
       autoComplete="off"
     >
+      {/* <h1>{user.userName}</h1> */}
       <Grid xs={6} style={{ border: "none" }}>
-        Interview Form
+        Candidate From
       </Grid>
       <TextField
         id="first-name"
@@ -93,20 +94,7 @@ export default function BasicTextFields() {
         label="Last Name"
         variant="outlined"
       />
-      <FormControl fullWidth>
-        <InputLabel id="department-id-label">Head of Department</InputLabel>
-        <Select
-          labelId="head-department-label"
-          id="headDepartment"
-          value={headDepartment}
-          label="Head of Department"
-          onChange={handleChangeHeDe}
-        >
-          {columnHeadDepa.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
-          })}
-        </Select>
-      </FormControl>
+
       <FormControl fullWidth>
         <InputLabel id="department-id-label">Gender</InputLabel>
         <Select
@@ -116,8 +104,8 @@ export default function BasicTextFields() {
           label="Gender"
           onChange={handleChangeGe}
         >
-          {columnGender.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnGender.map((cName, index) => {
+            return <MenuItem value={cName} key={index} >{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -146,8 +134,8 @@ export default function BasicTextFields() {
           label="Position"
           onChange={handleChangePo}
         >
-          {columnPosition.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnPosition.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -160,8 +148,8 @@ export default function BasicTextFields() {
           label="Department"
           onChange={handleChangeDe}
         >
-          {columnDepartment.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnDepartment.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -174,8 +162,8 @@ export default function BasicTextFields() {
           label="Business"
           onChange={handleChangeBu}
         >
-          {columnBusiness.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnBusiness.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -188,22 +176,22 @@ export default function BasicTextFields() {
           label="Received From"
           onChange={handleChangeReFr}
         >
-          {columnReceived.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnReceived.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
       <FormControl fullWidth>
-        <InputLabel id="interview-label">Interview Week </InputLabel>
+        <InputLabel id="received-id-label">Shortlist Week </InputLabel>
         <Select
           labelId="shortlist-week-label"
           id="shortlist-week"
-          value={interviewWeek}
+          value={shortlistWeek}
           label="ShortlistWeek"
-          onChange={handleChangeInWe}
+          onChange={handleChangeShWe}
         >
-          {columnShortlistWe.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnShortlistWe.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -216,8 +204,8 @@ export default function BasicTextFields() {
           label="shortlisted_result_id"
           onChange={handleChangeShRe}
         >
-          {columnShortlistRe.map((cName) => {
-            return <MenuItem value={cName}>{cName}</MenuItem>;
+          {columnShortlistRe.map((cName, index) => {
+            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
           })}
         </Select>
       </FormControl>
@@ -248,8 +236,8 @@ export default function BasicTextFields() {
         }}
       />
       <TextField
-        id="interview_date "
-        label="Interview date"
+        id="shortlist-date"
+        label="Shortlist date"
         type="date"
         sx={{ width: 220 }}
         InputLabelProps={{
@@ -278,7 +266,7 @@ export default function BasicTextFields() {
       />
       <br></br>
       <Button className="btn-submit" variant="outlined" color="success">
-        Update
+        Save
       </Button>
       <Button className="btn-submit" variant="outlined" color="error">
         Cancel
