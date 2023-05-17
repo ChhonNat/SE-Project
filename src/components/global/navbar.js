@@ -16,33 +16,34 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
-import Link from "@mui/material/Link";
-
-import MenuIcon from "@mui/icons-material/Menu";
 import OutputIcon from "@mui/icons-material/Output";
 import IconButton from "@mui/material/IconButton";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import MailIcon from "@mui/icons-material/Mail";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Avatar from "@mui/material/Avatar";
+import { useDispatch } from "react-redux";
+import { isLogout } from "../../store/authentication/authenticationService";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
 
+    const dispatch = useDispatch(); 
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(true);
 
-    // const handleDrawerOpen = () => {
-    //     setOpen(true);
-    // };
+    const handleLogout = () => {
+        dispatch(isLogout());
+        navigate('/login');
+    };
 
     return (
         <AppBar position="fixed" open={open}>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
-
 
                         {/* <IconButton
                             color="inherit"
@@ -388,14 +389,17 @@ const Navbar = () => {
                                                     <ListItem
                                                         alignItems="flex-start"
                                                         className="tableHover"
+                                                        onClick={handleLogout}
                                                     >
-                                                        <ListItemAvatar>
-                                                            <OutputIcon />
-                                                        </ListItemAvatar>
-                                                        <ListItemText sx={{ opacity: open ? 1 : 0 }}>
-                                                            <Link href="logout">Logout</Link>
-                                                        </ListItemText>
+                                                            <ListItemAvatar>
+                                                                <OutputIcon />
+                                                            </ListItemAvatar>
+                                                            <ListItemText sx={{ opacity: open ? 1 : 0 }}>
+                                                                Logout
+                                                            </ListItemText>
                                                     </ListItem>
+
+
                                                 </List>
                                             </Popover>
                                         </div>

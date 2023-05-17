@@ -2,9 +2,7 @@ export const DASHBOARD_URL = '/';
 
 
 export const AUTH = {
-    children: {
-        login_url: '/login'
-    }
+    login_url: '/login'
 }
 
 export const CANDIDATE = {

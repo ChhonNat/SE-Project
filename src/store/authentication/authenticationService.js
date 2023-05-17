@@ -1,5 +1,6 @@
 import { authActions } from './authenticationSlice';
 import axios from 'axios';
+import { useLinkClickHandler } from 'react-router-dom';
 
 const initialUser = {
   userName: '',
@@ -12,6 +13,7 @@ const initialUser = {
 };
 
 export const userAuthentication = ({ username, password }) => {
+
   return async (dispatch) => {
     const options = {
       headers: {
@@ -48,10 +50,9 @@ export const userAuthentication = ({ username, password }) => {
 
     try {
       const authUser = await authenticates();
-
       localStorage.setItem('recruitmentUser', JSON.stringify(authUser));
-
       dispatch(authActions.setAuthenticate(authUser));
+
     } catch (error) {
       dispatch(
         authActions.setAuthenticate({
@@ -78,3 +79,15 @@ export const isLogin = () => {
     dispatch(authActions.setAuthenticate(storeUser));
   };
 };
+
+export const isLogout = () => {
+
+    return (dispatch) => {
+        let storeUser = null;
+
+        localStorage.clear();
+        storeUser = initialUser;
+        dispatch(authActions.setAuthenticate(storeUser));
+    }
+}
+

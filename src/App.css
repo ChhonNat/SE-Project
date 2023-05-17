@@ -128,3 +128,21 @@
   width: 12ch !important;
   padding: 7px 15px !important;
 }
+
+.global-loading{
+  color: rgb(25, 118, 210);
+  font-weight: bold;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.page-not-found{
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}

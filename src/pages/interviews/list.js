@@ -13,7 +13,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Table from "@mui/material/Table";
-import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -98,10 +97,10 @@ export default function CustomPaginationActionsTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - interviewRecord.length)
-      : 0;
+  // const emptyRows =
+  //   page > 0
+  //     ? Math.max(0, (1 + page) * rowsPerPage - interviewRecord.length)
+  //     : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -207,13 +206,13 @@ export default function CustomPaginationActionsTable() {
         >
           <TableHead>
             <TableRow>
-              {columnName.map((cName) => {
-                return <TableCell>{cName}</TableCell>;
+              {columnName.map((cName, index) => {
+                return <TableCell key={index}>{cName}</TableCell>;
               })}
             </TableRow>
           </TableHead>
           <TableBody>
-            {interviewRecord.map((ir) => {
+            {interviewRecord.map((ir, index) => {
               return (
                 <InterviewRow
                   cadidateId={ir.cadidateId}
@@ -222,6 +221,7 @@ export default function CustomPaginationActionsTable() {
                   position={ir.position}
                   dept={ir.dept}
                   joinDate={ir.joinDate}
+                  key={index}
                 />
               );
             })}

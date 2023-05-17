@@ -4,16 +4,19 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
-import { userAuthentication } from '../../store/authentication/authenticationService';
+import { isLogin, userAuthentication } from '../../store/authentication/authenticationService';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Login() {
-  const [username, setUserName] = useState('developer');
-  const [password, setPassword] = useState('dev123');
+
   const dispatch = useDispatch();
 
+  const [username, setUserName] = useState('developer');
+  const [password, setPassword] = useState('dev123');
+
   const login = async (event) => {
+
     event.preventDefault();
     dispatch(userAuthentication({ username, password }));
   };

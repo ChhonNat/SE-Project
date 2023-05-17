@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 
 import MuiDrawer from "@mui/material/Drawer";
@@ -16,51 +16,33 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import logo from "../../logo/logo.png";
-// import Link from "@mui/material/Link";
 import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
 import { ROUTES } from "../../constants/routes";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Sidebar = () => {
 
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
+    const [menuIndex, setMenuIndex] = useState(0);
     const [openMenuCollape, setOpenMenuCollape] = useState(false);
-    const [parcentIndex, setParentIndex] = useState(0);
-    const [childIndex, setChildIndex] = useState(null);
 
-    /**
-     * Handle click change parent menu
-     * 
-     */
-    const handleParentMenuClicked = (index) => {
-
-        /**
-         * Get current index
-         * When menu index change check children if has child menu change icon and list down all child menus
-         * Comparing current index with last index if:
-         * 1- If same index set collape opposite boolean
-         * 2- If different set collape to alway true
-         */
-        setParentIndex(index);
-        setChildIndex(null);
-        index === parcentIndex ? setOpenMenuCollape(!openMenuCollape) : setOpenMenuCollape(true);
-    }
-
-    /**
-     * Handle click change child menu
-     * 
-     */
-    const handleChildMenuClicked = (index) => {
-        setChildIndex(index);
-    }
+    const location = useLocation();
+    const { pathname } = location;
+    const parentRoute = '/' + location?.pathname?.split('/')[1] || '/';
 
     /**
      * Handle minimize sidebar
      */
     const handleMinSidebar = () => {
         setOpen(!open);
+    }
+
+    const handleClickMenu = (index) => {
+        setMenuIndex(index);
+        setOpenMenuCollape(!openMenuCollape)
     }
 
     return (
@@ -82,52 +64,61 @@ const Sidebar = () => {
             {
                 ROUTES && ROUTES.length ?
                     <List>
+
                         {
-                            ROUTES.map((menu, index) => (
-                                <React.Fragment key={index}>
+                            ROUTES.map((menu, parentKey) => (
+                                <React.Fragment key={parentKey}>
 
                                     {/* parent menu */}
-                                    <Link to={menu?.children?.length ? null : menu?.path} style={sidebar.link}>
-                                        <ListItem key={index} disablePadding sx={sidebar.listItem.sx} style={parcentIndex === index ? sidebar.menu.activeLink : {}}>
-                                            <ListItemButton sx={open ? sidebar.listItemButton.initialSx : sidebar.listItemButton.centerSx} onClick={() => handleParentMenuClicked(index)}>
+                                    <Link
+                                        to={!menu?.children?.length ? menu?.path : menu?.path + '/' + menu?.children[0].path}
+                                        style={sidebar.link}
+                                        onClick={() => handleClickMenu(parentKey)}
+                                    >
+                                        <ListItemButton
+                                            sx={open ? sidebar.listItemButton.initialSx : sidebar.listItemButton.centerSx}
+                                            style={pathname === menu?.path ? sidebar.menu.activeLink : {}}
+                                        >
 
-                                                {/*Left parent menu icon */}
-                                                <ListItemIcon sx={open ? sidebar.listItemIcon.fixSx : sidebar.listItemIcon.autoSx} >
-                                                    {menu?.icon}
-                                                </ListItemIcon>
+                                            {/*Left parent menu icon */}
+                                            <ListItemIcon sx={open ? sidebar.listItemIcon.fixSx : sidebar.listItemIcon.autoSx} >
+                                                {menu?.icon}
+                                            </ListItemIcon>
 
-                                                {/* parent menu name */}
-                                                <ListItemText primary={menu?.name} sx={{ opacity: open ? 1 : 0 }} />
+                                            {/* parent menu name */}
+                                            <ListItemText primary={menu?.name} sx={{ opacity: open ? 1 : 0 }} />
 
-                                                {/* right parent menu icon */}
-                                                {menu?.children?.length ? (openMenuCollape && parcentIndex === index ? <ExpandLess /> : <ExpandMore />) : <></>}
-                                            </ListItemButton>
-                                        </ListItem>
+                                            {/* right parent menu icon */}
+                                            {menu?.children?.length ? (parentRoute === menu?.path ? <ExpandLess /> : <ExpandMore />) : <></>}
+                                        </ListItemButton>
                                     </Link>
 
                                     {/* child menu */}
                                     {
                                         menu && menu.children && menu.children.length ?
-                                            <Collapse in={parcentIndex === index ? openMenuCollape : false} timeout="auto" unmountOnExit key={index}>
+                                            <Collapse
+                                                in={parentRoute === menu?.path ? true : false}
+                                                timeout="auto"
+                                                unmountOnExit
+                                                key={parentKey}
+                                            >
                                                 <List component="div" disablePadding>
                                                     {
-                                                        menu.children.map((childMenu, childIdx) => (
-                                                            <Link to={menu?.path +'/'+ childMenu?.path} style={sidebar.link} key={childIdx}>
-                                                                <ListItemButton sx={{ pl: 5 }} 
-                                                                    onClick={() => handleChildMenuClicked(childIdx)} 
-                                                                    style={childIndex === childIdx ? sidebar?.menu?.child?.activeLink : {}}
-                                                                    >
-
-                                                                    {/* child menu icon */}
+                                                        menu.children.map((childMenu, childKey) => (
+                                                            <Link to={menu?.path + '/' + childMenu?.path} style={sidebar.link}>
+                                                                <ListItemButton sx={{ pl: 5 }}
+                                                                    style={pathname === menu?.path + '/' + childMenu?.path ? sidebar?.menu?.child?.activeLink : {}}
+                                                                    key={childKey}
+                                                                >
                                                                     <ListItemIcon>
                                                                         {childMenu?.icon}
                                                                     </ListItemIcon>
 
-                                                                    {/* child menu name */}
                                                                     <ListItemText primary={childMenu?.name} />
 
                                                                 </ListItemButton>
                                                             </Link>
+
                                                         ))
                                                     }
                                                 </List>
@@ -143,12 +134,13 @@ const Sidebar = () => {
                                 </React.Fragment>
                             ))
                         }
+
                     </List>
                     :
                     <></>
             }
 
-        </Drawer>
+        </Drawer >
     );
 };
 

@@ -7,15 +7,20 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import React from "react";
 
 /**
  * Components
  */
-import Dashboard from "../pages/dashboard/dashboard";
-import CandidateInfo from "../pages/candidates/info";
-import CandidateForm from "../pages/candidates/form";
-import InterviewRecord from "../pages/interviews/list";
-import InterviewForm from "../pages/interviews/form";
+const Dashboard = React.lazy(() => import('../pages/dashboard/dashboard'));
+const Candidate = {
+    info : React.lazy(() => import('../pages/candidates/info')),
+    form : React.lazy(() => import('../pages/candidates/form'))
+};
+const Interview = {
+    record: React.lazy(() => import('../pages/interviews/list')),
+    form: React.lazy(() => import('../pages/interviews/form'))
+};
 
 export const ROUTES = [
     {
@@ -37,13 +42,13 @@ export const ROUTES = [
             {
                 name: "Info",
                 path: "info",
-                component: <CandidateInfo />,
+                component: <Candidate.info />,
                 icon: <InfoIcon />
             },
             {
                 name: "Form",
                 path: "form",
-                component: <CandidateForm />,
+                component: <Candidate.form />,
                 icon: <FormatAlignJustifyIcon />
             }
         ]
@@ -52,18 +57,18 @@ export const ROUTES = [
         name: "Interview",
         path: "/interview",
         icon: <RecordVoiceOverIcon />,
-        isDivider: true,
+        isDivider: false,
         children: [
             {
                 name: "Record",
                 path: "record",
-                component: <InterviewRecord />,
+                component: <Interview.record />,
                 icon: <FormatListNumberedIcon />
             },
             {
                 name: "Form",
                 path: "form",
-                component: <InterviewForm />,
+                component: <Interview.form />,
                 icon: <FormatAlignJustifyIcon />
             }
         ]
