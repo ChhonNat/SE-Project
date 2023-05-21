@@ -89,7 +89,7 @@ const App = () => {
   return (
     <div>
       {
-        !user?.userAuthendicated ? <PrivateRouters /> : <PublicRouters />
+        user?.userAuthendicated ? <PrivateRouters /> : <PublicRouters />
       }
     </div>
   );
