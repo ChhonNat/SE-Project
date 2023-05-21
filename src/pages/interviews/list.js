@@ -161,7 +161,11 @@ export default function CustomPaginationActionsTable() {
   ];
 
   return (
-    <Box style={appStyle} component="main" sx={{ flexGrow: 1, p: 3 }}>
+    <Box 
+      // style={appStyle} 
+      // component="main" 
+      // sx={{ flexGrow: 1, p: 3 }}
+      >
       <Grid
         style={{ border: "none" }}
         container

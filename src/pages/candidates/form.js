@@ -11,266 +11,195 @@ import {
   Grid,
 } from "@mui/material";
 import { useSelector } from "react-redux";
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import CustomSelect from "../../components/select/select";
+import { API_URL } from "../../constants/apiUrl";
+import { LOCAL_STORAGE_KEYS } from "../../constants/localStorage";
+import { candidateService } from "../../services/candidate.service";
+import { useForm } from "react-hook-form";
 
 export default function BasicTextFields() {
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
   const [gender, setGender] = useState("");
   const [position, setPosition] = useState("");
   const [department, setDepartment] = useState("");
   const [business, setBusiness] = useState("");
-  const [receivedFr, setReFr] = useState("");
+  const [receivedFr, setReceivedFr] = useState("");
+  const [recruiter, setRecruiter] = useState("");
   const [shortlistWeek, setShWe] = useState("");
   const [shortlistedReesult, setShRe] = useState("");
 
-  const user = useSelector((state) => state.userAuthendicated);
+  const genders = [{ id: 1, name: 'Male' }, { id: 2, name: 'Female' }];
 
-  const handleChangeGe = (event) => {
-    setGender(event.target.value);
-  };
-  const handleChangePo = (event) => {
-    setPosition(event.target.value);
-  };
-  const handleChangeDe = (event) => {
-    setDepartment(event.target.value);
-  };
-  const handleChangeBu = (event) => {
-    setBusiness(event.target.value);
-  };
-  const handleChangeReFr = (event) => {
-    setReFr(event.target.value);
-  };
-  const handleChangeShWe = (event) => {
-    setShWe(event.target.value);
-  };
-  const handleChangeShRe = (event) => {
-    setShRe(event.target.value);
-  };
+  // const Item = styled(Paper)(({ theme }) => ({
+  //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  //   ...theme.typography.body2,
+  //   padding: theme.spacing(1),
+  //   textAlign: 'center',
+  //   color: theme.palette.text.secondary,
+  // }));
 
-  const columnGender = ["Male", "Female"];
-  const columnPosition = ["Web Developer", "Senior Web Developer"];
-  const columnDepartment = ["Information Technology", "Human Resource"];
-  const columnBusiness = ["MJQE", "MMN"];
-  const columnReceived = ["CHHENG Neang", "CHRIC Minea"];
-  const columnShortlistWe = [
-    "First Week",
-    "Second Week",
-    "Third Week",
-    "Four Week",
-  ];
-  const columnShortlistRe = ["Pass", "Fail"];
+  const shrinkOpt = { shrink: true };
 
-  // const [firstName, setUserfirstName] = useState("");
+  const handleCreateCandidate = data => console.log(errors);
 
   return (
-    <Box
-      style={{
-        marginTop: "6%",
-        width: "81%",
-        float: "right",
-      }}
-      component="form"
-      sx={{
-        "& > :not(style)": { m: 1, width: "25ch" },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      {/* <h1>{user.userName}</h1> */}
-      <Grid xs={6} style={{ border: "none" }}>
-        Candidate From
-      </Grid>
-      <TextField
-        id="first-name"
-        label="First Name"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        variant="outlined"
-      />
-      <TextField
-        id="last-name"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        label="Last Name"
-        variant="outlined"
-      />
+    <Box sx={{ width: '100%' }} component="form" onSubmit={handleSubmit(handleCreateCandidate)} >
+      <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid item xs={12}>
 
-      <FormControl fullWidth>
-        <InputLabel id="department-id-label">Gender</InputLabel>
-        <Select
-          labelId="gender-label"
-          id="gender"
-          value={gender}
-          label="Gender"
-          onChange={handleChangeGe}
-        >
-          {columnGender.map((cName, index) => {
-            return <MenuItem value={cName} key={index} >{cName}</MenuItem>;
-          })}
-        </Select>
-      </FormControl>
-      <TextField
-        id="phone-number"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        label="Phone Number"
-        variant="outlined"
-      />
-      <TextField
-        id="department-id"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        label="Last Name"
-        variant="outlined"
-      />
-      <FormControl fullWidth>
-        <InputLabel id="department-id-label">Position</InputLabel>
-        <Select
-          labelId="Position-id-label"
-          id="Position-id"
-          value={position}
-          label="Position"
-          onChange={handleChangePo}
-        >
-          {columnPosition.map((cName, index) => {
-            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
-          })}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth>
-        <InputLabel id="department-id-label">Department</InputLabel>
-        <Select
-          labelId="department-id-label"
-          id="department-id"
-          value={department}
-          label="Department"
-          onChange={handleChangeDe}
-        >
-          {columnDepartment.map((cName, index) => {
-            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
-          })}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth>
-        <InputLabel id="department-id-label">Business</InputLabel>
-        <Select
-          labelId="business-id-label"
-          id="business-id"
-          value={business}
-          label="Business"
-          onChange={handleChangeBu}
-        >
-          {columnBusiness.map((cName, index) => {
-            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
-          })}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth>
-        <InputLabel id="received-id-label">Received From</InputLabel>
-        <Select
-          labelId="received-from-id-label"
-          id="received-id"
-          value={receivedFr}
-          label="Received From"
-          onChange={handleChangeReFr}
-        >
-          {columnReceived.map((cName, index) => {
-            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
-          })}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth>
-        <InputLabel id="received-id-label">Shortlist Week </InputLabel>
-        <Select
-          labelId="shortlist-week-label"
-          id="shortlist-week"
-          value={shortlistWeek}
-          label="ShortlistWeek"
-          onChange={handleChangeShWe}
-        >
-          {columnShortlistWe.map((cName, index) => {
-            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
-          })}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth>
-        <InputLabel id="received-id-label">Shortlist Result </InputLabel>
-        <Select
-          labelId="shortlisted_result_id_label"
-          id="shortlisted_result_id"
-          value={shortlistedReesult}
-          label="shortlisted_result_id"
-          onChange={handleChangeShRe}
-        >
-          {columnShortlistRe.map((cName, index) => {
-            return <MenuItem value={cName} key={index}>{cName}</MenuItem>;
-          })}
-        </Select>
-      </FormControl>
-      <TextField
-        id="location"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        label="Location"
-        variant="outlined"
-      />
-      <TextField
-        id="applied-date"
-        label="Applied date"
-        type="date"
-        sx={{ width: 220 }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      <TextField
-        id="file-part"
-        label="File Part"
-        type="file"
-        sx={{ width: 220 }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      <TextField
-        id="shortlist-date"
-        label="Shortlist date"
-        type="date"
-        sx={{ width: 220 }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      {/* <FormControl fullWidth>
-        <InputLabel id="department-id-label">Recruiter</InputLabel>
-        <Select
-          labelId="recruiter-id-label"
-          id="recruiter-id"
-          value={age}
-          label="Recruiter id"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl> */}
-      <hr
-        style={{
-          width: "100%",
-          float: "right",
-        }}
-      />
+          <TextField
+            id="first-name"
+            label="First Name"
+            variant="outlined"
+            fullWidth
+            size="small"
+            InputLabelProps={shrinkOpt}
+            required
+            {...register("first_name", { required: true })}
+          />
+          {errors?.first_name?.type === "required" && <p style={{ fontSize: 10, color: 'red' }}>This field is required</p>}
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="last-name"
+            label="Last Name"
+            variant="outlined"
+            size="small"
+            fullWidth
+            InputLabelProps={shrinkOpt}
+             {...register("last_name", { required: true })}
+          />
+            {errors?.last_name?.type === "required" && <p style={{ fontSize: 10, color: 'red' }}>This field is required</p>}
+        </Grid>
+        <Grid item xs={12}>
+          <CustomSelect
+            id={'department-id'}
+            label={'Gender'}
+            value={gender}
+            handleOnChange={(e) => setGender(e?.target?.value)}
+            size={'small'}
+            isRequire={true}
+            customDatas={genders}
+            {...register('gender',{required:true})}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField id="phone-number"
+            label="Phone Number"
+            variant="outlined"
+            size="small"
+            fullWidth
+            InputLabelProps={shrinkOpt}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <CustomSelect
+            id="position-id"
+            label={'Position'}
+            value={position}
+            size={'small'}
+            handleOnChange={(e) => setPosition(e?.target?.value)}
+            callToApi={API_URL.position.get}
+            dataStorage={LOCAL_STORAGE_KEYS.position_data}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <CustomSelect
+            id="department-id"
+            label={'Department'}
+            value={department}
+            size={'small'}
+            handleOnChange={(e) => setDepartment(e?.target?.value)}
+            callToApi={API_URL.department.get}
+            dataStorage={LOCAL_STORAGE_KEYS.department_data}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <CustomSelect
+            id="business-id"
+            label={'Business'}
+            value={business}
+            size={'small'}
+            handleOnChange={(e) => setBusiness(e?.target?.value)}
+            callToApi={API_URL.business.get}
+            dataStorage={LOCAL_STORAGE_KEYS.business_data}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="location"
+            label="Location"
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <CustomSelect
+            id="received-id"
+            label={'Received From'}
+            value={receivedFr}
+            size={'small'}
+            handleOnChange={(e) => setReceivedFr(e?.target?.value)}
+            callToApi={API_URL.receiveCategory.get}
+            dataStorage={LOCAL_STORAGE_KEYS.receive_category_data}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <CustomSelect
+            id="recruiter-id"
+            label={'Recruiter'}
+            value={recruiter}
+            size={'small'}
+            handleOnChange={(e) => setRecruiter(e?.target?.value)}
+            callToApi={API_URL.recruiter.get}
+            dataStorage={LOCAL_STORAGE_KEYS.recruiter_data}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="applied-date"
+            label="Applied date"
+            type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            size="small"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="file-part"
+            label="File Part"
+            type="file"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            size="small"
+          />
+        </Grid>
+      </Grid>
       <br></br>
-      <Button className="btn-submit" variant="outlined" color="success">
-        Save
-      </Button>
-      <Button className="btn-submit" variant="outlined" color="error">
-        Cancel
-      </Button>
+
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        columnGap={2}
+      >
+        <Button className="btn-submit" variant="contained" type="submit">
+          Save
+        </Button>
+        <Button className="btn-submit" variant="contained" color="error">
+          Cancel
+        </Button>
+      </Grid>
     </Box>
   );
 }

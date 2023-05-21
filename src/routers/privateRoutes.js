@@ -22,7 +22,7 @@ const Interview = {
     form: React.lazy(() => import('../pages/interviews/form'))
 };
 
-export const ROUTES = [
+export const PRIVATE_ROUTES = [
     {
         name: "Dashboard",
         path: "/",
@@ -40,17 +40,18 @@ export const ROUTES = [
         isDivider: false,
         children: [
             {
-                name: "Info",
-                path: "info",
-                component: <Candidate.info />,
-                icon: <InfoIcon />
-            },
-            {
                 name: "Form",
                 path: "form",
                 component: <Candidate.form />,
                 icon: <FormatAlignJustifyIcon />
+            },
+            {
+                name: "Info",
+                path: "info",
+                component: <Candidate.info />,
+                icon: <InfoIcon />
             }
+
         ]
     },
     {
@@ -60,16 +61,16 @@ export const ROUTES = [
         isDivider: false,
         children: [
             {
-                name: "Record",
-                path: "record",
-                component: <Interview.record />,
-                icon: <FormatListNumberedIcon />
-            },
-            {
                 name: "Form",
                 path: "form",
                 component: <Interview.form />,
                 icon: <FormatAlignJustifyIcon />
+            },
+            {
+                name: "Record",
+                path: "record",
+                component: <Interview.record />,
+                icon: <FormatListNumberedIcon />
             }
         ]
     },
@@ -99,5 +100,5 @@ export const ROUTES = [
         children: [
 
         ]
-    },
+    }
 ];
