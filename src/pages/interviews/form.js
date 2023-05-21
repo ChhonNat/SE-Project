@@ -62,17 +62,17 @@ export default function BasicTextFields() {
 
   return (
     <Box
-      style={{
-        marginTop: "6%",
-        width: "81%",
-        float: "right",
-      }}
-      component="form"
+      // style={{
+      //   marginTop: "6%",
+      //   width: "81%",
+      //   float: "right",
+      // }}
+      // component="form"
       sx={{
         "& > :not(style)": { m: 1, width: "25ch" },
       }}
-      noValidate
-      autoComplete="off"
+      // noValidate
+      // autoComplete="off"
     >
       <Grid xs={6} style={{ border: "none" }}>
         Interview Form

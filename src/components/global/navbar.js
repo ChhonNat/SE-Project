@@ -26,10 +26,13 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import { isLogout } from "../../store/authentication/authenticationService";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
 
+    const location = useLocation();
+    const { pathname } = location;
+    const pageTitle = pathname !== '/' ? pathname.slice(1).replaceAll('/',' > ') : 'dashboard';
     const dispatch = useDispatch(); 
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(true);
@@ -45,27 +48,27 @@ const Navbar = () => {
                 <AppBar position="static">
                     <Toolbar>
 
-                        {/* <IconButton
+                        <IconButton
                             color="inherit"
                             aria-label="open drawer"
-                            onClick={handleDrawerOpen}
+                            // onClick={handleDrawerOpen}
                             edge="start"
                             sx={{
                                 marginRight: 5,
                                 ...(open && { display: "none" }),
                             }}
                         >
-                            <MenuIcon />
-                        </IconButton> */}
+                            {/* <MenuIcon /> */}
+                        </IconButton>
 
 
                         <Typography
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{ display: { xs: "none", sm: "block" } }}
+                            sx={{ display: { xs: "none", sm: "block" }, fontSize: 16}}
                         >
-                            Dashboard
+                            {pageTitle.toLocaleUpperCase()}
                         </Typography>
 
                         {/* Search Box */}
@@ -408,16 +411,16 @@ const Navbar = () => {
                             </IconButton>
 
                         </Box>
-                        {/* <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                        <Box sx={{ display: { xs: "flex", md: "none" } }}>
                             <IconButton
                                 size="large"
                                 aria-label="show more"
                                 aria-haspopup="true"
                                 color="inherit"
                             >
-                                <MoreIcon />
+                                {/* <MoreIcon /> */}
                             </IconButton>
-                        </Box> */}
+                        </Box>
                     </Toolbar>
                 </AppBar>
             </Box>

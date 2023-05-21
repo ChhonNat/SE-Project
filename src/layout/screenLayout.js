@@ -1,9 +1,9 @@
 import React from "react";
-import "../../App.css";
+import "../App.css";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Navbar from "./navbar";
-import Sidebar from "./sidebar";
+import Navbar from "../components/global/navbar";
+import Sidebar from "../components/global/sidebar";
 
 /**
  * Global layout
