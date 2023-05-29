@@ -3,18 +3,16 @@ import apiLink from "../constants/appCont";
 
 const userLogined = JSON.parse(localStorage.getItem('recruitmentUser'));
 
-const API = axios.create({
+const axiosAPI = axios.create({
     baseURL: apiLink,
     headers: {
-        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': '*',
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + userLogined?.token,
         'DeviceID': 'xxxxxxx'
     },
 });
+
 
 /**
  * method GET is the method to RETRIEVE the data from DB
@@ -24,7 +22,7 @@ const API = axios.create({
  */
 const _get = async (endpoint_url, params) => {
 
-    return API.get(endpoint_url, params)
+    return axiosAPI.get(endpoint_url, params)
 };
 
 
@@ -35,7 +33,7 @@ const _get = async (endpoint_url, params) => {
  * @returns return the response after updated
  */
 const _post = async (endpoint_url, params) => {
-    return API.post(endpoint_url, params);
+    return axiosAPI.post(endpoint_url, params);
 };
 
 /**
@@ -45,7 +43,7 @@ const _post = async (endpoint_url, params) => {
  * @returns return the response after deleted
  */
 const _delete = async (endpoint_url, params) => {
-    return API.delete(endpoint_url, params);
+    return axiosAPI.delete(endpoint_url, params);
 };
 
 
@@ -56,12 +54,14 @@ const _delete = async (endpoint_url, params) => {
  * @returns return the response after updated
  */
 const _update = async (endpoint_url, params) => {
-    return API.put(endpoint_url,params)
+    return axiosAPI.put(endpoint_url,params)
 };
+
+export default axiosAPI;
 
 export const httpService = {
     _get,
     _post,
     _delete,
-    _update
+    _update,
 };

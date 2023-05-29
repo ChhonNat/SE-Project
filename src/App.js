@@ -4,13 +4,10 @@ import './App.css';
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isLogin, isLogout } from "./store/authentication/authenticationService";
-import { PRIVATE_ROUTES } from "./routers/privateRoutes";
-import { AUTH } from "./constants/pathUrl";
-import Layout from './layout/screenLayout';
-import PageContainer from "./components/global/pageWrapper";
-import { PUBLIC_ROUTES } from "./routers/publicRoutes";
-
-const Login = React.lazy(() => import('./pages/authentication/login'));
+import { PRIVATE_ROUTES } from "./routers/private_routes";
+import Layout from './layout/screen_layout';
+import PageContainer from "./components/Layout/page_wrapper";
+import { PUBLIC_ROUTES } from "./routers/public_routes";
 
 const App = () => {
 
@@ -21,10 +18,17 @@ const App = () => {
     dispatch(isLogin());
   }, [dispatch]);
 
+  /**
+   * Loading while while route fallback
+   */
+
   const Loading = () => {
     return <p className="global-loading">Loading...</p>
   };
 
+  /**
+   * Page not found status
+   */
   const PageNotFound = () => {
     return <p className="page-not-found">Page not found!</p>
   }
@@ -41,18 +45,31 @@ const App = () => {
         <Suspense fallback={<Loading />}>
           <Routes>
             {
-              PRIVATE_ROUTES && PRIVATE_ROUTES.length &&
-              PRIVATE_ROUTES.map((route, index) => (
+              PRIVATE_ROUTES && PRIVATE_ROUTES.length && PRIVATE_ROUTES.map((route, index) => (
                 <React.Fragment key={index}>
                   {/* Parent routes */}
                   <Route path={route?.path} element={<PageContainer layout={route?.component} />} key={index} />
 
                   {/* Child routes */}
-                  {route?.children?.length && route?.children.map((child, childIndex) => (
+                  {route?.children?.length && route?.children.map((childRoute, childIndex) => (
+
                     <Route path={route?.path} key={index}>
-                      <Route path={child?.path} element={<PageContainer layout={child?.component} />} key={childIndex} />
+                      {/* Child route components */}
+                      <Route path={childRoute?.path} element={<PageContainer layout={childRoute?.component} />} key={childIndex} />
+
+                      {/* Child route child route components */}
+                      {
+                        childRoute?.children?.length && childRoute?.children?.map((childChildRoute, childChildRouteIndex) => (
+
+                          <Route path={route?.path + childRoute?.path} key={childChildRouteIndex}>
+                            <Route path={childChildRoute?.path} element={<PageContainer layout={childChildRoute?.component} />} key={childChildRouteIndex} />
+                          </Route>
+                        ))
+                      }
                     </Route>
+
                   ))}
+
                 </React.Fragment>
 
               ))
@@ -63,7 +80,7 @@ const App = () => {
     );
   };
 
-  
+
   /**
    * Public routes with public elements
    */
@@ -83,15 +100,27 @@ const App = () => {
     );
   };
 
+
+
+  /**
+   * Switch screen between authorize and unauthorize user
+   */
+  const Screen = () => {
+    return (
+      <>
+        {user?.isAuthenticated ? <PrivateRouters /> : <PublicRouters />}
+
+      </>
+    );
+  };
+
   /**
    * return private router if user has authentication, public router if user unauthentication
    */
   return (
-    <div>
-      {
-        user?.userAuthendicated ? <PrivateRouters /> : <PublicRouters />
-      }
-    </div>
+    <>
+      <Screen />
+    </>
   );
 };
 
