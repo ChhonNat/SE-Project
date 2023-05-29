@@ -48,7 +48,6 @@ const useHttp = () => {
 
       if (method === 'POST') {
         const postData = {...sendData, AuthToken: user.accessToken};
-        //console.log(postData);
         await axios
           .post(url, postData, options)
           .then(function (result) {
@@ -61,7 +60,7 @@ const useHttp = () => {
             }
           })
           .catch(error => {
-            // console.log(error.message);
+            console.log(error.message);
             dispatchHttp({type: 'ERROR', error: error.message});
           });
       } else {
@@ -71,7 +70,7 @@ const useHttp = () => {
             dispatchHttp({type: 'RESPONSE', data: result.data.data});
           })
           .catch(error => {
-            // console.log(error.message);
+            console.log(error.message);
             dispatchHttp({type: 'ERROR', error: error.message});
           });
       }

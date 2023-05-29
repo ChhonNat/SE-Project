@@ -1,16 +1,16 @@
 import React from "react";
-import "../../App.css";
+import "../App.css";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Navbar from "./navbar";
-import Sidebar from "./sidebar";
+import Navbar from "../components/Layout/navbar";
+import Sidebar from "../components/Layout/sidebar";
 
 /**
  * Global layout
  * Import Narbar and Sidebar from  custom component
  */
 
-export default function MiniDrawer() {
+export default function ScreenLayout() {
 
 
   return (

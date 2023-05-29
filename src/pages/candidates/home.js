@@ -152,9 +152,9 @@ export default function CustomPaginationActionsTable() {
 
   return (
     <Box
-      style={{ marginTop: "4%", width: "85%", float: "right" }}
-      component="main"
-      sx={{ flexGrow: 1, p: 3 }}
+      // style={{ marginTop: "4%", width: "85%", float: "right" }}
+      // component="main"
+      // sx={{ flexGrow: 1, p: 3 }}
     >
       <Grid
         style={{ border: "none" }}

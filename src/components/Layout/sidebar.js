@@ -18,16 +18,22 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import logo from "../../logo/logo.png";
 import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
-import { ROUTES } from "../../constants/routes";
+import { PRIVATE_ROUTES } from "../../routers/private_routes";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { LOCAL_STORAGE_KEYS } from "../../constants/local_storage";
 
-const Sidebar = () => {
+const SidebarComponent = () => {
+
+    /**
+     * To remember active menu or collape we get record from storage
+     */
+    const menuStorage = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.sidebar.getActiveSidebar));
 
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
-    const [menuIndex, setMenuIndex] = useState(0);
-    const [openMenuCollape, setOpenMenuCollape] = useState(false);
+    const [menuIndex, setMenuIndex] = useState(menuStorage?.activeIndex || 0);
+    const [openMenuCollape, setOpenMenuCollape] = useState(menuStorage?.isOpenCollape || false);
 
     const location = useLocation();
     const { pathname } = location;
@@ -40,10 +46,32 @@ const Sidebar = () => {
         setOpen(!open);
     }
 
+    /**
+     * Method click on sidebar 
+     * if menu has submenu open collape to show submenu
+     */
     const handleClickMenu = (index) => {
         setMenuIndex(index);
-        setOpenMenuCollape(!openMenuCollape)
-    }
+        menuIndex === index ? setOpenMenuCollape(!openMenuCollape) : setOpenMenuCollape(true);
+
+        /**
+         * Store active menu and collape in storage to help remember when user reload
+         */
+        localStorage.setItem(LOCAL_STORAGE_KEYS.sidebar.setActiveSidebar,JSON.stringify({activeIndex: index, isOpenCollape: menuIndex === index ? !openMenuCollape : true }));
+    };
+
+    /**
+     * Method to check active or inactive menu
+     */
+    const checkIsActive = (fullPath) => {
+
+        /**
+         * CASE match pathname mean active 
+         * CASE no match pathname mean inactive
+         */
+        if(pathname === fullPath || pathname === fullPath + '/create') return true;
+        else return false;
+    };
 
     return (
 
@@ -62,11 +90,10 @@ const Sidebar = () => {
             </DrawerHeader>
 
             {
-                ROUTES && ROUTES.length ?
+                PRIVATE_ROUTES && PRIVATE_ROUTES.length ?
                     <List>
-
                         {
-                            ROUTES.map((menu, parentKey) => (
+                            PRIVATE_ROUTES.map((menu, parentKey) => (
                                 <React.Fragment key={parentKey}>
 
                                     {/* parent menu */}
@@ -89,7 +116,7 @@ const Sidebar = () => {
                                             <ListItemText primary={menu?.name} sx={{ opacity: open ? 1 : 0 }} />
 
                                             {/* right parent menu icon */}
-                                            {menu?.children?.length ? (parentRoute === menu?.path ? <ExpandLess /> : <ExpandMore />) : <></>}
+                                            {menu?.children?.length ? (parentRoute === menu?.path && menuIndex === parentKey && openMenuCollape ? <ExpandLess /> : <ExpandMore />) : <></>}
                                         </ListItemButton>
                                     </Link>
 
@@ -97,7 +124,7 @@ const Sidebar = () => {
                                     {
                                         menu && menu.children && menu.children.length ?
                                             <Collapse
-                                                in={parentRoute === menu?.path ? true : false}
+                                                in={parentRoute === menu?.path && menuIndex === parentKey && openMenuCollape ? true : false}
                                                 timeout="auto"
                                                 unmountOnExit
                                                 key={parentKey}
@@ -105,9 +132,9 @@ const Sidebar = () => {
                                                 <List component="div" disablePadding>
                                                     {
                                                         menu.children.map((childMenu, childKey) => (
-                                                            <Link to={menu?.path + '/' + childMenu?.path} style={sidebar.link}>
+                                                            <Link to={menu?.path + '/' + childMenu?.path} style={sidebar.link} key={childKey}>
                                                                 <ListItemButton sx={{ pl: 5 }}
-                                                                    style={pathname === menu?.path + '/' + childMenu?.path ? sidebar?.menu?.child?.activeLink : {}}
+                                                                    style={checkIsActive(menu?.path + '/' + childMenu?.path)  ? sidebar?.menu?.child?.activeLink : {}}
                                                                     key={childKey}
                                                                 >
                                                                     <ListItemIcon>
@@ -144,7 +171,7 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export default SidebarComponent;
 
 const drawerWidth = 240;
 
