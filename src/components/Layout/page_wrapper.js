@@ -5,7 +5,7 @@ import React from "react";
  * Layout for all page
  */
 
-const PageContainer = ({layout}) => {
+const PageContainerComponent = ({layout}) => {
     return (
         
         <Box sx={{ display: "flex", padding: 3 }} style={{  paddingTop: 80, width: "85%", float: "right" }}>
@@ -16,4 +16,4 @@ const PageContainer = ({layout}) => {
     )
 }
 
-export default PageContainer;
+export default PageContainerComponent;

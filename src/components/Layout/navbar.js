@@ -28,7 +28,7 @@ import { useDispatch } from "react-redux";
 import { isLogout } from "../../store/authentication/authenticationService";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const NavbarComponent = () => {
 
     const location = useLocation();
     const { pathname } = location;
@@ -63,16 +63,16 @@ const Navbar = () => {
 
 
                         <Typography
-                            variant="h6"
+                            variant="h8"
                             noWrap
                             component="div"
-                            sx={{ display: { xs: "none", sm: "block" }, fontSize: 16}}
+                            sx={{ display: { xs: "none", sm: "block" }, fontSize: 20}}
                         >
-                            {pageTitle.toLocaleUpperCase()}
+                            {pageTitle}
                         </Typography>
 
                         {/* Search Box */}
-                        <Search>
+                        {/* <Search>
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
@@ -80,7 +80,7 @@ const Navbar = () => {
                                 placeholder="Search…"
                                 inputProps={{ "aria-label": "search" }}
                             />
-                        </Search>
+                        </Search> */}
 
 
                         <Box sx={{ flexGrow: 1 }} />
@@ -428,7 +428,7 @@ const Navbar = () => {
     )
 }
 
-export default Navbar;
+export default NavbarComponent;
 
 const drawerWidth = 240;
 
