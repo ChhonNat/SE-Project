@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 
 import _useHttp from '../../hooks/_http';
 import { HTTP_METHODS } from '../../constants/http_method';
-import HeaderActionComponent from '../page/header-action';
+import HeaderActionComponent from '../Page/header-action';
 
 /**
  * Table Component
@@ -84,7 +84,7 @@ const TableComponent = (props) => {
                                     <TableCell
                                         key={column?.id}
                                         align={column?.align}
-                                        style={{ minWidth: column?.minWidth, fontWeight: 'bold' }}
+                                        style={{ minWidth: column?.minWidth, fontWeight: 'bold', fontSize: 13, fontFamily: 'inherit' }}
                                     >
                                         {column?.label}
                                     </TableCell>
@@ -103,7 +103,7 @@ const TableComponent = (props) => {
 
                                     :
                                     <>
-{/* 
+                                        {/* 
                                         {
                                             currentPage && pageSize ?
                                                 ((currentPage * pageSize) - pageSize) + (index + 1)
@@ -119,12 +119,12 @@ const TableComponent = (props) => {
                                                             const isUseIndex = column?.id === 'index';
                                                             const value = row[column?.id];
                                                             return (
-                                                                <TableCell key={column?.id} align={column?.align}>
-                                                                  
+                                                                <TableCell key={column?.id} align={column?.align} sx={{ fontSize: 13, fontFamily: 'inherit' }}>
+
                                                                     {
-                                                                        isUseIndex ?  (index + 1) 
-                                                                        :
-                                                                        column?.format && typeof value === 'number' ? column?.format(value) : value
+                                                                        isUseIndex ? (index + 1)
+                                                                            :
+                                                                            column?.format && typeof value === 'number' ? column?.format(value) : value
                                                                     }
                                                                 </TableCell>
                                                             );
