@@ -2,29 +2,14 @@ import React from "react";
 import { API_URL } from "../../constants/api_url";
 import TableComponent from "../../components/Table/table";
 import { SCREEN_URL } from "../../constants/screen_url";
-
-/**
- * Header Recruiter Table
- * Custom In Table Component
- */
-const tblRecruiterHeaders = [
-    {
-        id: 'index', label: 'No.', 
-    },
-    {
-        id: 'first_name', label: 'First Name', 
-    },
-    {
-        id: 'last_name', label: 'Last Name',
-    }
-];
+import { TABLE_CONFIG } from "../../utils/table-config";
 
 const HomeRecruiter = () => {
 
     return (
         <>
             <TableComponent 
-                headerColumns={tblRecruiterHeaders}
+                headerColumns={TABLE_CONFIG.tblRecruiter}
                 requestToEndPoint={API_URL.recruiter.get}
                 buttonActions={SCREEN_URL.settings.recruiter}
             />
