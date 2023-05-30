@@ -21,6 +21,7 @@ export const API_URL = {
         get: API_VERSION + '/candidate/list-recruiters'
     },
     candidate: {
+        get: API_VERSION + '/candidate/candidates-info',
         create: API_VERSION + '/candidate'
     }
 };
