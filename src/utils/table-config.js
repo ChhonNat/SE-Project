@@ -18,10 +18,13 @@ const tblCandidate = [
         id: 'phoneNumber', label: 'Phone Number', minWidth: 130
     },
     {
+        id: 'email', label: 'Email', minWidth: 130
+    },
+    {
         id: 'positionName', label: 'Position'
     },
     {
-        id: 'departmentName', label: 'Department Name',
+        id: 'departmentName', label: 'Department',
     },
     {
         id: 'businessName', label: 'Business'
@@ -34,6 +37,48 @@ const tblCandidate = [
     },
     {
         id: 'recruiterName', label: 'Recruiter'
+    }
+];
+
+/***
+ * Candidate Table
+ */
+const tblInterview = [
+    {
+        id: 'index', label: 'No.'
+    },
+    {
+        id: 'firstName', label: 'First Name', minWidth: 110
+    },
+    {
+        id: 'lastName', label: 'Last Name', minWidth: 110
+    },
+    {
+        id: 'gender', label: 'Gender'
+    },
+    {
+        id: 'phoneNumber', label: 'Phone Number', minWidth: 130
+    },
+    {
+        id: 'email', label: 'Email'
+    },
+    {
+        id: 'departmentName', label: 'Department',
+    },
+    {
+        id: 'interviewDate', label: 'Interview Date'
+    },
+    {
+        id: 'interviewResultName', label: 'Result'
+    },
+    {
+        id: 'positionName', label: 'Position Offer', minWidth: 130
+    },
+    {
+        id: 'salaryOffer', label: 'Salary Offer'
+    },
+    {
+        id: 'joinDate', label: 'Join Date'
     }
 ];
 
@@ -115,6 +160,7 @@ const tblRecruiter = [
 
 export const TABLE_CONFIG = {
     tblCandidate,
+    tblInterview,
     tblBusiness,
     tblDepartment,
     tblPosition,

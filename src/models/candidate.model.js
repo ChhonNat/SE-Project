@@ -5,6 +5,7 @@ const CandidateModel = object({
     lastName: string().min(1),
     gender: string().min(1),
     phoneNumber: string().min(9).max(10),
+    email: string().min(1).email(),
     positionId: string(),
     departmentId: string(),
     businessId: string(),
