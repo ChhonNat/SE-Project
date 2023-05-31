@@ -59,18 +59,18 @@ export default function CandidateForm() {
    */
   useEffect(() => {
     fetchData(API_URL.receiveCategory.get, setListReceivingCategories);
-  },[])
+  }, [])
 
   /**
    * Fetch recruiter datas
    */
   useEffect(() => {
     fetchData(API_URL.recruiter.get, setListRecruiters);
-  },[])
+  }, [])
 
   const onError = (error, e) => console.log('>>>', error, e);
   const onSubmit = (data, e) => {
-    console.log('data',data);
+    console.log('data', data);
   }
 
 
@@ -149,6 +149,21 @@ export default function CandidateForm() {
             error={errors?.phoneNumber}
             helperText={errors?.phoneNumber?.message}
             {...register("phoneNumber")}
+          />
+        </Grid>
+        {/* Input Email */}
+        <Grid item xs={12}>
+          <TextField
+            type="email"
+            id="email"
+            label="Email"
+            variant="outlined"
+            fullWidth
+            size="small"
+            InputLabelProps={shrinkOpt}
+            error={errors?.email}
+            helperText={errors?.email?.message}
+            {...register("email")}
           />
         </Grid>
         {/* Select Position */}
@@ -236,6 +251,21 @@ export default function CandidateForm() {
             {...register("appliedDate")}
             error={errors?.appliedDate}
             helperText={errors?.appliedDate?.message}
+          />
+        </Grid>
+        {/* Input Short List Date */}
+        <Grid item xs={12}>
+          <TextField
+            type="date"
+            id="short-list-date-id"
+            label="shortListedDate"
+            variant="outlined"
+            fullWidth
+            size="small"
+            InputLabelProps={shrinkOpt}
+            {...register("shortListedDate")}
+            error={errors?.shortListedDate}
+            helperText={errors?.shortListedDate?.message}
           />
         </Grid>
         {/* Input Short List Date */}

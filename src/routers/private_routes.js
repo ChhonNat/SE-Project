@@ -20,12 +20,12 @@ import React from "react";
  */
 const Dashboard = lazy(() => import('../pages/dashboard/dashboard'));
 const Candidate = {
-    home: lazy(() => import('../pages/candidates/home')),
-    create: lazy(() => import('../pages/candidates/create'))
+    home: lazy(() => import('../pages/candidate/home')),
+    create: lazy(() => import('../pages/candidate/create'))
 };
 const Interview = {
-    home: lazy(() => import('../pages/interviews/home')),
-    create: lazy(() => import('../pages/interviews/create'))
+    home: lazy(() => import('../pages/interview/home')),
+    create: lazy(() => import('../pages/interview/create'))
 };
 const BusinessUnit = {
     home: lazy(() => import('../pages/business-unit/home')),
