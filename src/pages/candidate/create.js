@@ -12,6 +12,7 @@ import { departmentService } from "../../services/department.service";
 import { positionService } from "../../services/position.service";
 import { filter } from "../../constants/api_filter";
 import { globalService } from "../../services/global.service";
+import FooterComponent from "../../components/Page/footer";
 
 
 export default function CandidateForm() {
@@ -284,7 +285,8 @@ export default function CandidateForm() {
           />
         </Grid>
       </Grid>
-      <br></br>
+      <FooterComponent />
+      {/* <br></br>
       <Grid
         container
         direction="row"
@@ -298,7 +300,7 @@ export default function CandidateForm() {
         <Button className="btn-submit" variant="contained" color="error">
           Cancel
         </Button>
-      </Grid>
+      </Grid> */}
     </Box>
   );
 

@@ -12,6 +12,7 @@ const HomeReceivingCategory = () => {
                 headerColumns={TABLE_CONFIG.tblReceivingCategory}
                 requestToEndPoint={API_URL.receiveCategory.get}
                 buttonActions={SCREEN_URL.settings.receivingCategory}
+                useTableActions={{create: true ,edit: true, delete: true, search: true}}
             />
         </>
     )

@@ -41,8 +41,9 @@ const HomeInterview = () => {
         <>
             <TableComponent 
                 headerColumns={TABLE_CONFIG.tblInterview}
-                // requestToEndPoint={API_URL.interview.get}
+                requestToEndPoint={API_URL.interview.get}
                 useColumns={test}
+                useTableActions={{}}
             />
         </>
     )

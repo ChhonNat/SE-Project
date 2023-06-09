@@ -12,6 +12,7 @@ const HomePosition = () => {
                 headerColumns={TABLE_CONFIG.tblPosition}
                 requestToEndPoint={API_URL.position.get}
                 buttonActions={SCREEN_URL.settings.position}
+                useTableActions={{create: true, edit: true, delete: true, search: true}}
             />
         </>
     )

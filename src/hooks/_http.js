@@ -4,6 +4,8 @@ import axiosAPI from '../services/http.service';
 
 const _httpReducer = (httpState, action) => {
 
+    console.log(action);
+
     switch (action.type) {
         case 'SEND':
             return {
@@ -40,29 +42,52 @@ const _useHttp = () => {
 
     const sendRequest = useCallback(async (url, method, sendData) => {
 
-            const postData = { ...sendData };
-            dispatchHttp({ type: 'SEND' });
+        const postData = { ...sendData };
 
-            /**
-             * CASE: send request method == 'GET'
-             */
-            if (method === 'GET') {
+        dispatchHttp({ type: 'SEND' });
 
-                 await axiosAPI.get(url, postData)
-                    .then(function (result) {
+        /**
+         * CASE: send request method == 'GET'
+         */
+        if (method === 'GET') {
 
-                        const { data, success, message } = result?.data;
-                        success ?
-                            dispatchHttp({ type: 'RESPONSE', data }) :
-                            dispatchHttp({ type: 'ERROR', error: message });
-                    })
-                    .catch((error) => {
-                        const { message } = error || '';
-                        dispatchHttp({ type: 'ERROR', message: message });
-                    });
-            }
+            await axiosAPI.get(url, postData)
+                .then(function (result) {
 
-        },[],
+                    const { data, success, message } = result?.data;
+                    success ?
+                        dispatchHttp({ type: 'RESPONSE', data }) :
+                        dispatchHttp({ type: 'ERROR', error: message });
+                })
+                .catch((error) => {
+                    const { message } = error || '';
+                    dispatchHttp({ type: 'ERROR', message: message });
+                });
+        }
+
+        /**
+        * CASE: send request method == 'POST'
+        */
+        if (method === 'POST') {
+
+            console.log(url);
+
+            await axiosAPI.post(url, postData)
+                .then(function (result) {
+
+                    const { data, success, message } = result?.data;
+
+                    success ?
+                        dispatchHttp({ type: 'RESPONSE', data }) :
+                        dispatchHttp({ type: 'ERROR', error: message });
+                })
+                .catch((error) => {
+                    const { message } = error || '';
+                    dispatchHttp({ type: 'ERROR', message: message });
+                });
+        }
+
+    }, [],
     );
 
     return {

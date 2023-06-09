@@ -5,9 +5,6 @@ import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import ReplyIcon from '@mui/icons-material/Reply';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
-import InfoIcon from '@mui/icons-material/Info';
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
-import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import BusinessIcon from '@mui/icons-material/Business';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
@@ -16,7 +13,7 @@ import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import React from "react";
 
 /**
- * Components
+ * Import components
  */
 const Dashboard = lazy(() => import('../pages/dashboard/dashboard'));
 const Candidate = {
@@ -49,6 +46,7 @@ const Recruiter = {
 };
 
 export const PRIVATE_ROUTES = [
+    /** Dashboard */
     {
         name: "Dashboard",
         path: "/",
@@ -59,47 +57,54 @@ export const PRIVATE_ROUTES = [
 
         ]
     },
+    /**Candidate */
     {
-        name: "Candidate",
+        name: "Candidates",
         path: "/candidate",
+        component: <Candidate.home />,
         icon: <PeopleAltIcon />,
         isDivider: false,
-        children: [
-            {
-                name: "Record",
-                path: "record",
-                component: <Candidate.home />,
-                icon: <InfoIcon />
-            },
-            {
-                name: "Form",
-                path: "form",
-                component: <Candidate.create />,
-                icon: <FormatAlignJustifyIcon />
-            }
-        ]
+        /**Children candidate  */
+        // children: [
+        //     {
+        //         name: "Record",
+        //         path: "record",
+        //         component: <Candidate.home />,
+        //         icon: <InfoIcon />
+        //     },
+        //     {
+        //         name: "Form",
+        //         path: "form",
+        //         component: <Candidate.create />,
+        //         icon: <FormatAlignJustifyIcon />
+        //     }
+        // ]
     },
+    /**Interview */
     {
-        name: "Interview",
+        name: "Interviews",
         path: "/interview",
+        component: <Interview.home />,
         icon: <RecordVoiceOverIcon />,
         isDivider: false,
-        children: [
+        /**Interview interview */
+        // children: [
            
-            {
-                name: "Record",
-                path: "record",
-                component: <Interview.home />,
-                icon: <FormatListNumberedIcon />
-            },
-            {
-                name: "Form",
-                path: "form",
-                component: <Interview.create />,
-                icon: <FormatAlignJustifyIcon />
-            }
-        ]
+        //     {
+        //         name: "Record",
+        //         path: "record",
+        //         component: <Interview.home />,
+        //         icon: <FormatListNumberedIcon />
+        //     },
+        //     {
+        //         name: "Form",
+        //         path: "form",
+        //         component: <Interview.create />,
+        //         icon: <FormatAlignJustifyIcon />
+        //     }
+        // ]
     },
+    /**Replies */
     {
         name: "Replies",
         path: "/reply",
@@ -109,6 +114,7 @@ export const PRIVATE_ROUTES = [
 
         ]
     },
+    /**Reports */
     {
         name: "Reports",
         path: "/report",
@@ -118,17 +124,21 @@ export const PRIVATE_ROUTES = [
 
         ]
     },
+    /**Settings */
     {
         name: "Settings",
         path: "/settings",
         icon: <SettingsIcon />,
         isDivider: false,
+        /**Children settings */
         children: [
+            /**Business */
             {
                 name: "Business",
                 path: "business",
                 component: <BusinessUnit.home />,
                 icon: <BusinessIcon />,
+                /**Children business */
                 children: [
                     {
                         name: "Create Business",
@@ -138,11 +148,13 @@ export const PRIVATE_ROUTES = [
                     }
                 ]
             },
+            /**Department */
             {
                 name: "Department",
                 path: "department",
                 component: <Department.home />,
                 icon: <ApartmentIcon />,
+                /**Children department */
                 children: [
                     {
                         name: "Create Department",
@@ -152,11 +164,13 @@ export const PRIVATE_ROUTES = [
                     }
                 ]
             },
+            /**Position */
             {
                 name: "Position",
                 path: "position",
                 component: <Position.home />,
                 icon: <AirlineSeatReclineNormalIcon />,
+                /**Children position */
                 children: [
                     {
                         name: "Create Position",
@@ -165,11 +179,13 @@ export const PRIVATE_ROUTES = [
                     }
                 ]
             },
+            /**Receive category */
             {
                 name: "Receive Category",
                 path: "receiving-category",
                 component: <ReceivingCategory.home />,
                 icon: <CallReceivedIcon />,
+                /**Children receive category */
                 children: [
                     {
                         name: "Create Receiving Category",
@@ -178,11 +194,13 @@ export const PRIVATE_ROUTES = [
                     }
                 ]
             },
+            /**Recruiter */
             {
                 name: "Recruiter",
                 path: "recruiter",
                 component: <Recruiter.home />,
                 icon: <SwitchAccountIcon />,
+                /**Children recruiter */
                 children: [
                     {
                         name: "Create New Recruiter",
