@@ -28,41 +28,55 @@ const searchStyles = {
 
 const HeaderActionComponent = (props) => {
 
-    const { buttonActions } = props || {};
+    const { buttonActions, useActions } = props || {};
 
     return (
         <>
             <Box sx={{ flexGrow: 1, mb: 4, alignItems: 'end' }}>
                 <Grid container spacing={2}>
-                    {/* Search Column */}
-                    <Grid xs={6} md={6}>
-                        <Paper
-                            component="form"
-                            sx={searchStyles.paperSX}
-                        >
-                            <InputBase
-                                sx={searchStyles.inputBaseSX}
-                                placeholder="Search Record"
-                                inputProps={searchStyles.inputBaseProps}
-                            />
-                            <Divider sx={searchStyles.dividerSX} orientation="vertical" />
-                            <IconButton type="button" sx={searchStyles.iconButtonSX} aria-label="search">
-                                <SearchIcon />
-                            </IconButton>
-                        </Paper>
-                    </Grid>
+                    {
+                        Object.values(useActions).length ?
+                            <>
+                                <Grid xs={6} md={6}>
+                                    {/* Search Column */}
+                                    {
+                                        useActions?.search &&
+                                        <Paper
+                                            component="form"
+                                            sx={searchStyles.paperSX}
+                                        >
+                                            <InputBase
+                                                sx={searchStyles.inputBaseSX}
+                                                placeholder="Search Record"
+                                                inputProps={searchStyles.inputBaseProps}
+                                            />
+                                            <Divider sx={searchStyles.dividerSX} orientation="vertical" />
+                                            <IconButton type="button" sx={searchStyles.iconButtonSX} aria-label="search">
+                                                <SearchIcon />
+                                            </IconButton>
+                                        </Paper>
+                                    }
+                                </Grid>
+                                <Grid xs={6} md={6} sx={{ textAlign: 'right' }}>
+                                    <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                                        {/* Button Action Column */}
+                                        {
+                                            useActions?.create &&
+                                            <Link to={buttonActions?.create}>
+                                                <Button>
+                                                    <AddCircleOutlineIcon sx={{ mr: 0.3 }} />
+                                                    Add New
+                                                </Button>
+                                            </Link>
+                                        }
 
-                    {/* Button Action Column */}
-                    <Grid xs={6} md={6} sx={{ textAlign: 'right' }}>
-                        <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                            <Link to={buttonActions?.create}>
-                                <Button>
-                                    <AddCircleOutlineIcon sx={{mr: 0.3}} />
-                                    Add New
-                                </Button>
-                            </Link>
-                        </ButtonGroup>
-                    </Grid>
+                                    </ButtonGroup>
+                                </Grid>
+                            </>
+                            :
+                            <></>
+                    }
+
                 </Grid>
             </Box>
         </>

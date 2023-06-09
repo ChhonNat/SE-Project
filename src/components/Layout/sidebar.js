@@ -23,7 +23,116 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS } from "../../constants/local_storage";
 
-const SidebarComponent = () => {
+const drawerWidth = 240;
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+}));
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open }) => ({
+      width: drawerWidth,
+      flexShrink: 0,
+      whiteSpace: 'nowrap',
+      boxSizing: 'border-box',
+      ...(open && {
+        ...openedMixin(theme),
+        '& .MuiDrawer-paper': openedMixin(theme),
+      }),
+      ...(!open && {
+        ...closedMixin(theme),
+        '& .MuiDrawer-paper': closedMixin(theme),
+      }),
+    }),
+  );
+
+  
+const openedMixin = (theme) => ({
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+    }),
+    overflowX: 'hidden',
+});
+
+const closedMixin = (theme) => ({
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.up('sm')]: {
+        width: `calc(${theme.spacing(8)} + 1px)`,
+    },
+});
+
+
+/**
+ * Style customer drawer header
+ */
+const drawerHeader = {
+    styles: {
+        background: "#1976d2",
+        boxShadow:
+            "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
+        borderColor: "#e5e7eb",
+        justifyContent: "center"
+    },
+    img: {
+        styles: { width: "75%" }
+    }
+};
+
+
+/**
+ * Style customer sidebar
+ */
+const sidebar = {
+    link: {
+        textDecoration: 'none',
+        color: 'black',
+    },
+    menu: {
+        activeLink: {
+            backgroundColor: '#f2eeee',
+        },
+        child: {
+            activeLink: {
+                backgroundColor: '#f7f6f6',
+            },
+        }
+    },
+    listItem: {
+        sx: { display: "block" }
+    },
+    listItemButton: {
+        initialSx: { minHeight: 48, justifyContent: "initial", px: 2.5, },
+        centerSx: { minHeight: 48, justifyContent: "center", px: 2.5, }
+    },
+    listItemIcon: {
+        fixSx: {
+            minWidth: 0,
+            mr: 3,
+            justifyContent: "center",
+        },
+        autoSx: {
+            minWidth: 0,
+            mr: "auto",
+            justifyContent: "center",
+        }
+    }
+};
+
+const SidebarComponent = (props) => {
+
+    const { open } = props;
 
     /**
      * To remember active menu or collape we get record from storage
@@ -31,7 +140,7 @@ const SidebarComponent = () => {
     const menuStorage = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.sidebar.getActiveSidebar));
 
     const theme = useTheme();
-    const [open, setOpen] = React.useState(true);
+    // const [open, setOpen] = React.useState(true);
     const [menuIndex, setMenuIndex] = useState(menuStorage?.activeIndex || 0);
     const [openMenuCollape, setOpenMenuCollape] = useState(menuStorage?.isOpenCollape || false);
 
@@ -43,7 +152,8 @@ const SidebarComponent = () => {
      * Handle minimize sidebar
      */
     const handleMinSidebar = () => {
-        setOpen(!open);
+        // setOpen(!open);
+        props.handleMinSidebar(!open)
     }
 
     /**
@@ -57,7 +167,7 @@ const SidebarComponent = () => {
         /**
          * Store active menu and collape in storage to help remember when user reload
          */
-        localStorage.setItem(LOCAL_STORAGE_KEYS.sidebar.setActiveSidebar,JSON.stringify({activeIndex: index, isOpenCollape: menuIndex === index ? !openMenuCollape : true }));
+        localStorage.setItem(LOCAL_STORAGE_KEYS.sidebar.setActiveSidebar, JSON.stringify({ activeIndex: index, isOpenCollape: menuIndex === index ? !openMenuCollape : true }));
     };
 
     /**
@@ -69,24 +179,27 @@ const SidebarComponent = () => {
          * CASE match pathname mean active 
          * CASE no match pathname mean inactive
          */
-        if(pathname === fullPath || pathname === fullPath + '/create') return true;
+        if (pathname === fullPath || pathname === fullPath + '/create') return true;
         else return false;
     };
 
     return (
 
-        <Drawer variant="permanent" open={open}>
+        <Drawer
+            variant="permanent"
+            open={open}
+        >
 
             {/* Sidebar Header */}
             <DrawerHeader style={drawerHeader.styles}>
                 <img src={logo} alt="logo" style={drawerHeader.img.styles} />
-                <IconButton>
+                {/* <IconButton>
                     {theme.direction === "rtl" ? (
                         <ChevronRightIcon onClick={handleMinSidebar} />
                     ) : (
                         <ChevronLeftIcon onClick={handleMinSidebar} />
                     )}
-                </IconButton>
+                </IconButton> */}
             </DrawerHeader>
 
             {
@@ -134,7 +247,7 @@ const SidebarComponent = () => {
                                                         menu.children.map((childMenu, childKey) => (
                                                             <Link to={menu?.path + '/' + childMenu?.path} style={sidebar.link} key={childKey}>
                                                                 <ListItemButton sx={{ pl: 5 }}
-                                                                    style={checkIsActive(menu?.path + '/' + childMenu?.path)  ? sidebar?.menu?.child?.activeLink : {}}
+                                                                    style={checkIsActive(menu?.path + '/' + childMenu?.path) ? sidebar?.menu?.child?.activeLink : {}}
                                                                     key={childKey}
                                                                 >
                                                                     <ListItemIcon>
@@ -173,102 +286,4 @@ const SidebarComponent = () => {
 
 export default SidebarComponent;
 
-const drawerWidth = 240;
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-}));
-
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(({ theme, open }) => ({
-
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-    boxSizing: "border-box",
-    ...(open && {
-        ...openedMixin(theme), "& .MuiDrawer-paper": openedMixin(theme),
-    }),
-    ...(!open && { ...closedMixin(theme), "& .MuiDrawer-paper": closedMixin(theme), }),
-}));
-
-const openedMixin = (theme) => ({
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: "hidden",
-});
-
-const closedMixin = (theme) => ({
-    transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up("sm")]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
-    },
-});
-
-/**
- * Style customer drawer header
- */
-const drawerHeader = {
-    styles: {
-        background: "#1976d2",
-        boxShadow:
-            "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
-        borderColor: "#e5e7eb",
-    },
-    img: {
-        styles: { width: "75%" }
-    }
-};
-
-
-/**
- * Style customer sidebar
- */
-const sidebar = {
-    link: {
-        textDecoration: 'none',
-        color: 'black',
-    },
-    menu: {
-        activeLink: {
-            backgroundColor: '#f2eeee',
-        },
-        child: {
-            activeLink: {
-                backgroundColor: '#f7f6f6',
-            },
-        }
-    },
-    listItem: {
-        sx: { display: "block" }
-    },
-    listItemButton: {
-        initialSx: { minHeight: 48, justifyContent: "initial", px: 2.5, },
-        centerSx: { minHeight: 48, justifyContent: "center", px: 2.5, }
-    },
-    listItemIcon: {
-        fixSx: {
-            minWidth: 0,
-            mr: 3,
-            justifyContent: "center",
-        },
-        autoSx: {
-            minWidth: 0,
-            mr: "auto",
-            justifyContent: "center",
-        }
-    }
-};

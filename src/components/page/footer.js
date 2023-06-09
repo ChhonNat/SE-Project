@@ -17,6 +17,7 @@ const FooterComponent = (props) => {
                 justifyContent="center"
                 alignItems="center"
                 columnGap={2}
+                sx={{position: 'fixed', bottom: 0, left: 0, marginBottom: 2}}
             >
                 <Button className="btn-submit" variant="contained" type="submit">
                     <SaveIcon sx={{mr: 0.3}}/>

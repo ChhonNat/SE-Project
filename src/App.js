@@ -1,16 +1,19 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import './App.css';
 
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { isLogin, isLogout } from "./store/authentication/authenticationService";
+import { isLogin } from "./store/authentication/authenticationService";
 import { PRIVATE_ROUTES } from "./routers/private_routes";
-import Layout from './layout/screen_layout';
-import PageContainer from "./components/Layout/page_wrapper";
 import { PUBLIC_ROUTES } from "./routers/public_routes";
+import Navbar from "./components/Layout/navbar";
+import Sidebar from "./components/Layout/sidebar";
+import MainPageComponent from "./components/Layout/page-wrapper";
+
 
 const App = () => {
 
+  const [minSidebar, setMinsidebar] = useState(true);
   const user = useSelector((state) => state.userAuthendicated);
   const dispatch = useDispatch();
 
@@ -39,43 +42,69 @@ const App = () => {
   const PrivateRouters = () => {
     return (
       <>
-        <Layout />
 
+        {/* Navbar component */}
+        <Navbar
+          open={minSidebar}
+          handleSetMinSidebar={() => setMinsidebar(!minSidebar)}
+        />
+
+        {/* Sidebar component */}
+        <Sidebar
+          open={minSidebar}
+          handleMinSidebar={setMinsidebar}
+        />
         {/* All routes */}
         <Suspense fallback={<Loading />}>
+
           <Routes>
             {
               PRIVATE_ROUTES && PRIVATE_ROUTES.length && PRIVATE_ROUTES.map((route, index) => (
-                <React.Fragment key={index}>
+
+                < React.Fragment key={index} >
                   {/* Parent routes */}
-                  <Route path={route?.path} element={<PageContainer layout={route?.component} />} key={index} />
+                  < Route path={route?.path}
+                    element={
+                      <MainPageComponent open={minSidebar} outlet={route.component} />
+                    }
+                    key={index} />
 
                   {/* Child routes */}
                   {route?.children?.length && route?.children.map((childRoute, childIndex) => (
 
                     <Route path={route?.path} key={index}>
                       {/* Child route components */}
-                      <Route path={childRoute?.path} element={<PageContainer layout={childRoute?.component} />} key={childIndex} />
+                      <Route
+                        path={childRoute?.path}
+                        element={
+                          <MainPageComponent open={minSidebar} outlet={childRoute.component} />
+                        }
+                        key={childIndex}
+                      />
 
                       {/* Child route child route components */}
                       {
                         childRoute?.children?.length && childRoute?.children?.map((childChildRoute, childChildRouteIndex) => (
 
                           <Route path={route?.path + childRoute?.path} key={childChildRouteIndex}>
-                            <Route path={childChildRoute?.path} element={<PageContainer layout={childChildRoute?.component} />} key={childChildRouteIndex} />
+                            <Route path={childChildRoute?.path}
+                              element={
+                                <MainPageComponent open={minSidebar} outlet={childChildRoute.component} />
+                              }
+                              key={childChildRouteIndex}
+                            />
                           </Route>
                         ))
                       }
                     </Route>
-
                   ))}
-
                 </React.Fragment>
 
               ))
             }
           </Routes>
-        </Suspense>
+
+        </Suspense >
       </>
     );
   };
