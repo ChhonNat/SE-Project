@@ -18,9 +18,18 @@ const business = {
     limit: 20,
     search: '',
     status: ''
+};
+
+const candidate = {
+    start:0,
+    length:10,
+    searchValue:"Dydy",
+    orderColumn:"id",
+    ordinal:"asc"
 }
 
 export const filter = {
+    candidate,
     department,
     position,
     business

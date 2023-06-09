@@ -6,38 +6,35 @@ const tblCandidate = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'firstName', label: 'First Name', minWidth: 110
+        id: 'firstName', label: 'First Name', sqlField: 'can.first_name'
     },
     {
-        id: 'lastName', label: 'Last Name', minWidth: 110
+        id: 'lastName', label: 'Last Name', sqlField: 'can.last_name'
     },
     {
-        id: 'gender', label: 'Gender'
+        id: 'gender', label: 'Gender', sqlField: 'can.gender'
     },
     {
-        id: 'phoneNumber', label: 'Phone Number', minWidth: 130
+        id: 'phoneNumber', label: 'Phone Number', sqlField: 'can.phone_number'
     },
     {
-        id: 'email', label: 'Email', minWidth: 130
+        id: 'email', label: 'Email', sqlField: 'can.email'
     },
     {
-        id: 'positionName', label: 'Position'
+        id: 'positionName', label: 'Position', sqlField: 'pos.name'
     },
     {
-        id: 'departmentName', label: 'Department',
+        id: 'departmentName', label: 'Department', sqlField: 'dep.name'
     },
     {
-        id: 'businessName', label: 'Business'
+        id: 'businessName', label: 'Business', sqlField: 'bus.name'
     },
     {
-        id: 'location', label: 'Location'
+        id: 'appliedLocationName', label: 'Location', sqlField: 'appl.name'
     },
     {
-        id: 'shortListDate', label: 'Short List Date', minWidth: 130
+        id: 'shortListDate', label: 'Short List Date', sqlField: 'can.short_list_date'
     },
-    {
-        id: 'recruiterName', label: 'Recruiter'
-    }
 ];
 
 /***
@@ -87,10 +84,10 @@ const tblInterview = [
  */
 const tblBusiness = [
     {
-        id: 'index', label: 'No.', 
+        id: 'index', label: 'No.',
     },
     {
-        id: 'name', label: 'Name', 
+        id: 'name', label: 'Name',
     },
     {
         id: 'description', label: 'Description',
@@ -102,10 +99,10 @@ const tblBusiness = [
  */
 const tblDepartment = [
     {
-        id: 'index', label: 'No.', 
+        id: 'index', label: 'No.',
     },
     {
-        id: 'name', label: 'Name', 
+        id: 'name', label: 'Name',
     },
     {
         id: 'description', label: 'Description',
@@ -117,10 +114,10 @@ const tblDepartment = [
  */
 const tblPosition = [
     {
-        id: 'index', label: 'No.', 
+        id: 'index', label: 'No.',
     },
     {
-        id: 'name', label: 'Name', 
+        id: 'name', label: 'Name',
     },
     {
         id: 'description', label: 'Description',
@@ -132,10 +129,10 @@ const tblPosition = [
  */
 const tblReceivingCategory = [
     {
-        id: 'index', label: 'No.', 
+        id: 'index', label: 'No.',
     },
     {
-        id: 'name', label: 'Name', 
+        id: 'name', label: 'Name',
     },
     {
         id: 'description', label: 'Description',
@@ -147,10 +144,10 @@ const tblReceivingCategory = [
  */
 const tblRecruiter = [
     {
-        id: 'index', label: 'No.', 
+        id: 'index', label: 'No.',
     },
     {
-        id: 'first_name', label: 'First Name', 
+        id: 'first_name', label: 'First Name',
     },
     {
         id: 'last_name', label: 'Last Name',

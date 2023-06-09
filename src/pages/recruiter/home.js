@@ -12,6 +12,7 @@ const HomeRecruiter = () => {
                 headerColumns={TABLE_CONFIG.tblRecruiter}
                 requestToEndPoint={API_URL.recruiter.get}
                 buttonActions={SCREEN_URL.settings.recruiter}
+                useTableActions={{create: true, edit: true, delete: true, search: true}}
             />
         </>
     )

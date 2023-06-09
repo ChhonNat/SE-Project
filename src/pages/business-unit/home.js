@@ -12,6 +12,7 @@ const HomeBusinessUnit = () => {
                 headerColumns={TABLE_CONFIG.tblBusiness}
                 requestToEndPoint={API_URL.business.get}
                 buttonActions={SCREEN_URL.settings.business}
+                useTableActions={{create: true, edit: true, delete: true, search: true}}
             />
         </>
     )

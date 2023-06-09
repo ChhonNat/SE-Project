@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,6 +7,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 
 import _useHttp from '../../hooks/_http';
 import { HTTP_METHODS } from '../../constants/http_method';
@@ -25,20 +27,31 @@ const TableComponent = (props) => {
      * Custom body columns from called component
      * Custom request endpoint from called component
      */
-    const { headerColumns, useColumns, requestToEndPoint, buttonActions } = props || {};
+    const { headerColumns, useColumns, requestToEndPoint, buttonActions, useTableActions, postData } = props || {};
 
     const { data, loading, error, sendRequest } = _useHttp();
     const [bodyColumns, setBodyColumns] = useState(useColumns);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
+
+    /**
+     * Get dynamic screen height
+     */
+    const screenHeight = useRef(window.innerHeight);
+    const [autoHeighScreen, setAutoHeighScreen] = useState(500);
+    useEffect(() => {
+      setAutoHeighScreen(screenHeight?.current - 310);
+    },[screenHeight?.current])
+
     /**
      * Dynamic load data to display in table
      */
     useEffect(() => {
         if (requestToEndPoint) {
+            return;
             const fetchData = async () => {
-                await sendRequest(requestToEndPoint, HTTP_METHODS.get);
+                await sendRequest(requestToEndPoint, HTTP_METHODS.post, postData);
             };
             fetchData();
         }
@@ -50,6 +63,7 @@ const TableComponent = (props) => {
     useEffect(() => {
 
         useColumns && useColumns.length ? setBodyColumns(useColumns) : data?.length && !loading ? setBodyColumns(data) : setBodyColumns([]);
+
     }, [data, loading, useColumns]);
 
     /**
@@ -71,12 +85,12 @@ const TableComponent = (props) => {
         <>
 
             {/* Header action component */}
-            <HeaderActionComponent buttonActions={buttonActions} />
+            <HeaderActionComponent buttonActions={buttonActions} useActions={useTableActions} />
 
             {/* Table */}
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer sx={{ maxHeight: 500 }}>
-                    <Table stickyHeader aria-label="sticky table">
+                <TableContainer sx={{ maxHeight: autoHeighScreen }}>
+                    <Table stickyHeader aria-label="sticky table" size='small'>
                         {/* Table header */}
                         <TableHead>
                             <TableRow>
@@ -89,6 +103,19 @@ const TableComponent = (props) => {
                                         {column?.label}
                                     </TableCell>
                                 ))}
+
+                                {
+                                   useTableActions && Object.values(useTableActions || {}).length ?
+                                        <TableCell
+                                            align={'center'}
+                                            style={{ fontWeight: 'bold', fontSize: 13, fontFamily: 'inherit' }}
+                                        >
+                                            Actions
+                                        </TableCell>
+                                        :
+                                        <></>
+                                }
+
                             </TableRow>
                         </TableHead>
 
@@ -129,6 +156,18 @@ const TableComponent = (props) => {
                                                                 </TableCell>
                                                             );
                                                         })}
+
+                                                        {
+                                                            Object.values(useTableActions || {}).length ?
+                                                                (
+                                                                    <TableCell align={'center'} sx={{ fontSize: 13, fontFamily: 'inherit' }}>
+                                                                        {useTableActions.edit && <BorderColorOutlinedIcon color='primary' fontSize='small'/>}
+                                                                        {useTableActions.delete && <DeleteOutlineOutlinedIcon color='error' fontSize='small'/>}
+                                                                    </TableCell>
+                                                                )
+                                                                :
+                                                                <></>
+                                                        }
                                                     </TableRow>
                                                 );
                                             })
