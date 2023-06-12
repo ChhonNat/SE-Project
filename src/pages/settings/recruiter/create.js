@@ -1,10 +1,10 @@
 import React from "react";
 import { TextField, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
-import FooterComponent from "../../components/Page/footer";
-import { SCREEN_URL } from "../../constants/screen_url";
+import FooterComponent from "../../../components/Page/footer";
+import { SCREEN_URL } from "../../../constants/screen_url";
 
-const CreateNewReceivingCategory = () => {
+const CreateNewRecruiter = () => {
     return (
         <>
             <Box sx={{ width: '100%' }} component="form">
@@ -34,10 +34,10 @@ const CreateNewReceivingCategory = () => {
                 </Grid>
 
                 {/* Footer Page */}
-                <FooterComponent buttonActions={SCREEN_URL.settings.receivingCategory} />
+                <FooterComponent buttonActions={SCREEN_URL.settings.recruiter} />
             </Box>
         </>
     )
 };
 
-export default CreateNewReceivingCategory;
+export default CreateNewRecruiter;

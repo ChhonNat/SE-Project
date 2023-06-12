@@ -62,7 +62,7 @@ const NavbarComponent = ({ open, handleSetMinSidebar }) => {
                             }}
                         >
                             {
-                                open ? <ChevronLeftIcon /> : <MenuIcon />
+                                open ? <ChevronLeftIcon /> : <ChevronRightIcon />
                             }
                         </IconButton>
 

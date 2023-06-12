@@ -58,21 +58,12 @@ export default function BasicTextFields() {
   const columnShortlistRe = ["Pass", "Fail"];
   const columnHeadDepa = ["Tang Sam Eng", "Eav Huy", "Sam Engleang"];
 
-  // const [firstName, setUserfirstName] = useState("");
 
   return (
     <Box
-      // style={{
-      //   marginTop: "6%",
-      //   width: "81%",
-      //   float: "right",
-      // }}
-      // component="form"
       sx={{
         "& > :not(style)": { m: 1, width: "25ch" },
       }}
-      // noValidate
-      // autoComplete="off"
     >
       <Grid xs={6} style={{ border: "none" }}>
         Interview Form

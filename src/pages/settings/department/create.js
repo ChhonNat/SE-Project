@@ -1,8 +1,8 @@
 import React from "react";
 import { TextField, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
-import FooterComponent from "../../components/Page/footer";
-import { SCREEN_URL } from "../../constants/screen_url";
+import FooterComponent from "../../../components/Page/footer";
+import { SCREEN_URL } from "../../../constants/screen_url";
 
 const CreateNewDepartment = () => {
 

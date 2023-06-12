@@ -6,34 +6,31 @@ const tblCandidate = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'firstName', label: 'First Name', sqlField: 'can.first_name'
-    },
-    {
-        id: 'lastName', label: 'Last Name', sqlField: 'can.last_name'
+        id: 'fullName', label: 'Candidate Name', sqlField: 'can.first_name'
     },
     {
         id: 'gender', label: 'Gender', sqlField: 'can.gender'
     },
     {
-        id: 'phoneNumber', label: 'Phone Number', sqlField: 'can.phone_number'
+        id: 'phoneNumber', label: 'Phone', sqlField: 'can.phone_number'
     },
     {
         id: 'email', label: 'Email', sqlField: 'can.email'
     },
     {
-        id: 'positionName', label: 'Position', sqlField: 'pos.name'
+        id: 'appliedPositionName', label: 'Position', sqlField: 'pos.name'
     },
     {
-        id: 'departmentName', label: 'Department', sqlField: 'dep.name'
+        id: 'createdAt', type: 'date', label: 'Created At'
     },
     {
-        id: 'businessName', label: 'Business', sqlField: 'bus.name'
+        id: 'updatedAt', type: 'date', label: 'Updated At'
     },
     {
-        id: 'appliedLocationName', label: 'Location', sqlField: 'appl.name'
+        id: 'shortListDate', type: 'date', label: 'Short List Date', sqlField: 'can.short_list_date'
     },
     {
-        id: 'shortListDate', label: 'Short List Date', sqlField: 'can.short_list_date'
+        id: 'action', label: 'Actions',
     },
 ];
 
@@ -45,37 +42,83 @@ const tblInterview = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'firstName', label: 'First Name', minWidth: 110
+        id: 'candidateName', label: 'Candidate Name'
     },
     {
-        id: 'lastName', label: 'Last Name', minWidth: 110
+        id: 'appliedPositionName', label: 'Apply Position'
     },
     {
-        id: 'gender', label: 'Gender'
+        id: 'headDepartmentName', label: 'Head Department'
     },
     {
-        id: 'phoneNumber', label: 'Phone Number', minWidth: 130
+        id: 'interviewDate', type: 'date', label: 'Interview Date'
     },
     {
-        id: 'email', label: 'Email'
+        id: 'interviewResult', label: 'Result', badge: true, badgeColor: { Passed: 'green', Failed: 'red' }
     },
     {
-        id: 'departmentName', label: 'Department',
+        id: 'createdAt', type: 'date', label: 'Created At'
     },
     {
-        id: 'interviewDate', label: 'Interview Date'
+        id: 'updatedAt', type: 'date', label: 'Updated At'
     },
     {
-        id: 'interviewResultName', label: 'Result'
+        id: 'createdBy', label: 'Created By'
     },
     {
-        id: 'positionName', label: 'Position Offer', minWidth: 130
+        id: 'action', label: 'Actions',
+    },
+];
+
+
+/***
+ * Accessment Table
+ */
+const tblAccessment = [
+    {
+        id: 'index', label: 'No.'
     },
     {
-        id: 'salaryOffer', label: 'Salary Offer'
+        id: 'candidateName', label: 'Name'
     },
     {
-        id: 'joinDate', label: 'Join Date'
+        id: 'offerPositionName', label: 'Offer Position'
+    },
+    {
+        id: 'offerSalary', label: 'Offer Salary ($)'
+    },
+    {
+        id: 'headDepartmentName', label: 'Head Department'
+    },
+    {
+        id: 'createdAt', type: 'date', label: 'Created At'
+    },
+    {
+        id: 'updatedAt', type: 'date', label: 'Updated At'
+    },
+    {
+        id: 'createdBy', label: 'Created By'
+    }
+];
+
+/**
+ * Hire Table
+ */
+const tblHire = [
+    {
+        id: 'index', label: 'No.'
+    },
+    {
+        id: 'candidateName', label: 'Candidate Name'
+    },
+    {
+        id: 'createdAt', type: 'date', label: 'Created At'
+    },
+    {
+        id: 'updatedAt', type: 'date', label: 'Updated At'
+    },
+    {
+        id: 'createdBy', label: 'Created By'
     }
 ];
 
@@ -102,11 +145,23 @@ const tblDepartment = [
         id: 'index', label: 'No.',
     },
     {
-        id: 'name', label: 'Name',
+        id: 'name', label: 'Department Name',
     },
     {
         id: 'description', label: 'Description',
-    }
+    },
+    {
+        id: 'createdAt', label: 'Created At',
+    },
+    {
+        id: 'updatedAt', label: 'Updated At',
+    },
+    {
+        id: 'createdBy', label: 'Created By',
+    },
+    {
+        id: 'action', label: 'Actions'
+    },
 ];
 
 /**
@@ -158,6 +213,8 @@ const tblRecruiter = [
 export const TABLE_CONFIG = {
     tblCandidate,
     tblInterview,
+    tblAccessment,
+    tblHire,
     tblBusiness,
     tblDepartment,
     tblPosition,
