@@ -9,7 +9,13 @@ export const API_URL = {
         get: API_VERSION + '/candidate/list-positions'
     },
     department: {
-        get: API_VERSION + '/candidate/list-departments'
+        get: API_VERSION + '/departments/search'
+    },
+    accessment: {
+        get: API_VERSION + '/assessments/search'
+    },
+    hire: {
+        get: API_VERSION + '/hires/search'
     },
     business: {
         get: API_VERSION + '/candidate/list-business-units'
@@ -25,6 +31,6 @@ export const API_URL = {
         create: API_VERSION + '/candidate'
     },
     interview: {
-        get: API_VERSION + '/interview-records/list'
+        get: API_VERSION + '/interviews/search'
     }
 };

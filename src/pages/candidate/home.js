@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import TableComponent from "../../components/Table/table";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
-import { filter } from "../../constants/api_filter";
+import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
+import AsyncTableAction from "../../components/AsyncDataTable/async-table-action";
+import CandidateFormModal from "./form-candidate.modal";
+import CandidateApproveFormModal from "./form-approve-candidate.modal";
 
-import AsyncDatatable from "../../components/AsyncDataTable/async-datatable";
 
 const HomeCandidate = () => {
 
     const [selectedData, setSelectedData] = useState({ open: false, row: {} });
     const [isReload, setIsReload] = useState(false);
+    const [openAddCandidateModal, setOpenAddCandidateModal] = useState(false);
+    const [openEditCandidateModal, setOpenEditCandidateModal] = useState(false);
+    const [openApproveCandidateModal, setOpenApproveCandidateModal] = useState(false);
 
     return (
         <>
@@ -17,18 +21,41 @@ const HomeCandidate = () => {
                 setSelectedData={setSelectedData}
                 asyncURL={API_URL.candidate.get}
                 headers={TABLE_CONFIG.tblCandidate}
-                bannerText="List Candidates"
+                bannerText="List Candidate"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
+                onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
+                useTableActions={{ search: true, create: true, delete: true }}
+                customActions={
+                    <AsyncTableAction 
+                        useActions={{ approveCandidate: true, edit: true, delete: true }} 
+                        onHandleEditEvent={() => setOpenEditCandidateModal(true)}
+                        onHandleApproveCandidateEvent={() => setOpenApproveCandidateModal(true)}
+                    />
+                }
             />
-            {/* <TableComponent
-                headerColumns={TABLE_CONFIG.tblCandidate}
-                requestToEndPoint={API_URL.candidate.get}
-                postData={filter.candidate}
-                useTableActions={{create: true}}
-            /> */}
+
+            {/* Create new candidate form */}
+            <CandidateFormModal
+                modalTitle="New Candidate"
+                openCandidateModal={openAddCandidateModal}
+                onCloseCandidateModal={() => setOpenAddCandidateModal(false)}
+            />
+
+            {/* Edit candidate form */}
+            <CandidateFormModal
+                modalTitle="Edit Candidate"
+                openCandidateModal={openEditCandidateModal}
+                onCloseCandidateModal={() => setOpenEditCandidateModal(false)}
+            />
+
+            {/* Approve candidate form */}
+            <CandidateApproveFormModal 
+                openApproveCandidateModal={openApproveCandidateModal} 
+                onCloseApproveCandidateModal={() => setOpenApproveCandidateModal(false)}
+            />
         </>
     )
 };

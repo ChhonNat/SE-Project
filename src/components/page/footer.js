@@ -1,35 +1,43 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Grid, Button } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
-import DoDisturbIcon from '@mui/icons-material/DoDisturb';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 
 const FooterComponent = (props) => {
 
-    const { buttonActions } = props;
+    const {handleSave, handleCancel, saveButtunType } = props;
 
     return (
         <>
-            <br></br>
             <Grid
                 container
                 direction="row"
-                justifyContent="center"
+                justifyContent="end"
                 alignItems="center"
                 columnGap={2}
-                sx={{position: 'fixed', bottom: 0, left: 0, marginBottom: 2}}
+                paddingX={2}
             >
-                <Button className="btn-submit" variant="contained" type="submit">
-                    <SaveIcon sx={{mr: 0.3}}/>
+
+                <Button
+                    variant="outlined"
+                    // startIcon={<ClearOutlinedIcon />}
+                    color="error"
+                    onClick={handleCancel}
+                >
+                    Cancel
+                </Button>
+
+                <Button
+                    variant="outlined"
+                    // endIcon={<SaveIcon />}
+                    type={saveButtunType || 'button'}
+                    onClick={handleSave}
+                >
                     Save
                 </Button>
-                <Link to={buttonActions?.home}>
-                    <Button className="btn-submit" variant="contained" color="error">
-                        <DoDisturbIcon sx={{mr: 0.3}} />
-                        Cancel
-                    </Button>
-                </Link>
+
             </Grid>
+            <br></br>
         </>
 
     )

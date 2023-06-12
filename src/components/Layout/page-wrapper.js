@@ -31,7 +31,7 @@ const MainPage = styled('main', { shouldForwardProp: (prop) => prop !== 'open' }
                 easing: theme.transitions.easing.easeOut,
                 duration: theme.transitions.duration.enteringScreen,
             }),
-            marginLeft: 60,
+            marginLeft: 85,
         }),
     }),
 );

@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import { TextField, Grid } from "@mui/material";
-import FooterComponent from "../../components/Page/footer";
-import { SCREEN_URL } from "../../constants/screen_url";
+import FooterComponent from "../../../components/Page/footer";
+import { SCREEN_URL } from "../../../constants/screen_url";
 
 const CreateNewBusiness = () => {
     return (
