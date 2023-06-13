@@ -2,7 +2,8 @@ import { lazy } from "react";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import ReplyIcon from '@mui/icons-material/Reply';
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import BusinessIcon from '@mui/icons-material/Business';
@@ -24,26 +25,36 @@ const Interview = {
     home: lazy(() => import('../pages/interview/home')),
     create: lazy(() => import('../pages/interview/create'))
 };
-const BusinessUnit = {
-    home: lazy(() => import('../pages/business-unit/home')),
-    create: lazy(() => import('../pages/business-unit/create'))
+
+const Accessment = {
+    home: lazy(() => import('../pages/accessment/home'))
 };
-const Department = {
-    home: lazy(() => import('../pages/department/home')),
-    create: lazy(() => import('../pages/department/create'))
+const Hire = {
+    home: lazy(() => import('../pages/hire/home'))
 };
-const Position = {
-    home: lazy(() => import('../pages/position/home')),
-    create: lazy(() => import('../pages/position/create'))
-};
-const ReceivingCategory = {
-    home: lazy(() => import('../pages/receiving-category/home')),
-    create: lazy(() => import('../pages/receiving-category/create'))
-};
-const Recruiter = {
-    home: lazy(() => import('../pages/recruiter/home')),
-    create: lazy(() => import('../pages/recruiter/create'))
-};
+const Settings = {
+    businessUnit: {
+        home: lazy(() => import('../pages/settings/business_unit/home')),
+        create: lazy(() => import('../pages/settings/business_unit/home'))
+    },
+    department: {
+        home: lazy(() => import('../pages/settings/department/home')),
+        create: lazy(() => import('../pages/settings/department/create'))
+    },
+    position: {
+        home: lazy(() => import('../pages/settings/position/home')),
+        create: lazy(() => import('../pages/settings/position/create'))
+    },
+    receivingCategory: {
+        home: lazy(() => import('../pages/settings/receiving_category/home')),
+        create: lazy(() => import('../pages/settings/receiving_category/create'))
+    },
+    recruiter: {
+        home: lazy(() => import('../pages/settings/recruiter/home')),
+        create: lazy(() => import('../pages/settings/recruiter/create'))
+    }
+}
+
 
 export const PRIVATE_ROUTES = [
     /** Dashboard */
@@ -64,21 +75,6 @@ export const PRIVATE_ROUTES = [
         component: <Candidate.home />,
         icon: <PeopleAltIcon />,
         isDivider: false,
-        /**Children candidate  */
-        // children: [
-        //     {
-        //         name: "Record",
-        //         path: "record",
-        //         component: <Candidate.home />,
-        //         icon: <InfoIcon />
-        //     },
-        //     {
-        //         name: "Form",
-        //         path: "form",
-        //         component: <Candidate.create />,
-        //         icon: <FormatAlignJustifyIcon />
-        //     }
-        // ]
     },
     /**Interview */
     {
@@ -87,39 +83,28 @@ export const PRIVATE_ROUTES = [
         component: <Interview.home />,
         icon: <RecordVoiceOverIcon />,
         isDivider: false,
-        /**Interview interview */
-        // children: [
-           
-        //     {
-        //         name: "Record",
-        //         path: "record",
-        //         component: <Interview.home />,
-        //         icon: <FormatListNumberedIcon />
-        //     },
-        //     {
-        //         name: "Form",
-        //         path: "form",
-        //         component: <Interview.create />,
-        //         icon: <FormatAlignJustifyIcon />
-        //     }
-        // ]
+    },
+    /**Assessment */
+    {
+        name: "Assessments",
+        path: "/assessment",
+        component: <Accessment.home />,
+        icon: <PersonSearchIcon />,
     },
     /**Replies */
     {
-        name: "Replies",
-        path: "/reply",
-        icon: <ReplyIcon />,
+        name: "Hires",
+        path: "/hire",
+        component: <Hire.home />,
+        icon: <ChecklistIcon />,
         isDivider: false,
-        children: [
-
-        ]
     },
     /**Reports */
     {
         name: "Reports",
         path: "/report",
         icon: <AssessmentIcon />,
-        isDivider: false,
+        isDivider: true,
         children: [
 
         ]
@@ -136,78 +121,44 @@ export const PRIVATE_ROUTES = [
             {
                 name: "Business",
                 path: "business",
-                component: <BusinessUnit.home />,
+                component: <Settings.businessUnit.home />,
                 icon: <BusinessIcon />,
-                /**Children business */
-                children: [
-                    {
-                        name: "Create Business",
-                        path: "create",
-                        component: <BusinessUnit.create />,
-                        icon: null,
-                    }
-                ]
             },
             /**Department */
             {
                 name: "Department",
                 path: "department",
-                component: <Department.home />,
+                component: <Settings.department.home />,
                 icon: <ApartmentIcon />,
-                /**Children department */
-                children: [
-                    {
-                        name: "Create Department",
-                        path: "create",
-                        component: <Department.create />,
-                        icon: null
-                    }
-                ]
             },
             /**Position */
             {
                 name: "Position",
                 path: "position",
-                component: <Position.home />,
+                component: <Settings.position.home />,
                 icon: <AirlineSeatReclineNormalIcon />,
-                /**Children position */
-                children: [
-                    {
-                        name: "Create Position",
-                        path: "create",
-                        component: <Position.create />
-                    }
-                ]
             },
             /**Receive category */
             {
                 name: "Receive Category",
                 path: "receiving-category",
-                component: <ReceivingCategory.home />,
+                component: <Settings.receivingCategory.home />,
                 icon: <CallReceivedIcon />,
-                /**Children receive category */
-                children: [
-                    {
-                        name: "Create Receiving Category",
-                        path: "create",
-                        component: <ReceivingCategory.create />
-                    }
-                ]
             },
             /**Recruiter */
             {
                 name: "Recruiter",
                 path: "recruiter",
-                component: <Recruiter.home />,
+                component: <Settings.recruiter.home />,
                 icon: <SwitchAccountIcon />,
                 /**Children recruiter */
-                children: [
-                    {
-                        name: "Create New Recruiter",
-                        path: "create",
-                        component: <Recruiter.create />
-                    }
-                ]
+                // children: [
+                //     {
+                //         name: "Create New Recruiter",
+                //         path: "create",
+                //         component: <Recruiter.create />
+                //     }
+                // ]
             }
         ]
     }

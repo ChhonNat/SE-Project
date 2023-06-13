@@ -13,10 +13,12 @@ import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 import uuid from 'react-uuid';
 import _useHttp from '../../hooks/_http';
-import { Skeleton, Typography } from '@mui/material';
+import { Divider, Skeleton, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 
-import ToolBar from './aync-tool-bar';
+import ToolBar from './async-tool-bar';
+import Moment from 'react-moment';
+import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined';
 
 /**
  * Style Table Header
@@ -117,7 +119,8 @@ const TableRows = ({
   handleClick,
   headers,
   checkColumn,
-  pageSize
+  pageSize,
+  customActions
 }) => {
 
   return displayRecords.map((row, index) => {
@@ -135,38 +138,91 @@ const TableRows = ({
         selected={isItemSelected}
       >
 
-        {headers?.length ? headers.map((head) => {
+        {headers?.length ?
+          headers.map((head) => {
 
-          const showIndex = head.id === 'index';
-          const visible = head.visible !== undefined ? head.visible : true;
+            /**
+             * Show ranking index
+             */
+            const showIndex = head?.id === 'index';
 
-          const Row = () => {
+            /**
+             * Get header data type date => convert from unix date to IOS date
+             */
+            const typeDate = head?.type === 'date';
 
-            if (head.isHeader) {
-              return (
-                <TableCell
-                  component="th"
-                  id={labelId}
-                  scope="row"
-                  padding="none"
-                  key={uuid()}
-                  align="center"
-                  sx={{ '&.MuiTableCell-root': { display: visible ? 'table-cell' : 'none' }, fontSize: 13 }}
-                >
-                  {row[head.id]}
-                </TableCell>
-              );
-            } else {
+            /**
+             * Get header type action display custom template action in table
+             */
+            const isAction = head?.id === 'action';
 
-              return !head?.Render ?
-                <TableCell align={head.align} key={uuid()} sx={{ fontSize: 13 }}>{showIndex ? (index + 1) : row[head.id]}</TableCell>
-                :
-                <TableCell align={head.align} key={uuid()} sx={{ fontSize: 13 }}> {head.Render(row[head.id], row)}</TableCell>
-            }
-          };
+            /**
+             * Get header type badge display badge style in table
+             */
+            const isBadge = head?.badge ? true : false;
 
-          return <Row key={uuid()} />;
-        })
+            const visible = head.visible !== undefined ? head.visible : true;
+
+            const Row = () => {
+
+              if (head.isHeader) {
+                return (
+                  <TableCell
+                    component="th"
+                    id={labelId}
+                    scope="row"
+                    padding="none"
+                    key={uuid()}
+                    align="center"
+                    sx={{ '&.MuiTableCell-root': { display: visible ? 'table-cell' : 'none' }, fontSize: 13 }}
+                  >
+                    {row[head.id]}
+                  </TableCell>
+                );
+              } else {
+
+                return !head?.Render ?
+                  <TableCell align={head.align} key={uuid()} sx={{ fontSize: 13 }}>
+                    {/* Use table index */}
+                    {showIndex && (index + 1)}
+                    {/* Use table date */}
+                    {typeDate && <Moment format="DD-MMM-YYYY hh:mm A">{row[head.id]}</Moment>}
+                    {/* Use normal field */}
+                    {!showIndex && !typeDate && (!isBadge && row[head.id] || '-' )}
+                    {/* Use badge style */}
+                    {
+                      isBadge &&
+                      <Typography variant="h6" id="tableTitle" component="div"
+                        sx={{
+                          background: '#f2eeee',
+                          paddingLeft: 2,
+                          paddingRight: 2,
+                          borderRadius: 2,
+                          fontWeight: 'bold',
+                          width: 'max-content',
+                          fontSize: 14,
+                          color: head?.badgeColor[row['interviewResult']],
+                        }}
+                      > 
+                        {row[head.id] || '-'}
+                      </Typography>
+                    }
+                    {/* Custom button actions */}
+                    {isAction && customActions}
+                  </TableCell>
+                  :
+                  <TableCell
+                    align={head.align}
+                    key={uuid()}
+                    sx={{ fontSize: 13 }}>
+                    {head.Render(row[head.id], row)}
+                  </TableCell>
+              }
+
+            };
+
+            return <Row key={uuid()} />;
+          })
           :
           <></>
         }
@@ -199,9 +255,10 @@ const AsyncDatatable = (props) => {
     setSelectedData,
     asyncURL,
     headers,
-    hideAdd = false,
-    isReloadData = false
-
+    isReloadData = false,
+    onHandleAddNewEvent,
+    useTableActions,
+    customActions
   } = props;
 
   const [order, setOrder] = useState(ordinal);
@@ -314,6 +371,8 @@ const AsyncDatatable = (props) => {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
+  console.log('rows', rows);
+
   return (
     <Box
       sx={{
@@ -335,12 +394,15 @@ const AsyncDatatable = (props) => {
           numSelected={0}
           dense={dense}
           handleChangeDense={handleChangeDense}
+          handleAddNewEvent={onHandleAddNewEvent}
           title={bannerText}
           searchPlaceHolder={searchPlaceHolder}
           setSearchText={setSearchText}
           searchText={searchText}
-          hideAdd={hideAdd}
+          useActions={useTableActions}
         />
+
+        <Divider />
 
         <TableContainer>
           <Table
@@ -355,12 +417,11 @@ const AsyncDatatable = (props) => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows ? 0 : rows.length}
+              rowCount={rows ? 0 : rows?.length}
               headers={headers}
             />
 
             <TableBody>
-
               {loading ? Array(rowsPerPage).fill(null).map(() => (
 
                 <TableRow key={uuid()} style={{ height: dense ? 33 : 53 }}>
@@ -391,20 +452,21 @@ const AsyncDatatable = (props) => {
                     headers={headers}
                     checkColumn={checkColumn}
                     pageSize={rowsPerPage}
+                    customActions={customActions}
                   />
                   {
 
-                    (!error && rows.length === 0) ? (
+                    (!error && rows?.length === 0) ? (
                       <TableRow
                         style={{
-                          height: (dense ? 33 : 53) * 2,
+                          height: (dense ? 20 : 33) * 2,
                         }}
                       >
                         <TableCell
-                          colSpan={headers.length + 1}
+                          colSpan={headers?.length + 1}
                           sx={{ textAlign: 'center' }}
                         >
-                          <Typography variant="error">There are no records display</Typography>
+                          <Typography variant="error">Data Empty...!</Typography>
                         </TableCell>
                       </TableRow>
                     ) : ""
@@ -416,7 +478,7 @@ const AsyncDatatable = (props) => {
                       }}
                     >
                       <TableCell
-                        colSpan={headers.length + 1}
+                        colSpan={headers?.length + 1}
                         sx={{ textAlign: 'center' }}
                       >
                         <Typography variant="error">{error}</Typography>

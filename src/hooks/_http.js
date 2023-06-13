@@ -35,7 +35,7 @@ const _useHttp = () => {
     const user = useSelector(state => state.user);
 
     const [httpState, dispatchHttp] = useReducer(_httpReducer, {
-        loading: false,
+        loading: true,
         error: null,
         data: null,
     });
@@ -69,8 +69,6 @@ const _useHttp = () => {
         * CASE: send request method == 'POST'
         */
         if (method === 'POST') {
-
-            console.log(url);
 
             await axiosAPI.post(url, postData)
                 .then(function (result) {
