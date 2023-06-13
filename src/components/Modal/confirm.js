@@ -17,7 +17,7 @@ const ConfirmModal = (props) => {
             <DialogTitle>{"Delete"}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    Are you sure you want to delete this candidate?
+                    Are you sure you want to delete this record?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

@@ -186,7 +186,7 @@ const TableRows = ({
                     {/* Use table index */}
                     {showIndex && (index + 1)}
                     {/* Use table date */}
-                    {typeDate && <Moment format="DD-MMM-YYYY hh:mm A">{row[head.id]}</Moment>}
+                    {typeDate ? row[head.id] ?  <Moment format="DD-MMM-YYYY hh:mm A">{row[head.id]}</Moment> : '-' : ''}
                     {/* Use normal field */}
                     {!showIndex && !typeDate && (!isBadge && row[head.id] || '-' )}
                     {/* Use badge style */}

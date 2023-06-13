@@ -1,4 +1,19 @@
-
+/** proof of user working on data
+ */
+const proof = [
+    {
+        id: 'createdAt', type: 'date', label: 'Created At',
+    },
+    {
+        id: 'createdBy', label: 'Created By',
+    },
+    {
+        id: 'updatedAt', type: 'date', label: 'Updated At',
+    },
+    {
+        id: 'updatedBy', label: 'Updated By'
+    },
+];
 /***
  * Candidate Table
  */
@@ -24,12 +39,7 @@ const tblCandidate = [
     {
         id: 'shortListDate', type: 'date', label: 'Short List Date', sqlField: 'can.short_list_date'
     },
-    {
-        id: 'createdAt', type: 'date', label: 'Created At'
-    },
-    {
-        id: 'updatedAt', type: 'date', label: 'Updated At'
-    },
+    ...proof,
     {
         id: 'action', label: 'Actions',
     },
@@ -57,15 +67,7 @@ const tblInterview = [
     {
         id: 'interviewResult', label: 'Result', badge: true, badgeColor: { Passed: 'green', Failed: 'red' }
     },
-    {
-        id: 'createdAt', type: 'date', label: 'Created At'
-    },
-    {
-        id: 'updatedAt', type: 'date', label: 'Updated At'
-    },
-    {
-        id: 'createdBy', label: 'Created By'
-    },
+    ...proof,
     {
         id: 'action', label: 'Actions',
     },
@@ -91,12 +93,7 @@ const tblAccessment = [
     {
         id: 'headDepartmentName', label: 'Head Department'
     },
-    {
-        id: 'createdAt', type: 'date', label: 'Created At'
-    },
-    {
-        id: 'updatedAt', type: 'date', label: 'Updated At'
-    },
+    ...proof,
     {
         id: 'createdBy', label: 'Created By'
     }
@@ -112,14 +109,9 @@ const tblHire = [
     {
         id: 'candidateName', label: 'Candidate Name'
     },
+    ...proof,
     {
-        id: 'createdAt', type: 'date', label: 'Created At'
-    },
-    {
-        id: 'updatedAt', type: 'date', label: 'Updated At'
-    },
-    {
-        id: 'createdBy', label: 'Created By'
+        id: 'action', label: 'Actions'
     }
 ];
 
@@ -136,15 +128,7 @@ const tblPosition = [
     {
         id: 'description', label: 'Description',
     },
-    {
-        id: 'createdAt', label: 'Created At',
-    },
-    {
-        id: 'updatedAt', label: 'Updated At',
-    },
-    {
-        id: 'createdBy', label: 'Created By',
-    },
+    ...proof,
     {
         id: 'action', label: 'Actions'
     },
@@ -158,20 +142,15 @@ const tblRecruiter = [
         id: 'index', label: 'No.',
     },
     {
+        id: 'cardId', label: 'Card ID'
+    },
+    {
         id: 'firstName', label: 'First Name',
     },
     {
         id: 'lastName', label: 'Last Name',
     },
-    {
-        id: 'createdAt', label: 'Created At',
-    },
-    {
-        id: 'updatedAt', label: 'Updated At',
-    },
-    {
-        id: 'createdBy', label: 'Created By',
-    },
+    ...proof,
     {
         id: 'action', label: 'Actions'
     },
@@ -190,15 +169,7 @@ const tblDepartment = [
     {
         id: 'description', label: 'Description',
     },
-    {
-        id: 'createdAt', label: 'Created At',
-    },
-    {
-        id: 'updatedAt', label: 'Updated At',
-    },
-    {
-        id: 'createdBy', label: 'Created By',
-    },
+    ...proof,
     {
         id: 'action', label: 'Actions'
     },
@@ -230,15 +201,7 @@ const tblHeadDepartment = [
     {
         id: 'departmentName', label: 'Department Name'
     },
-    {
-        id: 'createdAt', label: 'Created At'
-    },
-    {
-        id: 'updatedAt', label: 'Updated At'
-    },
-    {
-        id: 'createdBy', label: 'Created By'
-    },
+    ...proof,
     {
         id: 'action', label: 'Actions'
     }
@@ -258,18 +221,7 @@ const tblBusiness = [
     {
         id: 'description', label: 'Description',
     },
-    {
-        id: 'createdAt', label: 'Created At'
-    },
-    {
-        id: 'createdBy', label: 'Created By'
-    },
-    {
-        id: 'updatedAt', label: 'Updated At'
-    },
-    {
-        id: 'updatedBy', label: 'Updated By'
-    },
+    ...proof,
     {
         id: 'action', label: 'Actions'
     }
@@ -288,18 +240,7 @@ const tblLocation = [
     {
         id: 'description', label: 'Description'
     },
-    {
-        id: 'createdAt', label: 'Created At'
-    },
-    {
-        id: 'createdBy', label: 'Created By'
-    },
-    {
-        id: 'updatedAt', label: 'Updated At'
-    },
-    {
-        id: 'updatedBy', label: 'Updated By'
-    },
+    ...proof,
     {
         id: 'action', label: 'Actions'
     }
@@ -319,6 +260,10 @@ const tblReceivingCategory = [
     },
     {
         id: 'description', label: 'Description',
+    },
+    ...proof,
+    {
+        id: 'action', label: 'Actions'
     }
 ];
 
