@@ -10,10 +10,23 @@ const HomeHire = () => {
 
     return (
         <>
+            {/* 
+                properties::
+                asyncUrl: 'request data url' 
+                headers: 'Table header display in table'
+                bannerText: 'Table title'
+                searchPlaceHolder: 'Search input place holder'
+                ordinal: 'Ordering data in table asc or desc'
+                setOrdinalBy: 'Field use to ordering data in table'
+                isReloadData: 'Listen table reload'
+                useTableActions: 'Enable button actions in table'
+                onHandleAddNewEvent: 'Listen button add new event'
+                customActions: 'Custom button event in table'
+            */}
             <AsyncDatatable
                 asyncURL={API_URL.hire.get}
                 headers={TABLE_CONFIG.tblHire}
-                bannerText="List Hire"
+                bannerText="All Hires"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
@@ -22,8 +35,8 @@ const HomeHire = () => {
                 customActions={
                     <AsyncTableAction
                         useActions={{ approveCandidate: true, edit: true, delete: true }}
-                        // onHandleEditEvent={() => setOpenEditCandidateModal(true)}
-                        // onHandleApproveCandidateEvent={() => setOpenApproveCandidateModal(true)}
+                    // onHandleEditEvent={() => setOpenEditCandidateModal(true)}
+                    // onHandleApproveCandidateEvent={() => setOpenApproveCandidateModal(true)}
                     />
                 }
             />

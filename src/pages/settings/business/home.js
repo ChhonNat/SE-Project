@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { TABLE_CONFIG } from "../../utils/table-config";
-import { API_URL } from "../../constants/api_url";
-import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import AsyncTableAction from "../../components/AsyncDataTable/async-table-action";
+import { API_URL } from "../../../constants/api_url";
+import { TABLE_CONFIG } from "../../../utils/table-config";
+import AsyncTableAction from "../../../components/AsyncDataTable/async-table-action";
+import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 
-const HomeInterview = () => {
+
+const HomeBusiness = () => {
 
     const [isReload, setIsReload] = useState(false);
+    const [openBusinessModal, setOpenBusinessModal] = useState(false);
 
     return (
         <>
-
             {/* 
                 properties::
                 asyncUrl: 'request data url' 
@@ -25,25 +26,23 @@ const HomeInterview = () => {
                 customActions: 'Custom button event in table'
             */}
             <AsyncDatatable
-                asyncURL={API_URL.interview.get}
-                headers={TABLE_CONFIG.tblInterview}
-                bannerText="All Interviews"
+                asyncURL={API_URL.business.get}
+                headers={TABLE_CONFIG.tblBusiness}
+                bannerText="All Businesses"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true }}
+                useTableActions={{ search: true, create: true }}
+                onHandleAddNewEvent={() => setOpenBusinessModal(true)}
                 customActions={
                     <AsyncTableAction
-                        useActions={{ approveCandidate: true, edit: true, delete: true }}
-                    // onHandleEditEvent={() => setOpenEditCandidateModal(true)}
-                    // onHandleApproveCandidateEvent={() => setOpenApproveCandidateModal(true)}
+                        useActions={{ edit: true, delete: true }}
                     />
                 }
             />
-
         </>
     )
-};
+}
 
-export default HomeInterview;
+export default HomeBusiness;

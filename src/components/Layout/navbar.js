@@ -78,6 +78,7 @@ const NavbarComponent = ({ open, handleSetMinSidebar }) => {
                                 size="large"
                                 aria-label="show 4 new mails"
                                 color="inherit"
+                                sx={{display: "none"}}
                             >
                                 <PopupState variant="popover" popupId="demo-popup-popover">
                                     {(popupState) => (
@@ -207,6 +208,7 @@ const NavbarComponent = ({ open, handleSetMinSidebar }) => {
                                 size="large"
                                 aria-label="show 17 new notifications"
                                 color="inherit"
+                                sx={{display: "none"}}
                             >
                                 <PopupState variant="popover" popupId="demo-popup-popover">
                                     {(popupState) => (

@@ -5,11 +5,12 @@ export const API_URL = {
     auth: {
         login: API_VERSION + '/login'
     },
-    position: {
-        get: API_VERSION + '/candidate/list-positions'
+    candidate: {
+        get: API_VERSION + '/candidates/search',
+        create: API_VERSION + '/candidate'
     },
-    department: {
-        get: API_VERSION + '/departments/search'
+    interview: {
+        get: API_VERSION + '/interviews/search'
     },
     accessment: {
         get: API_VERSION + '/assessments/search'
@@ -17,20 +18,28 @@ export const API_URL = {
     hire: {
         get: API_VERSION + '/hires/search'
     },
-    business: {
-        get: API_VERSION + '/candidate/list-business-units'
+    position: {
+        get: API_VERSION + '/positions/search'
     },
+    recruiter: {
+        get: API_VERSION + '/recruiters/search'
+    },
+    department: {
+        get: API_VERSION + '/departments/search'
+    },
+    headDepartment: {
+        get: API_VERSION + '/head-departments/search'
+    },
+
+    business: {
+        get: API_VERSION + '/business-divisions/search'
+    },
+
+    location: {
+        get: API_VERSION + '/locations/search'
+    },
+
     receiveCategory: {
         get: API_VERSION + '/candidate/list-receiving-categories'
     },
-    recruiter: {
-        get: API_VERSION + '/candidate/list-recruiters'
-    },
-    candidate: {
-        get: API_VERSION + '/candidates/search',
-        create: API_VERSION + '/candidate'
-    },
-    interview: {
-        get: API_VERSION + '/interviews/search'
-    }
 };
