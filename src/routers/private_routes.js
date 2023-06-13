@@ -1,4 +1,9 @@
 import { lazy } from "react";
+import React from "react";
+
+/**
+ * MUI icon
+ */
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
@@ -9,18 +14,21 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import BusinessIcon from '@mui/icons-material/Business';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
-import CallReceivedIcon from '@mui/icons-material/CallReceived';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
-import React from "react";
-
+import DomainIcon from '@mui/icons-material/Domain';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import PinDropIcon from '@mui/icons-material/PinDrop';
 /**
- * Import components
+ * Import all page components
  */
 const Dashboard = lazy(() => import('../pages/dashboard/dashboard'));
+
 const Candidate = {
     home: lazy(() => import('../pages/candidate/home')),
     create: lazy(() => import('../pages/candidate/create'))
 };
+
 const Interview = {
     home: lazy(() => import('../pages/interview/home')),
     create: lazy(() => import('../pages/interview/create'))
@@ -29,45 +37,73 @@ const Interview = {
 const Accessment = {
     home: lazy(() => import('../pages/accessment/home'))
 };
+
 const Hire = {
     home: lazy(() => import('../pages/hire/home'))
 };
+
 const Settings = {
-    businessUnit: {
-        home: lazy(() => import('../pages/settings/business_unit/home')),
-        create: lazy(() => import('../pages/settings/business_unit/home'))
-    },
-    department: {
-        home: lazy(() => import('../pages/settings/department/home')),
-        create: lazy(() => import('../pages/settings/department/create'))
-    },
+
     position: {
         home: lazy(() => import('../pages/settings/position/home')),
         create: lazy(() => import('../pages/settings/position/create'))
     },
-    receivingCategory: {
-        home: lazy(() => import('../pages/settings/receiving_category/home')),
-        create: lazy(() => import('../pages/settings/receiving_category/create'))
-    },
+
     recruiter: {
         home: lazy(() => import('../pages/settings/recruiter/home')),
         create: lazy(() => import('../pages/settings/recruiter/create'))
-    }
+    },
+
+    department: {
+        home: lazy(() => import('../pages/settings/department/home')),
+        create: lazy(() => import('../pages/settings/department/create'))
+    },
+
+    headDepartment: {
+        home: lazy(() => import('../pages/settings/head_department/home'))
+    },
+
+    businessUnit: {
+        home: lazy(() => import('../pages/settings/business/home')),
+        create: lazy(() => import('../pages/settings/business/home'))
+    },
+
+    location: {
+        home: lazy(() => import('../pages/settings/location/home'))
+    },
+
+    // receivingCategory: {
+    //     home: lazy(() => import('../pages/settings/receiving_category/home')),
+    //     create: lazy(() => import('../pages/settings/receiving_category/create'))
+    // },
 }
 
 
 export const PRIVATE_ROUTES = [
-    /** Dashboard */
-    {
-        name: "Dashboard",
-        path: "/",
-        component: <Dashboard />,
-        icon: <DashboardIcon />,
-        isDivider: false,
-        children: [
 
-        ]
-    },
+    /** Dashboard */
+    // {
+    //     name: "Dashboard",
+    //     path: "/",
+    //     component: <Dashboard />,
+    //     icon: <DashboardIcon />,
+    //     isDivider: false,
+    //     children: [
+
+    //     ]
+    // },
+
+    /**Reports */
+    // {
+    //     name: "Reports",
+    //     path: "/report",
+    //     icon: <AssessmentIcon />,
+    //     isDivider: true,
+    //     children: [
+
+    //     ]
+    // },
+
     /**Candidate */
     {
         name: "Candidates",
@@ -96,18 +132,8 @@ export const PRIVATE_ROUTES = [
         name: "Hires",
         path: "/hire",
         component: <Hire.home />,
-        icon: <ChecklistIcon />,
+        icon: <HowToRegIcon />,
         isDivider: false,
-    },
-    /**Reports */
-    {
-        name: "Reports",
-        path: "/report",
-        icon: <AssessmentIcon />,
-        isDivider: true,
-        children: [
-
-        ]
     },
     /**Settings */
     {
@@ -117,37 +143,18 @@ export const PRIVATE_ROUTES = [
         isDivider: false,
         /**Children settings */
         children: [
-            /**Business */
-            {
-                name: "Business",
-                path: "business",
-                component: <Settings.businessUnit.home />,
-                icon: <BusinessIcon />,
-            },
-            /**Department */
-            {
-                name: "Department",
-                path: "department",
-                component: <Settings.department.home />,
-                icon: <ApartmentIcon />,
-            },
+
             /**Position */
             {
-                name: "Position",
+                name: "Positions",
                 path: "position",
                 component: <Settings.position.home />,
                 icon: <AirlineSeatReclineNormalIcon />,
             },
-            /**Receive category */
-            {
-                name: "Receive Category",
-                path: "receiving-category",
-                component: <Settings.receivingCategory.home />,
-                icon: <CallReceivedIcon />,
-            },
+
             /**Recruiter */
             {
-                name: "Recruiter",
+                name: "Recruiters",
                 path: "recruiter",
                 component: <Settings.recruiter.home />,
                 icon: <SwitchAccountIcon />,
@@ -159,6 +166,38 @@ export const PRIVATE_ROUTES = [
                 //         component: <Recruiter.create />
                 //     }
                 // ]
+            },
+
+            /**Department */
+            {
+                name: "Departments",
+                path: "department",
+                component: <Settings.department.home />,
+                icon: <ApartmentIcon />,
+            },
+
+            /**Department */
+            {
+                name: "Head Departments",
+                path: "head-department",
+                component: <Settings.headDepartment.home />,
+                icon: <DomainIcon />,
+            },
+
+            /**Business */
+            {
+                name: "Businesses",
+                path: "business",
+                component: <Settings.businessUnit.home />,
+                icon: <MeetingRoomIcon />,
+            },
+
+            /**Location */
+            {
+                name: 'Locations',
+                path: 'location',
+                component: <Settings.location.home />,
+                icon: <PinDropIcon />
             }
         ]
     }

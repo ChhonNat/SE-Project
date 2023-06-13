@@ -9,10 +9,24 @@ const HomeAccessment = () => {
 
     return (
         <>
+            {/* 
+                properties::
+                asyncUrl: 'request data url' 
+                headers: 'Table header display in table'
+                bannerText: 'Table title'
+                searchPlaceHolder: 'Search input place holder'
+                ordinal: 'Ordering data in table asc or desc'
+                setOrdinalBy: 'Field use to ordering data in table'
+                isReloadData: 'Listen table reload'
+                useTableActions: 'Enable button actions in table'
+                onHandleAddNewEvent: 'Listen button add new event'
+                customActions: 'Custom button event in table'
+            */}
+            
             <AsyncDatatable
                 asyncURL={API_URL.accessment.get}
                 headers={TABLE_CONFIG.tblAccessment}
-                bannerText="List Accessment"
+                bannerText="All Accessments"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"

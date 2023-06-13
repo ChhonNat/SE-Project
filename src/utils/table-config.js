@@ -1,3 +1,4 @@
+
 /***
  * Candidate Table
  */
@@ -21,13 +22,13 @@ const tblCandidate = [
         id: 'appliedPositionName', label: 'Position', sqlField: 'pos.name'
     },
     {
+        id: 'shortListDate', type: 'date', label: 'Short List Date', sqlField: 'can.short_list_date'
+    },
+    {
         id: 'createdAt', type: 'date', label: 'Created At'
     },
     {
         id: 'updatedAt', type: 'date', label: 'Updated At'
-    },
-    {
-        id: 'shortListDate', type: 'date', label: 'Short List Date', sqlField: 'can.short_list_date'
     },
     {
         id: 'action', label: 'Actions',
@@ -123,9 +124,9 @@ const tblHire = [
 ];
 
 /**
- * Business Table
+ * Position Table
  */
-const tblBusiness = [
+const tblPosition = [
     {
         id: 'index', label: 'No.',
     },
@@ -134,7 +135,46 @@ const tblBusiness = [
     },
     {
         id: 'description', label: 'Description',
-    }
+    },
+    {
+        id: 'createdAt', label: 'Created At',
+    },
+    {
+        id: 'updatedAt', label: 'Updated At',
+    },
+    {
+        id: 'createdBy', label: 'Created By',
+    },
+    {
+        id: 'action', label: 'Actions'
+    },
+];
+
+/**
+ * Recruiter Table
+ */
+const tblRecruiter = [
+    {
+        id: 'index', label: 'No.',
+    },
+    {
+        id: 'firstName', label: 'First Name',
+    },
+    {
+        id: 'lastName', label: 'Last Name',
+    },
+    {
+        id: 'createdAt', label: 'Created At',
+    },
+    {
+        id: 'updatedAt', label: 'Updated At',
+    },
+    {
+        id: 'createdBy', label: 'Created By',
+    },
+    {
+        id: 'action', label: 'Actions'
+    },
 ];
 
 /**
@@ -165,9 +205,50 @@ const tblDepartment = [
 ];
 
 /**
- * Position Table
+ * Head department table
  */
-const tblPosition = [
+
+const tblHeadDepartment = [
+    {
+        id: 'index', label: 'No.'
+    },
+    {
+        id: 'cardId', label: 'Card ID'
+    },
+    {
+        id: 'firstName', label: 'First Name'
+    },
+    {
+        id: 'lastName', label: 'Last Name'
+    },
+    {
+        id: 'phoneNumber', label: 'Phone Number'
+    },
+    {
+        id: 'positionName', label: 'Position Name'
+    },
+    {
+        id: 'departmentName', label: 'Department Name'
+    },
+    {
+        id: 'createdAt', label: 'Created At'
+    },
+    {
+        id: 'updatedAt', label: 'Updated At'
+    },
+    {
+        id: 'createdBy', label: 'Created By'
+    },
+    {
+        id: 'action', label: 'Actions'
+    }
+];
+
+
+/**
+ * Business Table
+ */
+const tblBusiness = [
     {
         id: 'index', label: 'No.',
     },
@@ -176,8 +257,55 @@ const tblPosition = [
     },
     {
         id: 'description', label: 'Description',
+    },
+    {
+        id: 'createdAt', label: 'Created At'
+    },
+    {
+        id: 'createdBy', label: 'Created By'
+    },
+    {
+        id: 'updatedAt', label: 'Updated At'
+    },
+    {
+        id: 'updatedBy', label: 'Updated By'
+    },
+    {
+        id: 'action', label: 'Actions'
     }
 ];
+
+
+/**Location Table */
+
+const tblLocation = [
+    {
+        id: 'index', label: 'No.'
+    },
+    {
+        id: 'name', label: 'Location Name'
+    },
+    {
+        id: 'description', label: 'Description'
+    },
+    {
+        id: 'createdAt', label: 'Created At'
+    },
+    {
+        id: 'createdBy', label: 'Created By'
+    },
+    {
+        id: 'updatedAt', label: 'Updated At'
+    },
+    {
+        id: 'updatedBy', label: 'Updated By'
+    },
+    {
+        id: 'action', label: 'Actions'
+    }
+];
+
+
 
 /**
  * Receiving Category Table
@@ -194,20 +322,7 @@ const tblReceivingCategory = [
     }
 ];
 
-/**
- * Recruiter Table
- */
-const tblRecruiter = [
-    {
-        id: 'index', label: 'No.',
-    },
-    {
-        id: 'first_name', label: 'First Name',
-    },
-    {
-        id: 'last_name', label: 'Last Name',
-    }
-];
+
 
 
 export const TABLE_CONFIG = {
@@ -217,7 +332,9 @@ export const TABLE_CONFIG = {
     tblHire,
     tblBusiness,
     tblDepartment,
+    tblHeadDepartment,
     tblPosition,
     tblReceivingCategory,
-    tblRecruiter
+    tblRecruiter,
+    tblLocation
 };
