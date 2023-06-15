@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import _useHttp from "../../hooks/_http";
 import { HTTP_METHODS } from "../../constants/http_method";
@@ -59,21 +59,34 @@ const SelectComponent = (props) => {
                 id={id}
                 labelId={id + 'label'}
                 label={label}
-                defaultValue={""}
-                value={value || ""}
+                defaultValue={'select'}
+                value={value ? value : 'select'}
                 onChange={handleOnChange}
             >
-                {   
-                    callToApi && data?.length ? 
-                    data.map((ele, index) => {
-                        return <MenuItem value={returnValueAs ? returnValueAs : ele.id} key={index} >
-                            {ele?.name ? ele?.name : ele?.last_name + " " + ele?.first_name}
-                        </MenuItem>;
-                    }) : customDatas?.length && customDatas.map((ele, index) => {
-                        return <MenuItem value={returnValueAs ? returnValueAs : ele.id} key={index} >
-                            {ele?.name ? ele?.name : ele?.last_name + " " + ele?.first_name}
-                        </MenuItem>;
-                    })
+
+                <MenuItem disabled value="select">
+                    Select
+                </MenuItem>
+
+                {/* data return as:
+                    - id
+                    - if custom field beside id use returnValueAs e.g returnValueAs="name"
+                    - if string array return ele mean return string in array
+                */}
+                {
+                    callToApi ? (
+                        data?.length ? data.map((ele, index) => {
+                            return <MenuItem value={returnValueAs ? returnValueAs : ele?.id || ele} key={index} >
+                                {ele || ele?.name || ele?.fullName ? ele?.name || ele?.fullName || ele : ele?.last_name + " " + ele?.first_name}
+                            </MenuItem>;
+                        }) : <></>
+                    ) : (
+                        customDatas?.length ? customDatas.map((ele, index) => {
+                            return <MenuItem value={returnValueAs ? returnValueAs : ele?.id || ele} key={index} >
+                                {ele || ele?.name || ele?.fullName ? ele?.name || ele?.fullName || ele : ele?.last_name + " " + ele?.first_name}
+                            </MenuItem>;
+                        }) : <></>
+                    )
                 }
             </Select>
             <FormHelperText>{err}</FormHelperText>

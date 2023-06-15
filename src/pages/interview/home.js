@@ -32,14 +32,15 @@ const HomeInterview = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true }}
-                customActions={
-                    <AsyncTableAction
-                        useActions={{ approveCandidate: true, edit: true, delete: true }}
-                    // onHandleEditEvent={() => setOpenEditCandidateModal(true)}
-                    // onHandleApproveCandidateEvent={() => setOpenApproveCandidateModal(true)}
-                    />
-                }
+                useTableActions={{
+                    search: true,
+                    passedInterview: {
+                        field: 'interviewResult',
+                        condition: {
+                            Passed: true, Failed: false
+                        }
+                    }
+                }}
             />
 
         </>

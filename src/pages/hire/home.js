@@ -32,13 +32,13 @@ const HomeHire = () => {
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
                 useTableActions={{ search: true }}
-                customActions={
-                    <AsyncTableAction
-                        useActions={{ approveCandidate: true, edit: true, delete: true }}
-                    // onHandleEditEvent={() => setOpenEditCandidateModal(true)}
-                    // onHandleApproveCandidateEvent={() => setOpenApproveCandidateModal(true)}
-                    />
-                }
+                // customActions={
+                //     <AsyncTableAction
+                //         useActions={{ approveCandidate: true, edit: true, delete: true }}
+                //     // onHandleEditEvent={() => setOpenEditCandidateModal(true)}
+                //     // onHandleApproveCandidateEvent={() => setOpenApproveCandidateModal(true)}
+                //     />
+                // }
             />
         </>
     )

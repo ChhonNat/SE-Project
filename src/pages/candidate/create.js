@@ -264,9 +264,9 @@ export default function CandidateForm() {
             fullWidth
             size="small"
             InputLabelProps={shrinkOpt}
-            {...register("shortListedDate")}
-            error={errors?.shortListedDate}
-            helperText={errors?.shortListedDate?.message}
+            // {...register("shortListedDate")}
+            // error={errors?.shortListedDate}
+            // helperText={errors?.shortListedDate?.message}
           />
         </Grid>
         {/* Input Short List Date */}
@@ -279,9 +279,9 @@ export default function CandidateForm() {
             fullWidth
             size="small"
             InputLabelProps={shrinkOpt}
-            {...register("shortListedDate")}
-            error={errors?.shortListedDate}
-            helperText={errors?.shortListedDate?.message}
+            // {...register("shortListedDate")}
+            // error={errors?.shortListedDate}
+            // helperText={errors?.shortListedDate?.message}
           />
         </Grid>
       </Grid>

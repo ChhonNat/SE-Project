@@ -34,11 +34,11 @@ const HomeLocation = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{ search: true, create: true }}
                 onHandleAddNewEvent={() => setOpenLocationModal(true)}
-                customActions={
-                    <AsyncTableAction
-                        useActions={{ edit: true, delete: true }}
-                    />
-                }
+                // customActions={
+                //     <AsyncTableAction
+                //         useActions={{ edit: true, delete: true }}
+                //     />
+                // }
             />
         </>
     )
