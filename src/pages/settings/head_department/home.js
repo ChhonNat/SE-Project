@@ -35,11 +35,11 @@ const HomeHeadDepartment = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{ search: true, create: true }}
                 onHandleAddNewEvent={() => setOpenHeadDepartmentModal(true)}
-                customActions={
-                    <AsyncTableAction
-                        useActions={{ edit: true, delete: true }}
-                    />
-                }
+                // customActions={
+                //     <AsyncTableAction
+                //         useActions={{ edit: true, delete: true }}
+                //     />
+                // }
             />
         </>
     )

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import AsyncTableAction from "../../components/AsyncDataTable/async-table-action";
 import CandidateFormModal from "./form-candidate.modal";
-import CandidateApproveFormModal from "./form-approve-candidate.modal";
+import CandidateApproveFormModal from "./form-invite-candidate.modal";
+import CandidateReviewFormModal from "./form-review-candidate.modal";
 
 
 const HomeCandidate = () => {
@@ -14,6 +14,28 @@ const HomeCandidate = () => {
     const [openAddCandidateModal, setOpenAddCandidateModal] = useState(false);
     const [openEditCandidateModal, setOpenEditCandidateModal] = useState(false);
     const [openApproveCandidateModal, setOpenApproveCandidateModal] = useState(false);
+    const [openReviewCandidateModal, setOpenReviewCandidateModal] = useState(false);
+    const [editCandidate, setEditCandidate] = useState({});
+
+    // Handle click each candidate to update the info
+    const handleEditCandidate = (candidate) => {
+        setEditCandidate(candidate);
+        setOpenEditCandidateModal(true);
+    };
+
+    // handle click each candidate to update shortlist
+    const handleShortlistCandidate = (candidate) => {
+
+        setEditCandidate(candidate);
+        setOpenApproveCandidateModal(true);
+    };
+
+    //handle review candidate before shortlist
+    const handleReviewCandidate = (candidate) => {
+        setEditCandidate(candidate);
+        setOpenReviewCandidateModal(true);
+    };
+
 
     return (
         <>
@@ -40,15 +62,25 @@ const HomeCandidate = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
-                useTableActions={{ search: true, create: true, delete: true }}
-                customActions={
-                    <AsyncTableAction
-                        useActions={{ approveCandidate: true, edit: true, delete: true }}
-                        onHandleEditEvent={() => setOpenEditCandidateModal(true)}
-                        onHandleApproveCandidateEvent={() => setOpenApproveCandidateModal(true)}
-                    />
+                useTableActions={
+                    {
+                        search: true,
+                        create: true,
+                        delete: true,
+                        edit: true,
+                        approveCandidate: {
+                            field: 'shortListResult',
+                            condition: {
+                                Passed: true, Failed: false
+                            }
+                        },
+                        reviewCandidate: true
+                    }
                 }
+                onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
+                handleApproveEvent={(data) => handleShortlistCandidate(data)}
+                handleEditEvent={(data) => handleEditCandidate(data)}
+                handleReviewEvent={(data) => handleReviewCandidate(data)}
             />
 
             {/* Create new candidate form */}
@@ -61,12 +93,22 @@ const HomeCandidate = () => {
             {/* Edit candidate form */}
             <CandidateFormModal
                 modalTitle="Edit Candidate"
+                candidate={editCandidate}
                 openCandidateModal={openEditCandidateModal}
                 onCloseCandidateModal={() => setOpenEditCandidateModal(false)}
             />
 
+            {/* Review candidate form */}
+            <CandidateReviewFormModal
+                modalTitle="Review Candidate"
+                candidate={editCandidate}
+                openReviewCandidateModal={openReviewCandidateModal}
+                onCloseReviewCandidateModal={() => setOpenReviewCandidateModal(false)}
+            />
+
             {/* Approve candidate form */}
             <CandidateApproveFormModal
+                candidate={editCandidate}
                 openApproveCandidateModal={openApproveCandidateModal}
                 onCloseApproveCandidateModal={() => setOpenApproveCandidateModal(false)}
             />

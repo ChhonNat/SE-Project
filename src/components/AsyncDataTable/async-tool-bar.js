@@ -69,7 +69,14 @@ const AsynTableToolbar = (props) => {
               </Typography>
             ) : (
               <Typography variant="h6" id="tableTitle" component="div"
-                sx={{ background: '#f2eeee', paddingLeft: 2, paddingRight: 2, borderRadius: 2, color: '#1976d2', fontWeight: 'bold' }}
+                sx={{ 
+                  // background: '#f2eeee', 
+                  // paddingLeft: 2, 
+                  // paddingRight: 2, 
+                  // borderRadius: 2, 
+                  color: '#1976d2', 
+                  fontWeight: 'bold' 
+                }}
               >
                 {title}
               </Typography>

@@ -32,7 +32,6 @@ const HomeAccessment = () => {
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
                 useTableActions={{ search: true }}
-                custom
             />
 
         </>

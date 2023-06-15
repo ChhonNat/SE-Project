@@ -2,17 +2,22 @@
  */
 const proof = [
     {
-        id: 'createdAt', type: 'date', label: 'Created At',
+        id: 'createdAt', type: 'date', dateFormat: 'MMM DD, YYYY hh:mm:ss A', label: 'Created At',
     },
     {
         id: 'createdBy', label: 'Created By',
     },
     {
-        id: 'updatedAt', type: 'date', label: 'Updated At',
+        id: 'updatedAt', type: 'date', dateFormat: 'MMM DD, YYYY hh:mm:ss A', label: 'Updated At',
     },
     {
         id: 'updatedBy', label: 'Updated By'
     },
+    {
+        id: 'status', type: 'status',
+        statusColor: { 'Pending': 'orange', 'ACTIVE': 'green' },
+        label: 'Status'
+    }
 ];
 /***
  * Candidate Table
@@ -22,7 +27,7 @@ const tblCandidate = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'fullName', label: 'Candidate Name', sqlField: 'can.first_name'
+        id: 'fullName', label: 'Name', sqlField: 'can.first_name'
     },
     {
         id: 'gender', label: 'Gender', sqlField: 'can.gender'
@@ -37,9 +42,12 @@ const tblCandidate = [
         id: 'appliedPositionName', label: 'Position', sqlField: 'pos.name'
     },
     {
-        id: 'shortListDate', type: 'date', label: 'Short List Date', sqlField: 'can.short_list_date'
+        id: 'shortListDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
     },
     ...proof,
+    {
+        id: 'shortListResult', type: 'status', statusColor:{Passed: 'green', Failed: 'red'}, label: 'Shortlist Result'
+    },
     {
         id: 'action', label: 'Actions',
     },
@@ -53,7 +61,7 @@ const tblInterview = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'candidateName', label: 'Candidate Name'
+        id: 'candidateName', label: 'Name'
     },
     {
         id: 'appliedPositionName', label: 'Apply Position'
@@ -62,14 +70,14 @@ const tblInterview = [
         id: 'headDepartmentName', label: 'Head Department'
     },
     {
-        id: 'interviewDate', type: 'date', label: 'Interview Date'
+        id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'
     },
     {
-        id: 'interviewResult', label: 'Result', badge: true, badgeColor: { Passed: 'green', Failed: 'red' }
+        id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'
     },
     ...proof,
     {
-        id: 'action', label: 'Actions',
+        id: 'action', label: 'Actions'
     },
 ];
 
@@ -107,7 +115,7 @@ const tblHire = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'candidateName', label: 'Candidate Name'
+        id: 'candidateName', label: 'Name'
     },
     ...proof,
     {
@@ -150,6 +158,18 @@ const tblRecruiter = [
     {
         id: 'lastName', label: 'Last Name',
     },
+    {
+        id: 'phoneNumber', label: 'Phone Number'
+    },
+    {
+        id: 'positionName', label: 'Position Name'
+    },
+    {
+        id: 'departmentName', label: 'Department Name'
+    },
+    {
+        id: 'description', label: 'Description'
+    },
     ...proof,
     {
         id: 'action', label: 'Actions'
@@ -164,7 +184,7 @@ const tblDepartment = [
         id: 'index', label: 'No.',
     },
     {
-        id: 'name', label: 'Department Name',
+        id: 'name', label: 'Name',
     },
     {
         id: 'description', label: 'Description',
