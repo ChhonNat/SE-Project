@@ -44,7 +44,7 @@ const tblCandidate = [
     {
         id: 'shortListDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
     },
-    ...proof,
+    // ...proof,
     {
         id: 'shortListResult', type: 'status', statusColor:{Passed: 'green', Failed: 'red'}, label: 'Shortlist Result'
     },
@@ -75,7 +75,7 @@ const tblInterview = [
     {
         id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'
     },
-    ...proof,
+    // ...proof,
     {
         id: 'action', label: 'Actions'
     },

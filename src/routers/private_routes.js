@@ -153,20 +153,20 @@ export const PRIVATE_ROUTES = [
             },
 
             /**Recruiter */
-            {
-                name: "Recruiters",
-                path: "recruiter",
-                component: <Settings.recruiter.home />,
-                icon: <SwitchAccountIcon />,
-                /**Children recruiter */
-                // children: [
-                //     {
-                //         name: "Create New Recruiter",
-                //         path: "create",
-                //         component: <Recruiter.create />
-                //     }
-                // ]
-            },
+            // {
+            //     name: "Recruiters",
+            //     path: "recruiter",
+            //     component: <Settings.recruiter.home />,
+            //     icon: <SwitchAccountIcon />,
+            //     /**Children recruiter */
+            //     // children: [
+            //     //     {
+            //     //         name: "Create New Recruiter",
+            //     //         path: "create",
+            //     //         component: <Recruiter.create />
+            //     //     }
+            //     // ]
+            // },
 
             /**Department */
             {

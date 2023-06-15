@@ -1,5 +1,5 @@
 import axios from "axios";
-import apiLink from "../constants/appCont";
+import apiLink from "../constants/app_cont";
 
 const userLogined = JSON.parse(localStorage.getItem('recruitmentUser'));
 
@@ -20,9 +20,9 @@ const axiosAPI = axios.create({
  * @param {*} params is the OPTIONS submit to API
  * @returns return the response after getted
  */
-const _get = async (endpoint_url, params) => {
+const _get = async (endpoint_url, params, contentType) => {
 
-    return axiosAPI.get(endpoint_url, params)
+    return axiosAPI.get(endpoint_url, params, { headers: { 'Content-Type': contentType ? contentType : 'application/json' } })
 };
 
 
@@ -32,8 +32,8 @@ const _get = async (endpoint_url, params) => {
  * @param {*} params is the DATAS submit to API
  * @returns return the response after updated
  */
-const _post = async (endpoint_url, params) => {
-    return axiosAPI.post(endpoint_url, params);
+const _post = async (endpoint_url, params, contentType) => {
+    return axiosAPI.post(endpoint_url, params, { headers: { 'Content-Type': contentType ? contentType : 'application/json' } });
 };
 
 /**
@@ -42,8 +42,8 @@ const _post = async (endpoint_url, params) => {
  * @param {*} params is option submit to API
  * @returns return the response after deleted
  */
-const _delete = async (endpoint_url, params) => {
-    return axiosAPI.delete(endpoint_url, params);
+const _delete = async (endpoint_url, params, contentType) => {
+    return axiosAPI.delete(endpoint_url, params, { headers: { 'Content-Type': contentType ? contentType : 'application/json' }});
 };
 
 
@@ -53,8 +53,8 @@ const _delete = async (endpoint_url, params) => {
  * @param {*} params is the DATAS submit to API
  * @returns return the response after updated
  */
-const _update = async (endpoint_url, params) => {
-    return axiosAPI.put(endpoint_url,params)
+const _update = async (endpoint_url, params, contentType) => {
+    return axiosAPI.put(endpoint_url, params, { headers: { 'Content-Type': contentType ? contentType : 'application/json' }})
 };
 
 export default axiosAPI;

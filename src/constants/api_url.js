@@ -6,9 +6,9 @@ export const API_URL = {
         login: API_VERSION + '/login'
     },
     candidate: {
-
         get: API_VERSION + '/candidates/search',
         create: API_VERSION + '/candidates',
+        update: API_VERSION + '/candidates/',
 
         lookup: {
             get: API_VERSION + '/candidates/lookup-data'

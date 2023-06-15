@@ -88,6 +88,7 @@ const HomeCandidate = () => {
                 modalTitle="New Candidate"
                 openCandidateModal={openAddCandidateModal}
                 onCloseCandidateModal={() => setOpenAddCandidateModal(false)}
+                handleRecordCreated={() => setIsReload(!isReload)}
             />
 
             {/* Edit candidate form */}

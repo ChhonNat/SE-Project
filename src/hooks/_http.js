@@ -4,8 +4,6 @@ import axiosAPI from '../services/http.service';
 
 const _httpReducer = (httpState, action) => {
 
-    console.log(action);
-
     switch (action.type) {
         case 'SEND':
             return {
