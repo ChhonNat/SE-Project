@@ -37,7 +37,6 @@ const AsynTableToolbar = (props) => {
   const setSearchText = (val) => {
     props.setSearchText(val);
     setSearchVal(val);
-    console.log(searchVal);
   }
 
   const clearVal = () => {

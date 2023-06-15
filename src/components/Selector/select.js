@@ -79,13 +79,13 @@ const SelectComponent = (props) => {
                             return <MenuItem value={returnValueAs ? returnValueAs : ele?.id || ele} key={index} >
                                 {ele || ele?.name || ele?.fullName ? ele?.name || ele?.fullName || ele : ele?.last_name + " " + ele?.first_name}
                             </MenuItem>;
-                        }) : <></>
+                        }) : <div></div>
                     ) : (
                         customDatas?.length ? customDatas.map((ele, index) => {
                             return <MenuItem value={returnValueAs ? returnValueAs : ele?.id || ele} key={index} >
                                 {ele || ele?.name || ele?.fullName ? ele?.name || ele?.fullName || ele : ele?.last_name + " " + ele?.first_name}
                             </MenuItem>;
-                        }) : <></>
+                        }) : <div></div>
                     )
                 }
             </Select>

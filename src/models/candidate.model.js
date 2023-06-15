@@ -1,7 +1,7 @@
 import { string, object, any, number, date } from 'zod';
 
 const CandidateModel = object({
-    id: string().optional().nullable(),
+    id: any().optional().nullable(),
     firstName: string().min(1),
     lastName: string().min(1),
     fullName: string().optional().nullable(),
@@ -20,11 +20,12 @@ const CandidateModel = object({
     shortListMonth:string().optional().nullable(),
     shortListResult:string().optional().nullable(),
     filePath: string().optional().nullable(),
-    createdAt: string().optional().nullable(),
-    createdBy: string().optional().nullable(),
-    updatedAt: string().optional().nullable(),
-    updatedBy: string().optional().nullable(),
-    status: string().optional().nullable()
+    createdAt: any().optional().nullable(),
+    createdBy: any().optional().nullable(),
+    updatedAt: any().optional().nullable(),
+    updatedBy: any().optional().nullable(),
+    status: string().optional().nullable(),
+    receivedChanel: string().optional().nullable()
 });
 
 export default CandidateModel;
