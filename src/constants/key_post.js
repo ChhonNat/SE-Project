@@ -1,4 +1,4 @@
-const candidate = [
+const update_candidate = [
     'firstName',
     'lastName',
     'gender',
@@ -16,6 +16,26 @@ const candidate = [
     'status'
 ];
 
+const invite_candidate = [
+    "appliedPositionId",
+    "departmentId",
+    "businessDivisionId",
+    "headDepartmentId",
+    "appliedLocationId",
+    "interviewDate"
+];
+
+const accessment_candidate = [
+    "appliedPositionId",
+    "departmentId",
+    "businessDivisionId",
+    "headDepartmentId",
+    "appliedLocationId",
+    "offerDate"
+];
+
 export const KEY_POST = {
-    candidate
+    update_candidate,
+    invite_candidate,
+    accessment_candidate
 };

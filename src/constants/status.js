@@ -4,21 +4,22 @@ const RECORD = {
 };
 
 const SHORTLIST_RESULT = {
-    PASSED: 'PASSED',
-    FAILED: 'FAILED'
+    PENDING: 'Pending',
+    FAILED: 'Failed',
+    PASSED: 'Passed',
 };
 
 const INTERVIEW_RESULT = {
-    PASSED: 'PASSED',
-    FAILED: 'FAILED'
+    PASSED: 'Passed',
+    FAILED: 'Failed'
 };
 
 const CANDIDATE = {
-    PENDING: 'PENDING',
-    CV_REVIEWED: 'CV_REVIEWED',
-    IN_INTERVIEW: 'IN_INTERVIEW',
-    IN_ASSESSMENT: 'IN_ASSESSMENT',
-    HIRED: 'HIRED'
+    PENDING: 'Pending',
+    CV_REVIEWED: 'CV_Reviewed',
+    IN_INTERVIEW: 'IN_Interview',
+    IN_ASSESSMENT: 'In_Assessment',
+    HIRED: 'Hired'
 };
 
 export const STATUS = {

@@ -3,10 +3,14 @@ import { TABLE_CONFIG } from "../../utils/table-config";
 import { API_URL } from "../../constants/api_url";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import AsyncTableAction from "../../components/AsyncDataTable/async-table-action";
+import { STATUS } from "../../constants/status";
+import CandidateAccessmentFormModal from "./form-accessment-candidate.modal";
 
 const HomeInterview = () => {
 
     const [isReload, setIsReload] = useState(false);
+    const [openAccessmentModal, setOpenAccessmentModal] = useState(false);
+    const [editCandidate, setEditCandidate] = useState({});
 
     return (
         <>
@@ -24,7 +28,7 @@ const HomeInterview = () => {
                 onHandleAddNewEvent: 'Listen button add new event'
                 customActions: 'Custom button event in table'
             */}
-            <AsyncDatatable  
+            <AsyncDatatable
                 asyncURL={API_URL.interview.get}
                 headers={TABLE_CONFIG.tblInterview}
                 bannerText="All Interviews"
@@ -34,13 +38,26 @@ const HomeInterview = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
-                    passedInterview: {
-                        field: 'interviewResult',
-                        condition: {
-                            Passed: true, Failed: false
+                    edit: true,
+                    passedInterview: [
+                        {
+                            field: 'interviewResult',
+                            values: ['Passed']
                         }
-                    }
+                    ],
                 }}
+                handleAccessmentEvent={(data) => { 
+                    setEditCandidate(data);
+                    setOpenAccessmentModal(true);
+                }}
+            />
+
+            {/* /**Make accessment modal */}
+            <CandidateAccessmentFormModal 
+                openAccessmentCandidateModal={openAccessmentModal}
+                onCloseAcccessmentCandidateModal={() => setOpenAccessmentModal(false)}
+                interview={editCandidate}
+                handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
         </>

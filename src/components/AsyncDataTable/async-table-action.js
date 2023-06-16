@@ -16,7 +16,12 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const AsyncTableAction = (props) => {
 
-    const { useActions, onHandleEditEvent, onHandleApproveCandidateEvent, onHandleReviewCandidateEvent } = props;
+    const { useActions,
+        onHandleEditEvent,
+        onHandleApproveCandidateEvent,
+        onHandleReviewCandidateEvent,
+        onHandleAccessmentCandidateEvent
+    } = props;
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     return (
@@ -38,7 +43,7 @@ const AsyncTableAction = (props) => {
                     </Tooltip>
                 }
 
-                    {/* Show button review candidate info to decide about the CV result */}
+                {/* Show button review candidate info to decide about the CV result */}
                 {useActions?.reviewCandidate &&
                     <Tooltip title="Review candidate">
                         <Button variant="text" size="small" color="primary"
@@ -53,14 +58,14 @@ const AsyncTableAction = (props) => {
                     useActions?.passedInterview &&
                     <Tooltip title="Make accessment">
                         <Button variant="text" size="small" color="success"
-                            // onClick={onHandleReviewCandidateEvent}
+                            onClick={onHandleAccessmentCandidateEvent}
                         >
-                            <DoneOutlineSharpIcon />
+                            <HowToRegOutlinedIcon />
                         </Button>
                     </Tooltip>
                 }
 
-                    {/* Show button edit the candidate */}
+                {/* Show button edit the candidate */}
                 {useActions?.edit &&
                     <Tooltip title="Edit record">
                         <Button variant="text" size="small" color="inherit"
@@ -70,7 +75,7 @@ const AsyncTableAction = (props) => {
                     </Tooltip>
                 }
 
-                    {/* Show button to delete the candidate */}
+                {/* Show button to delete the candidate */}
                 {useActions?.delete &&
                     <Tooltip title="Delete record">
                         <Button variant="text" size="small" color="error"

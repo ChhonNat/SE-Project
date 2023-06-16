@@ -26,7 +26,7 @@ const HomeAccessment = () => {
             <AsyncDatatable
                 asyncURL={API_URL.accessment.get}
                 headers={TABLE_CONFIG.tblAccessment}
-                bannerText="All Accessments"
+                bannerText="All Assessments"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"

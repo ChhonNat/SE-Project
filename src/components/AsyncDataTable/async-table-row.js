@@ -26,6 +26,7 @@ const TableRows = ({
     handleClick,
     handleApproveEvent,
     handleReviewEvent,
+    haneleAccessmentEvent,
     handleEditEvent,
     headers,
     checkColumn,
@@ -37,6 +38,30 @@ const TableRows = ({
 
         const isItemSelected = isSelected(row[checkColumn]);
         const labelId = `enhanced-table-checkbox-${index}`;
+
+        const checkButtonAction = (objData, condition) => {
+
+            const trueCondition = [];
+
+            if (condition && condition.length) {
+
+                condition.forEach((ele, index) => {
+
+                    const { values, field } = condition[index];
+                    trueCondition.push(values.includes(row[field]));
+                });
+            }
+
+
+            if (!trueCondition?.length)
+                return false;
+
+            if (trueCondition?.includes(false))
+                return false;
+
+            return true
+        };
+
 
         return (
             <StyledTableRow
@@ -80,12 +105,42 @@ const TableRows = ({
 
                         /**Map button action with the condidtion */
                         const buttonAction = {
-                              approveCandidate: actions?.approveCandidate ? (typeof actions?.approveCandidate === 'boolean' ? actions?.approveCandidate : actions?.approveCandidate?.condition[row[actions?.approveCandidate?.field]]) : false,
-                              reviewCandidate: actions?.reviewCandidate ? (typeof actions?.reviewCandidate === 'boolean' ? actions?.reviewCandidate : actions?.reviewCandidate?.condition[row[actions?.reviewCandidate?.field]]) : false,
-                              create: actions?.create ? (typeof actions?.create === 'boolean' ? actions?.create : actions?.create?.condition[row[actions?.create?.field]]) : false,
-                              edit: actions?.edit ? (typeof actions?.edit === 'boolean' ? actions?.edit : actions?.edit?.condition[row[actions?.edit?.field]]) : false,
-                              delete: actions?.delete ? (typeof actions?.delete === 'boolean' ? actions?.delete : actions?.delete?.condition[row[actions?.delete?.field]]) : false,
-                              passedInterview: actions?.passedInterview ? (typeof actions?.passedInterview === 'boolean' ? actions?.passedInterview : actions?.passedInterview?.condition[row[actions?.passedInterview?.field]]) : false,
+                            approveCandidate: actions?.approveCandidate ?
+                                (
+                                    typeof actions?.approveCandidate === 'boolean' ?
+                                        actions?.approveCandidate :
+                                        checkButtonAction(row, actions?.approveCandidate)
+                                    // actions?.approveCandidate?.condition[row[actions?.approveCandidate?.field]]
+                                )
+                                :
+                                false,
+                            reviewCandidate: actions?.reviewCandidate ?
+                                (
+                                    typeof actions?.reviewCandidate === 'boolean' ?
+                                        actions?.reviewCandidate :
+                                        checkButtonAction(row, actions?.reviewCandidate)
+                                )
+                                :
+                                false,
+                            create: actions?.create ?
+                                (typeof actions?.create === 'boolean' ? actions?.create : actions?.create?.condition[row[actions?.create?.field]])
+                                :
+                                false,
+                            edit: actions?.edit ?
+                                (typeof actions?.edit === 'boolean' ? actions?.edit : actions?.edit?.condition[row[actions?.edit?.field]])
+                                :
+                                false,
+                            delete: actions?.delete ?
+                                (typeof actions?.delete === 'boolean' ? actions?.delete : actions?.delete?.condition[row[actions?.delete?.field]])
+                                :
+                                false,
+                            passedInterview: actions?.passedInterview ?
+                                (typeof actions?.passedInterview === 'boolean' ?
+                                    actions?.passedInterview :
+                                    checkButtonAction(row, actions?.passedInterview)
+                                )
+                                :
+                                false,
                         };
 
                         const visible = head.visible !== undefined ? head.visible : true;
@@ -109,7 +164,7 @@ const TableRows = ({
                             } else {
 
                                 return !head?.Render ?
-                                    <TableCell align={head.align} key={uuid()} sx={{ fontSize: 13}}>
+                                    <TableCell align={head.align} key={uuid()} sx={{ fontSize: 13 }}>
 
                                         {/* Use table index */}
                                         {showIndex && (index + 1)}
@@ -124,12 +179,12 @@ const TableRows = ({
                                             <Typography variant="h6" id="tableTitle" component="div"
                                                 sx={{
                                                     background: '#f2eeee',
-                                                    paddingLeft: 2,
-                                                    paddingRight: 2,
+                                                    paddingLeft: 1,
+                                                    paddingRight: 1,
                                                     borderRadius: 2,
                                                     fontWeight: 'bold',
                                                     width: 'max-content',
-                                                    fontSize: 14,
+                                                    fontSize: 12,
                                                     color: head?.statusColor[row[head.id]],
                                                 }}
                                             >
@@ -145,6 +200,7 @@ const TableRows = ({
                                             <AsyncTableAction
                                                 onHandleApproveCandidateEvent={() => handleApproveEvent(row)}
                                                 onHandleReviewCandidateEvent={() => handleReviewEvent(row)}
+                                                onHandleAccessmentCandidateEvent={() => haneleAccessmentEvent(row)}
                                                 onHandleEditEvent={() => handleEditEvent(row)}
                                                 useActions={buttonAction}
                                             />

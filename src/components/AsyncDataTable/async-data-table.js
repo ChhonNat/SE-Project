@@ -32,6 +32,7 @@ const AsyncDatatable = (props) => {
     onHandleAddNewEvent,
     handleApproveEvent,
     handleReviewEvent,
+    handleAccessmentEvent,
     handleEditEvent,
     useTableActions
   } = props;
@@ -229,6 +230,7 @@ const AsyncDatatable = (props) => {
                     handleApproveEvent={(record) => handleApproveEvent(record)}
                     handleEditEvent={(record) => handleEditEvent(record)}
                     handleReviewEvent={(record) => handleReviewEvent(record)}
+                    haneleAccessmentEvent={(record) => handleAccessmentEvent(record)}
                   />
                   {
 
@@ -270,7 +272,7 @@ const AsyncDatatable = (props) => {
         </TableContainer>
 
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25, 50, 100, 500]}
           component="div"
           count={rowCount}
           rowsPerPage={rowsPerPage}

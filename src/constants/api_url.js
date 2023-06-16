@@ -9,6 +9,8 @@ export const API_URL = {
         get: API_VERSION + '/candidates/search',
         create: API_VERSION + '/candidates',
         update: API_VERSION + '/candidates/',
+        invite: API_VERSION + '/candidates/',
+        accessment: API_VERSION + '/interviews/',
 
         lookup: {
             get: API_VERSION + '/candidates/lookup-data'
