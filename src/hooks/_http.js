@@ -45,7 +45,7 @@ const _useHttp = () => {
         dispatchHttp({ type: 'SEND' });
 
         /**
-         * CASE: send request method == 'GET'
+         * CASE: send request method = 'GET'
          */
         if (method === 'GET') {
 
@@ -56,15 +56,16 @@ const _useHttp = () => {
                     success ?
                         dispatchHttp({ type: 'RESPONSE', data }) :
                         dispatchHttp({ type: 'ERROR', error: message });
-                })
+                })  
                 .catch((error) => {
+
                     const { message } = error || '';
                     dispatchHttp({ type: 'ERROR', message: message });
                 });
         }
 
         /**
-        * CASE: send request method == 'POST'
+        * CASE: send request method = 'POST'
         */
         if (method === 'POST') {
 
@@ -78,9 +79,30 @@ const _useHttp = () => {
                         dispatchHttp({ type: 'ERROR', error: message });
                 })
                 .catch((error) => {
+
                     const { message } = error || '';
                     dispatchHttp({ type: 'ERROR', message: message });
                 });
+        }
+
+        /**
+         * CASE: send request method = 'DELETE'
+         */
+        if (method === 'GET') {
+
+            await axiosAPI.delete(url, postData)
+                .then(function (result) {
+
+                    const { data, success, message } = result?.data;
+                    success ? dispatchHttp({ type: 'RESPONSE', data }) :
+                        dispatchHttp({ type: 'ERROR', error: message });
+                })
+                .catch((error) => {
+
+                    const { message } = error || '';
+                    dispatchHttp({ type: 'ERROR', message: message });
+                });
+
         }
 
     }, [],

@@ -28,9 +28,7 @@ const AsyncTableAction = (props) => {
                 aria-label="Disabled elevation buttons"
             >
 
-                /**
-                Show button approve candidate when the candidate passed the shortlist
-                 */
+                {/* Show button approve candidate when the candidate passed the shortlist */}
                 {useActions?.approveCandidate &&
                     <Tooltip title="Invite to interview">
                         <Button variant="text" size="small" color="success"
@@ -40,9 +38,7 @@ const AsyncTableAction = (props) => {
                     </Tooltip>
                 }
 
-                /**
-                    Show button review candidate info to decide about the CV result
-                 */
+                    {/* Show button review candidate info to decide about the CV result */}
                 {useActions?.reviewCandidate &&
                     <Tooltip title="Review candidate">
                         <Button variant="text" size="small" color="primary"
@@ -64,9 +60,7 @@ const AsyncTableAction = (props) => {
                     </Tooltip>
                 }
 
-                /**
-                    Show button edit the candidate
-                 */
+                    {/* Show button edit the candidate */}
                 {useActions?.edit &&
                     <Tooltip title="Edit record">
                         <Button variant="text" size="small" color="inherit"
@@ -76,9 +70,7 @@ const AsyncTableAction = (props) => {
                     </Tooltip>
                 }
 
-                /**
-                    Show button to delete the candidate
-                 */
+                    {/* Show button to delete the candidate */}
                 {useActions?.delete &&
                     <Tooltip title="Delete record">
                         <Button variant="text" size="small" color="error"
