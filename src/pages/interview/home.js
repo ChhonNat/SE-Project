@@ -24,7 +24,7 @@ const HomeInterview = () => {
                 onHandleAddNewEvent: 'Listen button add new event'
                 customActions: 'Custom button event in table'
             */}
-            <AsyncDatatable
+            <AsyncDatatable  
                 asyncURL={API_URL.interview.get}
                 headers={TABLE_CONFIG.tblInterview}
                 bannerText="All Interviews"
