@@ -20,7 +20,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import FooterComponent from '../../components/Page/footer';
 import TitleComponent from '../../components/Page/title';
 import SelectComponent from '../../components/Selector/select';
-import CandidateModel from '../../models/candidate.model';
+// import CandidateModel from '../../models/candidate.model';
 import { globalService } from '../../services/global.service';
 import { API_URL } from '../../constants/api_url';
 import { CandidateService } from '../../services/candidate.service';
@@ -30,6 +30,8 @@ import Swal from 'sweetalert2';
 import { DATA_STATUS } from '../../constants/data_status';
 import { ConverterService } from '../../utils/converter';
 import { KEY_POST } from '../../constants/key_post';
+import { STATUS } from '../../constants/status';
+import { CandidateModel } from '../../models/candidate.model';
 
 
 const shrinkOpt = { shrink: true };
@@ -40,9 +42,9 @@ const TransitionModal = React.forwardRef(function Transition(props, ref) {
 
 const CandidateFormModal = (props) => {
 
-    const { openCandidateModal, onCloseCandidateModal, modalTitle, candidate, handleRecordCreated } = props;
+    const { openCandidateModal, onCloseCandidateModal, modalTitle, candidate, handleEventSuccessed } = props;
     const { register, handleSubmit, formState, setValue, watch, reset } = useForm({
-        resolver: zodResolver(CandidateModel),
+        resolver: zodResolver(CandidateModel.Create),
         defaultValues: candidate?.id ? {} : {
             firstName: 'test',
             lastName: 'test',
@@ -72,15 +74,13 @@ const CandidateFormModal = (props) => {
     const [listHeadDepartments, setListHeadDepartments] = useState([]);
     const [listReceivedFromChannels, setListReceivedFromChannels] = useState([]);
 
-    const [shortlistResult, setShortlistResult] = useState(null);
+    console.log('Candidate',candidate);
 
     /**
      * Form use for edit data
      * Add existed candidate data to form
      */
     useEffect(() => {
-
-        // setValue(key,'2023-06-14');
 
         if (candidate?.id) {
 
@@ -93,19 +93,21 @@ const CandidateFormModal = (props) => {
                     const appliedDate = ConverterService.convertUnixDateToMUI(candidate[key]);
                     setValue(key, appliedDate);
 
-                } else if (key === 'shortListDate') {
+                } else if (key === 'shortlistDate') {
 
-                    const shortListDate = ConverterService.convertUnixDateToMUI(candidate[key]);
-                    setValue(key, shortListDate);
+                    const shortlistDate = ConverterService.convertUnixDateToMUI(candidate[key]);
+                    setValue(key, shortlistDate);
 
-                } else if (KEY_POST.candidate.includes(key)) {
+                } else if (KEY_POST.update_candidate.includes(key)) {
 
                     setValue(key, candidate[key]);
                 }
             }
+
         }
 
-    }, [candidate?.id])
+
+    }, [candidate])
 
     /**
      * Fetch position datas
@@ -174,43 +176,37 @@ const CandidateFormModal = (props) => {
                 const appliedDate = ConverterService.convertDateToAPI(data[key]);
                 submitFormData.append(key, appliedDate);
 
-            } else if (key === 'shortListDate') {
+            } else if (key === 'shortlistDate') {
 
                 /**
                  * format shorListedDate
                  *  */
-                const shortListDate = ConverterService.convertDateToAPI(data[key]);
-                submitFormData.append(key, shortListDate)
+                const shortlistDate = ConverterService.convertDateToAPI(data[key]);
+                submitFormData.append(key, shortlistDate)
 
             } else {
                 submitFormData.append(key, data[key]);
             }
         });
 
-        submitFormData.append('shortlistResult', shortlistResult);
-
         try {
 
             let submitCandidateForm;
 
             if (candidate?.id) {
-
                 submitCandidateForm = await CandidateService.updateCandidate(submitFormData, candidate?.id, 'multipart/form-data');
             } else {
+
                 submitCandidateForm = await CandidateService.createCandidate(submitFormData, 'multipart/form-data');
             }
 
             const { status, data } = submitCandidateForm;
             const { message } = data;
 
-
             if (status === HTTP_STATUS.success) {
 
-                onCloseCandidateModal();
-                reset();
-
                 if (data?.status === DATA_STATUS.success)
-                    handleRecordCreated();
+                    handleEventSuccessed();
 
                 /**
                  * Alert after request responses
@@ -220,8 +216,11 @@ const CandidateFormModal = (props) => {
                     text: message,
                     icon: data?.status === DATA_STATUS.success ? 'success' : 'error',
                     confirmButtonText: 'OK',
-                    timer: 1500
+                    timer: 1500,
+                    size: 200
                 })
+
+                handleCloseModal();
 
             }
 
@@ -230,6 +229,13 @@ const CandidateFormModal = (props) => {
         }
     }
 
+    /**
+     * Handle close form modal
+     */
+    const handleCloseModal = () => {
+        // reset();
+        onCloseCandidateModal();
+    }
 
     return (
         <div>
@@ -354,9 +360,9 @@ const CandidateFormModal = (props) => {
                                     size="small"
                                     inputProps={{ format: 'MM/DD/YYYY' }}
                                     InputLabelProps={shrinkOpt}
-                                    {...register("appliedDate")}
                                     error={errors?.appliedDate}
                                     helperText={errors?.appliedDate?.message}
+                                    {...register("appliedDate")}
                                 />
                             </Grid>
 
@@ -432,8 +438,8 @@ const CandidateFormModal = (props) => {
                                     label={'CV Received From'}
                                     size={'small'}
                                     customDatas={listReceivedFromChannels}
-                                    handleOnChange={(e) => setValue('receivedChanel', e?.target?.value)}
-                                    value={watchCandidate?.receivedChanel || ""}
+                                    handleOnChange={(e) => setValue('receivedChannel', e?.target?.value)}
+                                    value={watchCandidate?.receivedChannel || ""}
                                 />
                             </Grid>
 
@@ -448,7 +454,9 @@ const CandidateFormModal = (props) => {
                                     size="small"
                                     inputProps={{ format: 'MM/DD/YYYY' }}
                                     InputLabelProps={shrinkOpt}
-                                    {...register("shortListDate")}
+                                    error={errors?.shortlistDate}
+                                    helperText={errors?.shortlistDate?.message}
+                                    {...register("shortlistDate")}
                                 />
                             </Grid>
 
@@ -460,14 +468,14 @@ const CandidateFormModal = (props) => {
                                     </FormLabel>
                                     <FormGroup aria-label="position" row>
                                         <FormControlLabel
-                                            value="CV_Reviewed"
+                                            value={STATUS.CANDIDATE.CV_REVIEWED}
                                             control={
                                                 <Checkbox
                                                     onChange={(e) => {
-                                                        setValue('status', e?.target?.checked ? 'CV_Reviewed' : null)
-                                                        setValue('shortlistResult', null)
+                                                        setValue('status', e?.target?.checked ? STATUS.CANDIDATE.CV_REVIEWED : STATUS.CANDIDATE.PENDING)
+                                                        setValue('shortlistResult', STATUS.SHORTLIST_RESULT.PENDING)
                                                     }}
-                                                    checked={watchCandidate?.status ? true : false}
+                                                    checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
                                                 />
                                             }
                                             label=""
@@ -481,28 +489,34 @@ const CandidateFormModal = (props) => {
                             <Grid item xs={12}>
                                 <FormControl component="fieldset">
                                     <FormLabel id="row-radio-buttons-group-label" sx={{ fontSize: 14 }}>
-                                        Review result
+                                        Shortlist Result
                                     </FormLabel>
                                     <RadioGroup row
-                                        value={watchCandidate?.shortlistResult}
+                                        value={watchCandidate?.shortlistResult || candidate?.shortlistResult}
                                         onChange={(e) => {
                                             setValue('shortlistResult', e?.target?.value)
-                                            setShortlistResult(e?.target?.value)
                                         }}
                                     >
+
                                         <FormControlLabel
-                                            value="Passed"
+                                            value={STATUS.SHORTLIST_RESULT.PENDING}
                                             control={<Radio />}
-                                            label="Passed"
+                                            label="Pending"
                                             labelPlacement="end"
-                                            disabled={!watchCandidate?.status}
                                         />
+
                                         <FormControlLabel
-                                            value="Failed"
+                                            value={STATUS.SHORTLIST_RESULT.FAILED}
                                             control={<Radio />}
                                             label="Failed"
                                             labelPlacement="end"
-                                            disabled={!watchCandidate?.status}
+                                        />
+
+                                        <FormControlLabel
+                                            value={STATUS.SHORTLIST_RESULT.PASSED}
+                                            control={<Radio />}
+                                            label="Passed"
+                                            labelPlacement="end"
                                         />
                                     </RadioGroup>
                                 </FormControl>
@@ -513,7 +527,8 @@ const CandidateFormModal = (props) => {
                 <DialogActions>
                     <FooterComponent
                         saveButtunType='submit'
-                        handleCancel={onCloseCandidateModal}
+                        handleCancel={handleCloseModal}
+                        saveButtonLabel={candidate?.id ? 'Update' : 'Save'}
                     />
                 </DialogActions>
             </Dialog>

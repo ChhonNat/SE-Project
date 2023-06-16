@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import { TextField, Button, Grid } from "@mui/material";
 import SelectComponent from "../../components/Selector/select";
 import { useController, useFieldArray, useForm, useWatch } from "react-hook-form";
-import CandidateModel from "../../models/candidate.model";
+// import CandidateModel from "../../models/candidate.model";
 import { API_URL } from "../../constants/api_url";
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,11 +13,12 @@ import { positionService } from "../../services/position.service";
 import { filter } from "../../constants/api_filter";
 import { globalService } from "../../services/global.service";
 import FooterComponent from "../../components/Page/footer";
+import { CandidateModel } from "../../models/candidate.model";
 
 
 export default function CandidateForm() {
 
-  const { register, handleSubmit, formState, setValue, watch } = useForm({ resolver: zodResolver(CandidateModel) });
+  const { register, handleSubmit, formState, setValue, watch } = useForm({ resolver: zodResolver(CandidateModel.Create) });
   const watchCandidate = watch();
 
   const genders = [{ id: 1, name: 'Male' }, { id: 2, name: 'Female' }];

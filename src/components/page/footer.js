@@ -3,7 +3,6 @@ import { Grid, Button } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { purple, blue, red } from "@mui/material/colors";
 
-
 const DangerButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(red[500]),
     backgroundColor: red[400],
@@ -34,14 +33,14 @@ const FooterComponent = (props) => {
                 columnGap={2}
                 paddingX={2}
             >
-                <DangerButton 
+                <DangerButton
                     variant="contained"
                     onClick={handleCancel}
                 >
                     Cancel
                 </DangerButton>
 
-                <PrimaryButton 
+                <PrimaryButton
                     variant="contained"
                     type={saveButtunType || 'button'}
                     onClick={handleSave}

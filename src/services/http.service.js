@@ -53,7 +53,7 @@ const _delete = async (endpoint_url, params, contentType) => {
  * @param {*} params is the DATAS submit to API
  * @returns return the response after updated
  */
-const _update = async (endpoint_url, params, contentType) => {
+const _put = async (endpoint_url, params, contentType) => {
     return axiosAPI.put(endpoint_url, params, { headers: { 'Content-Type': contentType ? contentType : 'application/json' }})
 };
 
@@ -63,5 +63,5 @@ export const httpService = {
     _get,
     _post,
     _delete,
-    _update,
+    _put,
 };

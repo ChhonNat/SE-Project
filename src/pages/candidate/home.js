@@ -3,8 +3,9 @@ import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import CandidateFormModal from "./form-candidate.modal";
-import CandidateApproveFormModal from "./form-invite-candidate.modal";
+import CandidateInviteFormModal from "./form-invite-candidate.modal";
 import CandidateReviewFormModal from "./form-review-candidate.modal";
+import { STATUS } from "../../constants/status";
 
 
 const HomeCandidate = () => {
@@ -68,13 +69,22 @@ const HomeCandidate = () => {
                         create: true,
                         delete: true,
                         edit: true,
-                        approveCandidate: {
-                            field: 'shortListResult',
-                            condition: {
-                                Passed: true, Failed: false
+                        approveCandidate: [
+                            {
+                                field: 'shortlistResult',
+                                values: [STATUS.SHORTLIST_RESULT.PASSED]
+                            },
+                            {
+                                field: 'status',
+                                values: [STATUS.CANDIDATE.CV_REVIEWED]
                             }
-                        },
-                        reviewCandidate: true
+                        ],
+                        reviewCandidate: [
+                            {
+                                field: 'status',
+                                values: [STATUS.CANDIDATE.PENDING]
+                            }
+                        ]
                     }
                 }
                 onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
@@ -88,7 +98,7 @@ const HomeCandidate = () => {
                 modalTitle="New Candidate"
                 openCandidateModal={openAddCandidateModal}
                 onCloseCandidateModal={() => setOpenAddCandidateModal(false)}
-                handleRecordCreated={() => setIsReload(!isReload)}
+                handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
             {/* Edit candidate form */}
@@ -97,6 +107,7 @@ const HomeCandidate = () => {
                 candidate={editCandidate}
                 openCandidateModal={openEditCandidateModal}
                 onCloseCandidateModal={() => setOpenEditCandidateModal(false)}
+                handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
             {/* Review candidate form */}
@@ -108,10 +119,11 @@ const HomeCandidate = () => {
             />
 
             {/* Approve candidate form */}
-            <CandidateApproveFormModal
+            <CandidateInviteFormModal
                 candidate={editCandidate}
                 openApproveCandidateModal={openApproveCandidateModal}
                 onCloseApproveCandidateModal={() => setOpenApproveCandidateModal(false)}
+                handleEventSuccessed={() => setIsReload(!isReload)}
             />
         </>
     )

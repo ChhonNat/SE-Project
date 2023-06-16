@@ -15,7 +15,7 @@ const proof = [
     },
     {
         id: 'status', type: 'status',
-        statusColor: { 'Pending': 'orange', 'ACTIVE': 'green' },
+        statusColor: { ACTIVE: 'green' },
         label: 'Status'
     }
 ];
@@ -27,7 +27,7 @@ const tblCandidate = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'fullName', label: 'Name', sqlField: 'can.first_name'
+        id: 'fullName', label: "Candidate's Name", sqlField: 'can.first_name'
     },
     {
         id: 'gender', label: 'Gender', sqlField: 'can.gender'
@@ -39,14 +39,19 @@ const tblCandidate = [
         id: 'email', label: 'Email', sqlField: 'can.email'
     },
     {
-        id: 'appliedPositionName', label: 'Position', sqlField: 'pos.name'
+        id: 'appliedPositionName', label: 'Position Apply for', sqlField: 'pos.name'
     },
     {
-        id: 'shortListDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
+        id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
     },
     // ...proof,
     {
-        id: 'shortListResult', type: 'status', statusColor:{Passed: 'green', Failed: 'red'}, label: 'Shortlist Result'
+        id: 'shortlistResult', type: 'status',
+        statusColor: { Passed: 'green', Failed: 'red' },
+        label: 'Shortlist Result'
+    },
+    {
+        id: 'status', type: 'status', statusColor: {Hired: 'Green', In_Assessment: 'MediumBlue', CV_Reviewed: 'DarkOrange', In_Interview: 'Maroon'}, label: 'Status'
     },
     {
         id: 'action', label: 'Actions',
@@ -67,10 +72,16 @@ const tblInterview = [
         id: 'appliedPositionName', label: 'Apply Position'
     },
     {
+        id: 'departmentName', label: 'Department'
+    },
+    {
         id: 'headDepartmentName', label: 'Head Department'
     },
     {
         id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'
+    },
+    {
+        id: 'status', type: 'status', statusColor: {}, label: 'Status'  
     },
     {
         id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'

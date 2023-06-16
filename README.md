@@ -131,3 +131,7 @@ Shortlist
 --------------
 Interview
 - Candidate -> Pending -> Reviewed -> In_Interview -> (Passed|Failed) -> In_Accessment(Passed)
+
+--------------
+--------------
+Candidate => ShortlistResult = 'Passed' && status = 'CV_Reviewed'

@@ -8,7 +8,8 @@ import { globalService } from "../../services/global.service";
 import { API_URL } from "../../constants/api_url";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CandidateModel from "../../models/candidate.model";
+import { CandidateModel } from "../../models/candidate.model";
+// import CandidateModel from "../../models/candidate.model";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -19,7 +20,7 @@ const shrinkOpt = { shrink: true };
 const CandidateReviewFormModal = (props) => {
 
     const { openReviewCandidateModal, onCloseReviewCandidateModal, candidate, modalTitle } = props;
-    const { register, setValue, watch } = useForm({ resolver: zodResolver(CandidateModel) });
+    const { register, setValue, watch } = useForm({ resolver: zodResolver(CandidateModel.Create) });
     const watchCandidate = watch();
 
     const [listShortlistResults, setShortlistResults] = useState([]);
@@ -94,8 +95,8 @@ const CandidateReviewFormModal = (props) => {
                                     label={'Review Result'}
                                     size={'small'}
                                     customDatas={listShortlistResults}
-                                    value={watchCandidate?.shortListResult || ''}
-                                    handleOnChange={(e) => setValue('shortListResult', e?.target?.value)}
+                                    value={watchCandidate?.shortlistResult || ''}
+                                    handleOnChange={(e) => setValue('shortlistResult', e?.target?.value)}
                                 />
                             </Grid>
 
@@ -106,6 +107,7 @@ const CandidateReviewFormModal = (props) => {
                     <FooterComponent
                         saveButtunType='submit'
                         handleCancel={onCloseReviewCandidateModal}
+                        saveButtonLabel={'Confirm'}
                     />
                 </DialogActions>
             </Dialog>

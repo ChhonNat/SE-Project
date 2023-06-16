@@ -10,7 +10,7 @@ import { CandidateService } from "../../services/candidate.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import Swal from "sweetalert2";
 import { DATA_STATUS } from "../../constants/data_status";
-import { CandidateModel } from "../../models/candidate.model";
+import InterviewModel from "../../models/interview.model";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -18,53 +18,55 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const shrinkOpt = { shrink: true };
 
-const CandidateInviteFormModal = (props) => {
+const CandidateAccessmentFormModal = (props) => {
 
 
-    const { openApproveCandidateModal, onCloseApproveCandidateModal, candidate, handleEventSuccessed } = props;
-    const { register, handleSubmit, setValue, watch , reset, formState} = useForm({ resolver: zodResolver(CandidateModel.Invite) });
+    const { openAccessmentCandidateModal, onCloseAcccessmentCandidateModal, interview, handleEventSuccessed } = props;
+    const { register, handleSubmit, setValue, formState} = useForm({ resolver: zodResolver(InterviewModel) });
     const { errors } = formState;
 
     useEffect(() => {
 
-        if (candidate?.id) {
+        if (interview?.id) {
 
-            for (let key in candidate) {
+            for (let key in interview) {
 
-                if (key === 'shortlistDate') {
-                    setValue(key, ConverterService.convertUnixDateToMUI(candidate[key]));
-                } else if (key === 'appliedDate') {
-                    setValue(key, ConverterService.convertUnixDateToMUI(candidate[key]))
+                if (key === 'interviewDate') {
+                    setValue(key, ConverterService.convertUnixDateToMUI(interview[key]));
                 } else {
-                    setValue(key, candidate[key]);
+                    setValue(key, interview[key]);
                 }
             }
         }
 
-    }, [candidate?.id])
+    }, [interview?.id])
 
 
     const error = (data) => console.log(data);
 
     const submit = async (data) => {
 
-        const inviteCandidate = {};
+        const accesssmentCandidate = {};
 
         Object.keys(data).forEach((key) => {
 
-            if (KEY_POST.invite_candidate.includes(key)) {
+            if (KEY_POST.accessment_candidate.includes(key)) {
 
-                if (key === 'interviewDate')
+                if (key === 'offerDate')
                     data[key] = ConverterService.convertDateToAPI(data[key])
 
-                inviteCandidate[key] = data[key];
+                    accesssmentCandidate[key] = data[key];
             }
         });
 
+
+
         try {
-            const submitCandidate = await CandidateService.inviteCandidate(inviteCandidate, candidate?.id);
+            const submitCandidate = await CandidateService.accessmentCandidate(accesssmentCandidate, interview?.id, interview?.candidateId);
             const { status, data } = submitCandidate;
             const { message } = data;
+
+            console.log(submitCandidate);
 
             if (status === HTTP_STATUS.success) {
 
@@ -88,8 +90,7 @@ const CandidateInviteFormModal = (props) => {
     }
 
     const handleCloseModal = () => {
-        reset();
-        onCloseApproveCandidateModal();
+        onCloseAcccessmentCandidateModal();
     }
 
 
@@ -98,12 +99,12 @@ const CandidateInviteFormModal = (props) => {
             <Dialog
                 maxWidth="sm"
                 TransitionComponent={TransitionModal}
-                open={openApproveCandidateModal}
+                open={openAccessmentCandidateModal}
                 component="form"
                 onSubmit={handleSubmit(submit, error)}
             >
                 <DialogTitle>
-                    <TitleComponent title="Invite to interview ?" />
+                    <TitleComponent title="Make accessment ?" />
                 </DialogTitle>
                 <DialogContent dividers>
                     <Box sx={{ width: '100%' }}>
@@ -120,7 +121,7 @@ const CandidateInviteFormModal = (props) => {
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    {...register('fullName')}
+                                    {...register('candidateName')}
                                 />
                             </Grid>
 
@@ -129,13 +130,13 @@ const CandidateInviteFormModal = (props) => {
                                 <TextField
                                     disabled
                                     type="date"
-                                    id="shortlist-date-id"
-                                    label="Date Shortlist"
+                                    id="interview-date-id"
+                                    label="Interview Date"
                                     variant="outlined"
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    {...register('shortlistDate')}
+                                    {...register('interviewDate')}
                                 />
                             </Grid>
 
@@ -144,13 +145,13 @@ const CandidateInviteFormModal = (props) => {
                                 <TextField
                                     disabled
                                     type="text"
-                                    id="shortlist-result-id"
-                                    label="Result Shortlist"
+                                    id="interview-result-id"
+                                    label="Interview Result"
                                     variant="outlined"
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    {...register('shortlistResult')}
+                                    {...register('interviewResult')}
                                 />
                             </Grid>
 
@@ -159,7 +160,7 @@ const CandidateInviteFormModal = (props) => {
                                 <TextField
                                     disabled
                                     type="text"
-                                    id="shortlist-result-id"
+                                    id="position-id"
                                     label="Position Apply For"
                                     variant="outlined"
                                     fullWidth
@@ -219,7 +220,7 @@ const CandidateInviteFormModal = (props) => {
                                 <TextField
                                     disabled
                                     type="text"
-                                    id="head-department-id"
+                                    id="location-id"
                                     label="Location"
                                     variant="outlined"
                                     fullWidth
@@ -233,15 +234,15 @@ const CandidateInviteFormModal = (props) => {
                             <Grid item xs={12}>
                                 <TextField
                                     type="date"
-                                    id="interview-date-id"
-                                    label="Interview Date"
+                                    id="offer-date-id"
+                                    label="Offer Date"
                                     variant="outlined"
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    {...register('interviewDate')}
-                                    error={errors?.interviewDate}
-                                    helperText={errors?.interviewDate?.message}
+                                    {...register('offerDate')}
+                                    error={errors?.offerDate}
+                                    helperText={errors?.offerDate?.message}
                                 />
                             </Grid>
 
@@ -260,4 +261,4 @@ const CandidateInviteFormModal = (props) => {
     )
 };
 
-export default CandidateInviteFormModal;
+export default CandidateAccessmentFormModal;
