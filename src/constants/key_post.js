@@ -12,7 +12,7 @@ const update_candidate = [
     'appliedDate',
     'shortlistResult',
     'shortListedDate',
-    'receivedChanel',
+    'receivedChannel',
     'status'
 ];
 

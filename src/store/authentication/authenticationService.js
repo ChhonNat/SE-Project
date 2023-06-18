@@ -1,6 +1,6 @@
 import { authActions } from './authenticationSlice';
 import axios from 'axios';
-import { useLinkClickHandler } from 'react-router-dom';
+import apiLink from '../../constants/app_cont';
 
 const initialUser = {
   userName: '',
@@ -25,7 +25,7 @@ export const userAuthentication = ({ username, password }) => {
 
     const authenticates = async () => {
       const response = await axios
-        .post(`api/v1/login`, postData, options)
+        .post(`${apiLink}/api/v1/login`, postData, options)
         .then(function (result) {
           return result;
         })
@@ -36,8 +36,7 @@ export const userAuthentication = ({ username, password }) => {
       const responseData = response.data.data;
 
       const responseUser = {
-        userName: `${responseData.info.firstName} ${responseData.info.secondName}`,
-        userId: responseData.info.id,
+        
         token: responseData.accessToken,
         refreshToken: responseData.refreshToken,
         isError: false,

@@ -59,7 +59,7 @@ const CandidateFormModal = (props) => {
             businessDivisionId: 1,
             appliedLocationId: 1,
             shortlistResult: 'Passed',
-            receivedChanel: 'Telegram',
+            receivedChannel: 'Telegram',
             status: 'CV_Reviewed'
         }
     });
