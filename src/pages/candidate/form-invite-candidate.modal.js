@@ -11,6 +11,7 @@ import { HTTP_STATUS } from "../../constants/http_status";
 import Swal from "sweetalert2";
 import { DATA_STATUS } from "../../constants/data_status";
 import { CandidateModel } from "../../models/candidate.model";
+import { ALERT_TIMER } from "../../constants/app_config";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -76,7 +77,7 @@ const CandidateInviteFormModal = (props) => {
                     text: message,
                     icon: data?.status === DATA_STATUS.success ? 'success' : 'error',
                     confirmButtonText: 'Text',
-                    timer: 1500
+                    timer: ALERT_TIMER
                 });
 
                 handleCloseModal();

@@ -32,6 +32,7 @@ import { ConverterService } from '../../utils/converter';
 import { KEY_POST } from '../../constants/key_post';
 import { STATUS } from '../../constants/status';
 import { CandidateModel } from '../../models/candidate.model';
+import { ALERT_TIMER } from '../../constants/app_config';
 
 
 const shrinkOpt = { shrink: true };
@@ -216,7 +217,7 @@ const CandidateFormModal = (props) => {
                     text: message,
                     icon: data?.status === DATA_STATUS.success ? 'success' : 'error',
                     confirmButtonText: 'OK',
-                    timer: 1500,
+                    timer: ALERT_TIMER,
                     size: 200
                 })
 
