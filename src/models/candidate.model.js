@@ -2,6 +2,7 @@ import { string, object, any, number, date } from 'zod';
 
 const Model = object({
     id: any().optional().nullable(),
+    applicationCode: string().min(1, { message: "Application code is required!" }),
     firstName: string().min(1, { message: "Firstname is required!" }),
     lastName: string().min(1, { message: "Lastname is required!" }),
     fullName: string().optional().nullable(),

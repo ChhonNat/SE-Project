@@ -1,4 +1,5 @@
 const update_candidate = [
+    'applicationCode',
     'firstName',
     'lastName',
     'gender',

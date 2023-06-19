@@ -27,6 +27,9 @@ const tblCandidate = [
         id: 'index', label: 'No.'
     },
     {
+        id: 'applicationCode', label: "Application Code", sqlField: 'can.application_number'
+    },
+    {
         id: 'fullName', label: "Candidate's Name", sqlField: 'can.first_name'
     },
     {
