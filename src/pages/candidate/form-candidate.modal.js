@@ -10,6 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import Link from '@mui/material/Link'
 
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -62,7 +63,7 @@ const CandidateFormModal = (props) => {
             appliedLocationId: 1,
             shortlistResult: 'Passed',
             receivedChannel: 'Telegram',
-            status: 'CV_Reviewed'
+            status: 'CV_Reviewed',
         }
     });
     const watchCandidate = watch();
@@ -76,8 +77,6 @@ const CandidateFormModal = (props) => {
     const [listHeadDepartments, setListHeadDepartments] = useState([]);
     const [listReceivedFromChannels, setListReceivedFromChannels] = useState([]);
 
-    console.log('Candidate',candidate);
-
     /**
      * Form use for edit data
      * Add existed candidate data to form
@@ -87,8 +86,6 @@ const CandidateFormModal = (props) => {
         if (candidate?.id) {
 
             for (let key in candidate) {
-
-                // setValue(key, candidate[key]);
 
                 if (key === 'appliedDate') {
 
@@ -100,14 +97,12 @@ const CandidateFormModal = (props) => {
                     const shortlistDate = ConverterService.convertUnixDateToMUI(candidate[key]);
                     setValue(key, shortlistDate);
 
-                } else if (KEY_POST.update_candidate.includes(key)) {
-
+                }  else if (KEY_POST.update_candidate.includes(key)) {
                     setValue(key, candidate[key]);
                 }
             }
 
         }
-
 
     }, [candidate])
 
@@ -129,7 +124,7 @@ const CandidateFormModal = (props) => {
         fetchData(API_URL.lookup.department.get, setListDepartments);
         /**Fetch recruiter data */
         fetchData(API_URL.lookup.headDepartment.get, setListHeadDepartments);
-    }, []);
+    }, [openCandidateModal]);
 
     /**
      * Fetch data to listing in each selector
@@ -142,11 +137,18 @@ const CandidateFormModal = (props) => {
 
             if (dataType === 'multi') {
                 if (success) {
+
                     setListGenders(data?.genders);
                     setListReceivedFromChannels(data?.receivedChannels);
+
+                    if (!candidate?.id)
+                        setValue('applicationCode', ConverterService.convertApplicationCode(data?.IncreasedAppNumber));
+
+
                 } else {
                     setListGenders([]);
                     setListReceivedFromChannels([]);
+                    setValue('applicationCode', null);
                 }
             } else {
                 success ? setDatas(data) : setDatas([]);
@@ -218,7 +220,7 @@ const CandidateFormModal = (props) => {
                     text: message,
                     icon: data?.status === DATA_STATUS.success ? 'success' : 'error',
                     confirmButtonText: 'OK',
-                    timer: ALERT_TIMER,
+                    // timer: ALERT_TIMER,
                     size: 200
                 })
 
@@ -255,15 +257,28 @@ const CandidateFormModal = (props) => {
                     <Box sx={{ width: '100%' }}>
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
+                            <Grid item xs={12}>
+                                <Link href="#">{candidate?.cvFile}</Link>
+                            </Grid>
+
                             {/*Upload file*/}
                             <Grid item xs={12}>
-                                <TextField type='file' label="Upload CV" accept=".pdf" InputLabelProps={{ shrink: true }}>
+                                <TextField
+                                    type='file'
+                                    label="Upload CV"
+                                    accept=".pdf"
+                                    InputLabelProps={{ shrink: true }}
+                                    onChange={(e) => setValue('file', e?.target?.files[0])}
+                                    error={errors?.file}
+                                    helperText={errors?.file?.message}
+                                >
                                     Upload
                                 </TextField>
                             </Grid>
                             {/* Input CV code */}
                             <Grid item xs={12}>
                                 <TextField
+                                    disabled
                                     type="text"
                                     id="application-code"
                                     label="Application Code"
@@ -271,9 +286,9 @@ const CandidateFormModal = (props) => {
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                // error={errors?.firstName}
-                                // helperText={errors?.firstName?.message}
-                                {...register("applicationCode")}
+                                    // error={errors?.firstName}
+                                    // helperText={errors?.firstName?.message}
+                                    {...register("applicationCode")}
                                 />
                             </Grid>
                             {/* Input First Name */}

@@ -14,7 +14,9 @@ const update_candidate = [
     'shortlistResult',
     'shortListedDate',
     'receivedChannel',
-    'status'
+    'status',
+    'file',
+    'cvFile'
 ];
 
 const invite_candidate = [
@@ -35,8 +37,19 @@ const accessment_candidate = [
     "offerDate"
 ];
 
+const hire_candidate = [
+        "offerPositionId",
+        "departmentId",
+        "businessDivisionId",
+        "headDepartmentId",
+        "offerLocationId",
+        "hireDate",
+        "joinDate"
+];
+
 export const KEY_POST = {
     update_candidate,
     invite_candidate,
-    accessment_candidate
+    accessment_candidate,
+    hire_candidate
 };

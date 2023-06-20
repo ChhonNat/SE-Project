@@ -19,12 +19,14 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const shrinkOpt = { shrink: true };
 
-const CandidateAccessmentFormModal = (props) => {
+const CandidateAssessmentFormModal = (props) => {
 
 
-    const { openAccessmentCandidateModal, onCloseAcccessmentCandidateModal, interview, handleEventSuccessed } = props;
+    const { openAssessmentCandidateModal, onCloseAssessmentCandidateModal, interview, handleEventSuccessed } = props;
     const { register, handleSubmit, setValue, formState} = useForm({ resolver: zodResolver(InterviewModel) });
     const { errors } = formState;
+
+    console.log(interview);
 
     useEffect(() => {
 
@@ -47,7 +49,8 @@ const CandidateAccessmentFormModal = (props) => {
 
     const submit = async (data) => {
 
-        const accesssmentCandidate = {};
+
+        const assesssmentCandidate = {};
 
         Object.keys(data).forEach((key) => {
 
@@ -56,14 +59,13 @@ const CandidateAccessmentFormModal = (props) => {
                 if (key === 'offerDate')
                     data[key] = ConverterService.convertDateToAPI(data[key])
 
-                    accesssmentCandidate[key] = data[key];
+                    assesssmentCandidate[key] = data[key];
             }
         });
 
 
-
         try {
-            const submitCandidate = await CandidateService.accessmentCandidate(accesssmentCandidate, interview?.id, interview?.candidateId);
+            const submitCandidate = await CandidateService.assessmentCandidate(assesssmentCandidate, interview?.id, interview?.candidateId);
             const { status, data } = submitCandidate;
             const { message } = data;
 
@@ -91,7 +93,7 @@ const CandidateAccessmentFormModal = (props) => {
     }
 
     const handleCloseModal = () => {
-        onCloseAcccessmentCandidateModal();
+        onCloseAssessmentCandidateModal();
     }
 
 
@@ -100,12 +102,12 @@ const CandidateAccessmentFormModal = (props) => {
             <Dialog
                 maxWidth="sm"
                 TransitionComponent={TransitionModal}
-                open={openAccessmentCandidateModal}
+                open={openAssessmentCandidateModal}
                 component="form"
                 onSubmit={handleSubmit(submit, error)}
             >
                 <DialogTitle>
-                    <TitleComponent title="Make accessment ?" />
+                    <TitleComponent title="Make assessment ?" />
                 </DialogTitle>
                 <DialogContent dividers>
                     <Box sx={{ width: '100%' }}>
@@ -262,4 +264,4 @@ const CandidateAccessmentFormModal = (props) => {
     )
 };
 
-export default CandidateAccessmentFormModal;
+export default CandidateAssessmentFormModal;

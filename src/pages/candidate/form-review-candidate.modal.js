@@ -20,7 +20,7 @@ const shrinkOpt = { shrink: true };
 const CandidateReviewFormModal = (props) => {
 
     const { openReviewCandidateModal, onCloseReviewCandidateModal, candidate, modalTitle } = props;
-    const { register, setValue, watch } = useForm({ resolver: zodResolver(CandidateModel.Create) });
+    const { register, setValue, watch, formState } = useForm({ resolver: zodResolver(CandidateModel.Create) });
     const watchCandidate = watch();
 
     const [listShortlistResults, setShortlistResults] = useState([]);
