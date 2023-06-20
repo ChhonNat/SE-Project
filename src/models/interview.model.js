@@ -25,7 +25,7 @@ const InterviewModel = object({
     updatedAt: any().optional().nullable(),
     updatedBy: any().optional().nullable(),
     status: string().optional().nullable().default('Pending'),
-    receivedChanel: string().optional().nullable(),
+    receivedChannel: string().optional().nullable(),
     interviewDate: string().optional().nullable(),
     offerDate: string().optional().nullable()
 });

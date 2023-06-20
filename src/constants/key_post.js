@@ -1,4 +1,5 @@
 const update_candidate = [
+    'applicationCode',
     'firstName',
     'lastName',
     'gender',
@@ -12,7 +13,7 @@ const update_candidate = [
     'appliedDate',
     'shortlistResult',
     'shortListedDate',
-    'receivedChanel',
+    'receivedChannel',
     'status'
 ];
 

@@ -32,6 +32,7 @@ import { ConverterService } from '../../utils/converter';
 import { KEY_POST } from '../../constants/key_post';
 import { STATUS } from '../../constants/status';
 import { CandidateModel } from '../../models/candidate.model';
+import { ALERT_TIMER } from '../../constants/app_config';
 
 
 const shrinkOpt = { shrink: true };
@@ -46,6 +47,7 @@ const CandidateFormModal = (props) => {
     const { register, handleSubmit, formState, setValue, watch, reset } = useForm({
         resolver: zodResolver(CandidateModel.Create),
         defaultValues: candidate?.id ? {} : {
+            applicationCode: 'CV-2023061914',
             firstName: 'test',
             lastName: 'test',
             gender: 'Male',
@@ -59,7 +61,7 @@ const CandidateFormModal = (props) => {
             businessDivisionId: 1,
             appliedLocationId: 1,
             shortlistResult: 'Passed',
-            receivedChanel: 'Telegram',
+            receivedChannel: 'Telegram',
             status: 'CV_Reviewed'
         }
     });
@@ -216,7 +218,7 @@ const CandidateFormModal = (props) => {
                     text: message,
                     icon: data?.status === DATA_STATUS.success ? 'success' : 'error',
                     confirmButtonText: 'OK',
-                    timer: 1500,
+                    timer: ALERT_TIMER,
                     size: 200
                 })
 
@@ -271,7 +273,7 @@ const CandidateFormModal = (props) => {
                                     InputLabelProps={shrinkOpt}
                                 // error={errors?.firstName}
                                 // helperText={errors?.firstName?.message}
-                                // {...register("firstName")}
+                                {...register("applicationCode")}
                                 />
                             </Grid>
                             {/* Input First Name */}

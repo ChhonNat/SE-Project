@@ -2,6 +2,7 @@ import { string, object, any, number, date } from 'zod';
 
 const Model = object({
     id: any().optional().nullable(),
+    applicationCode: string().min(1, { message: "Application code is required!" }),
     firstName: string().min(1, { message: "Firstname is required!" }),
     lastName: string().min(1, { message: "Lastname is required!" }),
     fullName: string().optional().nullable(),
@@ -25,7 +26,7 @@ const Model = object({
     updatedAt: any().optional().nullable(),
     updatedBy: any().optional().nullable(),
     status: string().optional().nullable().default('Pending'),
-    receivedChanel: string().optional().nullable(),
+    receivedChannel: string().optional().nullable(),
     interviewDate: string().optional().nullable()
 });
 
