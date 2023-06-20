@@ -26,7 +26,7 @@ const TableRows = ({
     handleClick,
     handleApproveEvent,
     handleReviewEvent,
-    haneleAccessmentEvent,
+    handleAssessmentEvent,
     handleEditEvent,
     headers,
     checkColumn,
@@ -127,7 +127,10 @@ const TableRows = ({
                                 :
                                 false,
                             edit: actions?.edit ?
-                                (typeof actions?.edit === 'boolean' ? actions?.edit : actions?.edit?.condition[row[actions?.edit?.field]])
+                                (
+                                    typeof actions?.edit === 'boolean' ?
+                                        actions?.edit :
+                                        checkButtonAction(row, actions?.edit))
                                 :
                                 false,
                             delete: actions?.delete ?
@@ -200,7 +203,7 @@ const TableRows = ({
                                             <AsyncTableAction
                                                 onHandleApproveCandidateEvent={() => handleApproveEvent(row)}
                                                 onHandleReviewCandidateEvent={() => handleReviewEvent(row)}
-                                                onHandleAccessmentCandidateEvent={() => haneleAccessmentEvent(row)}
+                                                onHandleAssessmentCandidateEvent={() => handleAssessmentEvent(row)}
                                                 onHandleEditEvent={() => handleEditEvent(row)}
                                                 useActions={buttonAction}
                                             />

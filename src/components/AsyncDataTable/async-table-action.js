@@ -20,7 +20,7 @@ const AsyncTableAction = (props) => {
         onHandleEditEvent,
         onHandleApproveCandidateEvent,
         onHandleReviewCandidateEvent,
-        onHandleAccessmentCandidateEvent
+        onHandleAssessmentCandidateEvent
     } = props;
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -56,9 +56,9 @@ const AsyncTableAction = (props) => {
 
                 {
                     useActions?.passedInterview &&
-                    <Tooltip title="Make accessment">
+                    <Tooltip title="Make assessment">
                         <Button variant="text" size="small" color="success"
-                            onClick={onHandleAccessmentCandidateEvent}
+                            onClick={onHandleAssessmentCandidateEvent}
                         >
                             <HowToRegOutlinedIcon />
                         </Button>

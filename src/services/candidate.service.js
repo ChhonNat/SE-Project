@@ -13,13 +13,18 @@ const inviteCandidate = (data,id, contentType) => {
     return httpService._put(API_URL.candidate.invite+id+'/invite', data, contentType);
 }
 
-const accessmentCandidate = (data,intId, canId, contentType) => {
-    return httpService._put(API_URL.candidate.accessment+intId+'/candidate/'+canId, data, contentType);
+const assessmentCandidate = (data,intId, canId, contentType) => {
+    return httpService._put(API_URL.candidate.assessment+intId+'/candidate/'+canId, data, contentType);
+}
+
+const hireCandidate = (data, assId, intId, canId, contentType) => {
+    return httpService._put(API_URL.candidate.hire+assId+'/interview/'+intId+'/candidate/'+canId, data, contentType);
 }
 
 export const CandidateService = {
     createCandidate,
     updateCandidate,
     inviteCandidate,
-    accessmentCandidate
+    assessmentCandidate,
+    hireCandidate
 };

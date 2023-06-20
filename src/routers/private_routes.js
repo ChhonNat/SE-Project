@@ -34,8 +34,8 @@ const Interview = {
     create: lazy(() => import('../pages/interview/create'))
 };
 
-const Accessment = {
-    home: lazy(() => import('../pages/accessment/home'))
+const Assessment = {
+    home: lazy(() => import('../pages/assessment/home'))
 };
 
 const Hire = {
@@ -124,7 +124,7 @@ export const PRIVATE_ROUTES = [
     {
         name: "Assessments",
         path: "/assessment",
-        component: <Accessment.home />,
+        component: <Assessment.home />,
         icon: <PersonSearchIcon />,
     },
     /**Replies */

@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { TABLE_CONFIG } from "../../utils/table-config";
-import { API_URL } from "../../constants/api_url";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import AsyncTableAction from "../../components/AsyncDataTable/async-table-action";
-import { STATUS } from "../../constants/status";
-import CandidateAssessmentFormModal from "./form-accessment-candidate.modal";
+import { API_URL } from "../../constants/api_url";
+import { TABLE_CONFIG } from "../../utils/table-config";
+import CandidateHireFormModal from "./form-hire-candidate.modal";
 
-const HomeInterview = () => {
+const HomeAssessment = () => {
 
-    const [isReload, setIsReload] = useState(false);
     const [openAssessmentModal, setOpenAssessmentModal] = useState(false);
     const [editCandidate, setEditCandidate] = useState({});
 
+    const [isReload, setIsReload] = useState(false);
+
     return (
         <>
-
             {/* 
                 properties::
                 asyncUrl: 'request data url' 
@@ -28,10 +26,11 @@ const HomeInterview = () => {
                 onHandleAddNewEvent: 'Listen button add new event'
                 customActions: 'Custom button event in table'
             */}
+
             <AsyncDatatable
-                asyncURL={API_URL.interview.get}
-                headers={TABLE_CONFIG.tblInterview}
-                bannerText="All Interviews"
+                asyncURL={API_URL.assessment.get}
+                headers={TABLE_CONFIG.tblAssessment}
+                bannerText="All Assessments"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
@@ -40,22 +39,24 @@ const HomeInterview = () => {
                     search: true,
                     approveCandidate: [
                         {
-                            field: 'interviewResult',
-                            values: [STATUS.INTERVIEW_RESULT.PASSED]
+                            field: 'status',
+                            values: ['Offered']
                         }
                     ],
                 }}
-                handleApproveEvent={(data) => {
-                    setEditCandidate(data);
-                    setOpenAssessmentModal(true);
-                }}
+                handleApproveEvent={
+                    (data) => {
+                        setEditCandidate(data);
+                        setOpenAssessmentModal(true)
+                    }
+                }
             />
 
-            {/* /**Make accessment modal */}
-            <CandidateAssessmentFormModal
-                openAssessmentCandidateModal={openAssessmentModal}
-                onCloseAssessmentCandidateModal={() => setOpenAssessmentModal(false)}
-                interview={editCandidate}
+            {/* Accesment modal to update the candidate to hire */}
+            <CandidateHireFormModal
+                openHireCandidateModal={openAssessmentModal}
+                onCloseHireCandidateModal={() => setOpenAssessmentModal(false)}
+                assessment={editCandidate}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
@@ -63,4 +64,4 @@ const HomeInterview = () => {
     )
 };
 
-export default HomeInterview;
+export default HomeAssessment;

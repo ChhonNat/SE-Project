@@ -27,7 +27,7 @@ const tblCandidate = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'applicationCode', label: "Application Code", sqlField: 'can.application_number'
+        id: 'applicationCode', type: 'status', statusColor: {},  label: "Application Code", sqlField: 'can.application_number'
     },
     {
         id: 'fullName', label: "Candidate's Name", sqlField: 'can.first_name'
@@ -38,11 +38,17 @@ const tblCandidate = [
     {
         id: 'phoneNumber', label: 'Phone', sqlField: 'can.phone_number'
     },
-    {
-        id: 'email', label: 'Email', sqlField: 'can.email'
-    },
+    // {
+    //     id: 'email', label: 'Email', sqlField: 'can.email'
+    // },
     {
         id: 'appliedPositionName', label: 'Position Apply for', sqlField: 'pos.name'
+    },
+    {
+        id: 'departmentName', label: 'Department Name'
+    },
+    {
+        id: 'businessDivisionName', label: 'Business Division', sqlField: 'pos.name'
     },
     {
         id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
@@ -67,6 +73,9 @@ const tblCandidate = [
 const tblInterview = [
     {
         id: 'index', label: 'No.'
+    },{
+        id: 'applicationCode', type: 'status', statusColor: {}, label: 'Application Code'
+
     },
     {
         id: 'candidateName', label: 'Name'
@@ -79,6 +88,9 @@ const tblInterview = [
     },
     {
         id: 'headDepartmentName', label: 'Head Department'
+    },
+    {
+        id: 'businessDivisionName', label: 'Business Division',
     },
     {
         id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'
@@ -97,11 +109,15 @@ const tblInterview = [
 
 
 /***
- * Accessment Table
+ * Assessment Table
  */
-const tblAccessment = [
+const tblAssessment = [
     {
         id: 'index', label: 'No.'
+    },
+    ,{
+        id: 'applicationCode',type: 'status', statusColor: {}, label: 'Application Code'
+
     },
     {
         id: 'candidateName', label: 'Name'
@@ -110,14 +126,23 @@ const tblAccessment = [
         id: 'offerPositionName', label: 'Offer Position'
     },
     {
+        id: 'departmentName', label: 'Department'
+    },
+    {
+        id: 'businessDivisionName', label: 'Business Division'
+    },
+    {
         id: 'offerSalary', label: 'Offer Salary ($)'
     },
+    // {
+    //     id: 'headDepartmentName', label: 'Head Department'
+    // },
+    // ...proof,
+    // {
+    //     id: 'createdBy', label: 'Created By'
+    // },
     {
-        id: 'headDepartmentName', label: 'Head Department'
-    },
-    ...proof,
-    {
-        id: 'createdBy', label: 'Created By'
+        id: 'action', label: 'Actions'
     }
 ];
 
@@ -128,13 +153,32 @@ const tblHire = [
     {
         id: 'index', label: 'No.'
     },
+    ,{
+        id: 'applicationCode',type: 'status', statusColor: {}, label: 'Application Code'
+
+    },
     {
         id: 'candidateName', label: 'Name'
     },
-    ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'hirePositionName', label: 'Hire Position'
+    },
+    {
+        id: 'departmentName', label: 'Department'
+    },
+    {
+        id: 'businessDivisionName', label: 'Business Division' 
+    },
+    {
+        id: 'hireDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Hire Date'
+    },
+    {
+        id: 'joinDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Join Date'
     }
+    // ...proof,
+    // {
+    //     id: 'action', label: 'Actions'
+    // }
 ];
 
 /**
@@ -150,7 +194,7 @@ const tblPosition = [
     {
         id: 'description', label: 'Description',
     },
-    ...proof,
+    // ...proof,
     {
         id: 'action', label: 'Actions'
     },
@@ -184,7 +228,7 @@ const tblRecruiter = [
     {
         id: 'description', label: 'Description'
     },
-    ...proof,
+    // ...proof,
     {
         id: 'action', label: 'Actions'
     },
@@ -203,7 +247,7 @@ const tblDepartment = [
     {
         id: 'description', label: 'Description',
     },
-    ...proof,
+    // ...proof,
     {
         id: 'action', label: 'Actions'
     },
@@ -235,7 +279,7 @@ const tblHeadDepartment = [
     {
         id: 'departmentName', label: 'Department Name'
     },
-    ...proof,
+    // ...proof,
     {
         id: 'action', label: 'Actions'
     }
@@ -255,7 +299,7 @@ const tblBusiness = [
     {
         id: 'description', label: 'Description',
     },
-    ...proof,
+    // ...proof,
     {
         id: 'action', label: 'Actions'
     }
@@ -274,7 +318,7 @@ const tblLocation = [
     {
         id: 'description', label: 'Description'
     },
-    ...proof,
+    // ...proof,
     {
         id: 'action', label: 'Actions'
     }
@@ -295,7 +339,7 @@ const tblReceivingCategory = [
     {
         id: 'description', label: 'Description',
     },
-    ...proof,
+    // ...proof,
     {
         id: 'action', label: 'Actions'
     }
@@ -307,7 +351,7 @@ const tblReceivingCategory = [
 export const TABLE_CONFIG = {
     tblCandidate,
     tblInterview,
-    tblAccessment,
+    tblAssessment,
     tblHire,
     tblBusiness,
     tblDepartment,
