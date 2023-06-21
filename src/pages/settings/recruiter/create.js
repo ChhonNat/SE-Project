@@ -34,7 +34,10 @@ const CreateNewRecruiter = () => {
                 </Grid>
 
                 {/* Footer Page */}
-                <FooterComponent buttonActions={SCREEN_URL.settings.recruiter} />
+                <FooterComponent
+                    buttonActions={SCREEN_URL.settings.recruiter}
+                    actions={{ cancel: true, submit: true }}
+                />
             </Box>
         </>
     )

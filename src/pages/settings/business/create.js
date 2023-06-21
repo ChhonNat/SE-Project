@@ -33,7 +33,10 @@ const CreateNewBusiness = () => {
             </Grid>
 
             {/* Footer Page */}
-            <FooterComponent buttonActions={SCREEN_URL.settings.business} />
+            <FooterComponent
+                buttonActions={SCREEN_URL.settings.business}
+                actions={{ cancel: true, submit: true }}
+            />
         </Box>
     )
 };

@@ -34,7 +34,10 @@ const CreateNewReceivingCategory = () => {
                 </Grid>
 
                 {/* Footer Page */}
-                <FooterComponent buttonActions={SCREEN_URL.settings.receivingCategory} />
+                <FooterComponent
+                    buttonActions={SCREEN_URL.settings.receivingCategory}
+                    actions={{ cancel: true, submit: true }}
+                />
             </Box>
         </>
     )

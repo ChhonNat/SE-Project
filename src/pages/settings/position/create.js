@@ -35,7 +35,10 @@ const CreateNewPosition = () => {
                 </Grid>
 
                 {/* Footer Page */}
-                <FooterComponent buttonActions={SCREEN_URL.settings.position} />
+                <FooterComponent
+                    buttonActions={SCREEN_URL.settings.position}
+                    actions={{ cancel: true, submit: true }}
+                />
             </Box>
         </>
     )

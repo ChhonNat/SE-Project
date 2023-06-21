@@ -90,7 +90,8 @@ const HomeCandidate = () => {
                 onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
                 handleApproveEvent={(data) => handleShortlistCandidate(data)}
                 handleEditEvent={(data) => handleEditCandidate(data)}
-                handleReviewEvent={(data) => handleReviewCandidate(data)}
+                handleReviewEvent={(data) => handleEditCandidate(data)}
+                handleLinkEvent={(data) => handleReviewCandidate(data)}
             />
 
             {/* Create new candidate form */}

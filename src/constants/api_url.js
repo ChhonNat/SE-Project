@@ -14,6 +14,7 @@ export const API_URL = {
         assessment: API_VERSION + '/interviews/',
         editAssessment: API_VERSION + '/assessments/',
         hire: API_VERSION + '/assessments/',
+        downloadCVFile: API_VERSION + '/candidates/download?id=',
 
         lookup: {
             get: API_VERSION + '/candidates/lookup-data'

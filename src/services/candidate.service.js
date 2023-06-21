@@ -29,6 +29,10 @@ const hireCandidate = (data, assId, intId, canId, contentType) => {
     return httpService._put(API_URL.candidate.hire+assId+'/interview/'+intId+'/candidate/'+canId, data, contentType);
 }
 
+const downloadCVFile = (id) => {
+    return httpService._get(API_URL.candidate.downloadCVFile+id);
+}
+
 
 export const CandidateService = {
     createCandidate,
@@ -37,5 +41,6 @@ export const CandidateService = {
     editResultCandidate,
     assessmentCandidate,
     editAssessmentCandidate,
-    hireCandidate
+    hireCandidate,
+    downloadCVFile
 };

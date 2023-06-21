@@ -303,6 +303,7 @@ const CandidateOfferFormModal = (props) => {
                         saveButtunType='submit'
                         saveButtonLabel='Confirm'
                         handleCancel={onCloseOfferCandidateModal}
+                        actions={{ cancel: true, submit: true }}
                     />
                 </DialogActions>
             </Dialog>

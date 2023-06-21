@@ -33,7 +33,10 @@ const CreateNewDepartment = () => {
                 </Grid>
             </Grid>
             {/* Page Footer */}
-           <FooterComponent buttonActions={SCREEN_URL.settings.department} />
+            <FooterComponent
+                buttonActions={SCREEN_URL.settings.department}
+                actions={{ cancel: true, submit: true }}
+            />
         </Box>
     )
 };

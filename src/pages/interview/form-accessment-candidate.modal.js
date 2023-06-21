@@ -254,6 +254,7 @@ const CandidateAssessmentFormModal = (props) => {
                         saveButtunType='submit'
                         saveButtonLabel='Confirm'
                         handleCancel={handleCloseModal}
+                        actions={{ cancel: true, submit: true }}
                     />
                 </DialogActions>
             </Dialog>
