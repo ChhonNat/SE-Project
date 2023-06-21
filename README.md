@@ -72,3 +72,66 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 #npm v 7.x.x
 #node v 18.x.x
+
+
+----
+departmentName
+businessDivisionName
+shortListDate
+shortListResult : passed
+-----
+recruiterName
+headDepartmentName
+interviewDate
+
+
+
+CandidateStatus(Status):  
+-    Pending,
+-    Reviewed,
+-    In_Interview,
+-    In_Assessment,
+-    Hired
+
+ShortlistResult: 
+-    Passed,
+-    Failed
+
+interviewResult:
+-    Passed, 
+-    Failed
+
+Interview status:
+-    Pending, 
+-    Interviewed, 
+-    Suspended, 
+-    Cancel
+
+feedBackChannel: 
+-    Telegram, 
+-    Mail, 
+-    Phone Call, 
+-    SMS, 
+-    Other
+
+2023-06-14
+
+--------------
+Create
+- Candidate -> Pending
+
+--------------
+Review
+- Candidate -> Pending -> Reviewed
+
+--------------
+Shortlist
+- Candidate -> Pending -> Reviewed -> (Passed|Failed) -> In_Interview(Passed)
+
+--------------
+Interview
+- Candidate -> Pending -> Reviewed -> In_Interview -> (Passed|Failed) -> In_Accessment(Passed)
+
+--------------
+--------------
+Candidate => ShortlistResult = 'Passed' && status = 'CV_Reviewed'
