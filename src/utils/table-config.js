@@ -258,6 +258,9 @@ const tblDepartment = [
     {
         id: 'description', label: 'Description',
     },
+    {
+        id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
+    },
     // ...proof,
     {
         id: 'action', label: 'Actions'
@@ -310,6 +313,9 @@ const tblBusiness = [
     {
         id: 'description', label: 'Description',
     },
+    {
+        id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
+    },
     // ...proof,
     {
         id: 'action', label: 'Actions'
@@ -328,6 +334,9 @@ const tblLocation = [
     },
     {
         id: 'description', label: 'Description'
+    },
+    {
+        id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
     },
     // ...proof,
     {

@@ -3,11 +3,15 @@ import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import UpsertForm from "../form/upsert";
+import DepartmentModel from "../../../models/department.model";
+import { KEY_POST } from "../../../constants/key_post";
 
 
 const HomeDepartment = () => {
 
-    const [openAddDepartmentModal, setOpenAddDepartmentModal] = useState(false);
+    const [openDepartmentModal, setOpenDepartmentModal] = useState(false);
+    const [editDepartment, setEditDepartment] = useState({});
+
     const [isReload, setIsReload] = useState(false);
 
     return (
@@ -34,8 +38,30 @@ const HomeDepartment = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true }}
-                onHandleAddNewEvent={() => setOpenAddDepartmentModal(true)}
+                useTableActions={{ search: true, create: true, edit: true }}
+                onHandleAddNewEvent={() => setOpenDepartmentModal(true)}
+                handleEditEvent={(data) => {
+                    setEditDepartment(data);
+                    setOpenDepartmentModal(true);
+                }}
+            />
+
+            
+            {/* Modal create and update */}
+            <UpsertForm
+                title={editDepartment?.id ? "Edit department" : "Add new department"}
+                openModal={openDepartmentModal}
+                editData={editDepartment}
+                onCloseModal={() => {
+                    setEditDepartment(DepartmentModel);
+                    setOpenDepartmentModal(false);
+                }}
+                model={DepartmentModel}
+                keyPosts={KEY_POST.department}
+                postUrl={API_URL.department.create}
+                putUrl={API_URL.department.edit}
+                dataType={'/department'}
+                handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
         </>
