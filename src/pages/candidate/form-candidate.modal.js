@@ -546,6 +546,7 @@ const CandidateFormModal = (props) => {
                         saveButtunType='submit'
                         handleCancel={handleCloseModal}
                         saveButtonLabel={candidate?.id ? 'Update' : 'Save'}
+                        actions={{ cancel: true, submit: true }}
                     />
                 </DialogActions>
             </Dialog>

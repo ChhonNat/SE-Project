@@ -1,117 +1,77 @@
-import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
-import Divider from "@mui/material/Divider";
+import React, { forwardRef, useEffect, useState } from "react";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Slide } from "@mui/material";
 import TitleComponent from "../../components/Page/title";
-import SelectComponent from "../../components/Selector/select";
 import FooterComponent from "../../components/Page/footer";
-import { globalService } from "../../services/global.service";
-import { API_URL } from "../../constants/api_url";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CandidateModel } from "../../models/candidate.model";
-// import CandidateModel from "../../models/candidate.model";
+import { CandidateService } from "../../services/candidate.service";
+import { HTTP_STATUS } from "../../constants/http_status";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const shrinkOpt = { shrink: true };
 
 const CandidateReviewFormModal = (props) => {
 
     const { openReviewCandidateModal, onCloseReviewCandidateModal, candidate, modalTitle } = props;
-    const { register, setValue, watch, formState } = useForm({ resolver: zodResolver(CandidateModel.Create) });
-    const watchCandidate = watch();
-
-    const [listShortlistResults, setShortlistResults] = useState([]);
-
+    const [cvFile, setCvFile] = useState();
 
     useEffect(() => {
 
         if (candidate?.id) {
-
-            for (let key in candidate) {
-
-                if (key === 'appliedDate') {
-
-                    const appliedDate = new Date(candidate[key]);
-                    setValue(key, appliedDate.getFullYear() + '-' + appliedDate.getMonth() + '-' + appliedDate.getDate());
-                } else {
-
-                    setValue(key, candidate[key]);
-                }
-            }
+            downloadCVFile(candidate?.id);
         }
 
-    }, [candidate?.id])
+    }, [candidate]);
 
-    useEffect(() => {
-        fetchData(API_URL.candidate.lookup.get, setShortlistResults);
-    }, [])
+    const downloadCVFile = async (canId) => {
 
-    const fetchData = useCallback(async (url, setData) => {
         try {
-            const req = await globalService.getData(url);
-
-            const { success, data } = req.data;
-            success ? setData(data?.shortlistResults) : setData([]);
+            await CandidateService.downloadCVFile(canId)
+                .then((result) => {
+                    const { status, data } = result;
+                    console.log(result);
+                }).catch((err) => {
+                    console.log(err);
+                })
 
         } catch (error) {
             console.log(error);
         }
-    }, [])
+    };
 
 
     return (
-        <div>
+        <>
             <Dialog
                 fullScreen={true}
-                maxWidth="lg"
                 TransitionComponent={TransitionModal}
                 open={openReviewCandidateModal}
-                component="form"
+                sx={{ margin: 1 }}
             >
                 <DialogTitle>
                     <TitleComponent title={modalTitle} />
                 </DialogTitle>
-                
+
                 <DialogContent dividers>
 
-                    <embed src="sample.pdf"
+                    <embed
+                        src="http://172.168.0.38:8585/api/v1/candidates/download?id=54"
                         style={
                             {
                                 width: '-webkit-fill-available',
-                                height: '70vh',
+                                height: '100%',
                             }}
                     />
 
-                    <Box sx={{ width: '100%' }} paddingTop={5}>
-                        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-
-                            {/* Shortlist Date */}
-                            <Grid item xs={12}>
-                                <SelectComponent
-                                    id="department-id"
-                                    label={'Review Result'}
-                                    size={'small'}
-                                    customDatas={listShortlistResults}
-                                    value={watchCandidate?.shortlistResult || ''}
-                                    handleOnChange={(e) => setValue('shortlistResult', e?.target?.value)}
-                                />
-                            </Grid>
-
-                        </Grid>
-                    </Box>
                 </DialogContent>
                 <DialogActions>
                     <FooterComponent
-                        saveButtunType='submit'
                         handleCancel={onCloseReviewCandidateModal}
-                        saveButtonLabel={'Confirm'}
+                        actions={{ cancel: true, submit: false }}
                     />
                 </DialogActions>
             </Dialog>
-        </div>
+        </>
     )
 };
 

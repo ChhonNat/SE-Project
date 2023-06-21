@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Tab, TableCell, TableRow, Typography } from '@mui/material';
+import { Link, Tab, TableCell, TableRow, Typography } from '@mui/material';
 import Moment from 'react-moment';
 import uuid from 'react-uuid';
 import AsyncTableAction from './async-table-action';
@@ -28,6 +28,7 @@ const TableRows = ({
     handleReviewEvent,
     handleAssessmentEvent,
     handleEditEvent,
+    handleLinkEvent,
     headers,
     checkColumn,
     pageSize,
@@ -101,6 +102,11 @@ const TableRows = ({
                          */
                         const isStatus = head?.type === 'status';
                         const recordStatus = row[head.id] === 1 ? 'Active' : 'Inactive';
+
+                        /**
+                         * Get header type link
+                         */
+                        const isLink = head?.type === 'link';
 
 
                         /**Map button action with the condidtion */
@@ -195,8 +201,13 @@ const TableRows = ({
                                             </Typography>
                                         }
 
+                                        {/* Use link */}
+                                        {
+                                            isLink && <Link sx={{ cursor: 'pointer' }} onClick={() => handleLinkEvent(row)}>{row[head.id]}</Link>
+                                        }
+
                                         {/* Use normal field */}
-                                        {!showIndex && !typeDate && !isAction && !isStatus && !isBadge && row[head.id]}
+                                        {!showIndex && !typeDate && !isAction && !isStatus && !isBadge && !isLink && row[head.id]}
 
                                         {/* Custom button actions */}
                                         {isAction &&

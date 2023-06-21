@@ -234,6 +234,7 @@ const CandidateResultFormModal = (props) => {
                     saveButtunType='submit'
                     saveButtonLabel='Confirm'
                     handleCancel={onCloseResultCandidateModal}
+                    actions={{ cancel: true, submit: true }}
                 />
             </DialogActions>
         </Dialog>

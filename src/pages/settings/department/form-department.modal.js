@@ -59,6 +59,7 @@ const DepartmentFormModal = ({openDepartmentModal, onCloseDepartmentModal}) => {
                     <FooterComponent
                         saveButtunType='submit'
                         handleCancel={onCloseDepartmentModal}
+                        actions={{ cancel: true, submit: true }}
                     />
                 </DialogActions>
             </Dialog>

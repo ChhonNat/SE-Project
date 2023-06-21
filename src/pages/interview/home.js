@@ -61,6 +61,9 @@ const HomeInterview = () => {
                     setEditCandidate(data);
                     setOpenResultModal(true)
                 }}
+                handleLinkEvent={(data) => {
+                    
+                }}
             />
 
             {/* /**Make accessment modal */}
