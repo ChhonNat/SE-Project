@@ -10,9 +10,17 @@ const SHORTLIST_RESULT = {
 };
 
 const INTERVIEW_RESULT = {
+    PENDING: 'Pending',
+    FAILED: 'Failed',
     PASSED: 'Passed',
-    FAILED: 'Failed'
 };
+
+const ASSESSMENT_RESULT = {
+    SUSPENDED: 'Suspended',
+    CANCELlED: 'Cancel',
+    OFFERED: 'Offered'
+};
+
 
 const CANDIDATE = {
     PENDING: 'Pending',
@@ -26,5 +34,6 @@ export const STATUS = {
     RECORD,
     SHORTLIST_RESULT,
     INTERVIEW_RESULT,
+    ASSESSMENT_RESULT,
     CANDIDATE
 };

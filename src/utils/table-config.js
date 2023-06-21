@@ -27,7 +27,7 @@ const tblCandidate = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'applicationCode', type: 'status', statusColor: {},  label: "Application Code", sqlField: 'can.application_number'
+        id: 'applicationCode', type: 'link', statusColor: {}, label: "Application Code", sqlField: 'can.application_number'
     },
     {
         id: 'fullName', label: "Candidate's Name", sqlField: 'can.first_name'
@@ -60,7 +60,7 @@ const tblCandidate = [
         label: 'Shortlist Result'
     },
     {
-        id: 'status', type: 'status', statusColor: {Hired: 'Green', In_Assessment: 'MediumBlue', CV_Reviewed: 'DarkOrange', In_Interview: 'Maroon'}, label: 'Status'
+        id: 'status', type: 'status', statusColor: { Hired: 'Green', In_Assessment: 'MediumBlue', CV_Reviewed: 'DarkOrange', In_Interview: 'Maroon' }, label: 'Status'
     },
     {
         id: 'action', label: 'Actions',
@@ -73,8 +73,8 @@ const tblCandidate = [
 const tblInterview = [
     {
         id: 'index', label: 'No.'
-    },{
-        id: 'applicationCode', type: 'status', statusColor: {}, label: 'Application Code'
+    }, {
+        id: 'applicationCode', type: 'link', statusColor: {}, label: 'Application Code'
 
     },
     {
@@ -96,7 +96,7 @@ const tblInterview = [
         id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'
     },
     {
-        id: 'status', type: 'status', statusColor: {}, label: 'Status'  
+        id: 'status', type: 'status', statusColor: {}, label: 'Status'
     },
     {
         id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'
@@ -115,8 +115,8 @@ const tblAssessment = [
     {
         id: 'index', label: 'No.'
     },
-    ,{
-        id: 'applicationCode',type: 'status', statusColor: {}, label: 'Application Code'
+    , {
+        id: 'applicationCode', type: 'status', statusColor: {}, label: 'Application Code'
 
     },
     {
@@ -133,6 +133,9 @@ const tblAssessment = [
     },
     {
         id: 'offerSalary', label: 'Offer Salary ($)'
+    },
+    {
+        id: 'status', type: 'status', statusColor: { Offered: 'Green', Suspended: 'Orange', Cancel: 'Red' }, label: 'Status'
     },
     // {
     //     id: 'headDepartmentName', label: 'Head Department'
@@ -153,9 +156,11 @@ const tblHire = [
     {
         id: 'index', label: 'No.'
     },
-    ,{
-        id: 'applicationCode',type: 'status', statusColor: {}, label: 'Application Code'
-
+    , {
+        id: 'applicationCode',
+        type: 'link',
+        statusColor: {},
+        label: 'Application Code'
     },
     {
         id: 'candidateName', label: 'Name'
@@ -167,13 +172,16 @@ const tblHire = [
         id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisionName', label: 'Business Division' 
+        id: 'businessDivisionName', label: 'Business Division'
     },
     {
         id: 'hireDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Hire Date'
     },
     {
         id: 'joinDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Join Date'
+    },
+    {
+        id: 'status', type: 'status', statusColor: { Hired: 'Green' }, label: 'Status'
     }
     // ...proof,
     // {

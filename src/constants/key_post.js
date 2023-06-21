@@ -28,13 +28,35 @@ const invite_candidate = [
     "interviewDate"
 ];
 
-const accessment_candidate = [
+const edit_result_candidate = [
+    "interviewDate",
+    "interviewResult",
+    "feedBackDate",
+    "feedBackChannel",
+    "remark",
+    "status"
+];
+
+const make_assessment_candidate = [
     "appliedPositionId",
     "departmentId",
     "businessDivisionId",
     "headDepartmentId",
     "appliedLocationId",
     "offerDate"
+];
+
+const offer_assessment_candidate = [
+    "offerSalary",
+    "offerDate",
+    "submitOPSOfficeDate",
+    "submitCEOOfficeDate",
+    "receivedOPSOfficeDate",
+    "receivedCEOOfficeDate",
+    "signedOfferDate",
+    "signedContractDate",
+    "remark",
+    "status"
 ];
 
 const hire_candidate = [
@@ -50,6 +72,8 @@ const hire_candidate = [
 export const KEY_POST = {
     update_candidate,
     invite_candidate,
-    accessment_candidate,
+    edit_result_candidate,
+    make_assessment_candidate,
+    offer_assessment_candidate,
     hire_candidate
 };

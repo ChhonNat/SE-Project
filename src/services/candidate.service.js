@@ -5,26 +5,42 @@ const createCandidate = (data, contentType) => {
     return httpService._post(API_URL.candidate.create, data, contentType );
 };
 
-const updateCandidate = (data,id, contentType) => {
-    return httpService._put(API_URL.candidate.update+id, data, contentType);
+const editCandidate = (data,id, contentType) => {
+    return httpService._put(API_URL.candidate.edit+id, data, contentType);
 }
 
 const inviteCandidate = (data,id, contentType) => {
     return httpService._put(API_URL.candidate.invite+id+'/invite', data, contentType);
 }
 
+const editResultCandidate = (data, id, contentType) => {
+    return httpService._put(API_URL.candidate.editResult+id, data, contentType);
+}
+
 const assessmentCandidate = (data,intId, canId, contentType) => {
     return httpService._put(API_URL.candidate.assessment+intId+'/candidate/'+canId, data, contentType);
+}
+
+const editAssessmentCandidate = (data, id, contentType) => {
+    return httpService._put(API_URL.candidate.editAssessment+id,data,contentType);
 }
 
 const hireCandidate = (data, assId, intId, canId, contentType) => {
     return httpService._put(API_URL.candidate.hire+assId+'/interview/'+intId+'/candidate/'+canId, data, contentType);
 }
 
+const downloadCVFile = (id) => {
+    return httpService._get(API_URL.candidate.downloadCVFile+id);
+}
+
+
 export const CandidateService = {
     createCandidate,
-    updateCandidate,
+    editCandidate,
     inviteCandidate,
+    editResultCandidate,
     assessmentCandidate,
-    hireCandidate
+    editAssessmentCandidate,
+    hireCandidate,
+    downloadCVFile
 };

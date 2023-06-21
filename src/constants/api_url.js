@@ -8,20 +8,31 @@ export const API_URL = {
     candidate: {
         get: API_VERSION + '/candidates/search',
         create: API_VERSION + '/candidates',
-        update: API_VERSION + '/candidates/',
+        edit: API_VERSION + '/candidates/',
         invite: API_VERSION + '/candidates/',
+        editResult: API_VERSION + '/interviews/',
         assessment: API_VERSION + '/interviews/',
+        editAssessment: API_VERSION + '/assessments/',
         hire: API_VERSION + '/assessments/',
+        downloadCVFile: API_VERSION + '/candidates/download?id=',
 
         lookup: {
             get: API_VERSION + '/candidates/lookup-data'
         }
     },
     interview: {
-        get: API_VERSION + '/interviews/search'
+        get: API_VERSION + '/interviews/search',
+        
+        lookup: {
+            get: API_VERSION + '/interviews/lookup-data'
+        }
     },
     assessment: {
-        get: API_VERSION + '/assessments/search'
+        get: API_VERSION + '/assessments/search',
+
+        lookup: {
+            get: API_VERSION + '/assessments/lookup-data'
+        }
     },
     hire: {
         get: API_VERSION + '/hires/search'

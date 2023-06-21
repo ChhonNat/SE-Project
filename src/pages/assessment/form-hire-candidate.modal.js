@@ -11,7 +11,7 @@ import { HTTP_STATUS } from "../../constants/http_status";
 import Swal from "sweetalert2";
 import { DATA_STATUS } from "../../constants/data_status";
 import { ALERT_TIMER } from "../../constants/app_config";
-import AssessmentModel from "../../models/assessment.model";
+import { AssessmentModel } from "../../models/assessment.model";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -23,10 +23,8 @@ const CandidateHireFormModal = (props) => {
 
 
     const { openHireCandidateModal, onCloseHireCandidateModal, assessment, handleEventSuccessed } = props;
-    const { register, handleSubmit, setValue, formState } = useForm({ resolver: zodResolver(AssessmentModel) });
+    const { register, handleSubmit, setValue, formState } = useForm({ resolver: zodResolver(AssessmentModel.Hire) });
     const { errors } = formState;
-
-    console.log('assessment', assessment);
 
     useEffect(() => {
 
@@ -244,6 +242,7 @@ const CandidateHireFormModal = (props) => {
                         saveButtunType='submit'
                         saveButtonLabel='Confirm'
                         handleCancel={handleCloseModal}
+                        actions={{ cancel: true, submit: true }}
                     />
                 </DialogActions>
             </Dialog>

@@ -198,7 +198,7 @@ const CandidateFormModal = (props) => {
             let submitCandidateForm;
 
             if (candidate?.id) {
-                submitCandidateForm = await CandidateService.updateCandidate(submitFormData, candidate?.id, 'multipart/form-data');
+                submitCandidateForm = await CandidateService.editCandidate(submitFormData, candidate?.id, 'multipart/form-data');
             } else {
 
                 submitCandidateForm = await CandidateService.createCandidate(submitFormData, 'multipart/form-data');
@@ -546,6 +546,7 @@ const CandidateFormModal = (props) => {
                         saveButtunType='submit'
                         handleCancel={handleCloseModal}
                         saveButtonLabel={candidate?.id ? 'Update' : 'Save'}
+                        actions={{ cancel: true, submit: true }}
                     />
                 </DialogActions>
             </Dialog>
