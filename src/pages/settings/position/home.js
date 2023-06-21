@@ -44,9 +44,9 @@ const HomePosition = () => {
                 }}
             />
 
-            {/* Modal create */}
-            <UpsertForm 
-                title="Add new position"
+            {/* Modal create and update */}
+            <UpsertForm
+                title={editPosition?.id ? "Edit position" : "Add new position"}
                 openModal={openPositionModal}
                 editData={editPosition}
                 onCloseModal={() => {

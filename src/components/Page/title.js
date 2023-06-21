@@ -8,10 +8,10 @@ const TitleComponent = (props) => {
     return (
         <Typography variant="h6" id="tableTitle" component="div"
             sx={{
-                background: '#f2eeee',
-                paddingLeft: 2,
-                paddingRight: 2,
-                borderRadius: 2,
+                // background: '#f2eeee',
+                // paddingLeft: 2,
+                // paddingRight: 2,
+                // borderRadius: 2,
                 color: '#1976d2',
                 fontWeight: 'bold',
                 width: 'max-content'

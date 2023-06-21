@@ -75,6 +75,25 @@ const position = [
     "status",
 ];
 
+const department = [
+    "name",
+    "description",
+    "status",
+];
+
+const business = [
+    "name",
+    "description",
+    "status",
+];
+
+const location = [
+    "name",
+    "description",
+    "status",
+];
+
+
 export const KEY_POST = {
     update_candidate,
     invite_candidate,
@@ -82,5 +101,8 @@ export const KEY_POST = {
     make_assessment_candidate,
     offer_assessment_candidate,
     hire_candidate,
-    position
+    position,
+    department,
+    business,
+    location
 };
