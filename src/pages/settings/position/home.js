@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
-import AsyncTableAction from "../../../components/AsyncDataTable/async-table-action";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
+import PositionModel from "../../../models/position.model";
+import { KEY_POST } from "../../../constants/key_post";
+import UpsertForm from "../form/upsert";
 
 const HomePosition = () => {
 
     const [isReload, setIsReload] = useState(false);
+    const [editPosition, setEditPosition] = useState({});
     const [openPositionModal, setOpenPositionModal] = useState(false);
 
     return (
@@ -33,13 +36,29 @@ const HomePosition = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true }}
+                useTableActions={{ search: true, create: true, edit: true }}
                 onHandleAddNewEvent={() => setOpenPositionModal(true)}
-                // customActions={
-                //     <AsyncTableAction
-                //         useActions={{ edit: true, delete: true }}
-                //     />
-                // }
+                handleEditEvent={(data) => {
+                    setEditPosition(data);
+                    setOpenPositionModal(true);
+                }}
+            />
+
+            {/* Modal create */}
+            <UpsertForm 
+                title="Add new position"
+                openModal={openPositionModal}
+                editData={editPosition}
+                onCloseModal={() => {
+                    setEditPosition(PositionModel);
+                    setOpenPositionModal(false);
+                }}
+                model={PositionModel}
+                keyPosts={KEY_POST.position}
+                postUrl={API_URL.position.create}
+                putUrl={API_URL.position.edit}
+                dataType={'/position'}
+                handleEventSuccessed={() => setIsReload(!isReload)}
             />
         </>
     )

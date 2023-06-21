@@ -96,7 +96,7 @@ const CandidateOfferFormModal = (props) => {
                     title:success ? 'Success' : 'Error',
                     text: message,
                     icon: success ? 'success' : 'error',
-                    confirmButtonText: 'Text',
+                    confirmButtonText: 'OK',
                     timer: ALERT_TIMER
                 });
 
