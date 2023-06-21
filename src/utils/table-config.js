@@ -134,6 +134,9 @@ const tblAssessment = [
     {
         id: 'offerSalary', label: 'Offer Salary ($)'
     },
+    {
+        id: 'status', type: 'status' ,statusColor: {Offered: 'Green', Suspended: 'Orange', Cancel: 'Red'} ,label: 'Status'
+    },
     // {
     //     id: 'headDepartmentName', label: 'Head Department'
     // },
@@ -174,6 +177,9 @@ const tblHire = [
     },
     {
         id: 'joinDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Join Date'
+    },
+    {
+        id: 'status', type: 'status', statusColor: {Hired: 'Green'}, label: 'Status'
     }
     // ...proof,
     // {

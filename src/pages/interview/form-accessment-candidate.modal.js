@@ -23,7 +23,7 @@ const CandidateAssessmentFormModal = (props) => {
 
 
     const { openAssessmentCandidateModal, onCloseAssessmentCandidateModal, interview, handleEventSuccessed } = props;
-    const { register, handleSubmit, setValue, formState} = useForm({ resolver: zodResolver(InterviewModel) });
+    const { register, handleSubmit, setValue, formState } = useForm({ resolver: zodResolver(InterviewModel) });
     const { errors } = formState;
 
     useEffect(() => {
@@ -52,12 +52,12 @@ const CandidateAssessmentFormModal = (props) => {
 
         Object.keys(data).forEach((key) => {
 
-            if (KEY_POST.accessment_candidate.includes(key)) {
+            if (KEY_POST.make_assessment_candidate.includes(key)) {
 
                 if (key === 'offerDate')
                     data[key] = ConverterService.convertDateToAPI(data[key])
 
-                    assesssmentCandidate[key] = data[key];
+                assesssmentCandidate[key] = data[key];
             }
         });
 
@@ -67,12 +67,11 @@ const CandidateAssessmentFormModal = (props) => {
             const { status, data } = submitCandidate;
             const { message } = data;
 
-            console.log(submitCandidate);
 
             if (status === HTTP_STATUS.success) {
 
-                if(data?.status === DATA_STATUS.success)
-                handleEventSuccessed();
+                if (data?.status === DATA_STATUS.success)
+                    handleEventSuccessed();
 
                 Swal.fire({
                     title: data?.status === DATA_STATUS.success ? 'Success' : 'Error',

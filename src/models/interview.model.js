@@ -31,7 +31,7 @@ const InterviewModel = object({
     feedBackChannel: string().optional().nullable(),
     remark: string().optional().nullable(),
     interviewResult: string().optional().nullable(),
-    feedBackDate: string().optional().nullable()
+    feedBackDate: any().optional().nullable()
 });
 
 export default InterviewModel;

@@ -15,6 +15,13 @@ const INTERVIEW_RESULT = {
     PASSED: 'Passed',
 };
 
+const ASSESSMENT_RESULT = {
+    SUSPENDED: 'Suspended',
+    CANCELlED: 'Cancel',
+    OFFERED: 'Offered'
+};
+
+
 const CANDIDATE = {
     PENDING: 'Pending',
     CV_REVIEWED: 'CV_Reviewed',
@@ -27,5 +34,6 @@ export const STATUS = {
     RECORD,
     SHORTLIST_RESULT,
     INTERVIEW_RESULT,
+    ASSESSMENT_RESULT,
     CANDIDATE
 };

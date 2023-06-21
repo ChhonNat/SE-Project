@@ -8,10 +8,11 @@ export const API_URL = {
     candidate: {
         get: API_VERSION + '/candidates/search',
         create: API_VERSION + '/candidates',
-        update: API_VERSION + '/candidates/',
+        edit: API_VERSION + '/candidates/',
         invite: API_VERSION + '/candidates/',
-        result: API_VERSION + '/interviews/',
+        editResult: API_VERSION + '/interviews/',
         assessment: API_VERSION + '/interviews/',
+        editAssessment: API_VERSION + '/assessments/',
         hire: API_VERSION + '/assessments/',
 
         lookup: {
@@ -26,7 +27,11 @@ export const API_URL = {
         }
     },
     assessment: {
-        get: API_VERSION + '/assessments/search'
+        get: API_VERSION + '/assessments/search',
+
+        lookup: {
+            get: API_VERSION + '/assessments/lookup-data'
+        }
     },
     hire: {
         get: API_VERSION + '/hires/search'

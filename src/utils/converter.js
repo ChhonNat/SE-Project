@@ -4,7 +4,7 @@
 const convertUnixDateToMUI = (date) => {
 
     const newDate = new Date(date);
-    return newDate.getFullYear() + '-' + ('0' + (newDate.getMonth() + 1)).slice(-2) + '-' + newDate.getDate();
+    return newDate.getFullYear() + '-' + ('0' + (newDate.getMonth() + 1)).slice(-2) + '-' + ('0' + (newDate.getDate() + 0)).slice(-2);
 };
 
 /**
@@ -13,7 +13,7 @@ const convertUnixDateToMUI = (date) => {
 const convertDateToAPI = (date) => {
 
     const newDate = new Date(date);
-    return ('0' + (newDate.getMonth() + 1)).slice(-2) + '/' + newDate.getDate() + '/' + newDate.getFullYear();
+    return ('0' + (newDate.getMonth() + 1)).slice(-2) + '/' + ('0' + (newDate.getDate() + 0)).slice(-2) + '/' + newDate.getFullYear();
 };
 
 /**

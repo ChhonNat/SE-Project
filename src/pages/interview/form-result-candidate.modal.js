@@ -88,7 +88,7 @@ const CandidateResultFormModal = (props) => {
         let resultCandidate = {};
 
         Object.keys(dataCandidate).forEach((key) => {
-            if (KEY_POST.result_candidate.includes(key)) {
+            if (KEY_POST.edit_result_candidate.includes(key)) {
 
                 if (key === 'interviewDate') {
 
@@ -104,7 +104,7 @@ const CandidateResultFormModal = (props) => {
             }
         })
 
-        const submitCandidate = await CandidateService.resultCandidate(resultCandidate, dataCandidate?.id);
+        const submitCandidate = await CandidateService.editResultCandidate(resultCandidate, dataCandidate?.id);
         const { status, data } = submitCandidate;
         const { message } = data;
 
@@ -139,7 +139,7 @@ const CandidateResultFormModal = (props) => {
             onSubmit={handleSubmit(onSubmit, onError)}
         >
             <DialogTitle>
-                <TitleComponent title="Edit Candidate Result" />
+                <TitleComponent title="Edit Candidate" />
             </DialogTitle>
             <DialogContent dividers>
                 <Box sx={{ width: '100%' }}>
