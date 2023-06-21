@@ -46,17 +46,17 @@ const Settings = {
 
     position: {
         home: lazy(() => import('../pages/settings/position/home')),
-        create: lazy(() => import('../pages/settings/position/create'))
+        // create: lazy(() => import('../pages/settings/position/create'))
     },
 
     recruiter: {
         home: lazy(() => import('../pages/settings/recruiter/home')),
-        create: lazy(() => import('../pages/settings/recruiter/create'))
+        // create: lazy(() => import('../pages/settings/recruiter/create'))
     },
 
     department: {
         home: lazy(() => import('../pages/settings/department/home')),
-        create: lazy(() => import('../pages/settings/department/create'))
+        // create: lazy(() => import('../pages/settings/department/create'))
     },
 
     headDepartment: {
@@ -65,7 +65,7 @@ const Settings = {
 
     businessUnit: {
         home: lazy(() => import('../pages/settings/business/home')),
-        create: lazy(() => import('../pages/settings/business/home'))
+        // create: lazy(() => import('../pages/settings/business/home'))
     },
 
     location: {

@@ -38,7 +38,9 @@ export const API_URL = {
         get: API_VERSION + '/hires/search'
     },
     position: {
-        get: API_VERSION + '/positions/search'
+        get: API_VERSION + '/positions/search',
+        create: API_VERSION + '/settings/position',
+        edit: API_VERSION + '/settings/'
     },
     recruiter: {
         get: API_VERSION + '/recruiters/search'

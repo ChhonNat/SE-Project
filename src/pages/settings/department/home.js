@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import AsyncTableAction from "../../../components/AsyncDataTable/async-table-action";
-import DepartmentFormModal from "./form-department.modal";
+import UpsertForm from "../form/upsert";
 
 
 const HomeDepartment = () => {
@@ -37,18 +36,8 @@ const HomeDepartment = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{ search: true, create: true }}
                 onHandleAddNewEvent={() => setOpenAddDepartmentModal(true)}
-                // customActions={
-                //     <AsyncTableAction
-                //         useActions={{ edit: true, delete: true }}
-                //     />
-                // }
             />
 
-            {/* Add new partment modal */}
-            <DepartmentFormModal
-                openDepartmentModal={openAddDepartmentModal}
-                onCloseDepartmentModal={() => setOpenAddDepartmentModal(false)}
-            />
         </>
     )
 }

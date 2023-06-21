@@ -60,13 +60,19 @@ const offer_assessment_candidate = [
 ];
 
 const hire_candidate = [
-        "offerPositionId",
-        "departmentId",
-        "businessDivisionId",
-        "headDepartmentId",
-        "offerLocationId",
-        "hireDate",
-        "joinDate"
+    "offerPositionId",
+    "departmentId",
+    "businessDivisionId",
+    "headDepartmentId",
+    "offerLocationId",
+    "hireDate",
+    "joinDate"
+];
+
+const position = [
+    "name",
+    "description",
+    "status",
 ];
 
 export const KEY_POST = {
@@ -75,5 +81,6 @@ export const KEY_POST = {
     edit_result_candidate,
     make_assessment_candidate,
     offer_assessment_candidate,
-    hire_candidate
+    hire_candidate,
+    position
 };

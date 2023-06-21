@@ -4,6 +4,9 @@ import axiosAPI from '../services/http.service';
 
 const _httpReducer = (httpState, action) => {
 
+    console.log('httpState', httpState);
+    console.log('action', action)
+
     switch (action.type) {
         case 'SEND':
             return {
@@ -36,6 +39,7 @@ const _useHttp = () => {
         loading: true,
         error: null,
         data: null,
+        message: null
     });
 
     const sendRequest = useCallback(async (url, method, sendData) => {
@@ -53,10 +57,12 @@ const _useHttp = () => {
                 .then(function (result) {
 
                     const { data, success, message } = result?.data;
+                    data.message = message;
+
                     success ?
                         dispatchHttp({ type: 'RESPONSE', data }) :
                         dispatchHttp({ type: 'ERROR', error: message });
-                })  
+                })
                 .catch((error) => {
 
                     const { message } = error || '';
@@ -73,6 +79,7 @@ const _useHttp = () => {
                 .then(function (result) {
 
                     const { data, success, message } = result?.data;
+                    data.message = message;
 
                     success ?
                         dispatchHttp({ type: 'RESPONSE', data }) :
@@ -86,15 +93,18 @@ const _useHttp = () => {
         }
 
         /**
-         * CASE: send request method = 'DELETE'
+         * CASE: send request method = 'PUT'
          */
-        if (method === 'GET') {
+        if (method === 'PUT') {
 
-            await axiosAPI.delete(url, postData)
+            await axiosAPI.put(url, postData)
                 .then(function (result) {
 
                     const { data, success, message } = result?.data;
-                    success ? dispatchHttp({ type: 'RESPONSE', data }) :
+                    data.message = message;
+
+                    success ?
+                        dispatchHttp({ type: 'RESPONSE', data }) :
                         dispatchHttp({ type: 'ERROR', error: message });
                 })
                 .catch((error) => {
@@ -102,7 +112,6 @@ const _useHttp = () => {
                     const { message } = error || '';
                     dispatchHttp({ type: 'ERROR', message: message });
                 });
-
         }
 
     }, [],
@@ -112,6 +121,7 @@ const _useHttp = () => {
         loading: httpState?.loading,
         data: httpState?.data,
         error: httpState?.error,
+        message: httpState?.data?.message,
         sendRequest,
     };
 };
