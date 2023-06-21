@@ -26,12 +26,12 @@ const Dashboard = lazy(() => import('../pages/dashboard/dashboard'));
 
 const Candidate = {
     home: lazy(() => import('../pages/candidate/home')),
-    create: lazy(() => import('../pages/candidate/create'))
+    // create: lazy(() => import('../pages/candidate/create'))
 };
 
 const Interview = {
     home: lazy(() => import('../pages/interview/home')),
-    create: lazy(() => import('../pages/interview/create'))
+    // create: lazy(() => import('../pages/interview/create'))
 };
 
 const Assessment = {

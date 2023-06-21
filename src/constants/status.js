@@ -10,8 +10,9 @@ const SHORTLIST_RESULT = {
 };
 
 const INTERVIEW_RESULT = {
+    PENDING: 'Pending',
+    FAILED: 'Failed',
     PASSED: 'Passed',
-    FAILED: 'Failed'
 };
 
 const CANDIDATE = {

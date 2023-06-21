@@ -5,11 +5,13 @@ import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import AsyncTableAction from "../../components/AsyncDataTable/async-table-action";
 import { STATUS } from "../../constants/status";
 import CandidateAssessmentFormModal from "./form-accessment-candidate.modal";
+import CandidateResultFormModal from "./form-result-candidate.modal";
 
 const HomeInterview = () => {
 
     const [isReload, setIsReload] = useState(false);
     const [openAssessmentModal, setOpenAssessmentModal] = useState(false);
+    const [openResultModal, setOpenResultModal] = useState(false);
     const [editCandidate, setEditCandidate] = useState({});
 
     return (
@@ -44,10 +46,20 @@ const HomeInterview = () => {
                             values: [STATUS.INTERVIEW_RESULT.PASSED]
                         }
                     ],
+                    edit: [
+                        {
+                            field: 'interviewResult',
+                            values: [STATUS.INTERVIEW_RESULT.PASSED,STATUS.INTERVIEW_RESULT.FAILED,STATUS.INTERVIEW_RESULT.PENDING]
+                        }
+                    ]
                 }}
                 handleApproveEvent={(data) => {
                     setEditCandidate(data);
                     setOpenAssessmentModal(true);
+                }}
+                handleEditEvent={(data) => {
+                    setEditCandidate(data);
+                    setOpenResultModal(true)
                 }}
             />
 
@@ -56,6 +68,14 @@ const HomeInterview = () => {
                 openAssessmentCandidateModal={openAssessmentModal}
                 onCloseAssessmentCandidateModal={() => setOpenAssessmentModal(false)}
                 interview={editCandidate}
+                handleEventSuccessed={() => setIsReload(!isReload)}
+            />
+
+            {/* Update Candidate Result */}
+            <CandidateResultFormModal 
+                openResultCandidateModal={openResultModal}
+                onCloseResultCandidateModal={() => setOpenResultModal(false)}
+                candidate={editCandidate}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 

@@ -27,7 +27,11 @@ const InterviewModel = object({
     status: string().optional().nullable().default('Pending'),
     receivedChannel: string().optional().nullable(),
     interviewDate: string().optional().nullable(),
-    offerDate: string().optional().nullable()
+    offerDate: string().optional().nullable(),
+    feedBackChannel: string().optional().nullable(),
+    remark: string().optional().nullable(),
+    interviewResult: string().optional().nullable(),
+    feedBackDate: string().optional().nullable()
 });
 
 export default InterviewModel;

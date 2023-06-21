@@ -26,8 +26,6 @@ const CandidateAssessmentFormModal = (props) => {
     const { register, handleSubmit, setValue, formState} = useForm({ resolver: zodResolver(InterviewModel) });
     const { errors } = formState;
 
-    console.log(interview);
-
     useEffect(() => {
 
         if (interview?.id) {

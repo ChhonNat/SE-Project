@@ -28,6 +28,15 @@ const invite_candidate = [
     "interviewDate"
 ];
 
+const result_candidate = [
+    "interviewDate",
+    "interviewResult",
+    "feedBackDate",
+    "feedBackChannel",
+    "remark",
+    "status"
+];
+
 const accessment_candidate = [
     "appliedPositionId",
     "departmentId",
@@ -50,6 +59,7 @@ const hire_candidate = [
 export const KEY_POST = {
     update_candidate,
     invite_candidate,
+    result_candidate,
     accessment_candidate,
     hire_candidate
 };

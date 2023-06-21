@@ -1,11 +1,27 @@
 import React from "react";
+import { styled } from '@mui/material/styles';
+import { blue, red } from "@mui/material/colors";
 import { Grid, Button } from "@mui/material";
-import SaveIcon from '@mui/icons-material/Save';
-import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+
+const DangerButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[400],
+    '&:hover': {
+        backgroundColor: red[700],
+    },
+}));
+
+const PrimaryButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(blue[500]),
+    backgroundColor: blue[400],
+    '&:hover': {
+        backgroundColor: blue[700],
+    },
+}));
 
 const FooterComponent = (props) => {
 
-    const {handleSave, handleCancel, saveButtunType } = props;
+    const { handleSave, handleCancel, saveButtunType, saveButtonLabel } = props;
 
     return (
         <>
@@ -18,23 +34,23 @@ const FooterComponent = (props) => {
                 paddingX={2}
             >
 
-                <Button
+                <DangerButton
                     variant="outlined"
                     // startIcon={<ClearOutlinedIcon />}
                     color="error"
                     onClick={handleCancel}
                 >
                     Cancel
-                </Button>
+                </DangerButton>
 
-                <Button
+                <PrimaryButton
                     variant="outlined"
                     // endIcon={<SaveIcon />}
                     type={saveButtunType || 'button'}
                     onClick={handleSave}
                 >
-                    Save
-                </Button>
+                    {saveButtonLabel ? saveButtonLabel : 'Save'}
+                </PrimaryButton>
 
             </Grid>
             <br></br>
