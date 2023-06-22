@@ -73,7 +73,7 @@ const AsynTableToolbar = (props) => {
                   // paddingLeft: 2, 
                   // paddingRight: 2, 
                   // borderRadius: 2, 
-                  color: '#1976d2', 
+                  // color: '#1976d2', 
                   fontWeight: 'bold' 
                 }}
               >
