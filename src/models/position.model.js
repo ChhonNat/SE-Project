@@ -2,7 +2,7 @@ import { object, any, string } from "zod"
 
 const PositionModel = object({
     id: any().optional().nullable(),
-    name: string().optional().nullable(),
+    name: string().min(1, { message: 'Position name is required!' }),
     description: string().optional().nullable(),
     createdAt: any().optional().nullable(),
     createdBy: any().optional().nullable(),

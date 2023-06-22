@@ -1,6 +1,6 @@
 const RECORD = {
-    ACTIVE: 'ACTIVE',
-    INACTIVE: 'INACTIVE'
+    ACTIVE: 'Active',
+    INACTIVE: 'Inactive'
 };
 
 const SHORTLIST_RESULT = {

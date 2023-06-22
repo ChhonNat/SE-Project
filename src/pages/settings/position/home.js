@@ -4,7 +4,7 @@ import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import PositionModel from "../../../models/position.model";
 import { KEY_POST } from "../../../constants/key_post";
-import UpsertForm from "../form/upsert";
+import UpsertForm from "../global-upsert-form/upsert";
 
 const HomePosition = () => {
 

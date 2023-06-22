@@ -9,6 +9,8 @@ import _useHttp from "../../../hooks/_http";
 import { HTTP_METHODS } from "../../../constants/http_method";
 import Swal from "sweetalert2";
 import { ALERT_TIMER } from "../../../constants/app_config";
+import SelectComponent from "../../../components/Selector/select";
+import { STATUS } from "../../../constants/status";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -17,22 +19,23 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 const UpsertForm = (props) => {
 
     const { openModal, onCloseModal, handleEventSuccessed, title, model, editData, keyPosts, postUrl, putUrl, dataType } = props;
-    const { register, handleSubmit, reset, setValue } = useForm({ resolver: zodResolver(model) });
+    const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({ resolver: zodResolver(model) });
     const { data, loading, error, message, sendRequest } = _useHttp();
+    const watchData = watch();
+    const { errors } = formState;
 
     useEffect(() => {
-        
-        console.log(editData);
 
         if (editData?.id) {
 
-            for(let key in editData){
+            for (let key in editData) {
                 setValue(key, editData[key])
             }
-        } 
+        }
         else {
-            setValue('name', null);
-            setValue('description', null);
+            setValue('name', '');
+            clearErrors('name');
+            setValue('description', '');
             setValue('status', 'Active');
         }
 
@@ -45,7 +48,7 @@ const UpsertForm = (props) => {
         let postData = {};
 
         Object.keys(data).forEach((key) => {
-            
+
             if (keyPosts.includes(key)) {
                 postData[key] = data[key];
             }
@@ -99,24 +102,38 @@ const UpsertForm = (props) => {
                                 <TextField
                                     type="text"
                                     id="name"
-                                    label="Name"
+                                    label={<span>Name <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
                                     size="meduim"
                                     {...register('name')}
+                                    error={errors?.name}
+                                    helperText={errors?.name?.message}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    type="text"
-                                    id="description"
+                                    sx={{ width: '100%' }}
+                                    id="outlined-multiline-static"
                                     label="Description"
+                                    multiline
+                                    rows={4}
                                     variant="outlined"
-                                    fullWidth
-                                    size="meduim"
                                     {...register('description')}
                                 />
                             </Grid>
+                            {editData?.id &&
+                                <Grid item xs={12}>
+                                    <SelectComponent
+                                        id="status-id"
+                                        label={'Status'}
+                                        size={'small'}
+                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
+                                        value={watchData?.status || ""}
+                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
+                                    />
+                                </Grid>
+                            }
                         </Grid>
                     </Box>
                 </DialogContent>
@@ -124,6 +141,7 @@ const UpsertForm = (props) => {
                     {/* Footer Page */}
                     <FooterComponent
                         saveButtunType="submit"
+                        saveButtonLabel={editData?.id ? "Confirm" : "Save"}
                         actions={{ cancel: true, submit: true }}
                         handleCancel={onCloseModal}
                     />

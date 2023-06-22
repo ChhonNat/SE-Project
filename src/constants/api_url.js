@@ -47,11 +47,13 @@ export const API_URL = {
     },
     department: {
         get: API_VERSION + '/departments/search',
-        create: API_VERSION + '/settings/department',
-        edit: API_VERSION + '/settings/'
+        create: API_VERSION + '/departments',
+        edit: API_VERSION + '/departments/'
     },
     headDepartment: {
-        get: API_VERSION + '/head-departments/search'
+        get: API_VERSION + '/head-departments/search',
+        create: API_VERSION + '/head-departments',
+        edit: API_VERSION + '/head-departments/'
     },
 
     business: {

@@ -15,6 +15,7 @@ import { API_URL } from "../../constants/api_url";
 import { globalService } from "../../services/global.service";
 import SelectComponent from "../../components/Selector/select";
 import { AssessmentModel } from "../../models/assessment.model";
+import LabelRequire from "../../components/Label/require";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -93,7 +94,7 @@ const CandidateOfferFormModal = (props) => {
                 handleEventSuccessed();
 
                 Swal.fire({
-                    title:success ? 'Success' : 'Error',
+                    title: success ? 'Success' : 'Error',
                     text: message,
                     icon: success ? 'success' : 'error',
                     confirmButtonText: 'OK',
@@ -155,13 +156,20 @@ const CandidateOfferFormModal = (props) => {
                             {/*Offer salary */}
                             <Grid item xs={12}>
                                 <TextField
-                                    type="text"
+                                    type="number"
                                     id="offer-salary-id"
-                                    label="Offer Salary ($)"
+                                    label={<LabelRequire label="Offer Salary($)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
+                                    InputProps={{
+                                        inputProps: {
+                                            max: 100, min: 1
+                                        }
+                                    }}
+                                    error={errors?.offerSalary}
+                                    helperText={errors?.offerSalary?.message}
                                     {...register('offerSalary')}
                                 />
                             </Grid>
@@ -291,6 +299,8 @@ const CandidateOfferFormModal = (props) => {
                                     multiline
                                     rows={4}
                                     variant="outlined"
+                                    // error={errors?.status}
+                                    // helperText={errors?.status?.message}
                                     {...register('remark')}
                                 />
                             </Grid>
