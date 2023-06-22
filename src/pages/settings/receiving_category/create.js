@@ -25,6 +25,7 @@ const CreateNewReceivingCategory = () => {
                         <TextField
                             type="text"
                             id="description"
+                            rows={4}
                             label="Description"
                             variant="outlined"
                             fullWidth

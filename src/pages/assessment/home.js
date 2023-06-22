@@ -5,6 +5,7 @@ import { TABLE_CONFIG } from "../../utils/table-config";
 import CandidateHireFormModal from "./form-hire-candidate.modal";
 import { STATUS } from "../../constants/status";
 import CandidateOfferFormModal from "./form-offer-candidate.modal";
+import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 
 const HomeAssessment = () => {
 
@@ -12,7 +13,7 @@ const HomeAssessment = () => {
     const [openOfferModal, setOpenOfferModal] = useState(false);
 
     const [editCandidate, setEditCandidate] = useState({});
-
+    const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
     const [isReload, setIsReload] = useState(false);
 
     return (
@@ -60,10 +61,16 @@ const HomeAssessment = () => {
                         setOpenAssessmentModal(true);
                     }
                 }
-                handleEditEvent ={
+                handleEditEvent={
                     (data) => {
                         setEditCandidate(data);
                         setOpenOfferModal(true);
+                    }
+                }
+                handleLinkEvent={
+                    (data) => {
+                        setEditCandidate(data);
+                        setOpenReviewCVModal(true);
                     }
                 }
             />
@@ -77,11 +84,19 @@ const HomeAssessment = () => {
             />
 
             {/* Offer candidate form */}
-            <CandidateOfferFormModal 
+            <CandidateOfferFormModal
                 openOfferCandidateModal={openOfferModal}
                 onCloseOfferCandidateModal={() => setOpenOfferModal(false)}
                 assessment={editCandidate}
                 handleEventSuccessed={() => setIsReload(!isReload)}
+            />
+
+            {/* Review candidate form */}
+            <CandidateReviewCVModal
+                modalTitle="Review CV"
+                candidate={editCandidate}
+                openReviewCVModal={openReviewCVModal}
+                onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
             />
 
         </>

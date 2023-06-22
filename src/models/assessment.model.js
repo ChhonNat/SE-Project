@@ -60,7 +60,7 @@ const Offer = object({
     offerLocationName: string().optional().nullable(),
     businessDivisionId: number().optional().nullable(),
     businessDivisionName: string().optional().nullable(),
-    offerSalary: any().optional().nullable(),
+    offerSalary: string().min(1,{message:"Offer salary is required!"}).default('1'),
     offerDate: any().optional().nullable(),
     offerWeek: any().optional().nullable(),
     offerMonth: any().optional().nullable(),
@@ -75,7 +75,7 @@ const Offer = object({
     updatedAt: any().optional().nullable(),
     updatedBy: any().optional().nullable(),
     remark: string().optional().nullable(),
-    status: string().optional().nullable(),
+    status: string().min(1, { message: 'Status is required!' })
 });
 
 export const AssessmentModel = {

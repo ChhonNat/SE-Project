@@ -4,7 +4,7 @@ import { TABLE_CONFIG } from "../../utils/table-config";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import CandidateFormModal from "./form-candidate.modal";
 import CandidateInviteFormModal from "./form-invite-candidate.modal";
-import CandidateReviewFormModal from "./form-review-candidate.modal";
+import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 import { STATUS } from "../../constants/status";
 
 
@@ -15,7 +15,7 @@ const HomeCandidate = () => {
     const [openAddCandidateModal, setOpenAddCandidateModal] = useState(false);
     const [openEditCandidateModal, setOpenEditCandidateModal] = useState(false);
     const [openApproveCandidateModal, setOpenApproveCandidateModal] = useState(false);
-    const [openReviewCandidateModal, setOpenReviewCandidateModal] = useState(false);
+    const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
     const [editCandidate, setEditCandidate] = useState({});
 
     // Handle click each candidate to update the info
@@ -34,7 +34,7 @@ const HomeCandidate = () => {
     //handle review candidate before shortlist
     const handleReviewCandidate = (candidate) => {
         setEditCandidate(candidate);
-        setOpenReviewCandidateModal(true);
+        setOpenReviewCVModal(true);
     };
 
 
@@ -67,7 +67,7 @@ const HomeCandidate = () => {
                     {
                         search: true,
                         create: true,
-                        delete: true,
+                        delete: false,
                         edit: true,
                         approveCandidate: [
                             {
@@ -79,12 +79,12 @@ const HomeCandidate = () => {
                                 values: [STATUS.CANDIDATE.CV_REVIEWED]
                             }
                         ],
-                        reviewCandidate: [
-                            {
-                                field: 'status',
-                                values: [STATUS.CANDIDATE.PENDING]
-                            }
-                        ]
+                        // reviewCandidate: [
+                        //     {
+                        //         field: 'status',
+                        //         values: [STATUS.CANDIDATE.PENDING]
+                        //     }
+                        // ]
                     }
                 }
                 onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
@@ -111,14 +111,6 @@ const HomeCandidate = () => {
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
-            {/* Review candidate form */}
-            <CandidateReviewFormModal
-                modalTitle="Review Candidate"
-                candidate={editCandidate}
-                openReviewCandidateModal={openReviewCandidateModal}
-                onCloseReviewCandidateModal={() => setOpenReviewCandidateModal(false)}
-            />
-
             {/* Approve candidate form */}
             <CandidateInviteFormModal
                 candidate={editCandidate}
@@ -126,6 +118,15 @@ const HomeCandidate = () => {
                 onCloseApproveCandidateModal={() => setOpenApproveCandidateModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
+
+            {/* Review candidate form */}
+            <CandidateReviewCVModal
+                modalTitle="Review CV"
+                candidate={editCandidate}
+                openReviewCVModal={openReviewCVModal}
+                onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
+            />
+
         </>
     )
 };

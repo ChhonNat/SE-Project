@@ -6,6 +6,7 @@ import AsyncTableAction from "../../components/AsyncDataTable/async-table-action
 import { STATUS } from "../../constants/status";
 import CandidateAssessmentFormModal from "./form-accessment-candidate.modal";
 import CandidateResultFormModal from "./form-result-candidate.modal";
+import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 
 const HomeInterview = () => {
 
@@ -13,6 +14,7 @@ const HomeInterview = () => {
     const [openAssessmentModal, setOpenAssessmentModal] = useState(false);
     const [openResultModal, setOpenResultModal] = useState(false);
     const [editCandidate, setEditCandidate] = useState({});
+    const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
 
     return (
         <>
@@ -49,7 +51,7 @@ const HomeInterview = () => {
                     edit: [
                         {
                             field: 'interviewResult',
-                            values: [STATUS.INTERVIEW_RESULT.PASSED,STATUS.INTERVIEW_RESULT.FAILED,STATUS.INTERVIEW_RESULT.PENDING]
+                            values: [STATUS.INTERVIEW_RESULT.PASSED, STATUS.INTERVIEW_RESULT.FAILED, STATUS.INTERVIEW_RESULT.PENDING]
                         }
                     ]
                 }}
@@ -62,7 +64,8 @@ const HomeInterview = () => {
                     setOpenResultModal(true)
                 }}
                 handleLinkEvent={(data) => {
-                    
+                    setEditCandidate(data);
+                    setOpenReviewCVModal(true);
                 }}
             />
 
@@ -75,11 +78,19 @@ const HomeInterview = () => {
             />
 
             {/* Update Candidate Result */}
-            <CandidateResultFormModal 
+            <CandidateResultFormModal
                 openResultCandidateModal={openResultModal}
                 onCloseResultCandidateModal={() => setOpenResultModal(false)}
                 candidate={editCandidate}
                 handleEventSuccessed={() => setIsReload(!isReload)}
+            />
+
+            {/* Review candidate form */}
+            <CandidateReviewCVModal
+                modalTitle="Review CV"
+                candidate={editCandidate}
+                openReviewCVModal={openReviewCVModal}
+                onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
             />
 
         </>

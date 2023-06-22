@@ -5,7 +5,7 @@ import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import LocationModel from "../../../models/location.model";
 import { KEY_POST } from "../../../constants/key_post";
-import UpsertForm from "../form/upsert";
+import UpsertForm from "../global-upsert-form/upsert";
 
 const HomeLocation = () => {
     const [isReload, setIsReload] = useState(false);

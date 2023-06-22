@@ -144,12 +144,45 @@ export const PRIVATE_ROUTES = [
         /**Children settings */
         children: [
 
+            /**Location */
+            {
+                name: 'Locations',
+                path: 'location',
+                component: <Settings.location.home />,
+                icon: <PinDropIcon />
+            },
+
             /**Position */
             {
                 name: "Positions",
                 path: "position",
                 component: <Settings.position.home />,
                 icon: <AirlineSeatReclineNormalIcon />,
+            },
+
+            /**Department */
+            {
+                name: "Departments",
+                path: "department",
+                component: <Settings.department.home />,
+                icon: <ApartmentIcon />,
+            },
+
+
+            /**Department */
+            {
+                name: "Head Departments",
+                path: "head-department",
+                component: <Settings.headDepartment.home />,
+                icon: <DomainIcon />,
+            },
+
+            /**Business */
+            {
+                name: "Business Divisions",
+                path: "business",
+                component: <Settings.businessUnit.home />,
+                icon: <MeetingRoomIcon />,
             },
 
             /**Recruiter */
@@ -168,37 +201,7 @@ export const PRIVATE_ROUTES = [
             //     // ]
             // },
 
-            /**Department */
-            {
-                name: "Departments",
-                path: "department",
-                component: <Settings.department.home />,
-                icon: <ApartmentIcon />,
-            },
 
-            /**Department */
-            {
-                name: "Head Departments",
-                path: "head-department",
-                component: <Settings.headDepartment.home />,
-                icon: <DomainIcon />,
-            },
-
-            /**Business */
-            {
-                name: "Businesses",
-                path: "business",
-                component: <Settings.businessUnit.home />,
-                icon: <MeetingRoomIcon />,
-            },
-
-            /**Location */
-            {
-                name: 'Locations',
-                path: 'location',
-                component: <Settings.location.home />,
-                icon: <PinDropIcon />
-            }
         ]
     }
 ];

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import UpsertForm from "../form/upsert";
 import DepartmentModel from "../../../models/department.model";
 import { KEY_POST } from "../../../constants/key_post";
+import UpsertDepartmentForm from "./form-upsert-department.model";
 
 
 const HomeDepartment = () => {
@@ -48,7 +48,7 @@ const HomeDepartment = () => {
 
             
             {/* Modal create and update */}
-            <UpsertForm
+            <UpsertDepartmentForm
                 title={editDepartment?.id ? "Edit department" : "Add new department"}
                 openModal={openDepartmentModal}
                 editData={editDepartment}
@@ -56,11 +56,6 @@ const HomeDepartment = () => {
                     setEditDepartment(DepartmentModel);
                     setOpenDepartmentModal(false);
                 }}
-                model={DepartmentModel}
-                keyPosts={KEY_POST.department}
-                postUrl={API_URL.department.create}
-                putUrl={API_URL.department.edit}
-                dataType={'/department'}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 

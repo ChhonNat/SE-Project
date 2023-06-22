@@ -78,6 +78,7 @@ const position = [
 const department = [
     "name",
     "description",
+    "businessDivisionId",
     "status",
 ];
 
@@ -93,6 +94,17 @@ const location = [
     "status",
 ];
 
+const headDepartment = [
+    "staffId",
+    "firstName",
+    "lastName",
+    "phoneNumber",
+    "businessDivisionId",
+    "positionId",
+    "departmentId",
+    "description",
+    "status",
+];
 
 export const KEY_POST = {
     update_candidate,
@@ -104,5 +116,6 @@ export const KEY_POST = {
     position,
     department,
     business,
-    location
+    location,
+    headDepartment
 };

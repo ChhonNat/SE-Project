@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import { DATA_STATUS } from "../../constants/data_status";
 import { ALERT_TIMER } from "../../constants/app_config";
 import { AssessmentModel } from "../../models/assessment.model";
+import LabelRequire from "../../components/Label/require";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -23,7 +24,7 @@ const CandidateHireFormModal = (props) => {
 
 
     const { openHireCandidateModal, onCloseHireCandidateModal, assessment, handleEventSuccessed } = props;
-    const { register, handleSubmit, setValue, formState } = useForm({ resolver: zodResolver(AssessmentModel.Hire) });
+    const { register, handleSubmit, setValue, formState, clearErrors } = useForm({ resolver: zodResolver(AssessmentModel.Hire) });
     const { errors } = formState;
 
     useEffect(() => {
@@ -40,7 +41,8 @@ const CandidateHireFormModal = (props) => {
             }
         }
 
-    }, [assessment?.id])
+        clearErrors()
+    }, [openHireCandidateModal])
 
 
     const error = (data) => console.log(data);
@@ -61,8 +63,6 @@ const CandidateHireFormModal = (props) => {
                     hireCandidate[key] = data[key];
             }
         });
-
-        console.log(hireCandidate);
 
         try {
             const submitCandidate = await CandidateService.hireCandidate(hireCandidate, assessment?.id, assessment?.interviewId ,assessment?.candidateId);
@@ -207,14 +207,14 @@ const CandidateHireFormModal = (props) => {
                                 <TextField
                                     type="date"
                                     id="hire-date-id"
-                                    label="Hire Date"
+                                    label={<LabelRequire label="Hire Date" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    {...register('hireDate')}
                                     error={errors?.hireDate}
                                     helperText={errors?.hireDate?.message}
+                                    {...register('hireDate')}
                                 />
                             </Grid>
 
@@ -223,14 +223,14 @@ const CandidateHireFormModal = (props) => {
                                 <TextField
                                     type="date"
                                     id="join-date-id"
-                                    label="Join Date"
+                                    label={<LabelRequire label="Join Date" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    {...register('joinDate')}
                                     error={errors?.joinDate}
                                     helperText={errors?.joinDate?.message}
+                                    {...register('joinDate')}
                                 />
                             </Grid>
 
