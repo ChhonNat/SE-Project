@@ -15,6 +15,12 @@ const INTERVIEW_RESULT = {
     PASSED: 'Passed',
 };
 
+const INTERVIEW_STATUS = {
+    INVITED: 'Invited',
+    INTERVIEWED: 'Interviewed',
+    EVALUATED: 'Evaluated'
+};
+
 const ASSESSMENT_RESULT = {
     SUSPENDED: 'Suspended',
     CANCELlED: 'Cancel',
@@ -34,6 +40,7 @@ export const STATUS = {
     RECORD,
     SHORTLIST_RESULT,
     INTERVIEW_RESULT,
+    INTERVIEW_STATUS,
     ASSESSMENT_RESULT,
     CANDIDATE
 };
