@@ -26,15 +26,20 @@ export default function Login() {
   return (
 
     <Grid container spacing={2}>
-      <Grid item xs={8} sx={{ height: '100vh', backgroundColor: '#44515e', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+
+      <Grid item xs={8} sx={{ height: '100vh', backgroundColor: '#283C55', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <img src={logo} width={400} height={120} />
       </Grid>
+
       <Grid item xs={4} padding={10}>
+
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <h1>Recruitment Management System</h1>
         </div>
+
         <br></br>
         <br></br>
+
         <Box
           style={{ border: '1px solid #9a9a9a', padding: '20px', borderRadius: '20px 0 20px 0' }}
           component="form"

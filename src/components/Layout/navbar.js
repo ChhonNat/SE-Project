@@ -46,9 +46,9 @@ const NavbarComponent = ({ open, handleSetMinSidebar }) => {
     };
 
     return (
-        <AppBar position="fixed" open={open}>
+        <AppBar position="fixed" open={open} >
             <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
+                <AppBar position="static" sx={{backgroundColor: '#283C55'}}>
                     <Toolbar>
 
                         <IconButton
