@@ -40,6 +40,7 @@ export default function Login() {
       autoComplete="off"
     >
       <Grid style={{ border: 'none', justityContent: 'center' }}>Log In</Grid>
+      <br></br>
       <TextField
         onChange={(event) => setUserName(event.target.value)}
         value={username}
@@ -63,9 +64,6 @@ export default function Login() {
         onClick={login}
       >
         login
-      </Button>
-      <Button className="btn-submit" variant="outlined" color="error">
-        Cancel
       </Button>
     </Box>
   );

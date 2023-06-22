@@ -3,11 +3,13 @@ import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table"
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncTableAction from "../../../components/AsyncDataTable/async-table-action";
+import UpsertHeadDepartmentForm from "./form-upsert-head-department.model";
 
 const HomeHeadDepartment = () => {
 
     const [isReload, setIsReload] = useState(false);
     const [openHeadDepartmentModal, setOpenHeadDepartmentModal] = useState(false);
+    const [editHeadDepartment, setEditHeadDepartment] = useState({});
 
     return (
         <>
@@ -33,13 +35,21 @@ const HomeHeadDepartment = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true }}
+                useTableActions={{ search: true, create: true, edit: true }}
                 onHandleAddNewEvent={() => setOpenHeadDepartmentModal(true)}
-                // customActions={
-                //     <AsyncTableAction
-                //         useActions={{ edit: true, delete: true }}
-                //     />
-                // }
+                handleEditEvent={(data) => {
+                    setEditHeadDepartment(data);
+                    setOpenHeadDepartmentModal(true);
+                }}
+            />
+
+            {/* Form create and update head department */}
+            <UpsertHeadDepartmentForm
+                title={editHeadDepartment?.id ? "Edit head department" : "Add head department"}
+                openModal={openHeadDepartmentModal}
+                onCloseModal={() => setOpenHeadDepartmentModal(false)}
+                handleEventSuccessed={() => setIsReload(!isReload)}
+                editData={editHeadDepartment}
             />
         </>
     )

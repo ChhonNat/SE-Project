@@ -117,7 +117,7 @@ const CandidateResultFormModal = (props) => {
                 title: data?.status === DATA_STATUS.success ? 'Success' : 'Error',
                 text: message,
                 icon: data?.status === DATA_STATUS.success ? 'success' : 'error',
-                confirmButtonText: 'Text',
+                confirmButtonText: 'OK',
                 timer: ALERT_TIMER
             });
 

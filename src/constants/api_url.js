@@ -22,7 +22,7 @@ export const API_URL = {
     },
     interview: {
         get: API_VERSION + '/interviews/search',
-        
+
         lookup: {
             get: API_VERSION + '/interviews/lookup-data'
         }
@@ -38,24 +38,34 @@ export const API_URL = {
         get: API_VERSION + '/hires/search'
     },
     position: {
-        get: API_VERSION + '/positions/search'
+        get: API_VERSION + '/positions/search',
+        create: API_VERSION + '/settings/position',
+        edit: API_VERSION + '/settings/'
     },
     recruiter: {
         get: API_VERSION + '/recruiters/search'
     },
     department: {
-        get: API_VERSION + '/departments/search'
+        get: API_VERSION + '/departments/search',
+        create: API_VERSION + '/departments',
+        edit: API_VERSION + '/departments/'
     },
     headDepartment: {
-        get: API_VERSION + '/head-departments/search'
+        get: API_VERSION + '/head-departments/search',
+        create: API_VERSION + '/head-departments',
+        edit: API_VERSION + '/head-departments/'
     },
 
     business: {
-        get: API_VERSION + '/business-divisions/search'
+        get: API_VERSION + '/business-divisions/search',
+        create: API_VERSION + '/settings/business_division',
+        edit: API_VERSION + '/settings/'
     },
 
     location: {
-        get: API_VERSION + '/locations/search'
+        get: API_VERSION + '/locations/search',
+        create: API_VERSION + '/settings/location',
+        edit: API_VERSION + '/settings/'
     },
 
     receiveCategory: {

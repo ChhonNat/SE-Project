@@ -25,6 +25,7 @@ const CreateNewRecruiter = () => {
                         <TextField
                             type="text"
                             id="description"
+                            rows={4}
                             label="Description"
                             variant="outlined"
                             fullWidth

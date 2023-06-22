@@ -34,6 +34,7 @@ import { KEY_POST } from '../../constants/key_post';
 import { STATUS } from '../../constants/status';
 import { CandidateModel } from '../../models/candidate.model';
 import { ALERT_TIMER } from '../../constants/app_config';
+import LabelRequire from '../../components/Label/require';
 
 
 const shrinkOpt = { shrink: true };
@@ -45,26 +46,27 @@ const TransitionModal = React.forwardRef(function Transition(props, ref) {
 const CandidateFormModal = (props) => {
 
     const { openCandidateModal, onCloseCandidateModal, modalTitle, candidate, handleEventSuccessed } = props;
-    const { register, handleSubmit, formState, setValue, watch, reset } = useForm({
+    const { register, handleSubmit, formState, setValue, watch, reset, clearErrors } = useForm({
         resolver: zodResolver(CandidateModel.Create),
-        defaultValues: candidate?.id ? {} : {
-            applicationCode: 'CV-2023061914',
-            firstName: 'test',
-            lastName: 'test',
-            gender: 'Male',
-            phoneNumber: '099887766',
-            email: 'test@gmail.com',
-            appliedDate: '2023-06-16',
-            shortListedDate: '2023-06-16',
-            appliedPositionId: 1,
-            departmentId: 1,
-            headDepartmentId: 1,
-            businessDivisionId: 1,
-            appliedLocationId: 1,
-            shortlistResult: 'Passed',
-            receivedChannel: 'Telegram',
-            status: 'CV_Reviewed',
-        }
+        defaultValues: CandidateModel.Create
+        // defaultValues: candidate?.id ? {} : {
+        //     applicationCode: 'CV-2023061914',
+        //     firstName: 'test',
+        //     lastName: 'test',
+        //     gender: 'Male',
+        //     phoneNumber: '099887766',
+        //     email: 'test@gmail.com',
+        //     appliedDate: '2023-06-16',
+        //     shortListedDate: '2023-06-16',
+        //     appliedPositionId: 1,
+        //     departmentId: 1,
+        //     headDepartmentId: 1,
+        //     businessDivisionId: 1,
+        //     appliedLocationId: 1,
+        //     shortlistResult: 'Passed',
+        //     receivedChannel: 'Telegram',
+        //     status: 'CV_Reviewed',
+        // }
     });
     const watchCandidate = watch();
     const { errors } = formState;
@@ -97,7 +99,7 @@ const CandidateFormModal = (props) => {
                     const shortlistDate = ConverterService.convertUnixDateToMUI(candidate[key]);
                     setValue(key, shortlistDate);
 
-                }  else if (KEY_POST.update_candidate.includes(key)) {
+                } else if (KEY_POST.update_candidate.includes(key)) {
                     setValue(key, candidate[key]);
                 }
             }
@@ -238,6 +240,7 @@ const CandidateFormModal = (props) => {
      */
     const handleCloseModal = () => {
         // reset();
+        clearErrors();
         onCloseCandidateModal();
     }
 
@@ -265,7 +268,7 @@ const CandidateFormModal = (props) => {
                             <Grid item xs={12}>
                                 <TextField
                                     type='file'
-                                    label="Upload CV"
+                                    label={<LabelRequire label="Upload CV" />}
                                     accept=".pdf"
                                     InputLabelProps={{ shrink: true }}
                                     onChange={(e) => setValue('file', e?.target?.files[0])}
@@ -286,8 +289,6 @@ const CandidateFormModal = (props) => {
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    // error={errors?.firstName}
-                                    // helperText={errors?.firstName?.message}
                                     {...register("applicationCode")}
                                 />
                             </Grid>
@@ -296,7 +297,7 @@ const CandidateFormModal = (props) => {
                                 <TextField
                                     type="text"
                                     id="first-name"
-                                    label="First Name"
+                                    label={<LabelRequire label="First Name" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -311,7 +312,7 @@ const CandidateFormModal = (props) => {
                                 <TextField
                                     type="text"
                                     id="last-name"
-                                    label="Last Name"
+                                    label={<LabelRequire label="Last Name" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -326,6 +327,7 @@ const CandidateFormModal = (props) => {
                                 <SelectComponent
                                     id={'gender-id'}
                                     label={'Gender'}
+                                    isRequire={true}
                                     size={'small'}
                                     customDatas={listGenders}
                                     value={watchCandidate?.gender || ""}
@@ -339,7 +341,7 @@ const CandidateFormModal = (props) => {
                                 <TextField
                                     type="text"
                                     id="phone-name"
-                                    label="Phone"
+                                    label={<LabelRequire label="Phone" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -354,7 +356,7 @@ const CandidateFormModal = (props) => {
                                 <TextField
                                     type="email"
                                     id="email"
-                                    label="Email"
+                                    label={<LabelRequire label="Email" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -371,7 +373,7 @@ const CandidateFormModal = (props) => {
                                 <TextField
                                     type="date"
                                     id="apply-date-id"
-                                    label="Applied Date"
+                                    label={<LabelRequire label="Applied Date" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -388,6 +390,7 @@ const CandidateFormModal = (props) => {
                                 <SelectComponent
                                     id="position-id"
                                     label={'Position Apply For'}
+                                    isRequire={true}
                                     size={'small'}
                                     customDatas={listPositions}
                                     value={watchCandidate?.appliedPositionId || ""}
@@ -401,11 +404,29 @@ const CandidateFormModal = (props) => {
                                 <SelectComponent
                                     id="location-id"
                                     label={'Location'}
+                                    isRequire={true}
                                     size={'small'}
                                     customDatas={listLocations}
                                     value={watchCandidate?.appliedLocationId || ""}
                                     handleOnChange={(e) => setValue('appliedLocationId', e?.target?.value)}
                                     err={errors?.appliedLocationId?.message}
+                                />
+                            </Grid>
+
+                            {/* Input Apply Date */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    type="date"
+                                    id="shortlist-date-id"
+                                    label={<LabelRequire label="Date Shortlist" />}
+                                    variant="outlined"
+                                    fullWidth
+                                    size="small"
+                                    inputProps={{ format: 'MM/DD/YYYY' }}
+                                    InputLabelProps={shrinkOpt}
+                                    error={errors?.shortlistDate}
+                                    helperText={errors?.shortlistDate?.message}
+                                    {...register("shortlistDate")}
                                 />
                             </Grid>
 
@@ -457,23 +478,6 @@ const CandidateFormModal = (props) => {
                                     customDatas={listReceivedFromChannels}
                                     handleOnChange={(e) => setValue('receivedChannel', e?.target?.value)}
                                     value={watchCandidate?.receivedChannel || ""}
-                                />
-                            </Grid>
-
-                            {/* Input Apply Date */}
-                            <Grid item xs={12}>
-                                <TextField
-                                    type="date"
-                                    id="shortlist-date-id"
-                                    label="Date Shortlist"
-                                    variant="outlined"
-                                    fullWidth
-                                    size="small"
-                                    inputProps={{ format: 'MM/DD/YYYY' }}
-                                    InputLabelProps={shrinkOpt}
-                                    error={errors?.shortlistDate}
-                                    helperText={errors?.shortlistDate?.message}
-                                    {...register("shortlistDate")}
                                 />
                             </Grid>
 

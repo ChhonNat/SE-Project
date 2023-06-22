@@ -3,10 +3,14 @@ import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table"
 import AsyncTableAction from "../../../components/AsyncDataTable/async-table-action";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
+import LocationModel from "../../../models/location.model";
+import { KEY_POST } from "../../../constants/key_post";
+import UpsertForm from "../global-upsert-form/upsert";
 
 const HomeLocation = () => {
     const [isReload, setIsReload] = useState(false);
     const [openLocationModal, setOpenLocationModal] = useState(false);
+    const [editLocation, setEditLocation] = useState({});
 
     return (
         <>
@@ -32,13 +36,29 @@ const HomeLocation = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true }}
+                useTableActions={{ search: true, create: true, edit: true }}
                 onHandleAddNewEvent={() => setOpenLocationModal(true)}
-                // customActions={
-                //     <AsyncTableAction
-                //         useActions={{ edit: true, delete: true }}
-                //     />
-                // }
+                handleEditEvent={(data) => {
+                    setEditLocation(data);
+                    setOpenLocationModal(true);
+                }}
+            />
+
+            {/* Modal create and update */}
+            <UpsertForm
+                title={editLocation?.id ? "Edit location" : "Add new location"}
+                openModal={openLocationModal}
+                editData={editLocation}
+                onCloseModal={() => {
+                    setEditLocation(LocationModel);
+                    setOpenLocationModal(false);
+                }}
+                model={LocationModel}
+                keyPosts={KEY_POST.location}
+                postUrl={API_URL.location.create}
+                putUrl={API_URL.location.edit}
+                dataType={'/location'}
+                handleEventSuccessed={() => setIsReload(!isReload)}
             />
         </>
     )

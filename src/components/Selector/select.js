@@ -3,6 +3,7 @@ import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import _useHttp from "../../hooks/_http";
 import { HTTP_METHODS } from "../../constants/http_method";
 import FormHelperText from '@mui/material/FormHelperText';
+import LabelRequire from "../Label/require";
 
 /**
  * Select Component
@@ -18,6 +19,7 @@ const SelectComponent = (props) => {
     const {
         id,
         label,
+        isRequire,
         value,
         handleOnChange,
         size,
@@ -54,7 +56,7 @@ const SelectComponent = (props) => {
 
     return (
         <FormControl fullWidth size={size} error={err}>
-            <InputLabel id={id}>{label}</InputLabel>
+            <InputLabel id={id}>{!isRequire ? label : <LabelRequire label={label} /> }</InputLabel>
             <Select
                 id={id}
                 labelId={id + 'label'}

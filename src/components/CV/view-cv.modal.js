@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Slide } from "@mui/material";
-import TitleComponent from "../../components/Page/title";
-import FooterComponent from "../../components/Page/footer";
+import TitleComponent from "../Page/title";
+import FooterComponent from "../Page/footer";
 import { CandidateService } from "../../services/candidate.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 
@@ -10,34 +10,34 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 });
 
 
-const CandidateReviewFormModal = (props) => {
+const CandidateReviewCVModal = (props) => {
 
-    const { openReviewCandidateModal, onCloseReviewCandidateModal, candidate, modalTitle } = props;
-    const [cvFile, setCvFile] = useState();
+    const { openReviewCVModal, onCloseReviewCVModal, candidate, modalTitle } = props;
+    // const [cvFile, setCvFile] = useState();
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (candidate?.id) {
-            downloadCVFile(candidate?.id);
-        }
+    //     if (candidate?.id) {
+    //         downloadCVFile(candidate?.id);
+    //     }
 
-    }, [candidate]);
+    // }, [candidate]);
 
-    const downloadCVFile = async (canId) => {
+    // const downloadCVFile = async (canId) => {
 
-        try {
-            await CandidateService.downloadCVFile(canId)
-                .then((result) => {
-                    const { status, data } = result;
-                    console.log(result);
-                }).catch((err) => {
-                    console.log(err);
-                })
+    //     try {
+    //         await CandidateService.downloadCVFile(canId)
+    //             .then((result) => {
+    //                 const { status, data } = result;
+    //                 console.log(result);
+    //             }).catch((err) => {
+    //                 console.log(err);
+    //             })
 
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
 
     return (
@@ -45,7 +45,7 @@ const CandidateReviewFormModal = (props) => {
             <Dialog
                 fullScreen={true}
                 TransitionComponent={TransitionModal}
-                open={openReviewCandidateModal}
+                open={openReviewCVModal}
                 sx={{ margin: 1 }}
             >
                 <DialogTitle>
@@ -55,7 +55,7 @@ const CandidateReviewFormModal = (props) => {
                 <DialogContent dividers>
 
                     <embed
-                        src="http://172.168.0.38:8585/api/v1/candidates/download?id=54"
+                        src={`http://172.168.0.38:8585/api/v1/candidates/download?id=${candidate?.id}`}
                         style={
                             {
                                 width: '-webkit-fill-available',
@@ -66,7 +66,7 @@ const CandidateReviewFormModal = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <FooterComponent
-                        handleCancel={onCloseReviewCandidateModal}
+                        handleCancel={onCloseReviewCVModal}
                         actions={{ cancel: true, submit: false }}
                     />
                 </DialogActions>
@@ -75,4 +75,4 @@ const CandidateReviewFormModal = (props) => {
     )
 };
 
-export default CandidateReviewFormModal;
+export default CandidateReviewCVModal;
