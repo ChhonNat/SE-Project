@@ -269,7 +269,7 @@ const CandidateFormModal = (props) => {
                                 <TextField
                                     type='file'
                                     label={<LabelRequire label="Upload CV" />}
-                                    accept=".pdf"
+                                    inputProps={{accept:"application/pdf"}}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={(e) => setValue('file', e?.target?.files[0])}
                                     error={errors?.file}
