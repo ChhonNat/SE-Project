@@ -165,7 +165,7 @@ const CandidateOfferFormModal = (props) => {
                                     InputLabelProps={shrinkOpt}
                                     InputProps={{
                                         inputProps: {
-                                            max: 100, min: 1
+                                            max: 5000, min: 1
                                         }
                                     }}
                                     error={errors?.offerSalary}
