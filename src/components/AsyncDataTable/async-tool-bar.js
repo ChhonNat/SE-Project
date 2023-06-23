@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 import Add from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const AsynTableToolbar = (props) => {
 
@@ -116,7 +117,7 @@ const AsynTableToolbar = (props) => {
               <Button
                 sx={{ marginRight: 2 }}
                 variant="contained"
-                startIcon={<Add />}
+                startIcon={<AddCircleIcon />}
                 onClick={handleAddNewEvent}
               >
                 Add
