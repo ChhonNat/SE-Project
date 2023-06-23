@@ -115,7 +115,7 @@ const AsynTableToolbar = (props) => {
             <Tooltip title="Add New">
               <Button
                 sx={{ marginRight: 2 }}
-                variant="outlined"
+                variant="contained"
                 startIcon={<Add />}
                 onClick={handleAddNewEvent}
               >

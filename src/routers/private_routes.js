@@ -19,6 +19,7 @@ import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import DomainIcon from '@mui/icons-material/Domain';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import PinDropIcon from '@mui/icons-material/PinDrop';
+
 /**
  * Import all page components
  */
@@ -174,7 +175,7 @@ export const PRIVATE_ROUTES = [
                 name: "Head Departments",
                 path: "head-department",
                 component: <Settings.headDepartment.home />,
-                icon: <DomainIcon />,
+                icon: <PeopleAltIcon />,
             },
 
             /**Business */
