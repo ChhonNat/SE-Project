@@ -19,7 +19,7 @@ const Hire = object({
     offerLocationName: string().optional().nullable(),
     businessDivisionId: number().optional().nullable(),
     businessDivisionName: string().optional().nullable(),
-    offerSalary: any().optional().nullable(),
+    offerSalary: number().min(1,{message:"Offer salary is required!"}).default('1'),
     offerDate: any().optional().nullable(),
     offerWeek: any().optional().nullable(),
     offerMonth: any().optional().nullable(),
