@@ -24,7 +24,6 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 const UpsertPositionForm = (props) => {
 
 
-
     const { openModal, onCloseModal, handleEventSuccessed, title, model, editData, keyPosts, postUrl, putUrl, dataType } = props;
     const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({ resolver: zodResolver(model) });
     const { data, loading, error, message, sendRequest } = _useHttp();
@@ -34,6 +33,8 @@ const UpsertPositionForm = (props) => {
     const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
     const [listDepartments, setListDepartments] = useState([]);
     const [isSubmitForm, setIsSubmitForm] = useState(false);
+
+    const formatKeys = ['businessDivisions'];
 
     useEffect(() => {
 
@@ -62,16 +63,53 @@ const UpsertPositionForm = (props) => {
         console.log(data);
     }
 
+
     const submit = async (data) => {
 
         let postData = {};
 
         Object.keys(data).forEach((key) => {
 
-            if (KEY_POST.position.includes(key)) {
+            if (KEY_POST.position.includes(key) && !editData?.id) {
+
+                postData[key] = data[key];
+
+            } else {
+
+                if (formatKeys.includes(key)) {
+
+                    const oldBusinessDivisions = [...editData?.businessDivisions];
+                    const mapBusinessDivision = {};
+
+                    if (oldBusinessDivisions?.length) {
+
+                        oldBusinessDivisions.forEach((ele) => {
+
+                            if (!ele?.id) {
+                                mapBusinessDivision = {}
+                            }
+
+                            mapBusinessDivision[ele?.id] = ele;
+
+                        })
+                    }
+
+                    data[key] = data[key].map((ele) => {
+
+                        const isObject = typeof ele === 'object';
+                        return isObject ?
+                            { id: ele?.id, recId: ele?.recId } :
+                            { id: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.id : ele, recId: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.recId : 0 }
+                    })
+
+                }
+
                 postData[key] = data[key];
             }
-        }); 
+        });
+
+        if(editData?.id)
+        return alert('This function is under construction');
 
         await sendRequest(!editData?.id ? API_URL.position.create : `${putUrl}${editData?.id}${dataType}`, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
     }
