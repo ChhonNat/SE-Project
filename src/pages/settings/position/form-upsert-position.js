@@ -33,6 +33,7 @@ const UpsertPositionForm = (props) => {
 
     const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
     const [listDepartments, setListDepartments] = useState([]);
+    const [isSubmitForm, setIsSubmitForm] = useState(false);
 
     useEffect(() => {
 
@@ -43,9 +44,11 @@ const UpsertPositionForm = (props) => {
             }
         } else {
             setValue('name', '');
-            clearErrors('name');
             setValue('description', '');
+            setValue('businessDivisions',);
+            setValue('departmentId',);
             setValue('status', 'Active');
+            clearErrors();
         }
 
         /**Fetch lookup data businesss and department  */
@@ -54,7 +57,10 @@ const UpsertPositionForm = (props) => {
 
     }, [openModal])
 
-    const onError = (data) => console.log(data);
+    const onError = (data) => {
+        setIsSubmitForm(true);
+        console.log(data);
+    }
 
     const submit = async (data) => {
 
@@ -145,7 +151,9 @@ const UpsertPositionForm = (props) => {
                                     id="business-division-id"
                                     label="Business Division"
                                     isRequire={true}
+                                    isSubmit={isSubmitForm}
                                     customDatas={listBusinessDivisions}
+                                    value={watchData?.businessDivisions || []}
                                     bindField="name"
                                     handleEventChange={(e) => setValue('businessDivisions', e)}
                                     err={errors?.businessDivisions?.message}

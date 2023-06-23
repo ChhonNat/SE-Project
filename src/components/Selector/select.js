@@ -53,10 +53,9 @@ const SelectComponent = (props) => {
 
     }, [callToApi]);
 
-
     return (
-        <FormControl fullWidth size={size} error={err}>
-            <InputLabel id={id}>{!isRequire ? label : <LabelRequire label={label} /> }</InputLabel>
+        <FormControl fullWidth size={size} error={value ? false : err}>
+            <InputLabel id={id}>{!isRequire ? label : <LabelRequire label={label} />}</InputLabel>
             <Select
                 id={id}
                 labelId={id + 'label'}
@@ -91,7 +90,9 @@ const SelectComponent = (props) => {
                     )
                 }
             </Select>
-            <FormHelperText>{err}</FormHelperText>
+            {
+                !value && <FormHelperText>{err}</FormHelperText>
+            }
         </FormControl>
     )
 };
