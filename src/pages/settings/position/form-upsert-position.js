@@ -108,10 +108,8 @@ const UpsertPositionForm = (props) => {
             }
         });
 
-        if(editData?.id)
-        return alert('This function is under construction');
 
-        await sendRequest(!editData?.id ? API_URL.position.create : `${putUrl}${editData?.id}${dataType}`, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
+        await sendRequest(!editData?.id ? API_URL.position.create : API_URL?.position?.edit + editData?.id, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
     }
 
     useEffect(() => {
