@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -34,24 +34,28 @@ function getStyles(name, values, theme) {
 
 const MultiSelectComponent = (props) => {
 
-    const { id, label, size, isRequire, customDatas, bindField, handleEventChange, err } = props;
+    const { id, label, size, isRequire, customDatas, value, bindField, isSubmit, handleEventChange, err } = props;
 
     const theme = useTheme();
-    const [values, setValues] = React.useState([]);
+    const [values, setValues] = useState([]);
 
     const handleChange = (event) => {
 
         const { target: { value } } = event;
         let formatValue = typeof value === 'string' ? value.split(',') : value;
         setValues(formatValue);
-
         handleEventChange(formatValue);
     };
+
+    useEffect(() => {
+        console.log(isRequire);
+        console.log(value);
+    },[isSubmit])
 
     return (
 
         <div>
-            <FormControl fullWidth size={size ? size : "sm"} error={err}>
+            <FormControl fullWidth size={size ? size : "sm"} error={ isSubmit && isRequire && !value?.length ? true : false}>
 
                 <InputLabel id={id}>
                     {isRequire ? <LabelRequire label={label} /> : label}
@@ -90,8 +94,9 @@ const MultiSelectComponent = (props) => {
                         </MenuItem>
                     ))}
                 </Select>
-
-                <FormHelperText>{err}</FormHelperText>
+                {
+                    !values?.length && <FormHelperText>{err}</FormHelperText>
+                }
             </FormControl>
         </div>
     );
