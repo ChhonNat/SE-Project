@@ -65,6 +65,7 @@ export default function Login() {
 
             <Grid item xs={12}>
               <TextField
+                type="password"
                 sx={{ width: '100%', paddingBottom: 3 }}
                 onChange={(event) => setPassword(event.target.value)}
                 value={password}
