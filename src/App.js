@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import './App.css';
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isLogin } from "./store/authentication/authenticationService";
 import { PRIVATE_ROUTES } from "./routers/private_routes";
@@ -16,10 +16,16 @@ const App = () => {
   const [minSidebar, setMinsidebar] = useState(true);
   const user = useSelector((state) => state.userAuthendicated);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(isLogin());
   }, [dispatch]);
+
+  useEffect(() => {
+
+    user?.isAuthenticated ? navigate('/candidate') : navigate('/login')
+  }, [user])
 
   /**
    * Loading while while route fallback
@@ -62,8 +68,9 @@ const App = () => {
               PRIVATE_ROUTES && PRIVATE_ROUTES.length && PRIVATE_ROUTES.map((route, index) => (
 
                 < React.Fragment key={index} >
+
                   {/* Parent routes */}
-                  < Route path={route?.path}
+                  <Route path={route?.path}
                     element={
                       <MainPageComponent open={minSidebar} outlet={route.component} />
                     }

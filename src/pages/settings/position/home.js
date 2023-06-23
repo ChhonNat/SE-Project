@@ -4,7 +4,7 @@ import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import PositionModel from "../../../models/position.model";
 import { KEY_POST } from "../../../constants/key_post";
-import UpsertForm from "../global-upsert-form/upsert";
+import UpsertPositionForm from "./form-upsert-position";
 
 const HomePosition = () => {
 
@@ -45,7 +45,7 @@ const HomePosition = () => {
             />
 
             {/* Modal create and update */}
-            <UpsertForm
+            <UpsertPositionForm
                 title={editPosition?.id ? "Edit position" : "Add new position"}
                 openModal={openPositionModal}
                 editData={editPosition}

@@ -14,18 +14,22 @@ const initialUser = {
 
 export const userAuthentication = ({ username, password }) => {
 
+
   return async (dispatch) => {
+
+
     const options = {
       headers: {
         'Content-Type': 'application/json',
         DeviceID: 'xxxxxxx',
       },
     };
+
     const postData = { username, password };
 
     const authenticates = async () => {
-      const response = await axios
-        .post(`${apiLink}/api/v1/login`, postData, options)
+
+      const response = await axios.post(`${apiLink}/api/v1/login`, postData, options)
         .then(function (result) {
           return result;
         })
@@ -36,7 +40,6 @@ export const userAuthentication = ({ username, password }) => {
       const responseData = response.data.data;
 
       const responseUser = {
-        
         token: responseData.accessToken,
         refreshToken: responseData.refreshToken,
         isError: false,
@@ -53,6 +56,7 @@ export const userAuthentication = ({ username, password }) => {
       dispatch(authActions.setAuthenticate(authUser));
 
     } catch (error) {
+
       dispatch(
         authActions.setAuthenticate({
           ...initialUser,
@@ -81,12 +85,12 @@ export const isLogin = () => {
 
 export const isLogout = () => {
 
-    return (dispatch) => {
-        let storeUser = null;
+  return (dispatch) => {
+    let storeUser = null;
 
-        localStorage.clear();
-        storeUser = initialUser;
-        dispatch(authActions.setAuthenticate(storeUser));
-    }
+    localStorage.clear();
+    storeUser = initialUser;
+    dispatch(authActions.setAuthenticate(storeUser));
+  }
 }
 
