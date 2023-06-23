@@ -108,6 +108,16 @@ const TableRows = ({
                          */
                         const isLink = head?.type === 'link';
 
+                        /**
+                         * get row is array or object;
+                         */
+
+                        const isArray = Array.isArray(row[head?.id]);
+                        const arrayValue = isArray && row[head?.id]?.length ?
+                                row[head?.id].map(function(ele) {
+                                    return ele[head?.arrayId] || ele;
+                                }) : [];
+
 
                         /**Map button action with the condidtion */
                         const buttonAction = {
@@ -207,7 +217,13 @@ const TableRows = ({
                                         }
 
                                         {/* Use normal field */}
-                                        {!showIndex && !typeDate && !isAction && !isStatus && !isBadge && !isLink && row[head.id]}
+                                        {!showIndex && !typeDate && !isAction && !isStatus && !isBadge && !isLink &&
+                                            (
+                                                !isArray ?
+                                                    row[head.id] :
+                                                    arrayValue?.length ? arrayValue.toString() : ''
+                                            )
+                                        }
 
                                         {/* Custom button actions */}
                                         {isAction &&
