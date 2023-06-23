@@ -200,13 +200,13 @@ const tblPosition = [
         id: 'name', label: 'Name',
     },
     {
-        id: 'description', label: 'Description',
-    },
-    {
         id: 'departmentName', label: 'Department Name' 
     },
     {
         id: 'businessDivisions', arrayId:'name', label: 'Business Division' 
+    },
+    {
+        id: 'description', label: 'Description',
     },
     {
         id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
