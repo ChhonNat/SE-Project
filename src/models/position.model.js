@@ -5,7 +5,7 @@ const PositionModel = object({
     name: string().min(1, { message: 'Position name is required!' }),
     description: string().optional().nullable(),
     departmentId: number().min(1, { message: 'Department is required!'}),
-    businessDivisions: any().array(),
+    businessDivisions: number().array().min(1, { message: 'Business devision is required!' }),
     createdAt: any().optional().nullable(),
     createdBy: any().optional().nullable(),
     updatedAt: any().optional().nullable(),
