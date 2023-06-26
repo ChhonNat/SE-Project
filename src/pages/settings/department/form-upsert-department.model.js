@@ -16,6 +16,7 @@ import { API_URL } from "../../../constants/api_url";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
 import DepartmentModel from "../../../models/department.model";
+import MultiSelectComponent from "../../../components/MultiSelector/select";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -30,6 +31,8 @@ const UpsertDepartmentForm = (props) => {
     const { errors } = formState;
 
     const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
+    const [isSubmitForm, setIsSubmitForm] = useState(false);
+    const formatKeys = ['businessDivisions'];
 
     useEffect(() => {
 
@@ -43,7 +46,7 @@ const UpsertDepartmentForm = (props) => {
             setValue('name', '');
             setValue('description', '');
             setValue('status', 'Active');
-            setValue('businessDivisionId', 0);
+            setValue('businessDivisions', 0);
             clearErrors();
         }
 
@@ -90,7 +93,10 @@ const UpsertDepartmentForm = (props) => {
         }
     }, [])
 
-    const onError = (data) => console.log(data);
+    const onError = (data) => {
+        setIsSubmitForm(true);
+        console.log(data);
+    }
 
     const submit = async (data) => {
 
@@ -98,8 +104,41 @@ const UpsertDepartmentForm = (props) => {
 
         Object.keys(data).forEach((key) => {
 
-            if (KEY_POST.department.includes(key)) {
+            if (KEY_POST.department.includes(key) && !editData?.id) {
                 postData[key] = data[key];
+
+            } else {
+
+                if (formatKeys.includes(key)) {
+
+                    const oldBusinessDivisions = [...editData?.businessDivisions];
+                    const mapBusinessDivision = {};
+
+                    if (oldBusinessDivisions?.length) {
+
+                        oldBusinessDivisions.forEach((ele) => {
+
+                            if (!ele?.id) {
+                                mapBusinessDivision = {}
+                            }
+
+                            mapBusinessDivision[ele?.id] = ele;
+
+                        })
+                    }
+
+                    data[key] = data[key].map((ele) => {
+
+                        const isObject = typeof ele === 'object';
+                        return isObject ?
+                            { id: ele?.id, recId: ele?.recId } :
+                            { id: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.id : ele, recId: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.recId : 0 }
+                    })
+
+                }
+
+                postData[key] = data[key];
+
             }
         });
 
@@ -140,7 +179,18 @@ const UpsertDepartmentForm = (props) => {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <SelectComponent
+                                <MultiSelectComponent
+                                    id="business-id"
+                                    label="Business Division"
+                                    isRequire={true}
+                                    isSubmit={isSubmitForm}
+                                    customDatas={listBusinessDivisions}
+                                    value={watchData?.businessDivisions || []}
+                                    bindField="name"
+                                    handleEventChange={(e) => setValue('businessDivisions', e)}
+                                    err={errors?.businessDivisions?.message}
+                                />
+                                {/* <SelectComponent
                                     id="business-id"
                                     label="Business Division"
                                     isRequire={true}
@@ -148,10 +198,10 @@ const UpsertDepartmentForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     customDatas={listBusinessDivisions}
-                                    value={watchData?.businessDivisionId || ""}
-                                    handleOnChange={(e) => setValue('businessDivisionId', e?.target?.value)}
+                                    value={watchData?.businessDivisions || ""}
+                                    handleOnChange={(e) => setValue('businessDivisions', e?.target?.value)}
                                     err={errors?.businessDivisionId?.message}
-                                />
+                                /> */}
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -183,7 +233,7 @@ const UpsertDepartmentForm = (props) => {
                     {/* Footer Page */}
                     <FooterComponent
                         saveButtunType="submit"
-                        saveButtonLabel={editData?.id ? "Confirm" : "Save"}
+                        saveButtonLabel={editData?.id ? "Update" : "Save"}
                         actions={{ cancel: true, submit: true }}
                         handleCancel={onCloseModal}
                     />

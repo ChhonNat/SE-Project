@@ -265,7 +265,7 @@ const UpsertHeadDepartmentForm = (props) => {
                     {/* Footer Page */}
                     <FooterComponent
                         saveButtunType="submit"
-                        saveButtonLabel={editData?.id ? "Confirm" : "Save"}
+                        saveButtonLabel={editData?.id ? "Update" : "Save"}
                         actions={{ cancel: true, submit: true }}
                         handleCancel={onCloseModal}
                     />

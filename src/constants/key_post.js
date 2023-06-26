@@ -84,7 +84,7 @@ const position = [
 const department = [
     "name",
     "description",
-    "businessDivisionId",
+    "businessDivisions",
     "status",
 ];
 
