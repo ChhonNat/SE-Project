@@ -19,6 +19,7 @@ import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import DomainIcon from '@mui/icons-material/Domain';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import PinDropIcon from '@mui/icons-material/PinDrop';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 /**
  * Import all page components
@@ -77,7 +78,11 @@ const Settings = {
     //     home: lazy(() => import('../pages/settings/receiving_category/home')),
     //     create: lazy(() => import('../pages/settings/receiving_category/create'))
     // },
-}
+};
+
+const User = {
+    home: lazy(() => import('../pages/user/home'))
+};
 
 
 export const PRIVATE_ROUTES = [
@@ -204,5 +209,13 @@ export const PRIVATE_ROUTES = [
 
 
         ]
-    }
+    },
+       /**Replies */
+    //    {
+    //     name: "Users",
+    //     path: "/user",
+    //     component: <User.home />,
+    //     icon:  <AccountCircleIcon />,
+    //     isDivider: false,
+    // }
 ];
