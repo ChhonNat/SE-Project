@@ -11,7 +11,7 @@ const Model = object({
     fullName: string().optional().nullable(),
     gender: string().min(1, { message: "Gender is required!" }),
     phoneNumber: string().min(8).min(9),
-    email: string().email().optional().nullable(),
+    email: string().optional().nullable(),
     appliedPositionId: number().min(1, { message: "Position is required!" }),
     departmentId: number().optional().nullable(),
     headDepartmentId: number().optional().nullable(),
