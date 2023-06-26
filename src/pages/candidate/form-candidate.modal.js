@@ -356,15 +356,13 @@ const CandidateFormModal = (props) => {
                                 />
                             </Grid>
 
-                            <Grid item xs={12}>
-                                <Link>{candidate?.cvFile}</Link>
-                            </Grid>
+                            
 
                             {/*Upload file*/}
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <TextField
                                     type='file'
-                                    label={<LabelRequire label={candidate?.id ? "Change CV" : "Upload CV"} />}
+                                    label={<LabelRequire label={candidate?.id ? "Update CV" : "Upload CV"} />}
                                     inputProps={{ accept: "application/pdf" }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={(e) => setValue('file', e?.target?.files[0])}
@@ -375,37 +373,8 @@ const CandidateFormModal = (props) => {
                                 </TextField>
                             </Grid>
 
-                            {
-                                candidate?.id &&
-                                <Grid item xs={12}>
-                                    {/* Control review candidate checkbox */}
-                                    <FormControl component="fieldset">
-                                        <FormLabel id="demo-row-radio-buttons-group-label" sx={{ fontSize: 14 }}>
-                                            Review CV yet?
-                                        </FormLabel>
-                                        <FormGroup aria-label="position" row>
-                                            <FormControlLabel
-                                                value={STATUS.CANDIDATE.CV_REVIEWED}
-                                                control={
-                                                    <Checkbox
-                                                        onChange={(e) => {
-                                                            setValue('status', e?.target?.checked ? STATUS.CANDIDATE.CV_REVIEWED : STATUS.CANDIDATE.PENDING)
-                                                            setValue('shortlistResult', STATUS.SHORTLIST_RESULT.PENDING)
-                                                        }}
-                                                        checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
-                                                    />
-                                                }
-                                                label=""
-                                                labelPlacement="end"
-                                            />
-                                        </FormGroup>
-                                    </FormControl>
-                                </Grid>
-                            }
-
-
-                            {/* Select  CV received from*/}
-                            <Grid item xs={12}>
+                             {/* Select  CV received from*/}
+                             <Grid item xs={6}>
                                 <SelectComponent
                                     id="cv-received-from-id"
                                     label={'CV Received From'}
@@ -415,6 +384,42 @@ const CandidateFormModal = (props) => {
                                     value={watchCandidate?.receivedChannel || ""}
                                 />
                             </Grid>
+
+                            <Grid item xs={6}>
+                                <Link>{candidate?.cvFile}</Link>
+                            </Grid>
+
+                            {
+                                candidate?.id &&
+                                <Grid item xs={6}>
+                                    {/* Control review candidate checkbox */}
+                                    <FormControl component="fieldset">
+                                        {/* <FormLabel id="demo-row-radio-buttons-group-label" sx={{ fontSize: 14 }}>
+                                            Review CV yet?
+                                        </FormLabel> */}
+                                        <FormGroup aria-label="position" row>
+                                            <FormControlLabel
+                                                value={STATUS.CANDIDATE.CV_REVIEWED}
+                                                label="Review CV yet?"
+                                                control={
+                                                    <Checkbox
+                                                        onChange={(e) => {
+                                                            setValue('status', e?.target?.checked ? STATUS.CANDIDATE.CV_REVIEWED : STATUS.CANDIDATE.PENDING)
+                                                            setValue('shortlistResult', STATUS.SHORTLIST_RESULT.PENDING)
+                                                        }}
+                                                        checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
+                                                    />
+                                                }
+                                             
+                                                labelPlacement="end"
+                                            />
+                                        </FormGroup>
+                                    </FormControl>
+                                </Grid>
+                            }
+
+
+                           
 
                             {/* Input Apply Date */}
                             <Grid item xs={12}>
