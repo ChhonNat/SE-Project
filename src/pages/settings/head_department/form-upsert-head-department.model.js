@@ -49,10 +49,10 @@ const UpsertHeadDepartmentForm = (props) => {
         fetchData(API_URL.lookup.business.get, setListBusinessDivisions);
 
         //Fetch department 
-        fetchData(API_URL.lookup.department.get, setListDepartments);
+        // fetchData(API_URL.lookup.department.get, setListDepartments);
 
         //Fetch position
-        fetchData(API_URL.lookup.position.get, setListPositions);
+        // fetchData(API_URL.lookup.position.get, setListPositions);
 
     }, [openModal])
 
@@ -198,7 +198,11 @@ const UpsertHeadDepartmentForm = (props) => {
                                     size="meduim"
                                     customDatas={listBusinessDivisions}
                                     value={watchData?.businessDivisionId || ""}
-                                    handleOnChange={(e) => setValue('businessDivisionId', e?.target?.value)}
+                                    handleOnChange={(e) => { 
+                                        setValue('businessDivisionId', e?.target?.value);
+                                        setValue('departmentId',null);
+                                        fetchData(API_URL.lookup.departmentById.get+e?.target?.value, setListDepartments);
+                                    }}
                                     err={errors?.businessDivisionId?.message}
                                 />
                             </Grid>
@@ -213,7 +217,11 @@ const UpsertHeadDepartmentForm = (props) => {
                                     size="meduim"
                                     customDatas={listDepartments}
                                     value={watchData?.departmentId || ""}
-                                    handleOnChange={(e) => setValue('departmentId', e?.target?.value)}
+                                    handleOnChange={(e) => {
+                                        setValue('departmentId', e?.target?.value);
+                                        setValue('positionId',null);
+                                        fetchData(API_URL.lookup.positionById.get+e?.target?.value, setListPositions);
+                                    }}
                                     err={errors?.departmentId?.message}
                                 />
                             </Grid>
