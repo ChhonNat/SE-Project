@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Link, Tab, TableCell, TableRow, Typography } from '@mui/material';
+import { Link, Tab, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import Moment from 'react-moment';
 import uuid from 'react-uuid';
 import AsyncTableAction from './async-table-action';
 import EditIcon from '@mui/icons-material/Edit';
+import Button from '@mui/material/Button';
 
 /**
  * Style Body Table 
@@ -196,28 +197,26 @@ const TableRows = ({
                                         {/* Use badge style */}
                                         {
                                             isStatus &&
-
-                                            <Typography variant="h6" id="tableTitle" component="div"
-                                                sx={{
-                                                    background: '#f5f5f5',
-                                                    paddingLeft: 1,
-                                                    paddingRight: 1,
-                                                    borderRadius: 2,
-                                                    fontWeight: 'bold',
-                                                    width: 'max-content',
-                                                    fontSize: 12,
-                                                    color: head?.statusColor[row[head.id]],
-                                                    cursor: actions?.editStatus?.[head?.id] ? 'pointer' : ''
-                                                }}
-                                                onClick={(e) =>
-                                                    actions?.editStatus?.[head?.id] ? handleStatusEvent(head?.id,row) : e.preventDefault()
-                                                }
-                                            >
-                                                {row[head.id]}
-                                                {/* {actions?.editStatus?.[head?.id] &&
-                                                    <EditIcon sx={{ fontSize: 12, paddingLeft: 1 }} />
-                                                } */}
-                                            </Typography>
+                                            <Tooltip title={actions?.editStatus?.[head?.id] ? 'Edit ' + head?.label : ''}>
+                                                <Typography variant="h6" id="tableTitle" component="div"
+                                                    sx={{
+                                                        background: '#f5f5f5',
+                                                        paddingLeft: 1,
+                                                        paddingRight: 1,
+                                                        borderRadius: 2,
+                                                        fontWeight: 'bold',
+                                                        width: 'max-content',
+                                                        fontSize: 12,
+                                                        color: head?.statusColor[row[head.id]],
+                                                        cursor: actions?.editStatus?.[head?.id] ? 'pointer' : ''
+                                                    }}
+                                                    onClick={(e) =>
+                                                        actions?.editStatus?.[head?.id] ? handleStatusEvent(head?.id, row) : e.preventDefault()
+                                                    }
+                                                >
+                                                    {row[head.id]}
+                                                </Typography>
+                                            </Tooltip>
                                         }
 
                                         {/* Use link */}
