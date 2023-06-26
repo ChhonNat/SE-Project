@@ -114,8 +114,8 @@ const CandidateFormModal = (props) => {
             fetchData(API_URL.lookup.departmentById.get + candidate?.businessDivisionId, setListDepartments);
 
         /**Fetch position data */
-        if(candidate?.id && candidate?.departmentId)
-        fetchData(API_URL.lookup.positionById.get+candidate?.departmentId, setListPositions);
+        if (candidate?.id && candidate?.departmentId)
+            fetchData(API_URL.lookup.positionById.get + candidate?.departmentId, setListPositions);
 
     }, [openCandidateModal]);
 
@@ -356,12 +356,13 @@ const CandidateFormModal = (props) => {
                                 />
                             </Grid>
 
-                            
+
 
                             {/*Upload file*/}
                             <Grid item xs={6}>
                                 <TextField
                                     type='file'
+                                    size='small'
                                     label={<LabelRequire label={candidate?.id ? "Update CV" : "Upload CV"} />}
                                     inputProps={{ accept: "application/pdf" }}
                                     InputLabelProps={{ shrink: true }}
@@ -373,8 +374,8 @@ const CandidateFormModal = (props) => {
                                 </TextField>
                             </Grid>
 
-                             {/* Select  CV received from*/}
-                             <Grid item xs={6}>
+                            {/* Select  CV received from*/}
+                            <Grid item xs={6}>
                                 <SelectComponent
                                     id="cv-received-from-id"
                                     label={'CV Received From'}
@@ -386,7 +387,7 @@ const CandidateFormModal = (props) => {
                             </Grid>
 
                             <Grid item xs={6}>
-                                <Link>{candidate?.cvFile}</Link>
+                                    <Link href='#'>{candidate?.cvFile}</Link>
                             </Grid>
 
                             {
@@ -410,7 +411,7 @@ const CandidateFormModal = (props) => {
                                                         checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
                                                     />
                                                 }
-                                             
+
                                                 labelPlacement="end"
                                             />
                                         </FormGroup>
@@ -418,8 +419,6 @@ const CandidateFormModal = (props) => {
                                 </Grid>
                             }
 
-
-                           
 
                             {/* Input Apply Date */}
                             <Grid item xs={12}>
@@ -464,7 +463,7 @@ const CandidateFormModal = (props) => {
                                     handleOnChange={(e) => {
                                         setValue('businessDivisionId', e?.target?.value);
                                         setValue('departmentId', null);
-                                        setValue('appliedPositionId',null);
+                                        setValue('appliedPositionId', null);
                                         setListDepartments([]);
                                         setListPositions([]);
                                         fetchData(API_URL.lookup.departmentById.get + e?.target?.value, setListDepartments);
@@ -482,7 +481,7 @@ const CandidateFormModal = (props) => {
                                     value={watchCandidate?.departmentId || ''}
                                     handleOnChange={(e) => {
                                         setValue('departmentId', e?.target?.value);
-                                        setValue('appliedPositionId',null);
+                                        setValue('appliedPositionId', null);
                                         setListPositions([]);
                                         fetchData(API_URL.lookup.headDepartment.get + e?.target?.value, setHeadDepartment, 'headDepartment');
                                         fetchData(API_URL.lookup.positionById.get + e?.target?.value, setListPositions);
