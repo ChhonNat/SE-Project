@@ -42,7 +42,7 @@ const tblCandidate = [
     //     id: 'email', label: 'Email', sqlField: 'can.email'
     // },
     {
-        id: 'appliedPositionName', label: 'Position Apply', sqlField: 'pos.name'
+        id: 'appliedPositionName', label: 'Apply Position', sqlField: 'pos.name'
     },
     {
         id: 'departmentName', label: 'Department'

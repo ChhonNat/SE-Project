@@ -97,7 +97,6 @@ const HomeCandidate = () => {
                     (key, data) => {
                         key === 'shortlistResult' ? (
                             setModalTitle('Edit shortlist result')
-                            
                         )
                         : (
                             setModalTitle('Edit status')
