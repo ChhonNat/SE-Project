@@ -6,6 +6,7 @@ import CandidateFormModal from "./form-candidate.modal";
 import CandidateInviteFormModal from "./form-invite-candidate.modal";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 import { STATUS } from "../../constants/status";
+import CandidateStatusFormModal from "./form-status-candidate.modal";
 
 
 const HomeCandidate = () => {
@@ -16,6 +17,8 @@ const HomeCandidate = () => {
     const [openEditCandidateModal, setOpenEditCandidateModal] = useState(false);
     const [openApproveCandidateModal, setOpenApproveCandidateModal] = useState(false);
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
+    const [modalTitle, setModalTitle] = useState('');
+    const [openStatusModal, setOpenStatusModal] = useState(false);
     const [editCandidate, setEditCandidate] = useState({});
 
     // Handle click each candidate to update the info
@@ -69,6 +72,10 @@ const HomeCandidate = () => {
                         create: true,
                         delete: false,
                         edit: true,
+                        editStatus: {
+                            shortlistResult: true,
+                            status: true
+                        },
                         approveCandidate: [
                             {
                                 field: 'shortlistResult',
@@ -79,12 +86,6 @@ const HomeCandidate = () => {
                                 values: [STATUS.CANDIDATE.CV_REVIEWED]
                             }
                         ],
-                        // reviewCandidate: [
-                        //     {
-                        //         field: 'status',
-                        //         values: [STATUS.CANDIDATE.PENDING]
-                        //     }
-                        // ]
                     }
                 }
                 onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
@@ -92,6 +93,18 @@ const HomeCandidate = () => {
                 handleEditEvent={(data) => handleEditCandidate(data)}
                 handleReviewEvent={(data) => handleEditCandidate(data)}
                 handleLinkEvent={(data) => handleReviewCandidate(data)}
+                handleStatusEvent={
+                    (key, data) => {
+                        key === 'shortlistResult' ? (
+                            setModalTitle('Edit shortlist result')
+                            
+                        )
+                        : (
+                            setModalTitle('Edit status')
+                        );
+                        setOpenStatusModal(true)
+                    }
+                }
             />
 
             {/* Create new candidate form */}
@@ -125,6 +138,12 @@ const HomeCandidate = () => {
                 candidate={editCandidate}
                 openReviewCVModal={openReviewCVModal}
                 onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
+            />
+
+            <CandidateStatusFormModal
+                title={modalTitle}
+                open={openStatusModal}
+                onCloseModal={() => setOpenStatusModal(false)}
             />
 
         </>

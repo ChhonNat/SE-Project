@@ -4,6 +4,7 @@ import { Link, Tab, TableCell, TableRow, Typography } from '@mui/material';
 import Moment from 'react-moment';
 import uuid from 'react-uuid';
 import AsyncTableAction from './async-table-action';
+import EditIcon from '@mui/icons-material/Edit';
 
 /**
  * Style Body Table 
@@ -29,6 +30,7 @@ const TableRows = ({
     handleAssessmentEvent,
     handleEditEvent,
     handleLinkEvent,
+    handleStatusEvent,
     headers,
     checkColumn,
     pageSize,
@@ -114,9 +116,9 @@ const TableRows = ({
 
                         const isArray = Array.isArray(row[head?.id]);
                         const arrayValue = isArray && row[head?.id]?.length ?
-                                row[head?.id].map(function(ele) {
-                                    return ele[head?.arrayId] || ele;
-                                }) : [];
+                            row[head?.id].map(function (ele) {
+                                return ele[head?.arrayId] || ele;
+                            }) : [];
 
 
                         /**Map button action with the condidtion */
@@ -197,7 +199,7 @@ const TableRows = ({
 
                                             <Typography variant="h6" id="tableTitle" component="div"
                                                 sx={{
-                                                    background: '#f2eeee',
+                                                    background: '#f5f5f5',
                                                     paddingLeft: 1,
                                                     paddingRight: 1,
                                                     borderRadius: 2,
@@ -205,9 +207,16 @@ const TableRows = ({
                                                     width: 'max-content',
                                                     fontSize: 12,
                                                     color: head?.statusColor[row[head.id]],
+                                                    cursor: actions?.editStatus?.[head?.id] ? 'pointer' : ''
                                                 }}
+                                                onClick={(e) =>
+                                                    actions?.editStatus?.[head?.id] ? handleStatusEvent(head?.id,row) : e.preventDefault()
+                                                }
                                             >
                                                 {row[head.id]}
+                                                {/* {actions?.editStatus?.[head?.id] &&
+                                                    <EditIcon sx={{ fontSize: 12, paddingLeft: 1 }} />
+                                                } */}
                                             </Typography>
                                         }
 

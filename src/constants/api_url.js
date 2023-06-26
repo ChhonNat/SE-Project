@@ -76,6 +76,9 @@ export const API_URL = {
         position: {
             get: API_VERSION + '/positions'
         },
+        positionById: {
+            get: API_VERSION + '/positions/department/'
+        },
         location: {
             get: API_VERSION + '/locations'
         },

@@ -265,7 +265,7 @@ const tblDepartment = [
         id: 'description', label: 'Description',
     },
     {
-        id: 'businessDivisionName', label: 'Business Division'
+        id: 'businessDivisions', arrayId: 'name', label: 'Business Division'
     },
     {
         id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
