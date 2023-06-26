@@ -60,6 +60,7 @@ const CandidateReviewCVModal = (props) => {
                             {
                                 width: '-webkit-fill-available',
                                 height: '100%',
+                                width: '100%'
                             }}
                     />
 
