@@ -88,8 +88,11 @@ export const API_URL = {
         department: {
             get: API_VERSION + '/departments'
         },
+        departmentById: {
+            get: API_VERSION + '/departments/business-division/'
+        },
         headDepartment: {
-            get: API_VERSION + '/head-departments'
+            get: API_VERSION + '/head-departments/department/'
         }
     }
 };

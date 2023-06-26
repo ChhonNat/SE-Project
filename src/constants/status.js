@@ -4,7 +4,8 @@ const RECORD = {
 };
 
 const SHORTLIST_RESULT = {
-    PENDING: 'Pending',
+    WAITING: 'Waiting',
+    KEEP_IN_POOL: "Keep_In_Pool",
     FAILED: 'Failed',
     PASSED: 'Passed',
 };
