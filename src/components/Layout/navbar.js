@@ -46,9 +46,9 @@ const NavbarComponent = ({ open, handleSetMinSidebar }) => {
     };
 
     return (
-        <AppBar position="fixed" open={open}>
+        <AppBar position="fixed" open={open} >
             <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
+                <AppBar position="static" sx={{ backgroundColor: '#283C55' }}>
                     <Toolbar>
 
                         <IconButton
@@ -340,6 +340,7 @@ const NavbarComponent = ({ open, handleSetMinSidebar }) => {
                                 aria-label="account of current user"
                                 aria-haspopup="true"
                                 color="inherit"
+                                sx={{width: 50, height: 50, display:'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'gray'}}
                             >
                                 <PopupState variant="popover" popupId="demo-popup-popover">
                                     {(popupState) => (

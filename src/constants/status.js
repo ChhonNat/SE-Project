@@ -4,7 +4,8 @@ const RECORD = {
 };
 
 const SHORTLIST_RESULT = {
-    PENDING: 'Pending',
+    WAITING: 'Waiting',
+    KEEP_IN_POOL: "Keep_In_Pool",
     FAILED: 'Failed',
     PASSED: 'Passed',
 };
@@ -13,6 +14,12 @@ const INTERVIEW_RESULT = {
     PENDING: 'Pending',
     FAILED: 'Failed',
     PASSED: 'Passed',
+};
+
+const INTERVIEW_STATUS = {
+    INVITED: 'Invited',
+    INTERVIEWED: 'Interviewed',
+    EVALUATED: 'Evaluated'
 };
 
 const ASSESSMENT_RESULT = {
@@ -34,6 +41,7 @@ export const STATUS = {
     RECORD,
     SHORTLIST_RESULT,
     INTERVIEW_RESULT,
+    INTERVIEW_STATUS,
     ASSESSMENT_RESULT,
     CANDIDATE
 };

@@ -60,12 +60,12 @@ const CandidateHireFormModal = (props) => {
                 if (key === 'hireDate')
                     data[key] = ConverterService.convertDateToAPI(data[key]);
 
-                    hireCandidate[key] = data[key];
+                hireCandidate[key] = data[key];
             }
         });
 
         try {
-            const submitCandidate = await CandidateService.hireCandidate(hireCandidate, assessment?.id, assessment?.interviewId ,assessment?.candidateId);
+            const submitCandidate = await CandidateService.hireCandidate(hireCandidate, assessment?.id, assessment?.interviewId, assessment?.candidateId);
             const { status, data } = submitCandidate;
             const { message } = data;
 
@@ -201,7 +201,24 @@ const CandidateHireFormModal = (props) => {
                                 />
                             </Grid>
 
-                            
+                            {/*Candidate Position */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    disabled
+                                    type="text"
+                                    id="shortlist-result-id"
+                                    label={<LabelRequire label="Offer Salary" />}
+                                    variant="outlined"
+                                    fullWidth
+                                    size="small"
+                                    InputLabelProps={shrinkOpt}
+                                    error={errors?.offerSalary}
+                                    helperText={errors?.offerSalary?.message}
+                                    {...register('offerSalary')}
+                                />
+                            </Grid>
+
+
                             {/*Hired date Date */}
                             <Grid item xs={12}>
                                 <TextField

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useCallback, useState } from 'react';
 
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Box, Button, FormLabel, Grid, IconButton, RadioGroup, Slide } from '@mui/material';
@@ -33,7 +33,7 @@ import { ConverterService } from '../../utils/converter';
 import { KEY_POST } from '../../constants/key_post';
 import { STATUS } from '../../constants/status';
 import { CandidateModel } from '../../models/candidate.model';
-import { ALERT_TIMER } from '../../constants/app_config';
+// import { ALERT_TIMER } from '../../constants/app_config';
 import LabelRequire from '../../components/Label/require';
 
 
@@ -50,7 +50,7 @@ const CandidateFormModal = (props) => {
         resolver: zodResolver(CandidateModel.Create),
         defaultValues: CandidateModel.Create
         // defaultValues: candidate?.id ? {} : {
-        //     applicationCode: 'CV-2023061914',
+        //     applicantCode: 'CV-2023061914',
         //     firstName: 'test',
         //     lastName: 'test',
         //     gender: 'Male',
@@ -76,8 +76,10 @@ const CandidateFormModal = (props) => {
     const [listLocations, setListLocations] = useState([]);
     const [listBusinesses, setListBusinesses] = useState([]);
     const [listDepartments, setListDepartments] = useState([]);
-    const [listHeadDepartments, setListHeadDepartments] = useState([]);
     const [listReceivedFromChannels, setListReceivedFromChannels] = useState([]);
+
+    const [headDepartment, setHeadDepartment] = useState('');
+    // const [listHeadDepartments, setListHeadDepartments] = useState([]);
 
     /**
      * Form use for edit data
@@ -89,18 +91,23 @@ const CandidateFormModal = (props) => {
 
             for (let key in candidate) {
 
-                if (key === 'appliedDate') {
+                if (KEY_POST.view_candidate.includes(key)) {
 
-                    const appliedDate = ConverterService.convertUnixDateToMUI(candidate[key]);
-                    setValue(key, appliedDate);
+                    if (key === 'appliedDate') {
 
-                } else if (key === 'shortlistDate') {
+                        const appliedDate = ConverterService.convertUnixDateToMUI(candidate[key]);
+                        setValue(key, appliedDate);
 
-                    const shortlistDate = ConverterService.convertUnixDateToMUI(candidate[key]);
-                    setValue(key, shortlistDate);
+                    }
+                    // else if (key === 'shortlistDate') {
 
-                } else if (KEY_POST.update_candidate.includes(key)) {
-                    setValue(key, candidate[key]);
+                    //     const shortlistDate = ConverterService.convertUnixDateToMUI(candidate[key]);
+                    //     setValue(key, shortlistDate);
+
+                    // } 
+                    else {
+                        setValue(key, candidate[key]);
+                    }
                 }
             }
 
@@ -118,20 +125,25 @@ const CandidateFormModal = (props) => {
 
         /**Fetch position data */
         fetchData(API_URL.lookup.position.get, setListPositions);
+
         /**Fetch location data */
         fetchData(API_URL.lookup.location.get, setListLocations);
+
         /**Fetch business data */
         fetchData(API_URL.lookup.business.get, setListBusinesses);
+
         /**fetch department data */
-        fetchData(API_URL.lookup.department.get, setListDepartments);
-        /**Fetch recruiter data */
-        fetchData(API_URL.lookup.headDepartment.get, setListHeadDepartments);
+        if (candidate?.id && candidate?.businessDivisionId)
+            fetchData(API_URL.lookup.departmentById.get + candidate?.businessDivisionId, setListDepartments);
+
     }, [openCandidateModal]);
+
 
     /**
      * Fetch data to listing in each selector
      */
     const fetchData = useCallback(async (url, setDatas, dataType) => {
+
         try {
 
             const req = await globalService.getData(url);
@@ -144,15 +156,26 @@ const CandidateFormModal = (props) => {
                     setListReceivedFromChannels(data?.receivedChannels);
 
                     if (!candidate?.id)
-                        setValue('applicationCode', ConverterService.convertApplicationCode(data?.IncreasedAppNumber));
+                        setValue('applicantCode', ConverterService.convertApplicationCode(data?.IncreasedAppNumber));
 
 
                 } else {
                     setListGenders([]);
                     setListReceivedFromChannels([]);
-                    setValue('applicationCode', null);
+                    setValue('applicantCode', null);
                 }
-            } else {
+            } else if (dataType === 'headDepartment') {
+
+                if (success) {
+
+                    setValue('headDepartmentId', data?.id ? data?.id : null);
+                    setValue('headDepartmentName', data?.fullName ? data?.fullName : null);
+                } else {
+                    setValue('headDepartmentName', null);
+                    setValue('headDepartmentId', null);
+                }
+            }
+            else {
                 success ? setDatas(data) : setDatas([]);
             }
 
@@ -176,22 +199,26 @@ const CandidateFormModal = (props) => {
         /**Transfer all candidate data to form data */
         Object.keys(data).forEach((key) => {
 
-            if (key === 'appliedDate') {
+            if (KEY_POST.update_candidate.includes(key)) {
+                if (key === 'appliedDate') {
 
-                /**format appliedDate */
-                const appliedDate = ConverterService.convertDateToAPI(data[key]);
-                submitFormData.append(key, appliedDate);
+                    /**format appliedDate */
+                    const appliedDate = ConverterService.convertDateToAPI(data[key]);
+                    submitFormData.append(key, appliedDate);
 
-            } else if (key === 'shortlistDate') {
+                }
+                // else if (key === 'shortlistDate') {
 
-                /**
-                 * format shorListedDate
-                 *  */
-                const shortlistDate = ConverterService.convertDateToAPI(data[key]);
-                submitFormData.append(key, shortlistDate)
+                //     /**
+                //      * format shorListedDate
+                //      *  */
+                //     const shortlistDate = ConverterService.convertDateToAPI(data[key]);
+                //     submitFormData.append(key, shortlistDate)
 
-            } else {
-                submitFormData.append(key, data[key]);
+                // } 
+                else {
+                    submitFormData.append(key, data[key]);
+                }
             }
         });
 
@@ -269,7 +296,7 @@ const CandidateFormModal = (props) => {
                                 <TextField
                                     type='file'
                                     label={<LabelRequire label="Upload CV" />}
-                                    accept=".pdf"
+                                    inputProps={{ accept: "application/pdf" }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={(e) => setValue('file', e?.target?.files[0])}
                                     error={errors?.file}
@@ -279,7 +306,7 @@ const CandidateFormModal = (props) => {
                                 </TextField>
                             </Grid>
                             {/* Input CV code */}
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <TextField
                                     disabled
                                     type="text"
@@ -289,9 +316,9 @@ const CandidateFormModal = (props) => {
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    {...register("applicationCode")}
+                                    {...register("applicantCode")}
                                 />
-                            </Grid>
+                            </Grid> */}
                             {/* Input First Name */}
                             <Grid item xs={12}>
                                 <TextField
@@ -356,14 +383,14 @@ const CandidateFormModal = (props) => {
                                 <TextField
                                     type="email"
                                     id="email"
-                                    label={<LabelRequire label="Email" />}
+                                    label="Email"
                                     variant="outlined"
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    error={errors?.email}
-                                    helperText={errors?.email?.message}
                                     {...register("email")}
+                                // error={errors?.email}
+                                // helperText={errors?.email?.message}
                                 />
                             </Grid>
 
@@ -413,22 +440,6 @@ const CandidateFormModal = (props) => {
                                 />
                             </Grid>
 
-                            {/* Input Apply Date */}
-                            <Grid item xs={12}>
-                                <TextField
-                                    type="date"
-                                    id="shortlist-date-id"
-                                    label={<LabelRequire label="Date Shortlist" />}
-                                    variant="outlined"
-                                    fullWidth
-                                    size="small"
-                                    inputProps={{ format: 'MM/DD/YYYY' }}
-                                    InputLabelProps={shrinkOpt}
-                                    error={errors?.shortlistDate}
-                                    helperText={errors?.shortlistDate?.message}
-                                    {...register("shortlistDate")}
-                                />
-                            </Grid>
 
                             {/*Select Business */}
                             <Grid item xs={12}>
@@ -438,8 +449,11 @@ const CandidateFormModal = (props) => {
                                     size={'small'}
                                     customDatas={listBusinesses}
                                     value={watchCandidate?.businessDivisionId || ''}
-                                    handleOnChange={(e) => setValue('businessDivisionId', e?.target?.value)}
-                                // err={errors?.businessDivisionId?.message}
+                                    handleOnChange={(e) => {
+                                        setValue('businessDivisionId', e?.target?.value)
+                                        setValue('departmentId', null)
+                                        fetchData(API_URL.lookup.departmentById.get + e?.target?.value, setListDepartments);
+                                    }}
                                 />
                             </Grid>
 
@@ -451,22 +465,37 @@ const CandidateFormModal = (props) => {
                                     size={'small'}
                                     customDatas={listDepartments}
                                     value={watchCandidate?.departmentId || ''}
-                                    handleOnChange={(e) => setValue('departmentId', e?.target?.value)}
+                                    handleOnChange={(e) => {
+                                        setValue('departmentId', e?.target?.value)
+                                        fetchData(API_URL.lookup.headDepartment.get + e?.target?.value, setHeadDepartment, 'headDepartment');
+                                    }}
                                 // err={errors?.departmentId?.message}
                                 />
                             </Grid>
 
                             {/* Select  department*/}
                             <Grid item xs={12}>
-                                <SelectComponent
+                                <TextField
+                                    disabled
+                                    type="text"
+                                    id="head-department"
+                                    label="Head Department"
+                                    variant="outlined"
+                                    fullWidth
+                                    size="small"
+                                    InputLabelProps={shrinkOpt}
+                                    {...register('headDepartmentName')}
+                                />
+
+                                {/* <SelectComponent
                                     id="department-id"
                                     label={'Head Department'}
                                     size={'small'}
-                                    customDatas={listHeadDepartments}
+                                    customDatas={[headDepartment]}
                                     handleOnChange={(e) => setValue('headDepartmentId', e?.target?.value)}
                                     value={watchCandidate?.headDepartmentId || ""}
                                 // err={errors?.positionId?.message}
-                                />
+                                /> */}
                             </Grid>
 
                             {/* Select  CV received from*/}
@@ -481,67 +510,79 @@ const CandidateFormModal = (props) => {
                                 />
                             </Grid>
 
-                            {/* Control review candidate checkbox */}
-                            <Grid item xs={12}>
-                                <FormControl component="fieldset">
-                                    <FormLabel id="demo-row-radio-buttons-group-label" sx={{ fontSize: 14 }}>
-                                        Review CV yet?
-                                    </FormLabel>
-                                    <FormGroup aria-label="position" row>
-                                        <FormControlLabel
-                                            value={STATUS.CANDIDATE.CV_REVIEWED}
-                                            control={
-                                                <Checkbox
-                                                    onChange={(e) => {
-                                                        setValue('status', e?.target?.checked ? STATUS.CANDIDATE.CV_REVIEWED : STATUS.CANDIDATE.PENDING)
-                                                        setValue('shortlistResult', STATUS.SHORTLIST_RESULT.PENDING)
-                                                    }}
-                                                    checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
+                            {
+                                candidate?.id &&
+                                <>
+                                    <Grid item xs={12}>
+                                        {/* Control review candidate checkbox */}
+                                        <FormControl component="fieldset">
+                                            <FormLabel id="demo-row-radio-buttons-group-label" sx={{ fontSize: 14 }}>
+                                                Review CV yet?
+                                            </FormLabel>
+                                            <FormGroup aria-label="position" row>
+                                                <FormControlLabel
+                                                    value={STATUS.CANDIDATE.CV_REVIEWED}
+                                                    control={
+                                                        <Checkbox
+                                                            onChange={(e) => {
+                                                                setValue('status', e?.target?.checked ? STATUS.CANDIDATE.CV_REVIEWED : STATUS.CANDIDATE.PENDING)
+                                                                setValue('shortlistResult', STATUS.SHORTLIST_RESULT.PENDING)
+                                                            }}
+                                                            checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
+                                                        />
+                                                    }
+                                                    label=""
+                                                    labelPlacement="end"
                                                 />
-                                            }
-                                            label=""
-                                            labelPlacement="end"
-                                        />
-                                    </FormGroup>
-                                </FormControl>
-                            </Grid>
+                                            </FormGroup>
+                                        </FormControl>
+                                    </Grid>
 
-                            {/* Control review candidate result */}
-                            <Grid item xs={12}>
-                                <FormControl component="fieldset">
-                                    <FormLabel id="row-radio-buttons-group-label" sx={{ fontSize: 14 }}>
-                                        Shortlist Result
-                                    </FormLabel>
-                                    <RadioGroup row
-                                        value={watchCandidate?.shortlistResult || candidate?.shortlistResult}
-                                        onChange={(e) => {
-                                            setValue('shortlistResult', e?.target?.value)
-                                        }}
-                                    >
+                                    <Grid item xs={12}>
+                                        {/* Control review candidate result */}
+                                        <FormControl component="fieldset">
+                                            <FormLabel id="row-radio-buttons-group-label" sx={{ fontSize: 14 }}>
+                                                Shortlist Result
+                                            </FormLabel>
+                                            <RadioGroup
+                                                value={watchCandidate?.shortlistResult || candidate?.shortlistResult}
+                                                onChange={(e) => {
+                                                    setValue('shortlistResult', e?.target?.value)
+                                                }}
+                                            >
 
-                                        <FormControlLabel
-                                            value={STATUS.SHORTLIST_RESULT.PENDING}
-                                            control={<Radio />}
-                                            label="Pending"
-                                            labelPlacement="end"
-                                        />
+                                                <FormControlLabel
+                                                    value={STATUS.SHORTLIST_RESULT.WAITING}
+                                                    control={<Radio />}
+                                                    label="Waiting"
+                                                    labelPlacement="end"
+                                                />
 
-                                        <FormControlLabel
-                                            value={STATUS.SHORTLIST_RESULT.FAILED}
-                                            control={<Radio />}
-                                            label="Failed"
-                                            labelPlacement="end"
-                                        />
+                                                <FormControlLabel
+                                                    value={STATUS.SHORTLIST_RESULT.KEEP_IN_POOL}
+                                                    control={<Radio />}
+                                                    label="Keep In Pool"
+                                                    labelPlacement="end"
+                                                />
 
-                                        <FormControlLabel
-                                            value={STATUS.SHORTLIST_RESULT.PASSED}
-                                            control={<Radio />}
-                                            label="Passed"
-                                            labelPlacement="end"
-                                        />
-                                    </RadioGroup>
-                                </FormControl>
-                            </Grid>
+                                                <FormControlLabel
+                                                    value={STATUS.SHORTLIST_RESULT.FAILED}
+                                                    control={<Radio />}
+                                                    label="Failed"
+                                                    labelPlacement="end"
+                                                />
+
+                                                <FormControlLabel
+                                                    value={STATUS.SHORTLIST_RESULT.PASSED}
+                                                    control={<Radio />}
+                                                    label="Passed"
+                                                    labelPlacement="end"
+                                                />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </Grid>
+                                </>
+                            }
                         </Grid>
                     </Box>
                 </DialogContent>

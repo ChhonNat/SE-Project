@@ -79,7 +79,7 @@ const closedMixin = (theme) => ({
  */
 const drawerHeader = {
     styles: {
-        background: "#1976d2",
+        background: "#283C55",
         boxShadow:
             "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
         borderColor: "#e5e7eb",

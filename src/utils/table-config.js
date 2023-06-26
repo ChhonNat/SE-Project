@@ -27,7 +27,7 @@ const tblCandidate = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'applicationCode', type: 'link', statusColor: {}, label: "Application Code", sqlField: 'can.application_number'
+        id: 'applicantCode', type: 'link', statusColor: {}, label: "Applicant Code", sqlField: 'can.application_number'
     },
     {
         id: 'fullName', label: "Candidate's Name", sqlField: 'can.first_name'
@@ -42,10 +42,10 @@ const tblCandidate = [
     //     id: 'email', label: 'Email', sqlField: 'can.email'
     // },
     {
-        id: 'appliedPositionName', label: 'Position Apply for', sqlField: 'pos.name'
+        id: 'appliedPositionName', label: 'Position Apply', sqlField: 'pos.name'
     },
     {
-        id: 'departmentName', label: 'Department Name'
+        id: 'departmentName', label: 'Department'
     },
     {
         id: 'businessDivisionName', label: 'Business Division', sqlField: 'pos.name'
@@ -74,7 +74,7 @@ const tblInterview = [
     {
         id: 'index', label: 'No.'
     }, {
-        id: 'applicationCode', type: 'link', statusColor: {}, label: 'Application Code'
+        id: 'applicantCode', type: 'link', statusColor: {}, label: 'Applicant Code'
 
     },
     {
@@ -116,7 +116,7 @@ const tblAssessment = [
         id: 'index', label: 'No.'
     },
     , {
-        id: 'applicationCode', type: 'link', statusColor: {}, label: 'Application Code'
+        id: 'applicantCode', type: 'link', statusColor: {}, label: 'Applicant Code'
 
     },
     {
@@ -157,10 +157,10 @@ const tblHire = [
         id: 'index', label: 'No.'
     },
     , {
-        id: 'applicationCode',
+        id: 'applicantCode',
         type: 'link',
         statusColor: {},
-        label: 'Application Code'
+        label: 'Applicant Code'
     },
     {
         id: 'candidateName', label: 'Name'
@@ -200,6 +200,12 @@ const tblPosition = [
         id: 'name', label: 'Name',
     },
     {
+        id: 'departmentName', label: 'Department' 
+    },
+    {
+        id: 'businessDivisions', arrayId:'name', label: 'Business Division' 
+    },
+    {
         id: 'description', label: 'Description',
     },
     {
@@ -231,10 +237,10 @@ const tblRecruiter = [
         id: 'phoneNumber', label: 'Phone Number'
     },
     {
-        id: 'positionName', label: 'Position Name'
+        id: 'positionName', label: 'Position'
     },
     {
-        id: 'departmentName', label: 'Department Name'
+        id: 'departmentName', label: 'Department'
     },
     {
         id: 'description', label: 'Description'
@@ -291,10 +297,10 @@ const tblHeadDepartment = [
         id: 'businessDivisionName', label: 'Business Division'
     },
     {
-        id: 'departmentName', label: 'Department Name'
+        id: 'departmentName', label: 'Department'
     },
     {
-        id: 'positionName', label: 'Position Name'
+        id: 'positionName', label: 'Position'
     },
     {
         id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
@@ -336,7 +342,7 @@ const tblLocation = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'name', label: 'Location Name'
+        id: 'name', label: 'Name'
     },
     {
         id: 'description', label: 'Description'
@@ -371,6 +377,27 @@ const tblReceivingCategory = [
     }
 ];
 
+/**
+ * User management
+ */
+const tblUser = [
+    {
+        id: "index", label: "No."
+    },
+    {
+        id: "username", label: "Username"
+    },
+    {
+        id: "phoneNumber", label: "Phone Number"
+    },
+    {
+        id: "email", label: "Email"
+    },
+    {
+        id: "action", label: "Actions"
+    }
+]
+
 
 
 
@@ -385,5 +412,6 @@ export const TABLE_CONFIG = {
     tblPosition,
     tblReceivingCategory,
     tblRecruiter,
-    tblLocation
+    tblLocation,
+    tblUser
 };

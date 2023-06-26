@@ -1,5 +1,4 @@
 const update_candidate = [
-    'applicationCode',
     'firstName',
     'lastName',
     'gender',
@@ -16,8 +15,13 @@ const update_candidate = [
     'receivedChannel',
     'status',
     'file',
-    'cvFile'
+    'cvFile',
 ];
+
+const view_candidate = [
+    ...update_candidate,
+    "headDepartmentName",
+]
 
 const invite_candidate = [
     "appliedPositionId",
@@ -73,6 +77,8 @@ const position = [
     "name",
     "description",
     "status",
+    "businessDivisions",
+    "departmentId"
 ];
 
 const department = [
@@ -107,6 +113,7 @@ const headDepartment = [
 ];
 
 export const KEY_POST = {
+    view_candidate,
     update_candidate,
     invite_candidate,
     edit_result_candidate,
