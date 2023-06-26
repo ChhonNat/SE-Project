@@ -3,7 +3,7 @@ import '../../App.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Container } from '@mui/material';
+import { Container, FormControl } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { isLogin, userAuthentication } from '../../store/authentication/authenticationService';
 import { useState } from 'react';
@@ -15,7 +15,7 @@ export default function Login() {
   const dispatch = useDispatch();
 
   const [username, setUserName] = useState('developer');
-  const [password, setPassword] = useState('dev123');
+  const [password, setPassword] = useState(null);
 
   const login = async (event) => {
 
