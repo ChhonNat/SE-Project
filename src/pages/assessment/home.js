@@ -51,7 +51,7 @@ const HomeAssessment = () => {
                     edit: [
                         {
                             field: 'status',
-                            values: [STATUS.ASSESSMENT_RESULT.OFFERED, STATUS.ASSESSMENT_RESULT.SUSPENDED, STATUS.ASSESSMENT_RESULT.CANCELlED]
+                            values: [STATUS.ASSESSMENT_RESULT.OFFERED, STATUS.ASSESSMENT_RESULT.SUSPENDED, STATUS.ASSESSMENT_RESULT.CANCELLED]
                         }
                     ]
                 }}

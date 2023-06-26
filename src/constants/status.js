@@ -11,20 +11,23 @@ const SHORTLIST_RESULT = {
 };
 
 const INTERVIEW_RESULT = {
-    PENDING: 'Pending',
+    WAITING: 'Waiting',
     FAILED: 'Failed',
+    KEEP_IN_REVIEW: 'Keep_In_Review',
     PASSED: 'Passed',
+    CANCELLED: 'Cancel'
 };
 
 const INTERVIEW_STATUS = {
     INVITED: 'Invited',
     INTERVIEWED: 'Interviewed',
-    EVALUATED: 'Evaluated'
+    EVALUATED: 'Evaluated',
+    CANCELLED: 'Cancel'
 };
 
 const ASSESSMENT_RESULT = {
     SUSPENDED: 'Suspended',
-    CANCELlED: 'Cancel',
+    CANCELLED: 'Cancel',
     OFFERED: 'Offered'
 };
 

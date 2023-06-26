@@ -42,6 +42,10 @@ const HomeInterview = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
+                    editStatus: {
+                        interviewResult: true,
+                        status: true
+                    },
                     approveCandidate: [
                         {
                             field: 'interviewResult',
@@ -55,7 +59,7 @@ const HomeInterview = () => {
                     edit: [
                         {
                             field: 'interviewResult',
-                            values: [STATUS.INTERVIEW_RESULT.PASSED, STATUS.INTERVIEW_RESULT.FAILED, STATUS.INTERVIEW_RESULT.PENDING]
+                            values: [STATUS.INTERVIEW_RESULT.PASSED, STATUS.INTERVIEW_RESULT.FAILED, STATUS.INTERVIEW_RESULT.WAITING]
                         }
                     ]
                 }}
@@ -71,6 +75,11 @@ const HomeInterview = () => {
                     setEditCandidate(data);
                     setOpenReviewCVModal(true);
                 }}
+                handleStatusEvent={
+                    (key, data) => {
+                       alert(key);
+                    }
+                }
             />
 
             {/* /**Make accessment modal */}
