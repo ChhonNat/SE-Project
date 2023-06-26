@@ -50,8 +50,8 @@ const CandidateStatusFormModal = (props) => {
             const { success, data } = req?.data;
 
             if (success) {
-                setShortlistResults(data?.candidateStatuses);
-                setCandidateStatuses(data?.shortlistResults);
+                setShortlistResults(data?.shortlistResults);
+                setCandidateStatuses(data?.candidateStatuses);
             } else {
                 setShortlistResults([]);
                 setCandidateStatuses([]);
