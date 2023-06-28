@@ -150,12 +150,20 @@ export const PRIVATE_ROUTES = [
         /**Children settings */
         children: [
 
-            /**Location */
+            /**Business */
             {
-                name: 'Locations',
-                path: 'location',
-                component: <Settings.location.home />,
-                icon: <PinDropIcon />
+                name: "Business Divisions",
+                path: "business",
+                component: <Settings.businessUnit.home />,
+                icon: <MeetingRoomIcon />,
+            },
+
+            /**Department */
+            {
+                name: "Departments",
+                path: "department",
+                component: <Settings.department.home />,
+                icon: <ApartmentIcon />,
             },
 
             /**Position */
@@ -168,27 +176,18 @@ export const PRIVATE_ROUTES = [
 
             /**Department */
             {
-                name: "Departments",
-                path: "department",
-                component: <Settings.department.home />,
-                icon: <ApartmentIcon />,
-            },
-
-
-            /**Department */
-            {
                 name: "Head Departments",
                 path: "head-department",
                 component: <Settings.headDepartment.home />,
                 icon: <PeopleAltIcon />,
             },
 
-            /**Business */
+            /**Location */
             {
-                name: "Business Divisions",
-                path: "business",
-                component: <Settings.businessUnit.home />,
-                icon: <MeetingRoomIcon />,
+                name: 'Locations',
+                path: 'location',
+                component: <Settings.location.home />,
+                icon: <PinDropIcon />
             },
 
             /**Recruiter */
@@ -210,7 +209,7 @@ export const PRIVATE_ROUTES = [
 
         ]
     },
-       /**Replies */
+    /**Replies */
     //    {
     //     name: "Users",
     //     path: "/user",
