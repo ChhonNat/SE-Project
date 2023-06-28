@@ -15,7 +15,7 @@ const axiosAPI = axios.create({
 });
 
 //Intercepter request
-axiosAPI.interceptors.request.use((config) => {
+await axiosAPI.interceptors.request.use((config) => {
 
     const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
 
@@ -30,64 +30,65 @@ axiosAPI.interceptors.request.use((config) => {
 });
 
 
-// //Intercepter response
-// axiosAPI.interceptors.response.use(
-//     (res) => {
-//         return res;
-//     },
-//     async (err) => {
+//Intercepter response
+await axiosAPI.interceptors.response.use(
+    (res) => {
+        return res;
+    },
+    async (err) => {
 
-//         console.log('axiosAPI.interceptors.response', err)
+        console.log('axiosAPI.interceptors.response err', err)
 
-//         const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
-//         const originalRequest = err?.config;
+        const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+        const originalRequest = err?.config;
 
-//         if (err?.response?.status === HTTP_STATUS.expired && originalRequest?._retry) {
+        if (err?.response?.status === HTTP_STATUS.expired && !originalRequest?._retry) {
 
-//             originalRequest._retry = true
-//             await refreshAccessToken();
-//             axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${user?.accessToken}`;
+            originalRequest._retry = true
 
-//             return axiosAPI(originalRequest);
-//         }
+            const reqNewToken = await refreshAccessToken();
+            const { status, data } = reqNewToken;
 
-//         return Promise.reject(err);
 
-//     });
+            if (status === HTTP_STATUS.success) {
+                const newToken = {
+                    userName: data?.data?.userName,
+                    token: data?.data?.accessToken,
+                    refreshToken: data?.data?.refreshToken,
+                    isError: false,
+                    errorMessage: '',
+                    isAuthenticated: true,
+                    date: Date().toString()
+                }
 
-// //Token refresh token
-// const refreshAccessToken = async () => {
 
-//     const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+                localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(newToken));
+                axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${newToken?.accessToken}`;
+            }
 
-//     await axiosAPI.post(API_URL.auth.refreshAccessToken,
-//         {
-//             refreshToken: user?.refreshToken
-//         }
-//     )
-//         .then(function (res) {
-//             console.log('refreshAccessToken res', res);
+            return axiosAPI(originalRequest);
+        }
 
-//             const { data } = res?.data;
-//             const newToken = {
-//                 userName: data?.userName,
-//                 accessToken: data?.accessToken,
-//                 refreshToken: data?.refreshToken,
-//                 isError: false,
-//                 errorMessage: '',
-//                 isAuthenticated: true,
-//                 date: Date().toString()
-//             }
+        return Promise.reject(err);
 
-//             localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(newToken));
+    });
 
-//             return newToken;
-//         })
-//         .catch((err) => {
-//             console.log('refreshAccessToken err', err);
-//             return false;
-//         });
-// };
+//Token refresh token
+const refreshAccessToken = async () => {
+
+    const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+
+    return await axios.post(apiLink + API_URL.auth.refreshAccessToken,
+        { refreshToken: user?.refreshToken },
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'DeviceID': 'xxxxxxx'
+            },
+        }
+    );
+};
 
 
 /**
