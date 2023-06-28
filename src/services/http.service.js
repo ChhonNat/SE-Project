@@ -4,8 +4,6 @@ import { LOCAL_STORAGE_KEYS } from "../constants/local_storage";
 import { HTTP_STATUS } from "../constants/http_status";
 import { API_URL } from "../constants/api_url";
 
-const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
-
 //Create axios header config
 const axiosAPI = axios.create({
     baseURL: apiLink,
@@ -19,6 +17,8 @@ const axiosAPI = axios.create({
 //Intercepter request
 axiosAPI.interceptors.request.use((config) => {
 
+    const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+
     if (user?.token) {
         config.headers['Authorization'] = 'Bearer ' + user?.token;
     }
@@ -30,61 +30,64 @@ axiosAPI.interceptors.request.use((config) => {
 });
 
 
-//Intercepter response
-axiosAPI.interceptors.response.use(
-    (res) => {
-        return res;
-    },
-    async (err) => {
-        
-        console.log('axiosAPI.interceptors.response',err)
+// //Intercepter response
+// axiosAPI.interceptors.response.use(
+//     (res) => {
+//         return res;
+//     },
+//     async (err) => {
 
-        let originalRequest = err?.config;
-        if (err?.response?.status === HTTP_STATUS.expired && !originalRequest?._retry) {
+//         console.log('axiosAPI.interceptors.response', err)
 
-            originalRequest._retry = true
-            await refreshAccessToken();
-            axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${user?.accessToken}`;
+//         const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+//         const originalRequest = err?.config;
 
-            return axiosAPI(originalRequest);
-        }
+//         if (err?.response?.status === HTTP_STATUS.expired && originalRequest?._retry) {
 
-        return Promise.reject(err);
+//             originalRequest._retry = true
+//             await refreshAccessToken();
+//             axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${user?.accessToken}`;
 
-    });
+//             return axiosAPI(originalRequest);
+//         }
 
-//Token refresh token
-const refreshAccessToken = async () => {
+//         return Promise.reject(err);
 
-    await axiosAPI.post(API_URL.auth.refreshAccessToken,
-        {
-            refreshToken: user?.refreshToken
-        }
-    )
-        .then(function (res) {
+//     });
 
-            console.log('refreshAccessToken res', res);
+// //Token refresh token
+// const refreshAccessToken = async () => {
 
-            const { data } = res?.data;
-            const newToken = {
-                userName: data?.userName,
-                accessToken: data?.accessToken,
-                refreshToken: data?.refreshToken,
-                isError: false,
-                errorMessage: '',
-                isAuthenticated: true,
-                date: Date().toString()
-            }
+//     const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
 
-            localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(newToken));
+//     await axiosAPI.post(API_URL.auth.refreshAccessToken,
+//         {
+//             refreshToken: user?.refreshToken
+//         }
+//     )
+//         .then(function (res) {
+//             console.log('refreshAccessToken res', res);
 
-            return newToken;
-        })
-        .catch((err) => {
-            console.log('refreshAccessToken err', err);
-            return false;
-        });
-};
+//             const { data } = res?.data;
+//             const newToken = {
+//                 userName: data?.userName,
+//                 accessToken: data?.accessToken,
+//                 refreshToken: data?.refreshToken,
+//                 isError: false,
+//                 errorMessage: '',
+//                 isAuthenticated: true,
+//                 date: Date().toString()
+//             }
+
+//             localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(newToken));
+
+//             return newToken;
+//         })
+//         .catch((err) => {
+//             console.log('refreshAccessToken err', err);
+//             return false;
+//         });
+// };
 
 
 /**
