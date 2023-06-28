@@ -32,8 +32,6 @@ const _httpReducer = (httpState, action) => {
 
 const _useHttp = () => {
 
-    const user = useSelector(state => state.user);
-
     const [httpState, dispatchHttp] = useReducer(_httpReducer, {
         loading: true,
         error: null,

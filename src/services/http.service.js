@@ -39,7 +39,6 @@ await axiosAPI.interceptors.response.use(
 
         console.log('axiosAPI.interceptors.response err', err)
 
-        const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
         const originalRequest = err?.config;
 
         if (err?.response?.status === HTTP_STATUS.expired && !originalRequest?._retry) {
