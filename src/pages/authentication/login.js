@@ -14,8 +14,13 @@ export default function Login() {
 
   const dispatch = useDispatch();
 
-  const [username, setUserName] = useState('developer');
-  const [password, setPassword] = useState('dev123');
+  /**
+   * username: developer
+   * pwd: dev123
+   */
+
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
 
   const login = async (event) => {
 
