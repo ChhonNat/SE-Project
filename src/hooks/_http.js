@@ -43,62 +43,6 @@ const _useHttp = () => {
 
     const sendRequest = useCallback(async (url, method, sendData) => {
 
-        const refreshAccessToken = async () => {
-            await axiosAPI
-                .post(API_URL.auth.refreshAccessToken,
-                    { refreshToken: user?.refreshToken }
-                )
-                .then(function (res) {
-                    const { result, msg } = res?.data;
-
-                    if (result === 'error') {
-
-                        dispatchHttp({ type: 'ERROR', data: msg });
-                    } else {
-
-                        const { data } = res?.data;
-                        const newToken = {
-                            userName: data?.userName,
-                            accessToken: data?.accessToken,
-                            refreshToken: data?.refreshToken,
-                            isError: false,
-                            errorMessage: '',
-                            isAuthenticated: true,
-                            date: Date().toString()
-                        }
-
-
-                    }
-                })
-                .catch((err) => {
-                    console.log('refresh token err', err);
-                });
-        };
-
-        axiosAPI.interceptors.response.use(
-            (res) => {
-                return res;
-            },
-            async (err) => {
-
-                let originalRequest = err?.config;
-                if (err?.response?.status === HTTP_STATUS.expired && !originalRequest?._retry) {
-
-                    originalRequest._retry = true
-
-                    await refreshAccessToken();
-
-                    axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${user?.accessToken}`;
-
-                    return axiosAPI(originalRequest);
-                }
-
-
-                return Promise.reject(err);
-
-            });
-
-
         const postData = { ...sendData };
 
         dispatchHttp({ type: 'SEND' });
