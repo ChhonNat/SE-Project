@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
@@ -7,6 +7,7 @@ import CandidateInviteFormModal from "./form-invite-candidate.modal";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 import { STATUS } from "../../constants/status";
 import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
+import axiosAPI from "../../services/http.service";
 
 
 const HomeCandidate = () => {
@@ -39,7 +40,6 @@ const HomeCandidate = () => {
         setEditCandidate(candidate);
         setOpenReviewCVModal(true);
     };
-
 
     return (
         <>
