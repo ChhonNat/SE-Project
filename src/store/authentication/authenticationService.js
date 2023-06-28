@@ -1,6 +1,7 @@
 import { authActions } from './authenticationSlice';
 import axios from 'axios';
 import apiLink from '../../constants/app_cont';
+import { LOCAL_STORAGE_KEYS } from '../../constants/local_storage';
 
 const initialUser = {
   userName: '',
@@ -52,7 +53,7 @@ export const userAuthentication = ({ username, password }) => {
 
     try {
       const authUser = await authenticates();
-      localStorage.setItem('recruitmentUser', JSON.stringify(authUser));
+      localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(authUser));
       dispatch(authActions.setAuthenticate(authUser));
 
     } catch (error) {
@@ -73,10 +74,10 @@ export const isLogin = () => {
   return (dispatch) => {
     let storeUser = null;
 
-    if (!localStorage.getItem('recruitmentUser')) {
+    if (!localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser)) {
       storeUser = initialUser;
     } else {
-      storeUser = JSON.parse(localStorage.getItem('recruitmentUser'));
+      storeUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
     }
 
     dispatch(authActions.setAuthenticate(storeUser));

@@ -3,7 +3,8 @@ const API_VERSION = '/api/v1';
 
 export const API_URL = {
     auth: {
-        login: API_VERSION + '/login'
+        login: API_VERSION + '/login',
+        refreshAccessToken: API_VERSION + '/login/renew-token'
     },
     candidate: {
         get: API_VERSION + '/candidates/search',
