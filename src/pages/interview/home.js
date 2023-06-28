@@ -7,6 +7,7 @@ import { STATUS } from "../../constants/status";
 import CandidateAssessmentFormModal from "./form-accessment-candidate.modal";
 import CandidateResultFormModal from "./form-result-candidate.modal";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
+import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
 
 const HomeInterview = () => {
 
@@ -15,6 +16,8 @@ const HomeInterview = () => {
     const [openResultModal, setOpenResultModal] = useState(false);
     const [editCandidate, setEditCandidate] = useState({});
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
+    const [modalStatusTitle, setModalStatusTitle] = useState('');
+    const [openModalStatus, setOpenModalStatus] = useState(false);
 
     return (
         <>
@@ -42,10 +45,8 @@ const HomeInterview = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
-                    editStatus: {
-                        interviewResult: true,
-                        status: true
-                    },
+                    // editResult: true,
+                    // editStatus: true,
                     approveCandidate: [
                         {
                             field: 'interviewResult',
@@ -75,11 +76,14 @@ const HomeInterview = () => {
                     setEditCandidate(data);
                     setOpenReviewCVModal(true);
                 }}
-                handleStatusEvent={
-                    (key, data) => {
-                       alert(key);
-                    }
-                }
+                handleStatusEvent={(data) => {
+                    setModalStatusTitle('Edit status')
+                    setOpenModalStatus(true)
+                }}
+                handleResultEvent={(data) => {
+                    setModalStatusTitle('Edit interview result')
+                    setOpenModalStatus(true)
+                }}
             />
 
             {/* /**Make accessment modal */}
@@ -101,9 +105,16 @@ const HomeInterview = () => {
             {/* Review candidate form */}
             <CandidateReviewCVModal
                 modalTitle="Review CV"
-                candidate={editCandidate}
+                id={editCandidate?.candidateId}
                 openReviewCVModal={openReviewCVModal}
                 onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
+            />
+
+            {/* Edit candidate result and status */}
+            <CandidateStatusFormModal
+                title={modalStatusTitle}
+                open={openModalStatus}
+                onCloseModal={() => setOpenModalStatus(false)}
             />
 
         </>

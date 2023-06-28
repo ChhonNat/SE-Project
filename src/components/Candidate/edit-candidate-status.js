@@ -1,11 +1,11 @@
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide } from "@mui/material";
-import TitleComponent from "../../components/Page/title";
-import FooterComponent from "../../components/Page/footer";
+import TitleComponent from "../Page/title";
+import FooterComponent from "../Page/footer";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InterviewModel from "../../models/interview.model";
-import SelectComponent from "../../components/Selector/select";
+import SelectComponent from "../Selector/select";
 import { globalService } from "../../services/global.service";
 import { API_URL } from "../../constants/api_url";
 

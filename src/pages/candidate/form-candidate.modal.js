@@ -35,6 +35,7 @@ import { STATUS } from '../../constants/status';
 import { CandidateModel } from '../../models/candidate.model';
 // import { ALERT_TIMER } from '../../constants/app_config';
 import LabelRequire from '../../components/Label/require';
+import CandidateReviewCVModal from '../../components/CV/view-cv.modal';
 
 
 const shrinkOpt = { shrink: true };
@@ -60,6 +61,7 @@ const CandidateFormModal = (props) => {
     const [listReceivedFromChannels, setListReceivedFromChannels] = useState([]);
 
     const [headDepartment, setHeadDepartment] = useState('');
+    const [openCVModal, setOpenCVModal] = useState(false);
 
     /**
      * Form use for edit data
@@ -268,19 +270,6 @@ const CandidateFormModal = (props) => {
                     <Box sx={{ width: '100%' }}>
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
-                            {/* <Grid item xs={12}>
-                                <TextField
-                                    disabled
-                                    type="text"
-                                    id="application-code"
-                                    label="Application Code"
-                                    variant="outlined"
-                                    fullWidth
-                                    size="small"
-                                    InputLabelProps={shrinkOpt}
-                                    {...register("applicantCode")}
-                                />
-                            </Grid> */}
                             {/* Input First Name */}
                             <Grid item xs={12}>
                                 <TextField
@@ -341,7 +330,7 @@ const CandidateFormModal = (props) => {
                                 />
                             </Grid>
                             {/* Input Email */}
-                            <Grid item xs={12}>
+                            <Grid item xs={12} paddingBottom={2}>
                                 <TextField
                                     type="email"
                                     id="email"
@@ -351,12 +340,39 @@ const CandidateFormModal = (props) => {
                                     size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register("email")}
-                                // error={errors?.email}
-                                // helperText={errors?.email?.message}
                                 />
                             </Grid>
 
+                            <Grid item xs={12}>
+                                <Link sx={{cursor:'pointer'}} onClick={() => setOpenCVModal(true)}>{candidate?.cvFile}</Link>
+                            </Grid>
 
+                            {
+                                candidate?.id &&
+                                <Grid item xs={12}  paddingBottom={2}>
+                                    {/* Control review candidate checkbox */}
+                                    <FormControl component="fieldset">
+                                 
+                                        <FormGroup aria-label="position" row>
+                                            <FormControlLabel
+                                                value={STATUS.CANDIDATE.CV_REVIEWED}
+                                                label="Review CV yet?"
+                                                control={
+                                                    <Checkbox
+                                                        onChange={(e) => {
+                                                            setValue('status', e?.target?.checked ? STATUS.CANDIDATE.CV_REVIEWED : STATUS.CANDIDATE.PENDING)
+                                                            setValue('shortlistResult', STATUS.SHORTLIST_RESULT.PENDING)
+                                                        }}
+                                                        checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
+                                                    />
+                                                }
+
+                                                labelPlacement="end"
+                                            />
+                                        </FormGroup>
+                                    </FormControl>
+                                </Grid>
+                            }
 
                             {/*Upload file*/}
                             <Grid item xs={6}>
@@ -385,39 +401,6 @@ const CandidateFormModal = (props) => {
                                     value={watchCandidate?.receivedChannel || ""}
                                 />
                             </Grid>
-
-                            <Grid item xs={6}>
-                                    <Link href='#'>{candidate?.cvFile}</Link>
-                            </Grid>
-
-                            {
-                                candidate?.id &&
-                                <Grid item xs={6}>
-                                    {/* Control review candidate checkbox */}
-                                    <FormControl component="fieldset">
-                                        {/* <FormLabel id="demo-row-radio-buttons-group-label" sx={{ fontSize: 14 }}>
-                                            Review CV yet?
-                                        </FormLabel> */}
-                                        <FormGroup aria-label="position" row>
-                                            <FormControlLabel
-                                                value={STATUS.CANDIDATE.CV_REVIEWED}
-                                                label="Review CV yet?"
-                                                control={
-                                                    <Checkbox
-                                                        onChange={(e) => {
-                                                            setValue('status', e?.target?.checked ? STATUS.CANDIDATE.CV_REVIEWED : STATUS.CANDIDATE.PENDING)
-                                                            setValue('shortlistResult', STATUS.SHORTLIST_RESULT.PENDING)
-                                                        }}
-                                                        checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
-                                                    />
-                                                }
-
-                                                labelPlacement="end"
-                                            />
-                                        </FormGroup>
-                                    </FormControl>
-                                </Grid>
-                            }
 
 
                             {/* Input Apply Date */}
@@ -456,7 +439,7 @@ const CandidateFormModal = (props) => {
                             <Grid item xs={12}>
                                 <SelectComponent
                                     id="business-id"
-                                    label={'Business Division'}
+                                    label={<LabelRequire label='Business Division' />}
                                     size={'small'}
                                     customDatas={listBusinesses}
                                     value={watchCandidate?.businessDivisionId || ''}
@@ -468,6 +451,7 @@ const CandidateFormModal = (props) => {
                                         setListPositions([]);
                                         fetchData(API_URL.lookup.departmentById.get + e?.target?.value, setListDepartments);
                                     }}
+                                    err={errors?.businessDivisionId?.message}
                                 />
                             </Grid>
 
@@ -475,7 +459,7 @@ const CandidateFormModal = (props) => {
                             <Grid item xs={12}>
                                 <SelectComponent
                                     id="department-id"
-                                    label={'Department'}
+                                    label={<LabelRequire label='Department' />}
                                     size={'small'}
                                     customDatas={listDepartments}
                                     value={watchCandidate?.departmentId || ''}
@@ -486,6 +470,7 @@ const CandidateFormModal = (props) => {
                                         fetchData(API_URL.lookup.headDepartment.get + e?.target?.value, setHeadDepartment, 'headDepartment');
                                         fetchData(API_URL.lookup.positionById.get + e?.target?.value, setListPositions);
                                     }}
+                                    err={errors?.departmentId?.message}
                                 />
                             </Grid>
 
@@ -495,12 +480,14 @@ const CandidateFormModal = (props) => {
                                     disabled
                                     type="text"
                                     id="head-department"
-                                    label="Head Department"
+                                    label={<LabelRequire label="Head Department" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('headDepartmentName')}
+                                    error={errors?.headDepartmentName}
+                                    helperText={errors?.headDepartmentName?.message}
                                 />
 
                                 {/* <SelectComponent
@@ -528,56 +515,6 @@ const CandidateFormModal = (props) => {
                                 />
                             </Grid>
 
-                            {/* {
-                                candidate?.id &&
-                                <>
-                                   
-
-                                    <Grid item xs={12}>
-                                     
-                                        <FormControl component="fieldset">
-                                            <FormLabel id="row-radio-buttons-group-label" sx={{ fontSize: 14 }}>
-                                                Shortlist Result
-                                            </FormLabel>
-                                            <RadioGroup
-                                                value={watchCandidate?.shortlistResult || candidate?.shortlistResult}
-                                                onChange={(e) => {
-                                                    setValue('shortlistResult', e?.target?.value)
-                                                }}
-                                            >
-
-                                                <FormControlLabel
-                                                    value={STATUS.SHORTLIST_RESULT.WAITING}
-                                                    control={<Radio />}
-                                                    label="Waiting"
-                                                    labelPlacement="end"
-                                                />
-
-                                                <FormControlLabel
-                                                    value={STATUS.SHORTLIST_RESULT.KEEP_IN_POOL}
-                                                    control={<Radio />}
-                                                    label="Keep In Pool"
-                                                    labelPlacement="end"
-                                                />
-
-                                                <FormControlLabel
-                                                    value={STATUS.SHORTLIST_RESULT.FAILED}
-                                                    control={<Radio />}
-                                                    label="Failed"
-                                                    labelPlacement="end"
-                                                />
-
-                                                <FormControlLabel
-                                                    value={STATUS.SHORTLIST_RESULT.PASSED}
-                                                    control={<Radio />}
-                                                    label="Passed"
-                                                    labelPlacement="end"
-                                                />
-                                            </RadioGroup>
-                                        </FormControl>
-                                    </Grid>
-                                </>
-                            } */}
                         </Grid>
                     </Box>
                 </DialogContent>
@@ -590,6 +527,12 @@ const CandidateFormModal = (props) => {
                     />
                 </DialogActions>
             </Dialog>
+
+            <CandidateReviewCVModal 
+                id={candidate?.id}
+                openReviewCVModal={openCVModal}
+                onCloseReviewCVModal={() => setOpenCVModal(false)}
+            />
         </div>
     );
 }
