@@ -119,28 +119,28 @@ export const PRIVATE_ROUTES = [
         isDivider: false,
     },
     /**Interview */
-    {
-        name: "Interviews",
-        path: "/interview",
-        component: <Interview.home />,
-        icon: <RecordVoiceOverIcon />,
-        isDivider: false,
-    },
+    // {
+    //     name: "Interviews",
+    //     path: "/interview",
+    //     component: <Interview.home />,
+    //     icon: <RecordVoiceOverIcon />,
+    //     isDivider: false,
+    // },
     /**Assessment */
-    {
-        name: "Assessments",
-        path: "/assessment",
-        component: <Assessment.home />,
-        icon: <PersonSearchIcon />,
-    },
+    // {
+    //     name: "Assessments",
+    //     path: "/assessment",
+    //     component: <Assessment.home />,
+    //     icon: <PersonSearchIcon />,
+    // },
     /**Replies */
-    {
-        name: "Hires",
-        path: "/hire",
-        component: <Hire.home />,
-        icon: <HowToRegIcon />,
-        isDivider: false,
-    },
+    // {
+    //     name: "Hires",
+    //     path: "/hire",
+    //     component: <Hire.home />,
+    //     icon: <HowToRegIcon />,
+    //     isDivider: false,
+    // },
     /**Settings */
     {
         name: "Settings",
