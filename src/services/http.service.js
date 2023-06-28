@@ -3,7 +3,6 @@ import apiLink from "../constants/app_cont";
 import { LOCAL_STORAGE_KEYS } from "../constants/local_storage";
 import { HTTP_STATUS } from "../constants/http_status";
 import { API_URL } from "../constants/api_url";
-import { useDispatch } from "react-redux";
 
 const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
 
@@ -19,8 +18,6 @@ const axiosAPI = axios.create({
 
 //Intercepter request
 axiosAPI.interceptors.request.use((config) => {
-
-    console.log('axiosAPI.interceptors.request',config);
 
     if (user?.token) {
         config.headers['Authorization'] = 'Bearer ' + user?.token;
