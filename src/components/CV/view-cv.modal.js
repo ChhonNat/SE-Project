@@ -4,6 +4,7 @@ import TitleComponent from "../Page/title";
 import FooterComponent from "../Page/footer";
 import { CandidateService } from "../../services/candidate.service";
 import { HTTP_STATUS } from "../../constants/http_status";
+import apiLink from "../../constants/app_cont";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -12,33 +13,9 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const CandidateReviewCVModal = (props) => {
 
-    const { openReviewCVModal, onCloseReviewCVModal, candidate, modalTitle } = props;
-    // const [cvFile, setCvFile] = useState();
+    const { openReviewCVModal, onCloseReviewCVModal, id, modalTitle } = props;
 
-    // useEffect(() => {
-
-    //     if (candidate?.id) {
-    //         downloadCVFile(candidate?.id);
-    //     }
-
-    // }, [candidate]);
-
-    // const downloadCVFile = async (canId) => {
-
-    //     try {
-    //         await CandidateService.downloadCVFile(canId)
-    //             .then((result) => {
-    //                 const { status, data } = result;
-    //                 console.log(result);
-    //             }).catch((err) => {
-    //                 console.log(err);
-    //             })
-
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-
+    const downloadCV =  `${apiLink}/api/v1/candidates/download?id=${id}`
 
     return (
         <>
@@ -55,7 +32,7 @@ const CandidateReviewCVModal = (props) => {
                 <DialogContent dividers>
 
                     <embed
-                        src={`http://172.168.0.38:8585/api/v1/candidates/download?id=${candidate?.id}`}
+                        src={downloadCV}
                         style={
                             {
                                 width: '-webkit-fill-available',

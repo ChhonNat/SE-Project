@@ -32,7 +32,7 @@ const invite_candidate = [
     "interviewDate"
 ];
 
-const edit_result_candidate = [
+const feedback_candidate = [
     "interviewDate",
     "interviewResult",
     "feedBackDate",
@@ -116,7 +116,7 @@ export const KEY_POST = {
     view_candidate,
     update_candidate,
     invite_candidate,
-    edit_result_candidate,
+    feedback_candidate,
     make_assessment_candidate,
     offer_assessment_candidate,
     hire_candidate,
