@@ -31,6 +31,7 @@ const TableRows = ({
     handleAssessmentEvent,
     handleEditEvent,
     handleLinkEvent,
+    handleResultEvent,
     handleStatusEvent,
     headers,
     checkColumn,
@@ -163,6 +164,18 @@ const TableRows = ({
                                 )
                                 :
                                 false,
+                            editResult: actions?.editResult ? (typeof actions?.editResult === 'boolean' ?
+                                actions?.editResult :
+                                checkButtonAction(row, actions?.editResult)
+                            )
+                                :
+                                false,
+                            editStatus: actions?.editStatus ? (typeof actions?.editStatus === 'boolean' ?
+                                actions?.editStatus :
+                                checkButtonAction(row, actions?.editStatus)
+                            )
+                                :
+                                false,
                         };
 
                         const visible = head.visible !== undefined ? head.visible : true;
@@ -210,9 +223,9 @@ const TableRows = ({
                                                         color: head?.statusColor[row[head.id]],
                                                         cursor: actions?.editStatus?.[head?.id] ? 'pointer' : ''
                                                     }}
-                                                    onClick={(e) =>
-                                                        actions?.editStatus?.[head?.id] ? handleStatusEvent(head?.id, row) : e.preventDefault()
-                                                    }
+                                                    // onClick={(e) =>
+                                                    //     actions?.editStatus?.[head?.id] ? handleStatusEvent(head?.id, row) : e.preventDefault()
+                                                    // }
                                                 >
                                                     {row[head.id]}
                                                 </Typography>
@@ -240,6 +253,8 @@ const TableRows = ({
                                                 onHandleReviewCandidateEvent={() => handleReviewEvent(row)}
                                                 onHandleAssessmentCandidateEvent={() => handleAssessmentEvent(row)}
                                                 onHandleEditEvent={() => handleEditEvent(row)}
+                                                onHandleEditResult={() => handleResultEvent(row)}
+                                                onHandleEditStatus={() => handleStatusEvent(row)}
                                                 useActions={buttonAction}
                                             />
                                         }

@@ -8,7 +8,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import DoneOutlineSharpIcon from '@mui/icons-material/DoneOutlineSharp';
 import ConfirmModal from "../Modal/confirm-delete";
 import Tooltip from '@mui/material/Tooltip';
-
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -20,7 +21,9 @@ const AsyncTableAction = (props) => {
         onHandleEditEvent,
         onHandleApproveCandidateEvent,
         onHandleReviewCandidateEvent,
-        onHandleAssessmentCandidateEvent
+        onHandleAssessmentCandidateEvent,
+        onHandleEditResult,
+        onHandleEditStatus
     } = props;
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -71,6 +74,26 @@ const AsyncTableAction = (props) => {
                         <Button variant="text" size="small" color="inherit"
                             onClick={onHandleEditEvent}>
                             <DriveFileRenameOutlineOutlinedIcon />
+                        </Button>
+                    </Tooltip>
+                }
+
+                {/* Show button edit result */}
+                {useActions?.editResult &&
+                    <Tooltip title="Edit shortlist result">
+                        <Button variant="text" size="small" color="info"
+                            onClick={onHandleEditResult}>
+                            <CheckBoxOutlinedIcon />
+                        </Button>
+                    </Tooltip>
+                }
+
+                {/* Show button edit status */}
+                {useActions?.editStatus &&
+                    <Tooltip title="Edit status">
+                        <Button variant="text" size="small" color="secondary"
+                            onClick={onHandleEditStatus}>
+                            <CheckCircleOutlineOutlinedIcon />
                         </Button>
                     </Tooltip>
                 }

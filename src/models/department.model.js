@@ -1,4 +1,4 @@
-import { object, any, string, number } from "zod"
+import { object, any, string, number, array } from "zod"
 
 const DepartmentModel = object({
     id: any().optional().nullable(),

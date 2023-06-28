@@ -96,10 +96,10 @@ const tblInterview = [
         id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'
     },
     {
-        id: 'status', type: 'status', statusColor: {}, label: 'Status'
+        id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'
     },
     {
-        id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'
+        id: 'status', type: 'status', statusColor: {}, label: 'Status'
     },
     // ...proof,
     {
@@ -200,16 +200,16 @@ const tblPosition = [
         id: 'name', label: 'Name',
     },
     {
-        id: 'departmentName', label: 'Department' 
+        id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisions', arrayId:'name', label: 'Business Division' 
+        id: 'businessDivisions', arrayId: 'name', label: 'Business Division'
     },
     {
         id: 'description', label: 'Description',
     },
     {
-        id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
+        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
     },
     // ...proof,
     {
@@ -268,7 +268,7 @@ const tblDepartment = [
         id: 'businessDivisions', arrayId: 'name', label: 'Business Division'
     },
     {
-        id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
+        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
     },
     // ...proof,
     {
@@ -303,7 +303,7 @@ const tblHeadDepartment = [
         id: 'positionName', label: 'Position'
     },
     {
-        id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
+        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
     },
     // ...proof,
     {
@@ -326,7 +326,7 @@ const tblBusiness = [
         id: 'description', label: 'Description',
     },
     {
-        id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
+        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
     },
     // ...proof,
     {
@@ -348,7 +348,7 @@ const tblLocation = [
         id: 'description', label: 'Description'
     },
     {
-        id: 'status', type: 'status', statusColor: {Active: 'Green', Inactive: 'Red'}, label: 'Status'
+        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
     },
     // ...proof,
     {

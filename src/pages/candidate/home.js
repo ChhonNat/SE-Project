@@ -6,7 +6,7 @@ import CandidateFormModal from "./form-candidate.modal";
 import CandidateInviteFormModal from "./form-invite-candidate.modal";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 import { STATUS } from "../../constants/status";
-import CandidateStatusFormModal from "./form-status-candidate.modal";
+import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
 
 
 const HomeCandidate = () => {
@@ -72,10 +72,8 @@ const HomeCandidate = () => {
                         create: true,
                         delete: false,
                         edit: true,
-                        editStatus: {
-                            shortlistResult: true,
-                            status: true
-                        },
+                        // editResult: true,
+                        // editStatus: true,
                         approveCandidate: [
                             {
                                 field: 'shortlistResult',
@@ -93,17 +91,14 @@ const HomeCandidate = () => {
                 handleEditEvent={(data) => handleEditCandidate(data)}
                 handleReviewEvent={(data) => handleEditCandidate(data)}
                 handleLinkEvent={(data) => handleReviewCandidate(data)}
-                handleStatusEvent={
-                    (key, data) => {
-                        key === 'shortlistResult' ? (
-                            setModalTitle('Edit shortlist result')
-                        )
-                        : (
-                            setModalTitle('Edit status')
-                        );
-                        setOpenStatusModal(true)
-                    }
-                }
+                handleResultEvent={(data) => {
+                    setModalTitle('Edit shortlist result');
+                    setOpenStatusModal(true);
+                }}
+                handleStatusEvent={(data) => {
+                    setModalTitle('Edit status');
+                    setOpenStatusModal(true);
+                }}
             />
 
             {/* Create new candidate form */}
@@ -134,7 +129,7 @@ const HomeCandidate = () => {
             {/* Review candidate form */}
             <CandidateReviewCVModal
                 modalTitle="Review CV"
-                candidate={editCandidate}
+                id={editCandidate?.id}
                 openReviewCVModal={openReviewCVModal}
                 onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
             />

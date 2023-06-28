@@ -88,7 +88,7 @@ const CandidateResultFormModal = (props) => {
         let resultCandidate = {};
 
         Object.keys(dataCandidate).forEach((key) => {
-            if (KEY_POST.edit_result_candidate.includes(key)) {
+            if (KEY_POST.feedback_candidate.includes(key)) {
 
                 if (key === 'interviewDate') {
 
@@ -161,7 +161,7 @@ const CandidateResultFormModal = (props) => {
                         </Grid>
 
                         {/* Status record*/}
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <SelectComponent
                                 id="status-id"
                                 label={'Status'}
@@ -171,10 +171,10 @@ const CandidateResultFormModal = (props) => {
                                 handleOnChange={(e) => setValue('status', e?.target?.value)}
                                 err={errors?.status?.message}
                             />
-                        </Grid>
+                        </Grid> */}
 
                         {/*Interview Result */}
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <SelectComponent
                                 id="interview-result-id"
                                 label={'Interview Result'}
@@ -184,7 +184,7 @@ const CandidateResultFormModal = (props) => {
                                 handleOnChange={(e) => setValue('interviewResult', e?.target?.value)}
                                 err={errors?.interviewResult?.message}
                             />
-                        </Grid>
+                        </Grid> */}
 
                         {/*Feedback Date*/}
                         <Grid item xs={12}>
