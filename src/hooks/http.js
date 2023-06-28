@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useReducer, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import apiLink from '../constants/app_cont';
+import { LOCAL_STORAGE_KEYS } from '../constants/local_storage';
 
 const httpReducer = (httpState, action) => {
   switch (action.type) {
@@ -50,7 +51,7 @@ const useHttp = () => {
       const refreshAccessToken = async () => {
 
         await axios
-          .post(`${apiLink}/api/v1/login/renew-token`,{refreshToken: user.refreshToken},options)
+          .post(`${apiLink}/api/v1/login/renew-token`, { refreshToken: user.refreshToken }, options)
           .then(function (result) {
 
             if (result.data.result === 'error') {
@@ -70,7 +71,7 @@ const useHttp = () => {
                 date: Date().toString(),
               };
 
-              localStorage.setItem('recruitmentUser', JSON.stringify(token));
+              localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(token));
 
               dispatch(isLogin());
 
@@ -90,51 +91,51 @@ const useHttp = () => {
       // interceptor
       const customAxios = axios.create();
 
-      customAxios.interceptors.request.use(
-        async (config) => {
+      customAxios.interceptors.request.use(async (config) => {
 
-          if (user.accessToken) {
-
-            config.headers = {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${user.accessToken}`,
-              'Access-Control-Allow-Origin': '*',
-            };
-
-            return config;
-          }
-
-          if (localStorage.getItem("recruitmentUser")) {
-            config.headers = {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${JSON.parse(localStorage.getItem('recruitmentUser')).accessToken}`,
-              'Access-Control-Allow-Origin': '*',
-            };
-
-            return config;
-
-          }
+        if (user.accessToken) {
 
           config.headers = {
             'Content-Type': 'application/json',
-            // Authorization: `Bearer ${user.accessToken}`,
+            Authorization: `Bearer ${user.accessToken}`,
             'Access-Control-Allow-Origin': '*',
           };
 
           return config;
-        },
-        (error) => {
-          Promise.reject(error);
         }
+
+        if (localStorage.getItem("recruitmentUser")) {
+
+          config.headers = {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser)).accessToken}`,
+            'Access-Control-Allow-Origin': '*',
+          };
+
+          return config;
+
+        }
+
+        config.headers = {
+          'Content-Type': 'application/json',
+          // Authorization: `Bearer ${user.accessToken}`,
+          'Access-Control-Allow-Origin': '*',
+        };
+
+        return config;
+      }, (error) => {
+        Promise.reject(error);
+      }
       );
 
-      customAxios.interceptors.response.use(
-        (response) => {
-          return response;
-        },
+      customAxios.interceptors.response.use((response) => 
+      {
+        return response;
+      },
         async (error) => {
           const originalRequest = error.config;
           if (error.response.status === 403 && !originalRequest._retry) {
+
             originalRequest._retry = true;
             await refreshAccessToken();
 
@@ -147,7 +148,6 @@ const useHttp = () => {
           return Promise.reject(error);
         }
       );
-      ////////Custom Axios and interceptor////////////
 
       dispatchHttp({ type: 'SEND' });
 
