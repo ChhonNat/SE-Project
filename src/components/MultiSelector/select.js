@@ -10,6 +10,8 @@ import Chip from '@mui/material/Chip';
 import LabelRequire from '../Label/require';
 import { FormHelperText, IconButton } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
+import _useHttp from '../../hooks/_http';
+import { HTTP_METHODS } from '../../constants/http_method';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -47,25 +49,49 @@ const MultiSelectComponent = (props) => {
      * handleEventChange: when select change return value back
      * err: status of error if use as require
      */
-    const { id, label, size, isRequire, customDatas, value, bindField, isSubmit, handleEventChange, err } = props;
+    const { id, label, size, isRequire, customDatas, bindField, isSubmit, handleEventChange, err, callToApi } = props;
+    const { value } = props || [];
+
+    const { data, loading, error, message, sendRequest } = _useHttp();
+    const [datas, setDatas] = useState([]);
 
     const theme = useTheme();
 
-    /**
-     * Convert value to display in select e.g edit value
-     */
-    const convertValue = !value?.length ? [] : value.map(function (ele) {
-        return ele.id || ele;
-    });
+    const [values, setValues] = useState([]);
 
-    const [values, setValues] = useState(convertValue);
+    useEffect(() => {
+
+        if (callToApi) {
+
+            const fetchData = async () => {
+                await sendRequest(callToApi, HTTP_METHODS.get);
+            }
+
+            fetchData();
+        }
+    }, [callToApi]);
+
+
+    useEffect(() => {
+
+        setDatas(callToApi ? data : customDatas)
+    }, [customDatas, data]);
+
 
     /**
      * listen if value change re-set new value
      */
     useEffect(() => {
+        /**
+        * Convert value to display in select e.g edit value
+        */
+        const convertValue = value && value.length ? value.map(function (ele) {
+            return ele.id || ele;
+        }) : [];
         setValues(convertValue);
+
     }, [value]);
+
 
     /**
      * Event select change
@@ -82,9 +108,9 @@ const MultiSelectComponent = (props) => {
     return (
 
         <div>
-            <FormControl 
-                fullWidth 
-                size={size ? size : "sm"} 
+            <FormControl
+                fullWidth
+                size={size ? size : "sm"}
                 error={isSubmit && isRequire && !value?.length ? true : false}>
 
                 <InputLabel id={id}>
@@ -107,14 +133,14 @@ const MultiSelectComponent = (props) => {
                             {selected.map((value, index) => (
                                 <Chip
                                     key={index}
-                                    label={customDatas?.length && bindField ? customDatas.find((ele) => ele.id === value)[bindField] : value}
+                                    label={datas?.length && bindField ? datas.find((ele) => ele.id === value)[bindField] : value}
                                 />
                             ))}
                         </Box>
                     )}
                     MenuProps={MenuProps}
                 >
-                    {customDatas?.length && customDatas.map((ele, index) => (
+                    {datas?.length && datas.map((ele, index) => (
                         <MenuItem
                             key={index}
                             value={ele?.id || ele[bindField] || ele}

@@ -123,7 +123,8 @@ const user = [
     "username",
     "password",
     "confirmPassword",
-    "status"
+    "status",
+    "roles"
 ]
 
 export const KEY_POST = {

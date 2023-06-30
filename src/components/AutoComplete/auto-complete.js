@@ -25,7 +25,7 @@ const AsyncAutoComplete = (props) => {
 
   const { data, loading, error, sendRequest } = _useHttp();
   const [open, setOpen] = useState(false);
-  const [selectValue, setSelectValue] = useState([]);
+  const [selectValue, setSelectValue] = useState(null);
 
   /** 
    * When callToApi has value request data to display in auto complete

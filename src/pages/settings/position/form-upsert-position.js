@@ -45,18 +45,10 @@ const UpsertPositionForm = (props) => {
                 setValue(key, editData[key])
             }
         }
-        // else {
-        //     setValue('name', '');
-        //     setValue('description', '');
-        //     setValue('businessDivisions',);
-        //     setValue('departmentId',);
-        //     setValue('status', 'Active');
-        //     clearErrors();
-        // }
 
         /**Fetch lookup data businesss and department  */
         fetchData(API_URL.lookup.business.get, setListBusinessDivisions);
-        fetchData(API_URL.lookup.department.get, setListDepartments);
+        // fetchData(API_URL.lookup.department.get, setListDepartments);
 
     }, [openModal])
 
@@ -202,7 +194,7 @@ const UpsertPositionForm = (props) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <SelectComponent
+                                {/* <SelectComponent
                                     id="department-id"
                                     label="Department"
                                     isRequire={true}
@@ -213,19 +205,21 @@ const UpsertPositionForm = (props) => {
                                     value={watchData?.departmentId || ""}
                                     handleOnChange={(e) => setValue('departmentId', e?.target?.value)}
                                     err={errors?.departmentId?.message}
-                                />
-{/* 
+                                /> */}
+                                
                                 <AsyncAutoComplete
                                     id="department-id"
                                     label="Department"
                                     size="large"
                                     callToApi={API_URL.lookup.department.get}
                                     bindField={'name'}
-                                    handleOnChange={(e, value) => setValue('departmentId', value?.id ? value?.id : value)}
+                                    handleOnChange={(e, value) => { 
+                                        setValue('departmentId', value?.id ? value?.id : value);
+                                    }}
                                     value={watchData?.departmentId || null}
                                     isRequire={true}
                                     err={errors?.departmentId?.message}
-                                /> */}
+                                />
 
                             </Grid>
                             <Grid item xs={12}>

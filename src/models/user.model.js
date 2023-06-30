@@ -1,4 +1,4 @@
-import { object, string } from "zod";
+import { number, object, string } from "zod";
 
 const CreateModel = object({
     staffId: string().min(1, { message: 'Staff ID is required!' }),
@@ -11,7 +11,7 @@ const CreateModel = object({
     username: string().min(1, { message: 'Username is required!' }),
     password: string().min(1, { message: 'Password is required!' }),
     confirmPassword: string().min(1, { message: 'Confirm password is required!' }),
-    roleId: string().optional().nullable()
+    roles: number().array().nonempty({ message: 'Role is required!' })
 }).refine((data) => data?.password === data?.confirmPassword, {
     message: "Confirm password doesn't match",
     path: ["confirmPassword"]
@@ -28,7 +28,7 @@ const UpdateModel = object({
     username: string().min(1, { message: 'Username is required!' }),
     password: string().optional().nullable(),
     confirmPassword: string().optional().nullable(),
-    roleId: string().optional().nullable(),
+    roles: number().array().nonempty({ message: 'Role is required!' }),
     status: string().optional().default('Active')
 });
 

@@ -14,6 +14,8 @@ import { DATA_STATUS } from "../../constants/data_status";
 import Swal from "sweetalert2";
 import { UserModel } from "../../models/user.model";
 import { ConverterService } from "../../utils/converter";
+import MultiSelectComponent from "../../components/MultiSelector/select";
+import { API_URL } from "../../constants/api_url";
 
 const shrinkOpt = { shrink: true };
 
@@ -41,8 +43,9 @@ const UpsertUserForm = (props) => {
     const watchUser = watch();
     const [showPwd, setShowPwd] = useState(false);
     const [showConfirmPwd, setShowConfirmPwd] = useState(false);
+    const [isSubmitForm, setIsSubmitForm] = useState(false);
 
-    const formatKeys = ['birthDate'];
+    const formatKeys = ['birthDate', 'roles'];
 
     useEffect(() => {
 
@@ -52,6 +55,8 @@ const UpsertUserForm = (props) => {
             Object.keys(user).forEach((key) => {
 
                 if (KEY_POST.user.includes(key)) {
+
+                    console.log(key);
 
                     if (formatKeys.includes(key)) {
                         setValue(key, ConverterService.convertUnixDateToMUI(user[key]))
@@ -77,7 +82,7 @@ const UpsertUserForm = (props) => {
 
     const onError = (data) => {
         console.log(data);
-
+        setIsSubmitForm(true);
         if (user?.id) {
             if (watchUser?.password || watchUser?.confirmPassword) {
                 if (watchUser?.password !== watchUser?.confirmPassword)
@@ -90,6 +95,7 @@ const UpsertUserForm = (props) => {
     const submit = async (data) => {
 
         if (user?.id) {
+
             if (watchUser?.password || watchUser?.confirmPassword) {
                 if (watchUser?.password !== watchUser?.confirmPassword) {
                     setError('confirmPassword', { message: "Confirm password doesn't match!" });
@@ -102,15 +108,60 @@ const UpsertUserForm = (props) => {
 
         Object.keys(data).forEach((key) => {
 
-            if (KEY_POST.user.includes(key)) {
+            if (KEY_POST.user.includes(key) && !user?.id) {
 
-                if (formatKeys.includes(key)) {
+                if (formatKeys[0] === key) {
                     submitData[key] = ConverterService.convertDateToAPI(data[key])
                 } else {
+
+                    submitData[key] = data[key];
+                }
+
+            } else {
+
+                if (formatKeys.includes(key)) {
+
+                    if (formatKeys[0] === key) {
+                        submitData[key] = ConverterService.convertDateToAPI(data[key])
+                    }
+
+                    if (formatKeys[1] === key) {
+
+                        const oldRoles = [...user?.roles];
+                        const mapRole = {};
+
+                        if (oldRoles?.length) {
+
+                            oldRoles.forEach((ele) => {
+
+                                if (!ele?.id) {
+                                    mapRole = {}
+                                }
+
+                                mapRole[ele?.id] = ele;
+
+                            })
+                        }
+
+                        data[key] = data[key].map((ele) => {
+
+                            const isObject = typeof ele === 'object';
+                            return isObject ?
+                                { id: ele?.id, recId: ele?.recId } :
+                                { id: mapRole[ele] ? mapRole[ele]?.id : ele, recId: mapRole[ele] ? mapRole[ele]?.recId : 0 }
+                        })
+
+                        submitData[key] = data[key];
+                    }
+
+
+                } else {
+
                     submitData[key] = data[key];
                 }
             }
         });
+
 
         try {
 
@@ -204,16 +255,32 @@ const UpsertUserForm = (props) => {
                                 helperText={errors?.secondName?.message}
                             />
                         </Grid>
-                        {/* <Grid item xs={12}>
-                            <SelectComponent
+                        <Grid item xs={12}>
+
+                            <MultiSelectComponent
+                                id="role-id"
+                                label="Role"
+                                isRequire={true}
+                                size="small"
+                                isSubmit={isSubmitForm}
+                                customDatas={[]}
+                                callToApi={API_URL.role.get}
+                                value={user?.id ? user?.roles : watchUser.roles}
+                                bindField="authority"
+                                handleEventChange={(e) => setValue('roles', e)}
+                                err={errors?.roles?.message}
+                            />
+
+                            {/* <SelectComponent
                                 label={<LabelRequire label="Role" />}
                                 customDatas={['Test', 'Test1']}
                                 size="small"
                                 error={errors?.roleId}
                                 helperText={errors?.roleId?.message}
 
-                            />
-                        </Grid> */}
+                            /> */}
+
+                        </Grid>
                         <Grid item xs={12}>
                             <SelectComponent
                                 label={<LabelRequire label="Gender" />}

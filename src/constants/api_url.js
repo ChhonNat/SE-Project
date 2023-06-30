@@ -9,7 +9,10 @@ export const API_URL = {
     user: {
         get: API_VERSION + '/users/search',
         create: API_VERSION + '/users',
-        edit: API_VERSION + '/users/'
+        edit: API_VERSION + '/users/',
+    },
+    role: {
+        get: API_VERSION + '/users/roles'
     },
     candidate: {
         get: API_VERSION + '/candidates/search',
