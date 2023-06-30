@@ -47,7 +47,7 @@ const AsyncDatatable = (props) => {
   const [dense, setDense] = useState(true);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchText, setSearchText] = useState('');
-  const { data, loading, error, sendRequest } = _useHttp();
+  const { data, loading, error, message, sendRequest } = _useHttp();
 
   let rows = useMemo(() => (data?.records ? data?.records : []), [data]);
   let rowCount = useMemo(() => (data?.totalRecord ? data?.totalRecord : 0), [data]);
@@ -149,6 +149,11 @@ const AsyncDatatable = (props) => {
   }, []);
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+
+  useEffect(() => {
+
+    console.log(message);
+  },[message])
 
   return (
     <Box
