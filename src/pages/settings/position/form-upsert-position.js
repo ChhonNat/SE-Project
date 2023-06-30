@@ -16,6 +16,7 @@ import { globalService } from "../../../services/global.service";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { API_URL } from "../../../constants/api_url";
 import { KEY_POST } from "../../../constants/key_post";
+import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -43,7 +44,7 @@ const UpsertPositionForm = (props) => {
             for (let key in editData) {
                 setValue(key, editData[key])
             }
-        } 
+        }
         // else {
         //     setValue('name', '');
         //     setValue('description', '');
@@ -213,6 +214,19 @@ const UpsertPositionForm = (props) => {
                                     handleOnChange={(e) => setValue('departmentId', e?.target?.value)}
                                     err={errors?.departmentId?.message}
                                 />
+{/* 
+                                <AsyncAutoComplete
+                                    id="department-id"
+                                    label="Department"
+                                    size="large"
+                                    callToApi={API_URL.lookup.department.get}
+                                    bindField={'name'}
+                                    handleOnChange={(e, value) => setValue('departmentId', value?.id ? value?.id : value)}
+                                    value={watchData?.departmentId || null}
+                                    isRequire={true}
+                                    err={errors?.departmentId?.message}
+                                /> */}
+
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
