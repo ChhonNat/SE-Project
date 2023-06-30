@@ -21,7 +21,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import FooterComponent from '../../components/Page/footer';
 import TitleComponent from '../../components/Page/title';
 import SelectComponent from '../../components/Selector/select';
-// import CandidateModel from '../../models/candidate.model';
 import { globalService } from '../../services/global.service';
 import { API_URL } from '../../constants/api_url';
 import { CandidateService } from '../../services/candidate.service';
@@ -33,10 +32,8 @@ import { ConverterService } from '../../utils/converter';
 import { KEY_POST } from '../../constants/key_post';
 import { STATUS } from '../../constants/status';
 import { CandidateModel } from '../../models/candidate.model';
-// import { ALERT_TIMER } from '../../constants/app_config';
 import LabelRequire from '../../components/Label/require';
 import CandidateReviewCVModal from '../../components/CV/view-cv.modal';
-import AsyncAutoComplete from '../../components/AutoComplete/auto-complete';
 
 
 const shrinkOpt = { shrink: false };
@@ -437,11 +434,7 @@ const CandidateFormModal = (props) => {
 
                                 <br></br>
 
-                                {/* <AsyncAutoComplete
-                                    callToApi={API_URL.lookup.location.get}
-                                    bindField={'name'}
-                                    handleOnChange={(e, value) => console.log('value', value)}
-                                /> */}
+                 
                             </Grid>
 
                             {/*Select Business */}

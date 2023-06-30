@@ -423,6 +423,9 @@ const tblUser = [
     {
         id: "createdAt", type: "date", dateFormat: 'MMM DD, YYYY', label: "Created At"
     },
+    {
+        id: "roles", arrayId: "authority", label: "Role"
+    },
     {   
         id: "action", label: "Actions"
     }
