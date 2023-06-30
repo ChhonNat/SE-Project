@@ -3,6 +3,7 @@ import apiLink from "../constants/app_cont";
 import { LOCAL_STORAGE_KEYS } from "../constants/local_storage";
 import { HTTP_STATUS } from "../constants/http_status";
 import { API_URL } from "../constants/api_url";
+import Swal from "sweetalert2";
 
 //Create axios header config
 const axiosAPI = axios.create({
@@ -32,8 +33,8 @@ await axiosAPI.interceptors.request.use((config) => {
 
 //Intercepter response
 await axiosAPI.interceptors.response.use((res) => {
-        return res;
-    },
+    return res;
+},
     async (err) => {
 
         console.log('axiosAPI.interceptors.response err', err)
@@ -63,8 +64,20 @@ await axiosAPI.interceptors.response.use((res) => {
                 localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(newToken));
                 axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${newToken?.accessToken}`;
             }
-
             return axiosAPI(originalRequest);
+        }
+
+        /**
+         * Unauthorize user
+         */
+        if (err?.response?.status === HTTP_STATUS.unauthorize) {
+
+            return Swal.fire({
+                title: 'Accesss denied',
+                text: "You don't have the permission on this page!",
+                icon: 'info',
+                confirmButtonText: 'OK',
+            });
         }
 
         return Promise.reject(err);
