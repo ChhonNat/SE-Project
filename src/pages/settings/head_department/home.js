@@ -47,7 +47,11 @@ const HomeHeadDepartment = () => {
             <UpsertHeadDepartmentForm
                 title={editHeadDepartment?.id ? "Edit head department" : "Add head department"}
                 openModal={openHeadDepartmentModal}
-                onCloseModal={() => setOpenHeadDepartmentModal(false)}
+                onCloseModal={() => {
+                    setEditHeadDepartment({});
+                    setOpenHeadDepartmentModal(false);
+                }
+                }
                 handleEventSuccessed={() => setIsReload(!isReload)}
                 editData={editHeadDepartment}
             />

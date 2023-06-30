@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
-import AsyncTableAction from "../../../components/AsyncDataTable/async-table-action";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import UpsertForm from "../global-upsert-form/upsert";
 import BusinessModel from "../../../models/business.model";
@@ -32,7 +31,7 @@ const HomeBusiness = () => {
             <AsyncDatatable
                 asyncURL={API_URL.business.get}
                 headers={TABLE_CONFIG.tblBusiness}
-                bannerText="All Businesses"
+                bannerText="All Business Units"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
@@ -47,7 +46,7 @@ const HomeBusiness = () => {
 
             {/* Modal create and update */}
             <UpsertForm
-                title={editBusiness?.id ? "Edit business" : "Add new business"}
+                title={editBusiness?.id ? "Edit business unit" : "Add business unit"}
                 openModal={openBusinessModal}
                 editData={editBusiness}
                 onCloseModal={() => {

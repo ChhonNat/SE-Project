@@ -19,8 +19,8 @@ export default function Login() {
    * pwd: dev123
    */
 
-  const [username, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUserName] = useState('developer');
+  const [password, setPassword] = useState('dev123');
 
   const login = async (event) => {
 
@@ -63,7 +63,7 @@ export default function Login() {
                 sx={{ width: '100%', paddingBottom: 3 }}
                 onChange={(event) => setUserName(event.target.value)}
                 value={username}
-                label="User Name"
+                label="Username"
                 variant="outlined"
               />
             </Grid>

@@ -48,11 +48,6 @@ const UpsertHeadDepartmentForm = (props) => {
         //Fetch business division
         fetchData(API_URL.lookup.business.get, setListBusinessDivisions);
 
-        //Fetch department 
-        // fetchData(API_URL.lookup.department.get, setListDepartments);
-
-        //Fetch position
-        // fetchData(API_URL.lookup.position.get, setListPositions);
 
     }, [openModal])
 
@@ -68,11 +63,10 @@ const UpsertHeadDepartmentForm = (props) => {
                 timer: ALERT_TIMER
             });
 
-            onCloseModal();
-            reset();
-
             if (!error)
                 handleEventSuccessed();
+
+            handleCloseModal();
 
         }
 
@@ -109,6 +103,12 @@ const UpsertHeadDepartmentForm = (props) => {
         });
 
         await sendRequest(!editData?.id ? API_URL.headDepartment.create : API_URL.headDepartment.edit + editData?.id, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
+    }
+
+    const handleCloseModal = () => {
+        reset();
+        clearErrors();
+        onCloseModal();
     }
 
     return (
@@ -191,7 +191,7 @@ const UpsertHeadDepartmentForm = (props) => {
                             <Grid item xs={12}>
                                 <SelectComponent
                                     id="business-id"
-                                    label="Business Division"
+                                    label="Business Unit"
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
@@ -275,7 +275,7 @@ const UpsertHeadDepartmentForm = (props) => {
                         saveButtunType="submit"
                         saveButtonLabel={editData?.id ? "Update" : "Save"}
                         actions={{ cancel: true, submit: true }}
-                        handleCancel={onCloseModal}
+                        handleCancel={handleCloseModal}
                     />
                 </DialogActions>
 

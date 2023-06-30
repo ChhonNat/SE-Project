@@ -42,13 +42,6 @@ const UpsertDepartmentForm = (props) => {
                 setValue(key, editData[key])
             }
         }
-        else {
-            setValue('name', '');
-            setValue('description', '');
-            setValue('status', 'Active');
-            setValue('businessDivisions', 0);
-            clearErrors();
-        }
 
         fetchData(API_URL.lookup.business.get, setListBusinessDivisions);
 
@@ -66,11 +59,10 @@ const UpsertDepartmentForm = (props) => {
                 timer: ALERT_TIMER
             });
 
-            onCloseModal();
-            reset();
-
             if (!error)
                 handleEventSuccessed();
+
+            handleCloseModal();
 
         }
 
@@ -145,6 +137,12 @@ const UpsertDepartmentForm = (props) => {
         await sendRequest(!editData?.id ? API_URL.department.create : API_URL.department.edit + editData?.id, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
     }
 
+    const handleCloseModal = () => {
+        reset();
+        clearErrors();
+        onCloseModal();
+    }
+
     return (
 
         <>
@@ -181,7 +179,7 @@ const UpsertDepartmentForm = (props) => {
                             <Grid item xs={12}>
                                 <MultiSelectComponent
                                     id="business-id"
-                                    label="Business Division"
+                                    label="Business Unit"
                                     isRequire={true}
                                     isSubmit={isSubmitForm}
                                     customDatas={listBusinessDivisions}
@@ -192,7 +190,7 @@ const UpsertDepartmentForm = (props) => {
                                 />
                                 {/* <SelectComponent
                                     id="business-id"
-                                    label="Business Division"
+                                    label="Business Unit"
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
@@ -235,7 +233,7 @@ const UpsertDepartmentForm = (props) => {
                         saveButtunType="submit"
                         saveButtonLabel={editData?.id ? "Update" : "Save"}
                         actions={{ cancel: true, submit: true }}
-                        handleCancel={onCloseModal}
+                        handleCancel={handleCloseModal}
                     />
                 </DialogActions>
 

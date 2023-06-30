@@ -48,7 +48,7 @@ const tblCandidate = [
         id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisionName', label: 'Business Division', sqlField: 'pos.name'
+        id: 'businessDivisionName', label: 'Business Unit', sqlField: 'pos.name'
     },
     {
         id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
@@ -90,7 +90,7 @@ const tblInterview = [
         id: 'headDepartmentName', label: 'Head Department'
     },
     {
-        id: 'businessDivisionName', label: 'Business Division',
+        id: 'businessDivisionName', label: 'Business Unit',
     },
     {
         id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'
@@ -129,7 +129,7 @@ const tblAssessment = [
         id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisionName', label: 'Business Division'
+        id: 'businessDivisionName', label: 'Business Unit'
     },
     {
         id: 'offerSalary', label: 'Offer Salary ($)'
@@ -172,7 +172,7 @@ const tblHire = [
         id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisionName', label: 'Business Division'
+        id: 'businessDivisionName', label: 'Business Unit'
     },
     {
         id: 'hireDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Hire Date'
@@ -203,7 +203,7 @@ const tblPosition = [
         id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisions', arrayId: 'name', label: 'Business Division'
+        id: 'businessDivisions', arrayId: 'name', label: 'Business Unit'
     },
     {
         id: 'description', label: 'Description',
@@ -265,7 +265,7 @@ const tblDepartment = [
         id: 'description', label: 'Description',
     },
     {
-        id: 'businessDivisions', arrayId: 'name', label: 'Business Division'
+        id: 'businessDivisions', arrayId: 'name', label: 'Business Unit'
     },
     {
         id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
@@ -294,7 +294,7 @@ const tblHeadDepartment = [
         id: 'phoneNumber', label: 'Phone Number'
     },
     {
-        id: 'businessDivisionName', label: 'Business Division'
+        id: 'businessDivisionName', label: 'Business Unit'
     },
     {
         id: 'departmentName', label: 'Department'
@@ -311,6 +311,27 @@ const tblHeadDepartment = [
     }
 ];
 
+/**
+ * Main business table
+ */
+
+const tblMainBusiness = [
+    {
+        id: 'index', label: 'No .'
+    },
+    {
+        id: 'name', label: 'Name'
+    },
+    {
+        id: 'description', label: 'Description'
+    },
+    {
+        id: 'status', label: 'Status'
+    },
+    {
+        id: 'action', label: 'Actions'
+    }
+];
 
 /**
  * Business Table
@@ -385,6 +406,9 @@ const tblUser = [
         id: "index", label: "No."
     },
     {
+        id: 'fullName', label: 'Full Name'
+    },  
+    {   
         id: "username", label: "Username"
     },
     {
@@ -394,6 +418,12 @@ const tblUser = [
         id: "email", label: "Email"
     },
     {
+        id: "status", type: 'status' ,statusColor: {Active: 'green', Inactive: 'red' } , label: "Status"
+    },
+    {
+        id: "createdAt", type: "date", dateFormat: 'MMM DD, YYYY', label: "Created At"
+    },
+    {   
         id: "action", label: "Actions"
     }
 ]
@@ -406,6 +436,7 @@ export const TABLE_CONFIG = {
     tblInterview,
     tblAssessment,
     tblHire,
+    tblMainBusiness,
     tblBusiness,
     tblDepartment,
     tblHeadDepartment,
