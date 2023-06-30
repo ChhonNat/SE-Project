@@ -112,6 +112,20 @@ const headDepartment = [
     "status",
 ];
 
+const user = [
+    "staffId",
+    "firstName",
+    "secondName",
+    "gender",
+    "birthDate",
+    "email",
+    "phoneNumber",
+    "username",
+    "password",
+    "confirmPassword",
+    "status"
+]
+
 export const KEY_POST = {
     view_candidate,
     update_candidate,
@@ -124,5 +138,6 @@ export const KEY_POST = {
     department,
     business,
     location,
-    headDepartment
+    headDepartment,
+    user
 };

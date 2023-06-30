@@ -36,9 +36,10 @@ import { CandidateModel } from '../../models/candidate.model';
 // import { ALERT_TIMER } from '../../constants/app_config';
 import LabelRequire from '../../components/Label/require';
 import CandidateReviewCVModal from '../../components/CV/view-cv.modal';
+import AsyncAutoComplete from '../../components/AutoComplete/auto-complete';
 
 
-const shrinkOpt = { shrink: true };
+const shrinkOpt = { shrink: false };
 
 const TransitionModal = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -249,7 +250,7 @@ const CandidateFormModal = (props) => {
      * Handle close form modal
      */
     const handleCloseModal = () => {
-        // reset();
+        reset();
         clearErrors();
         onCloseCandidateModal();
     }
@@ -344,15 +345,15 @@ const CandidateFormModal = (props) => {
                             </Grid>
 
                             <Grid item xs={12}>
-                                <Link sx={{cursor:'pointer'}} onClick={() => setOpenCVModal(true)}>{candidate?.cvFile}</Link>
+                                <Link sx={{ cursor: 'pointer' }} onClick={() => setOpenCVModal(true)}>{candidate?.cvFile}</Link>
                             </Grid>
 
                             {
                                 candidate?.id &&
-                                <Grid item xs={12}  paddingBottom={2}>
+                                <Grid item xs={12} paddingBottom={2}>
                                     {/* Control review candidate checkbox */}
                                     <FormControl component="fieldset">
-                                 
+
                                         <FormGroup aria-label="position" row>
                                             <FormControlLabel
                                                 value={STATUS.CANDIDATE.CV_REVIEWED}
@@ -433,13 +434,21 @@ const CandidateFormModal = (props) => {
                                     handleOnChange={(e) => setValue('appliedLocationId', e?.target?.value)}
                                     err={errors?.appliedLocationId?.message}
                                 />
+
+                                <br></br>
+
+                                {/* <AsyncAutoComplete
+                                    callToApi={API_URL.lookup.location.get}
+                                    bindField={'name'}
+                                    handleOnChange={(e, value) => console.log('value', value)}
+                                /> */}
                             </Grid>
 
                             {/*Select Business */}
                             <Grid item xs={12}>
                                 <SelectComponent
                                     id="business-id"
-                                    label={<LabelRequire label='Business Division' />}
+                                    label={<LabelRequire label='Business Unit' />}
                                     size={'small'}
                                     customDatas={listBusinesses}
                                     value={watchCandidate?.businessDivisionId || ''}
@@ -528,7 +537,7 @@ const CandidateFormModal = (props) => {
                 </DialogActions>
             </Dialog>
 
-            <CandidateReviewCVModal 
+            <CandidateReviewCVModal
                 id={candidate?.id}
                 openReviewCVModal={openCVModal}
                 onCloseReviewCVModal={() => setOpenCVModal(false)}

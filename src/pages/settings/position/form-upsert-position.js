@@ -43,14 +43,15 @@ const UpsertPositionForm = (props) => {
             for (let key in editData) {
                 setValue(key, editData[key])
             }
-        } else {
-            setValue('name', '');
-            setValue('description', '');
-            setValue('businessDivisions',);
-            setValue('departmentId',);
-            setValue('status', 'Active');
-            clearErrors();
-        }
+        } 
+        // else {
+        //     setValue('name', '');
+        //     setValue('description', '');
+        //     setValue('businessDivisions',);
+        //     setValue('departmentId',);
+        //     setValue('status', 'Active');
+        //     clearErrors();
+        // }
 
         /**Fetch lookup data businesss and department  */
         fetchData(API_URL.lookup.business.get, setListBusinessDivisions);
@@ -124,12 +125,10 @@ const UpsertPositionForm = (props) => {
                 timer: ALERT_TIMER
             });
 
-            onCloseModal();
-            reset();
-
             if (!error)
                 handleEventSuccessed();
 
+            handleCloseModal();
         }
 
     }, [data, error, loading, message])
@@ -149,6 +148,12 @@ const UpsertPositionForm = (props) => {
             console.log(error);
         }
     }, [])
+
+    const handleCloseModal = () => {
+        reset();
+        clearErrors();
+        onCloseModal();
+    }
 
     return (
 
@@ -185,7 +190,7 @@ const UpsertPositionForm = (props) => {
                             <Grid item xs={12}>
                                 <MultiSelectComponent
                                     id="business-division-id"
-                                    label="Business Division"
+                                    label="Business Unit"
                                     isRequire={true}
                                     isSubmit={isSubmitForm}
                                     customDatas={listBusinessDivisions}
@@ -242,7 +247,7 @@ const UpsertPositionForm = (props) => {
                         saveButtunType="submit"
                         saveButtonLabel={editData?.id ? "Update" : "Save"}
                         actions={{ cancel: true, submit: true }}
-                        handleCancel={onCloseModal}
+                        handleCancel={handleCloseModal}
                     />
                 </DialogActions>
 

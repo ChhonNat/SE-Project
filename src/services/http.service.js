@@ -31,8 +31,7 @@ await axiosAPI.interceptors.request.use((config) => {
 
 
 //Intercepter response
-await axiosAPI.interceptors.response.use(
-    (res) => {
+await axiosAPI.interceptors.response.use((res) => {
         return res;
     },
     async (err) => {

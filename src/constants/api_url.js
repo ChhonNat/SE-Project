@@ -6,6 +6,11 @@ export const API_URL = {
         login: API_VERSION + '/login',
         refreshAccessToken: API_VERSION + '/login/renew-token'
     },
+    user: {
+        get: API_VERSION + '/users/search',
+        create: API_VERSION + '/users',
+        edit: API_VERSION + '/users/'
+    },
     candidate: {
         get: API_VERSION + '/candidates/search',
         create: API_VERSION + '/candidates',
@@ -55,6 +60,10 @@ export const API_URL = {
         get: API_VERSION + '/head-departments/search',
         create: API_VERSION + '/head-departments',
         edit: API_VERSION + '/head-departments/'
+    },
+
+    mainBuiness: {
+        get: API_VERSION  + '/main-business'
     },
 
     business: {

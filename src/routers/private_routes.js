@@ -48,26 +48,26 @@ const Settings = {
 
     position: {
         home: lazy(() => import('../pages/settings/position/home')),
-        // create: lazy(() => import('../pages/settings/position/create'))
     },
 
     recruiter: {
         home: lazy(() => import('../pages/settings/recruiter/home')),
-        // create: lazy(() => import('../pages/settings/recruiter/create'))
     },
 
     department: {
         home: lazy(() => import('../pages/settings/department/home')),
-        // create: lazy(() => import('../pages/settings/department/create'))
     },
 
     headDepartment: {
         home: lazy(() => import('../pages/settings/head_department/home'))
     },
 
+    mainBusiness : {
+        home: lazy(() => import('../pages/settings/main-business/home'))
+    },
+
     businessUnit: {
-        home: lazy(() => import('../pages/settings/business/home')),
-        // create: lazy(() => import('../pages/settings/business/home'))
+        home: lazy(() => import('../pages/settings/business-unit/home')),
     },
 
     location: {
@@ -150,9 +150,17 @@ export const PRIVATE_ROUTES = [
         /**Children settings */
         children: [
 
+            // Main business
+            // {
+            //     name: "Main Businesses",
+            //     path: "main-business",
+            //     component: <Settings.mainBusiness.home />,
+            //     icon: <BusinessIcon />
+            // },
+
             /**Business */
             {
-                name: "Business Divisions",
+                name: "Business Units",
                 path: "business",
                 component: <Settings.businessUnit.home />,
                 icon: <MeetingRoomIcon />,
@@ -210,11 +218,11 @@ export const PRIVATE_ROUTES = [
         ]
     },
     /**Replies */
-    //    {
-    //     name: "Users",
-    //     path: "/user",
-    //     component: <User.home />,
-    //     icon:  <AccountCircleIcon />,
-    //     isDivider: false,
-    // }
+    {
+        name: "Users",
+        path: "/user",
+        component: <User.home />,
+        icon: <AccountCircleIcon />,
+        isDivider: false,
+    }
 ];

@@ -32,12 +32,6 @@ const UpsertForm = (props) => {
                 setValue(key, editData[key])
             }
         }
-        else {
-            setValue('name', '');
-            clearErrors('name');
-            setValue('description', '');
-            setValue('status', 'Active');
-        }
 
     }, [openModal])
 
@@ -69,15 +63,21 @@ const UpsertForm = (props) => {
                 timer: ALERT_TIMER
             });
 
-            onCloseModal();
-            reset();
 
             if (!error)
                 handleEventSuccessed();
 
+            handleCloseModal();
+
         }
 
     }, [data, error, loading, message])
+
+    const handleCloseModal = () => {
+        reset();
+        clearErrors();
+        onCloseModal();
+    }
 
     return (
 
@@ -143,7 +143,7 @@ const UpsertForm = (props) => {
                         saveButtunType="submit"
                         saveButtonLabel={editData?.id ? "Update" : "Save"}
                         actions={{ cancel: true, submit: true }}
-                        handleCancel={onCloseModal}
+                        handleCancel={handleCloseModal}
                     />
                 </DialogActions>
 

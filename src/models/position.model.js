@@ -10,7 +10,7 @@ const PositionModel = object({
     createdBy: any().optional().nullable(),
     updatedAt: any().optional().nullable(),
     updatedBy: any().optional().nullable(),
-    status: string().optional().nullable()
+    status: string().optional().nullable().default('Active')
 });
 
 export default PositionModel;
