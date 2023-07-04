@@ -418,7 +418,7 @@ const NavbarComponent = ({ open, handleSetMinSidebar }) => {
 
 export default NavbarComponent;
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",

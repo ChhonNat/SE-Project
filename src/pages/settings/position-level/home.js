@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import UpsertBusinessUnitForm from "./form-upsert-business-unit";
-import BusinessUnitModel from "../../../models/business-unit.model";
+import PositionModel from "../../../models/position.model";
 import { KEY_POST } from "../../../constants/key_post";
+import UpsertPositionForm from "./form-upsert-position";
 
-
-const HomeBusiness = () => {
+const HomePositionLevel = () => {
 
     const [isReload, setIsReload] = useState(false);
-    const [openBusinessUnitModal, setOpenBusinessUnitModal] = useState(false);
-    const [editBusinessUnit, setEditBusinessUnit] = useState({});
+    const [editPositionLevel, setEditPositionLevel] = useState({});
+    const [openPositionLevelModal, setOpenPositionLevelModal] = useState(false);
 
     return (
         <>
+
             {/* 
                 properties::
                 asyncUrl: 'request data url' 
@@ -29,36 +29,34 @@ const HomeBusiness = () => {
                 customActions: 'Custom button event in table'
             */}
             <AsyncDatatable
-                asyncURL={API_URL.businessUnit.get}
-                headers={TABLE_CONFIG.tblBusinessUnit}
-                bannerText="All Primary Businesses"
+                asyncURL={API_URL.positionLevel.get}
+                headers={TABLE_CONFIG.tblPositionLevel}
+                bannerText="All Position Levels"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
                 useTableActions={{ search: true, create: true, edit: true }}
-                onHandleAddNewEvent={() => setOpenBusinessUnitModal(true)}
+                onHandleAddNewEvent={() => setOpenPositionLevelModal(true)}
                 handleEditEvent={(data) => {
-                    setEditBusinessUnit(data);
-                    setOpenBusinessUnitModal(true);
+                    setEditPositionLevel(data);
+                    setOpenPositionLevelModal(true);
                 }}
             />
 
             {/* Modal create and update */}
-            <UpsertBusinessUnitForm
-                title={editBusinessUnit?.id ? "Edit Primary Business" : "Add Primary Business"}
-                openModal={openBusinessUnitModal}
-                editData={editBusinessUnit}
+            <UpsertPositionForm
+                title={editPositionLevel?.id ? "Edit Position Level" : "Add Position Level"}
+                openModal={openPositionLevelModal}
+                editData={editPositionLevel}
                 onCloseModal={() => {
-                    setEditBusinessUnit({});
-                    setOpenBusinessUnitModal(false);
+                    setEditPositionLevel(PositionModel);
+                    setOpenPositionLevelModal(false);
                 }}
-                model={BusinessUnitModel}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
-
         </>
     )
 }
 
-export default HomeBusiness;
+export default HomePositionLevel;

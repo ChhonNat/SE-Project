@@ -153,7 +153,7 @@ const AsyncDatatable = (props) => {
   useEffect(() => {
 
     console.log(message);
-  },[message])
+  }, [message])
 
   return (
     <Box
@@ -210,7 +210,7 @@ const AsyncDatatable = (props) => {
 
                   {headers?.length ? headers.filter((h) => h.visible !== false).map((h) => (
 
-                    <TableCell key={uuid()} sx={{ textAlign: 'center', padding: '0.8rem 1rem' }}>
+                    <TableCell align='center' key={uuid()} sx={{ textAlign: 'center', padding: '0.8rem 1rem' }}>
                       <Skeleton
                         key={uuid()}
                         variant="rectangular"
@@ -240,8 +240,8 @@ const AsyncDatatable = (props) => {
                     handleReviewEvent={(record) => handleReviewEvent(record)}
                     handleAssessmentEvent={(record) => handleAssessmentEvent(record)}
                     handleLinkEvent={(record) => handleLinkEvent(record)}
-                    handleStatusEvent={(key,record) => handleStatusEvent(key,record)}
-                    handleResultEvent={(key,record) => handleResultEvent(key,record)}
+                    handleStatusEvent={(key, record) => handleStatusEvent(key, record)}
+                    handleResultEvent={(key, record) => handleResultEvent(key, record)}
                   />
                   {
 
@@ -252,6 +252,7 @@ const AsyncDatatable = (props) => {
                         }}
                       >
                         <TableCell
+                          align='center'
                           colSpan={headers?.length + 1}
                           sx={{ textAlign: 'center' }}
                         >
@@ -267,6 +268,7 @@ const AsyncDatatable = (props) => {
                       }}
                     >
                       <TableCell
+                        align='center'
                         colSpan={headers?.length + 1}
                         sx={{ textAlign: 'center' }}
                       >

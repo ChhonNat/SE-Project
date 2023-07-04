@@ -16,7 +16,7 @@ const Model = object({
     departmentId: number().min(1, {message: 'Department is required!'}),
     headDepartmentId: number().min(1, {message: 'Head department ID is required!'}),
     headDepartmentName: string().min(1,{message: 'Head department is required!'}),
-    businessDivisionId: number().min(1,{message: 'Business division is required!'}),
+    businessDivisionId: number().min(1,{message: 'Business unit is required!'}),
     appliedLocationId: number(),
     appliedDate: string().min(1, { message: "Applied date is required!" }),
     receivedChannel: string().optional().nullable(),

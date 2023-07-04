@@ -48,7 +48,7 @@ const tblCandidate = [
         id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisionName', label: 'Business Unit', sqlField: 'pos.name'
+        id: 'businessDivisionName', label: 'Primary Business', sqlField: 'pos.name'
     },
     {
         id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
@@ -90,7 +90,7 @@ const tblInterview = [
         id: 'headDepartmentName', label: 'Head Department'
     },
     {
-        id: 'businessDivisionName', label: 'Business Unit',
+        id: 'businessDivisionName', label: 'Primary Business',
     },
     {
         id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'
@@ -129,7 +129,7 @@ const tblAssessment = [
         id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisionName', label: 'Business Unit'
+        id: 'businessDivisionName', label: 'Primary Business'
     },
     {
         id: 'offerSalary', label: 'Offer Salary ($)'
@@ -172,7 +172,7 @@ const tblHire = [
         id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisionName', label: 'Business Unit'
+        id: 'businessDivisionName', label: 'Primary Business'
     },
     {
         id: 'hireDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Hire Date'
@@ -197,13 +197,50 @@ const tblPosition = [
         id: 'index', label: 'No.',
     },
     {
-        id: 'name', label: 'Name',
+        id: 'nameEn', label: 'Name',
+    },
+    {
+        id: 'nameKh', label: 'Name(KH)',
+    },
+    {
+        id: 'positionLevelName', label: 'Level'
+    },
+    {
+        id: 'businessUnitName', arrayId: 'name', label: 'Primary Business'
     },
     {
         id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisions', arrayId: 'name', label: 'Business Unit'
+        id: 'description', label: 'Description',
+    },
+    {
+        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+    },
+    // ...proof,
+    {
+        id: 'action', label: 'Actions'
+    },
+];
+
+/**
+ * Position level table
+ */
+const tblPositionLevel = [
+    {
+        id: 'index', label: 'No.',
+    },
+    {
+        id: 'nameEn', label: 'Name',
+    },
+    {
+        id: 'nameKh', label: 'Name(KH)'
+    },
+    {
+        id: 'businessUnitName', label: 'Primary Business'
+    },
+    {
+        id: 'departmentName', arrayId: 'name', label: 'Department Name'
     },
     {
         id: 'description', label: 'Description',
@@ -259,13 +296,16 @@ const tblDepartment = [
         id: 'index', label: 'No.',
     },
     {
-        id: 'name', label: 'Name',
+        id: 'nameEn', label: 'Name',
+    },
+    {
+        id: 'nameKh', label: 'Name(KH)'
     },
     {
         id: 'description', label: 'Description',
     },
     {
-        id: 'businessDivisions', arrayId: 'name', label: 'Business Unit'
+        id: 'businessUnitName', arrayId: 'name', label: 'Primary Business'
     },
     {
         id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
@@ -294,13 +334,19 @@ const tblHeadDepartment = [
         id: 'phoneNumber', label: 'Phone Number'
     },
     {
-        id: 'businessDivisionName', label: 'Business Unit'
+        id: 'businessUnitName', label: 'Primary Business'
     },
     {
         id: 'departmentName', label: 'Department'
     },
     {
         id: 'positionName', label: 'Position'
+    },
+    {
+        id: 'positionLevelName', label: 'Level'
+    },
+    {
+        id: 'description', label: 'Description'
     },
     {
         id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
@@ -320,28 +366,37 @@ const tblMainBusiness = [
         id: 'index', label: 'No .'
     },
     {
-        id: 'name', label: 'Name'
+        id: 'nameEn', label: 'Name'
+    },
+    {
+        id: 'nameKh', label: 'Name(KH)'
     },
     {
         id: 'description', label: 'Description'
     },
-    {
-        id: 'status', label: 'Status'
-    },
-    {
-        id: 'action', label: 'Actions'
-    }
+    // {
+    //     id: 'status', label: 'Status'
+    // },
+    // {
+    //     id: 'action', label: 'Actions'
+    // }
 ];
 
 /**
  * Business Table
  */
-const tblBusiness = [
+const tblBusinessUnit = [
     {
         id: 'index', label: 'No.',
     },
     {
-        id: 'name', label: 'Name',
+        id: 'nameEn', label: 'Name',
+    },
+    {
+        id: 'nameKh', label: 'Name(KH)'
+    },
+    {
+        id: 'mainBusinessUnitName', label: 'Main Primary Business'
     },
     {
         id: 'description', label: 'Description',
@@ -355,6 +410,34 @@ const tblBusiness = [
     }
 ];
 
+// Sub Primary Business
+const tblSubBusinessUnit = [
+    {
+        id: 'index', label: 'No.',
+    },
+    {
+        id: 'nameEn', label: 'Name',
+    },
+    {
+        id: 'nameKh', label: 'Name(KH)'
+    },
+    {
+        id: 'mainBusinessUnitName', label: 'Main Primary Business'
+    },
+    {
+        id: 'businessUnitName', label: 'Primary Business'
+    },
+    {
+        id: 'description', label: 'Description',
+    },
+    {
+        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+    },
+    // ...proof,
+    {
+        id: 'action', label: 'Actions'
+    }
+];
 
 /**Location Table */
 
@@ -407,8 +490,8 @@ const tblUser = [
     },
     {
         id: 'fullName', label: 'Full Name'
-    },  
-    {   
+    },
+    {
         id: "username", label: "Username"
     },
     {
@@ -418,7 +501,7 @@ const tblUser = [
         id: "email", label: "Email"
     },
     {
-        id: "status", type: 'status' ,statusColor: {Active: 'green', Inactive: 'red' } , label: "Status"
+        id: "status", type: 'status', statusColor: { Active: 'green', Inactive: 'red' }, label: "Status"
     },
     {
         id: "createdAt", type: "date", dateFormat: 'MMM DD, YYYY', label: "Created At"
@@ -426,7 +509,7 @@ const tblUser = [
     {
         id: "roles", arrayId: "authority", label: "Role"
     },
-    {   
+    {
         id: "action", label: "Actions"
     }
 ]
@@ -440,10 +523,12 @@ export const TABLE_CONFIG = {
     tblAssessment,
     tblHire,
     tblMainBusiness,
-    tblBusiness,
+    tblBusinessUnit,
+    tblSubBusinessUnit,
     tblDepartment,
     tblHeadDepartment,
     tblPosition,
+    tblPositionLevel,
     tblReceivingCategory,
     tblRecruiter,
     tblLocation,

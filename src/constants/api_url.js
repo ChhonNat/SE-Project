@@ -46,6 +46,11 @@ export const API_URL = {
     hire: {
         get: API_VERSION + '/hires/search'
     },
+    positionLevel: {
+        get: API_VERSION + '/position-levels/search',
+        create: API_VERSION + '/position-levels',
+        edit: API_VERSION + '/position-levels/'
+    },
     position: {
         get: API_VERSION + '/positions/search',
         create: API_VERSION + '/positions',
@@ -66,13 +71,24 @@ export const API_URL = {
     },
 
     mainBuiness: {
-        get: API_VERSION  + '/main-business'
+        get: API_VERSION + '/main-business-units/search',
+        create: API_VERSION + '',
+        edit: API_VERSION + ''
     },
 
-    business: {
-        get: API_VERSION + '/business-divisions/search',
-        create: API_VERSION + '/settings/business_division',
-        edit: API_VERSION + '/settings/'
+    businessUnit: {
+        get: API_VERSION + '/business-units/search',
+        create: API_VERSION + '/business-units',
+        edit: API_VERSION + '/business-units/'
+    },
+
+    subBusinessUnit: {
+        get: API_VERSION + '/sub-business-units/search',
+        create: API_VERSION + '/sub-business-units',
+        edit: API_VERSION + '/sub-business-units/',
+        lookup: {
+            get: API_VERSION + '/sub-business-units/lookup'
+        }
     },
 
     location: {
@@ -86,6 +102,9 @@ export const API_URL = {
     },
 
     lookup: {
+        positionLevel: {
+            get: API_VERSION + '/position-levels'
+        },
         position: {
             get: API_VERSION + '/positions'
         },
@@ -98,14 +117,17 @@ export const API_URL = {
         recruiter: {
             get: API_VERSION + '/recruiters'
         },
-        business: {
-            get: API_VERSION + '/business-divisions'
+        mainBusiness: {
+            get: API_VERSION + '/main-business-units'
+        },
+        businessUnit: {
+            get: API_VERSION + '/business-units'
         },
         department: {
             get: API_VERSION + '/departments'
         },
         departmentById: {
-            get: API_VERSION + '/departments/business-division/'
+            get: API_VERSION + '/departments/business-unit/'
         },
         headDepartment: {
             get: API_VERSION + '/head-departments/department/'

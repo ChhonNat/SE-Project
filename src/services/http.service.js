@@ -30,7 +30,6 @@ await axiosAPI.interceptors.request.use((config) => {
     Promise.reject(err);
 });
 
-
 //Intercepter response
 await axiosAPI.interceptors.response.use((res) => {
     return res;
@@ -66,6 +65,9 @@ await axiosAPI.interceptors.response.use((res) => {
             }
             return axiosAPI(originalRequest);
         }
+
+        console.log('err?.response?.status',err?.response?.status);
+        console.log('HTTP_STATUS.unauthorize',HTTP_STATUS.unauthorize);
 
         /**
          * Unauthorize user
