@@ -97,8 +97,13 @@ const _useHttp = () => {
             await axiosAPI.put(url, postData)
                 .then(function (result) {
 
+                    console.log(result);
+
                     const { data, success, message } = result?.data;
-                    data.message = message;
+                    console.log('message ', message);
+                    data.message =  message;
+
+                    console.log('data >>>> ',data);
 
                     success ?
                         dispatchHttp({ type: 'RESPONSE', data }) :

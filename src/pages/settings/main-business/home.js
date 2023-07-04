@@ -3,7 +3,7 @@ import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import UpsertForm from "../global-upsert-form/upsert";
-import BusinessModel from "../../../models/business.model";
+import MainBusinessModel from "../../../models/main-business.model";
 import { KEY_POST } from "../../../constants/key_post";
 
 
@@ -29,14 +29,14 @@ const HomeMainBusiness = () => {
                 customActions: 'Custom button event in table'
             */}
             <AsyncDatatable
-                // asyncURL={API_URL.business.get}
+                asyncURL={API_URL.mainBuiness.get}
                 headers={TABLE_CONFIG.tblMainBusiness}
                 bannerText="All Main Businesses"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true, edit: true }}
+                useTableActions={{ search: true, create: false, edit: false }}
                 onHandleAddNewEvent={() => setOpenMainBusinessModal(true)}
                 handleEditEvent={(data) => {
                     setEditMainBusiness(data);
@@ -50,13 +50,13 @@ const HomeMainBusiness = () => {
                 openModal={openMainBusinessModal}
                 editData={editMainBusiness}
                 onCloseModal={() => {
-                    setEditMainBusiness(BusinessModel);
+                    setEditMainBusiness(MainBusinessModel);
                     setOpenMainBusinessModal(false);
                 }}
-                model={BusinessModel}
-                keyPosts={KEY_POST.business}
-                postUrl={API_URL.business.create}
-                putUrl={API_URL.business.edit}
+                model={MainBusinessModel}
+                keyPosts={KEY_POST.mainBusiness}
+                postUrl={API_URL.mainBuiness.create}
+                putUrl={API_URL.mainBuiness.edit}
                 dataType={'/business_division'}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />

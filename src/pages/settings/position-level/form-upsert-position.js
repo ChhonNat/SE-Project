@@ -11,29 +11,31 @@ import Swal from "sweetalert2";
 import { ALERT_TIMER } from "../../../constants/app_config";
 import SelectComponent from "../../../components/Selector/select";
 import { STATUS } from "../../../constants/status";
-import { globalService } from "../../../services/global.service";
-import { API_URL } from "../../../constants/api_url";
-import { HTTP_STATUS } from "../../../constants/http_status";
-import { KEY_POST } from "../../../constants/key_post";
-import DepartmentModel from "../../../models/department.model";
 import MultiSelectComponent from "../../../components/MultiSelector/select";
+import { globalService } from "../../../services/global.service";
+import { HTTP_STATUS } from "../../../constants/http_status";
+import { API_URL } from "../../../constants/api_url";
+import { KEY_POST } from "../../../constants/key_post";
 import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
-import LabelRequire from "../../../components/Label/require";
+import PositionLevelModel from "../../../models/position-level.model";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const UpsertDepartmentForm = (props) => {
+const UpsertPositionLavelForm = (props) => {
+
 
     const { openModal, onCloseModal, handleEventSuccessed, title, editData } = props;
-    const { register, handleSubmit, reset, setValue, watch, formState, clearErrors, setError } = useForm({ resolver: zodResolver(DepartmentModel) });
+    const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({ resolver: zodResolver(PositionLevelModel) });
     const { data, loading, error, message, sendRequest } = _useHttp();
     const watchData = watch();
     const { errors } = formState;
 
-    // const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
-    // const [isSubmitForm, setIsSubmitForm] = useState(false);
+    const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
+    const [listDepartments, setListDepartments] = useState([]);
+    const [isSubmitForm, setIsSubmitForm] = useState(false);
+
     // const formatKeys = ['businessDivisions'];
 
     useEffect(() => {
@@ -45,53 +47,17 @@ const UpsertDepartmentForm = (props) => {
             }
         }
 
-        // fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
+        /**Fetch lookup data businesss and department  */
+        fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
+        // fetchData(API_URL.lookup.department.get, setListDepartments);
 
     }, [openModal])
 
-    useEffect(() => {
-
-        if (!loading) {
-
-            Swal.fire({
-                title: !error ? 'Success' : 'Error',
-                text: message,
-                icon: !error ? 'success' : 'error',
-                confirmButtonText: 'OK',
-                timer: ALERT_TIMER
-            });
-
-            if (!error)
-                handleEventSuccessed();
-
-            handleCloseModal();
-
-        }
-
-    }, [data, error, loading, message]);
-
-
-    // const fetchData = useCallback(async (asyncUrl, setData) => {
-    //     try {
-
-    //         const reqData = await globalService.getData(asyncUrl);
-    //         const { status, data } = reqData;
-    //         const { success } = data;
-
-    //         if (status === HTTP_STATUS.success) {
-    //             success ? setData(data?.data) : setData([]);
-    //         }
-
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }, [])
-
     const onError = (data) => {
+        setIsSubmitForm(true);
         console.log(data);
-        if(data?.businessUnitId)
-        setError('businessUnitId',{message: 'Primary business is required!'});
     }
+
 
     const submit = async (data) => {
 
@@ -99,7 +65,8 @@ const UpsertDepartmentForm = (props) => {
 
         Object.keys(data).forEach((key) => {
 
-            if (KEY_POST.department.includes(key) && !editData?.id) {
+            if (KEY_POST.positionLevel.includes(key) && !editData?.id) {
+
                 postData[key] = data[key];
 
             } else {
@@ -133,12 +100,48 @@ const UpsertDepartmentForm = (props) => {
                 // }
 
                 postData[key] = data[key];
-
             }
         });
 
-        await sendRequest(!editData?.id ? API_URL.department.create : API_URL.department.edit + editData?.id, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
+
+        await sendRequest(!editData?.id ? API_URL.positionLevel.create : API_URL?.positionLevel?.edit + editData?.id, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
     }
+
+    useEffect(() => {
+
+        if (!loading) {
+
+            Swal.fire({
+                title: !error ? 'Success' : 'Error',
+                text: message,
+                icon: !error ? 'success' : 'error',
+                confirmButtonText: 'OK',
+                timer: ALERT_TIMER
+            });
+
+            if (!error)
+                handleEventSuccessed();
+
+            handleCloseModal();
+        }
+
+    }, [data, error, loading, message])
+
+    const fetchData = useCallback(async (asyncUrl, setData) => {
+        try {
+
+            const reqData = await globalService.getData(asyncUrl);
+            const { status, data } = reqData;
+            const { success } = data;
+
+            if (status === HTTP_STATUS.success) {
+                success ? setData(data?.data) : setData([]);
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }, [])
 
     const handleCloseModal = () => {
         reset();
@@ -165,26 +168,11 @@ const UpsertDepartmentForm = (props) => {
 
                         {/* Input Fields */}
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-
                             <Grid item xs={12}>
                                 <TextField
                                     type="text"
-                                    id="code"
-                                    label={<LabelRequire label="Code" />}
-                                    variant="outlined"
-                                    fullWidth
-                                    size="meduim"
-                                    {...register('code')}
-                                    error={errors?.code}
-                                    helperText={errors?.code?.message}
-                                />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    type="text"
-                                    id="name-en"
-                                    label={<LabelRequire label="Name" />}
+                                    id="name"
+                                    label={<span>Name <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
                                     size="meduim"
@@ -193,12 +181,11 @@ const UpsertDepartmentForm = (props) => {
                                     helperText={errors?.nameEn?.message}
                                 />
                             </Grid>
-
                             <Grid item xs={12}>
                                 <TextField
                                     type="text"
-                                    id="name-kh"
-                                    label={<LabelRequire label="Name(KH)" />}
+                                    id="name"
+                                    label={<span>Name(KH) <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
                                     size="meduim"
@@ -207,23 +194,22 @@ const UpsertDepartmentForm = (props) => {
                                     helperText={errors?.nameKh?.message}
                                 />
                             </Grid>
-
                             <Grid item xs={12}>
-                                <AsyncAutoComplete
+                                <SelectComponent
                                     id="primary-business-id"
                                     label="Primary Business"
-                                    size="medium"
-                                    callToApi={API_URL.lookup.businessUnit.get}
-                                    bindField={'nameEn'}
-                                    handleOnChange={(e, value) => {
-                                        setValue('businessUnitId', value?.id ? value?.id : value);
-                                    }}
-                                    value={watchData?.businessUnitId || null}
                                     isRequire={true}
+                                    variant="outlined"
+                                    fullWidth
+                                    size="meduim"
+                                    customDatas={listBusinessDivisions}
+                                    value={watchData?.businessUnitId || ""}
+                                    bindField="nameEn"
+                                    handleOnChange={(e) => setValue('businessUnitId', e?.target?.value)}
                                     err={errors?.businessUnitId?.message}
                                 />
                                 {/* <MultiSelectComponent
-                                    id="business-id"
+                                    id="business-unit-id"
                                     label="Primary Business"
                                     isRequire={true}
                                     isSubmit={isSubmitForm}
@@ -233,21 +219,24 @@ const UpsertDepartmentForm = (props) => {
                                     handleEventChange={(e) => setValue('businessDivisions', e)}
                                     err={errors?.businessDivisions?.message}
                                 /> */}
-                                {/* <SelectComponent
-                                    id="primary-business-id"
-                                    label="Primary Business"
-                                    isRequire={true}
-                                    variant="outlined"
-                                    fullWidth
-                                    size="meduim"
-                                    customDatas={listBusinessDivisions}
-                                    value={watchData?.businessDivisions || ""}
-                                    bindField="nameEn"
-                                    handleOnChange={(e) => setValue('businessDivisions', e?.target?.value)}
-                                    err={errors?.businessDivisions?.message}
-                                /> */}
                             </Grid>
+                            <Grid item xs={12}>
 
+                                <AsyncAutoComplete
+                                    id="department-id"
+                                    label="Department"
+                                    size="large"
+                                    callToApi={API_URL.lookup.department.get}
+                                    bindField={'nameEn'}
+                                    handleOnChange={(e, value) => {
+                                        setValue('departmentId', value?.id ? value?.id : value);
+                                    }}
+                                    value={watchData?.departmentId || null}
+                                    isRequire={true}
+                                    err={errors?.departmentId?.message}
+                                />
+
+                            </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     sx={{ width: '100%' }}
@@ -290,4 +279,4 @@ const UpsertDepartmentForm = (props) => {
     )
 };
 
-export default UpsertDepartmentForm;
+export default UpsertPositionLavelForm;

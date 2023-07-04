@@ -20,6 +20,8 @@ import DomainIcon from '@mui/icons-material/Domain';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import PinDropIcon from '@mui/icons-material/PinDrop';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CorporateFareIcon from '@mui/icons-material/CorporateFare';
+import ElevatorIcon from '@mui/icons-material/Elevator';
 
 /**
  * Import all page components
@@ -46,12 +48,12 @@ const Hire = {
 
 const Settings = {
 
+    positionLevel : {
+        home: lazy(() => import('../pages/settings/position-level/home'))
+    },      
+
     position: {
         home: lazy(() => import('../pages/settings/position/home')),
-    },
-
-    recruiter: {
-        home: lazy(() => import('../pages/settings/recruiter/home')),
     },
 
     department: {
@@ -62,7 +64,7 @@ const Settings = {
         home: lazy(() => import('../pages/settings/head_department/home'))
     },
 
-    mainBusiness : {
+    mainBusiness: {
         home: lazy(() => import('../pages/settings/main-business/home'))
     },
 
@@ -70,14 +72,23 @@ const Settings = {
         home: lazy(() => import('../pages/settings/business-unit/home')),
     },
 
-    location: {
-        home: lazy(() => import('../pages/settings/location/home'))
+    subBusinessUnit: {
+        home: lazy(() => import('../pages/settings/sub-business-unit/home'))
+    },
+
+    campus: {
+        home: lazy(() => import('../pages/settings/campus/home'))
     },
 
     // receivingCategory: {
     //     home: lazy(() => import('../pages/settings/receiving_category/home')),
     //     create: lazy(() => import('../pages/settings/receiving_category/create'))
     // },
+
+    // recruiter: {
+    //     home: lazy(() => import('../pages/settings/recruiter/home')),
+    // },
+
 };
 
 const User = {
@@ -151,19 +162,27 @@ export const PRIVATE_ROUTES = [
         children: [
 
             // Main business
-            // {
-            //     name: "Main Businesses",
-            //     path: "main-business",
-            //     component: <Settings.mainBusiness.home />,
-            //     icon: <BusinessIcon />
-            // },
+            {
+                name: "Main Businesses",
+                path: "main-business",
+                component: <Settings.mainBusiness.home />,
+                icon: <BusinessIcon />
+            },
 
             /**Business */
             {
-                name: "Business Units",
+                name: "Primary Businesses",
                 path: "business",
                 component: <Settings.businessUnit.home />,
                 icon: <MeetingRoomIcon />,
+            },
+
+            /**Sub Business */
+            {
+                name: "Secondary Businesses",
+                path: "sub-business",
+                component: <Settings.subBusinessUnit.home />,
+                icon: <CorporateFareIcon />
             },
 
             /**Department */
@@ -172,6 +191,14 @@ export const PRIVATE_ROUTES = [
                 path: "department",
                 component: <Settings.department.home />,
                 icon: <ApartmentIcon />,
+            },
+
+            // Position label
+            {
+                name: "Position Levels",
+                path: "position-level",
+                component: <Settings.positionLevel.home/>,
+                icon: <ElevatorIcon/>,
             },
 
             /**Position */
@@ -191,12 +218,12 @@ export const PRIVATE_ROUTES = [
             },
 
             /**Location */
-            {
-                name: 'Locations',
-                path: 'location',
-                component: <Settings.location.home />,
-                icon: <PinDropIcon />
-            },
+            // {
+            //     name: 'Campuses',
+            //     path: 'campus',
+            //     component: <Settings.campus.home />,
+            //     icon: <PinDropIcon />
+            // },
 
             /**Recruiter */
             // {

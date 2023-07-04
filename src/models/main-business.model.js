@@ -1,8 +1,9 @@
 import { object, any, string } from "zod"
 
-const BusinessModel = object({
+const MainBusinessModel = object({
     id: any().optional().nullable(),
-    name: string().min(1, { message: 'Business name is required!' }),
+    nameEn: string().min(1, { message: 'Main business english name is required!' }),
+    nameKh: string().min(1, { message: 'Main business khmer name is required!' }),
     description: string().optional().nullable(),
     createdAt: any().optional().nullable(),
     createdBy: any().optional().nullable(),
@@ -11,4 +12,4 @@ const BusinessModel = object({
     status: string().optional().nullable()
 });
 
-export default BusinessModel;
+export default MainBusinessModel;

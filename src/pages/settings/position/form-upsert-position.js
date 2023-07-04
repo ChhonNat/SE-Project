@@ -32,10 +32,9 @@ const UpsertPositionForm = (props) => {
     const { errors } = formState;
 
     const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
-    const [listDepartments, setListDepartments] = useState([]);
-    const [isSubmitForm, setIsSubmitForm] = useState(false);
-
-    const formatKeys = ['businessDivisions'];
+    const [listPositionLevels, setListPositionLevels] = useState([]);
+    // const [isSubmitForm, setIsSubmitForm] = useState(false);
+    // const formatKeys = ['businessDivisions'];
 
     useEffect(() => {
 
@@ -47,13 +46,13 @@ const UpsertPositionForm = (props) => {
         }
 
         /**Fetch lookup data businesss and department  */
-        fetchData(API_URL.lookup.business.get, setListBusinessDivisions);
-        // fetchData(API_URL.lookup.department.get, setListDepartments);
+        fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
+        fetchData(API_URL.lookup.positionLevel.get, setListPositionLevels);
 
     }, [openModal])
 
     const onError = (data) => {
-        setIsSubmitForm(true);
+        // setIsSubmitForm(true);
         console.log(data);
     }
 
@@ -70,33 +69,33 @@ const UpsertPositionForm = (props) => {
 
             } else {
 
-                if (formatKeys.includes(key)) {
+                // if (formatKeys.includes(key)) {
 
-                    const oldBusinessDivisions = [...editData?.businessDivisions];
-                    const mapBusinessDivision = {};
+                //     const oldBusinessDivisions = [...editData?.businessDivisions];
+                //     const mapBusinessDivision = {};
 
-                    if (oldBusinessDivisions?.length) {
+                //     if (oldBusinessDivisions?.length) {
 
-                        oldBusinessDivisions.forEach((ele) => {
+                //         oldBusinessDivisions.forEach((ele) => {
 
-                            if (!ele?.id) {
-                                mapBusinessDivision = {}
-                            }
+                //             if (!ele?.id) {
+                //                 mapBusinessDivision = {}
+                //             }
 
-                            mapBusinessDivision[ele?.id] = ele;
+                //             mapBusinessDivision[ele?.id] = ele;
 
-                        })
-                    }
+                //         })
+                //     }
 
-                    data[key] = data[key].map((ele) => {
+                //     data[key] = data[key].map((ele) => {
 
-                        const isObject = typeof ele === 'object';
-                        return isObject ?
-                            { id: ele?.id, recId: ele?.recId } :
-                            { id: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.id : ele, recId: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.recId : 0 }
-                    })
+                //         const isObject = typeof ele === 'object';
+                //         return isObject ?
+                //             { id: ele?.id, recId: ele?.recId } :
+                //             { id: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.id : ele, recId: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.recId : 0 }
+                //     })
 
-                }
+                // }
 
                 postData[key] = data[key];
             }
@@ -175,45 +174,64 @@ const UpsertPositionForm = (props) => {
                                     variant="outlined"
                                     fullWidth
                                     size="meduim"
-                                    {...register('name')}
-                                    error={errors?.name}
-                                    helperText={errors?.name?.message}
+                                    {...register('nameEn')}
+                                    error={errors?.nameEn}
+                                    helperText={errors?.nameEn?.message}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <MultiSelectComponent
-                                    id="business-division-id"
-                                    label="Business Unit"
-                                    isRequire={true}
-                                    isSubmit={isSubmitForm}
-                                    customDatas={listBusinessDivisions}
-                                    value={watchData?.businessDivisions || []}
-                                    bindField="name"
-                                    handleEventChange={(e) => setValue('businessDivisions', e)}
-                                    err={errors?.businessDivisions?.message}
+                                <TextField
+                                    type="text"
+                                    id="name"
+                                    label={<span>Name(KH) <b style={{ color: 'red' }}>*</b></span>}
+                                    variant="outlined"
+                                    fullWidth
+                                    size="meduim"
+                                    {...register('nameKh')}
+                                    error={errors?.nameKh}
+                                    helperText={errors?.nameKh?.message}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                {/* <SelectComponent
-                                    id="department-id"
-                                    label="Department"
+
+                                <SelectComponent
+                                    id="business-unit-id"
+                                    label="Primary Business"
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
                                     size="meduim"
-                                    customDatas={listDepartments}
-                                    value={watchData?.departmentId || ""}
-                                    handleOnChange={(e) => setValue('departmentId', e?.target?.value)}
-                                    err={errors?.departmentId?.message}
+                                    customDatas={listBusinessDivisions}
+                                    value={watchData?.businessUnitId || ""}
+                                    bindField="nameEn"
+                                    handleOnChange={(e) => {
+                                        setValue('businessUnitId', e?.target?.value)
+                                        setValue('departmentId', null)
+                                    }}
+                                    err={errors?.businessUnitId?.message}
+                                />
+
+                                {/* <MultiSelectComponent
+                                    id="business-unit-id"
+                                    label="Primary Business"
+                                    isRequire={true}
+                                    isSubmit={isSubmitForm}
+                                    customDatas={listBusinessDivisions}
+                                    value={watchData?.businessDivisions || []}
+                                    bindField="nameEn"
+                                    handleEventChange={(e) => setValue('businessDivisions', e)}
+                                    err={errors?.businessDivisions?.message}
                                 /> */}
-                                
+
+                            </Grid>
+                            <Grid item xs={12}>
                                 <AsyncAutoComplete
                                     id="department-id"
                                     label="Department"
                                     size="large"
-                                    callToApi={API_URL.lookup.department.get}
-                                    bindField={'name'}
-                                    handleOnChange={(e, value) => { 
+                                    callToApi={API_URL.lookup.departmentById.get + watchData?.businessUnitId}
+                                    bindField={'nameEn'}
+                                    handleOnChange={(e, value) => {
                                         setValue('departmentId', value?.id ? value?.id : value);
                                     }}
                                     value={watchData?.departmentId || null}
@@ -221,6 +239,24 @@ const UpsertPositionForm = (props) => {
                                     err={errors?.departmentId?.message}
                                 />
 
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <SelectComponent
+                                    id="position-level-id"
+                                    label="Position Level"
+                                    isRequire={true}
+                                    variant="outlined"
+                                    fullWidth
+                                    size="meduim"
+                                    customDatas={listPositionLevels}
+                                    value={watchData?.positionLevelId || ""}
+                                    bindField="nameEn"
+                                    handleOnChange={(e) => {
+                                        setValue('positionLevelId', e?.target?.value)
+                                    }}
+                                    err={errors?.positionLevelId?.message}
+                                />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField

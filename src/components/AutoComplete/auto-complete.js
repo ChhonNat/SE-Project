@@ -24,8 +24,9 @@ const AsyncAutoComplete = (props) => {
   } = props;
 
   const { data, loading, error, sendRequest } = _useHttp();
+  const [options, setOptions] = useState([]);
   const [open, setOpen] = useState(false);
-  const [selectValue, setSelectValue] = useState(null);
+  const [selectValue, setSelectValue] = useState({});
 
   /** 
    * When callToApi has value request data to display in auto complete
@@ -41,6 +42,10 @@ const AsyncAutoComplete = (props) => {
       fetchData();
     }
   }, [callToApi])
+
+  useEffect(() => {
+    data?.length ? setOptions(data) : setOptions([]);
+  }, [data])
 
 
   /**
@@ -62,10 +67,19 @@ const AsyncAutoComplete = (props) => {
    */
   const checkOptionEqToVal = (option, value) => {
 
-    if (option & value)
-      return bindField ? option[bindField] === value[bindField] : option === option
-    else
-      return {}
+    let searchResult = "";
+
+    if (option && value)
+      searchResult = bindField ? option[bindField] === value[bindField] : option === option
+
+    return searchResult;
+  }
+
+  /**
+   * Check option label
+   */
+  const checkOptionLabel = () => {
+      
   }
 
   /**
@@ -93,7 +107,7 @@ const AsyncAutoComplete = (props) => {
 
 
   return (
-    <ThemeProvider theme={ err && !value ? customTheme : {}}>
+    <ThemeProvider theme={err && !value ? customTheme : {}}>
       <Autocomplete
         id={id ? id : "async-auto-complete"}
         fullWidth
@@ -102,9 +116,9 @@ const AsyncAutoComplete = (props) => {
         onOpen={() => { setOpen(true); }}
         onClose={() => { setOpen(false); }}
         loading={loading}
-        options={callToApi ? (data?.length ? data : []) : (customDatas?.length ? customDatas : [])}
+        options={callToApi ? (options?.length ? options : []) : (customDatas?.length ? customDatas : [])}
         isOptionEqualToValue={(option, value) => checkOptionEqToVal(option, value)}
-        getOptionLabel={(option) => bindField ? option[bindField] : option}
+        getOptionLabel={(option) => option[bindField] || ''}
         onChange={handleOnChange}
         value={selectValue}
         renderInput={(params) => (
@@ -120,7 +134,7 @@ const AsyncAutoComplete = (props) => {
                 </>
               ),
             }}
-            helperText={<span style={{color: err && !value ? '#d32f2f' : ''}}>{err}</span>}
+            helperText={err && !value &&<span style={{ color: err && !value ? '#d32f2f' : '' }}>{err}</span>}
           />
         )}
       />

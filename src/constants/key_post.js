@@ -74,27 +74,67 @@ const hire_candidate = [
 ];
 
 const position = [
-    "name",
+    "nameEn",
+    "nameKh",
     "description",
     "status",
+    "businessUnitId",
+    "departmentId",
+    "positionLevelId"
+];
+
+const positionLevel = [
+    "nameEn",
+    "nameKh",
     "businessDivisions",
-    "departmentId"
+    "departmentId",
+    "description",
+    "status"
 ];
 
 const department = [
-    "name",
+    "nameEn",
+    "nameKh",
+    "code",
     "description",
     "businessDivisions",
     "status",
 ];
 
-const business = [
-    "name",
+const mainBusiness = [
+    "nameEn",
+    "nameKh",
+    "description"
+]
+
+const businessUnit = [
+    "mainBusinessUnitId",
+    "code",
+    "nameEn",
+    "nameKh",
+    "phone",
+    "email",
     "description",
+    "addressEn",
+    "addressKh",
     "status",
 ];
 
-const location = [
+const subBusinessUnit = [
+    "mainBusinessUnitId",
+    "businessUnitId",
+    "code",
+    "nameEn",
+    "nameKh",
+    "phone",
+    "email",
+    "description",
+    "addressEn",
+    "addressKh",
+    "status",
+];
+
+const campus = [
     "name",
     "description",
     "status",
@@ -105,8 +145,9 @@ const headDepartment = [
     "firstName",
     "lastName",
     "phoneNumber",
-    "businessDivisionId",
+    "businessUnitId",
     "positionId",
+    "positionLevelId",
     "departmentId",
     "description",
     "status",
@@ -136,9 +177,12 @@ export const KEY_POST = {
     offer_assessment_candidate,
     hire_candidate,
     position,
+    positionLevel,
     department,
-    business,
-    location,
+    mainBusiness,
+    businessUnit,
+    subBusinessUnit,
+    campus,
     headDepartment,
     user
 };

@@ -23,7 +23,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS } from "../../constants/local_storage";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
     display: "flex",

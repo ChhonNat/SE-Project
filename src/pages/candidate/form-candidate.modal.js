@@ -36,7 +36,7 @@ import LabelRequire from '../../components/Label/require';
 import CandidateReviewCVModal from '../../components/CV/view-cv.modal';
 
 
-const shrinkOpt = { shrink: false };
+const shrinkOpt = { shrink: true };
 
 const TransitionModal = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -107,7 +107,7 @@ const CandidateFormModal = (props) => {
         fetchData(API_URL.lookup.location.get, setListLocations);
 
         /**Fetch business data */
-        fetchData(API_URL.lookup.business.get, setListBusinesses);
+        fetchData(API_URL.lookup.businessUnit.get, setListBusinesses);
 
         /**fetch department data */
         if (candidate?.id && candidate?.businessDivisionId)

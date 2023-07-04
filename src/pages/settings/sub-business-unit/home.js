@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import UpsertBusinessUnitForm from "./form-upsert-business-unit";
-import BusinessUnitModel from "../../../models/business-unit.model";
-import { KEY_POST } from "../../../constants/key_post";
+import UpsertSubBusinessUnitForm from "./form-upsert-sub-business-unit";
+import SubBusinessUnitModel from "../../../models/sub-business-unit.model";
 
 
-const HomeBusiness = () => {
+const HomeSubBusiness = () => {
 
     const [isReload, setIsReload] = useState(false);
-    const [openBusinessUnitModal, setOpenBusinessUnitModal] = useState(false);
-    const [editBusinessUnit, setEditBusinessUnit] = useState({});
+    const [openBusinessModal, setOpenBusinessModal] = useState(false);
+    const [editSubBusiness, setEditSubBusiness] = useState({});
 
     return (
         <>
@@ -29,31 +28,30 @@ const HomeBusiness = () => {
                 customActions: 'Custom button event in table'
             */}
             <AsyncDatatable
-                asyncURL={API_URL.businessUnit.get}
-                headers={TABLE_CONFIG.tblBusinessUnit}
-                bannerText="All Primary Businesses"
+                asyncURL={API_URL.subBusinessUnit.get}
+                headers={TABLE_CONFIG.tblSubBusinessUnit}
+                bannerText="All Secondary Businesses"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
                 useTableActions={{ search: true, create: true, edit: true }}
-                onHandleAddNewEvent={() => setOpenBusinessUnitModal(true)}
+                onHandleAddNewEvent={() => setOpenBusinessModal(true)}
                 handleEditEvent={(data) => {
-                    setEditBusinessUnit(data);
-                    setOpenBusinessUnitModal(true);
+                    setEditSubBusiness(data);
+                    setOpenBusinessModal(true);
                 }}
             />
 
             {/* Modal create and update */}
-            <UpsertBusinessUnitForm
-                title={editBusinessUnit?.id ? "Edit Primary Business" : "Add Primary Business"}
-                openModal={openBusinessUnitModal}
-                editData={editBusinessUnit}
+            <UpsertSubBusinessUnitForm
+                title={editSubBusiness?.id ? "Edit Secondary Business" : "Add Secondary Business"}
+                openModal={openBusinessModal}
+                editData={editSubBusiness}
                 onCloseModal={() => {
-                    setEditBusinessUnit({});
-                    setOpenBusinessUnitModal(false);
+                    setEditSubBusiness(SubBusinessUnitModel);
+                    setOpenBusinessModal(false);
                 }}
-                model={BusinessUnitModel}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
@@ -61,4 +59,4 @@ const HomeBusiness = () => {
     )
 }
 
-export default HomeBusiness;
+export default HomeSubBusiness;

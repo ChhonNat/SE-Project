@@ -31,7 +31,7 @@ const HomeLocation = () => {
             <AsyncDatatable
                 asyncURL={API_URL.location.get}
                 headers={TABLE_CONFIG.tblLocation}
-                bannerText="All Locations"
+                bannerText="All Campuses"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
@@ -46,7 +46,7 @@ const HomeLocation = () => {
 
             {/* Modal create and update */}
             <UpsertForm
-                title={editLocation?.id ? "Edit location" : "Add new location"}
+                title={editLocation?.id ? "Edit campus" : "Add new campus"}
                 openModal={openLocationModal}
                 editData={editLocation}
                 onCloseModal={() => {
@@ -54,7 +54,7 @@ const HomeLocation = () => {
                     setOpenLocationModal(false);
                 }}
                 model={LocationModel}
-                keyPosts={KEY_POST.location}
+                keyPosts={KEY_POST.campus}
                 postUrl={API_URL.location.create}
                 putUrl={API_URL.location.edit}
                 dataType={'/location'}

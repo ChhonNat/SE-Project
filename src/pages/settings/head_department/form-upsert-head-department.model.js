@@ -16,6 +16,7 @@ import { API_URL } from "../../../constants/api_url";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
 import HeadDepartmentModel from "../../../models/head-department.model";
+import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -24,7 +25,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 const UpsertHeadDepartmentForm = (props) => {
 
     const { openModal, onCloseModal, handleEventSuccessed, title, editData } = props;
-    const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({ resolver: zodResolver(HeadDepartmentModel) });
+    const { register, handleSubmit, reset, setValue, watch, formState, clearErrors, setError } = useForm({ resolver: zodResolver(HeadDepartmentModel) });
     const { data, loading, error, message, sendRequest } = _useHttp();
     const watchData = watch();
     const { errors } = formState;
@@ -32,6 +33,8 @@ const UpsertHeadDepartmentForm = (props) => {
     const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
     const [listDepartments, setListDepartments] = useState([]);
     const [listPositions, setListPositions] = useState([]);
+    const [listPositionLevels, setListPositionLevels] = useState([]);
+
 
     useEffect(() => {
 
@@ -45,9 +48,14 @@ const UpsertHeadDepartmentForm = (props) => {
             clearErrors();
         }
 
-        //Fetch business division
-        fetchData(API_URL.lookup.business.get, setListBusinessDivisions);
+        //Fetch business unit
+        fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
+        fetchData(API_URL.lookup.positionLevel.get, setListPositionLevels);
 
+        if (editData?.id) {
+            fetchData(API_URL.lookup.departmentById.get + editData?.businessUnitId, setListDepartments);
+            fetchData(API_URL.lookup.positionById.get + editData?.departmentId, setListPositions);
+        }
 
     }, [openModal])
 
@@ -89,7 +97,15 @@ const UpsertHeadDepartmentForm = (props) => {
         }
     }, [])
 
-    const onError = (data) => console.log(data);
+    const onError = (data) => {
+        console.log(data);
+
+        if(data?.departmentId)
+        setError('departmentId',{message: 'Department is required!'});
+
+        if(data?.positionId)
+        setError('positionId', {message: 'Position is required!'});
+    }
 
     const submit = async (data) => {
 
@@ -191,38 +207,56 @@ const UpsertHeadDepartmentForm = (props) => {
                             <Grid item xs={12}>
                                 <SelectComponent
                                     id="business-id"
-                                    label="Business Unit"
+                                    label="Primary Business"
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
                                     size="meduim"
                                     customDatas={listBusinessDivisions}
-                                    value={watchData?.businessDivisionId || ""}
-                                    handleOnChange={(e) => { 
-                                        setValue('businessDivisionId', e?.target?.value);
-                                        setValue('departmentId',null);
-                                        fetchData(API_URL.lookup.departmentById.get+e?.target?.value, setListDepartments);
+                                    value={watchData?.businessUnitId || ""}
+                                    bindField="nameEn"
+                                    handleOnChange={(e) => {
+                                        setValue('businessUnitId', e?.target?.value);
+                                        setValue('departmentId', null);
+                                        fetchData(API_URL.lookup.departmentById.get + e?.target?.value, setListDepartments);
                                     }}
-                                    err={errors?.businessDivisionId?.message}
+                                    err={errors?.businessUnitId?.message}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <AsyncAutoComplete
+                                    id="department-id"
+                                    label="Department"
+                                    size="large"
+                                    // callToApi={API_URL.lookup.departmentById.get + editData?.businessUnitId}
+                                    customDatas={listDepartments}
+                                    bindField={'nameEn'}
+                                    handleOnChange={(e, value) => {
+                                        setValue('departmentId', value?.id ? value?.id : value);
+                                        setValue('positionId', null);
+                                        fetchData(API_URL.lookup.positionById.get + value?.id, setListPositions);
+                                    }}
+                                    value={watchData?.departmentId || null}
+                                    isRequire={true}
+                                    err={errors?.departmentId?.message}
                                 />
                             </Grid>
 
                             <Grid item xs={12}>
                                 <SelectComponent
-                                    id="department-id"
-                                    label="Department"
+                                    id="position-level-id"
+                                    label="Position Level"
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
                                     size="meduim"
-                                    customDatas={listDepartments}
-                                    value={watchData?.departmentId || ""}
+                                    customDatas={listPositionLevels}
+                                    value={watchData?.positionLevelId || ""}
+                                    bindField="nameEn"
                                     handleOnChange={(e) => {
-                                        setValue('departmentId', e?.target?.value);
-                                        setValue('positionId',null);
-                                        fetchData(API_URL.lookup.positionById.get+e?.target?.value, setListPositions);
+                                        setValue('positionLevelId', e?.target?.value);
                                     }}
-                                    err={errors?.departmentId?.message}
+                                    err={errors?.positionLevelId?.message}
                                 />
                             </Grid>
 
@@ -237,6 +271,7 @@ const UpsertHeadDepartmentForm = (props) => {
                                     size="meduim"
                                     customDatas={listPositions}
                                     value={watchData?.positionId || ""}
+                                    bindField="nameEn"
                                     handleOnChange={(e) => setValue('positionId', e?.target?.value)}
                                     err={errors?.positionId?.message}
                                 />

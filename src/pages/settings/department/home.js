@@ -49,7 +49,7 @@ const HomeDepartment = () => {
             
             {/* Modal create and update */}
             <UpsertDepartmentForm
-                title={editDepartment?.id ? "Edit department" : "Add new department"}
+                title={editDepartment?.id ? "Edit Department" : "Add New Department"}
                 openModal={openDepartmentModal}
                 editData={editDepartment}
                 onCloseModal={() => {
