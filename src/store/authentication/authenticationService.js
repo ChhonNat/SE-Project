@@ -36,12 +36,14 @@ export const userAuthentication = ({ username, password }) => {
           const { data } = result;
           const { message, success } = data;
 
-          Swal.fire({
-            title: 'Login',
-            text: message,
-            icon: success ? 'success' : 'error' ,
-            confirmButtonText: 'OK',
-          });
+          if (!success) {
+            Swal.fire({
+              title: 'Login',
+              text: message,
+              icon: 'error',
+              confirmButtonText: 'OK',
+            });
+          }
 
           return result;
         })
