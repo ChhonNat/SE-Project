@@ -30,10 +30,12 @@ import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import { isLogout } from "../../store/authentication/authenticationService";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { LOCAL_STORAGE_KEYS } from "../../constants/local_storage";
 
 
 const NavbarComponent = ({ open, handleSetMinSidebar }) => {
 
+    const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
     const location = useLocation();
     const { pathname } = location;
     const pageTitle = pathname !== '/' ? pathname.slice(1).replaceAll('/', ' > ') : 'dashboard';
@@ -333,70 +335,74 @@ const NavbarComponent = ({ open, handleSetMinSidebar }) => {
                                 </PopupState>
                             </IconButton>
 
-                            {/* User Profile                                    */}
-                            <IconButton
-                                size="large"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-haspopup="true"
-                                color="inherit"
-                                sx={{width: 50, height: 50, display:'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'gray'}}
-                            >
-                                <PopupState variant="popover" popupId="demo-popup-popover">
-                                    {(popupState) => (
-                                        <div>
-                                            <AccountCircle
-                                                variant="contained"
-                                                {...bindTrigger(popupState)}
-                                            />
-                                            <Popover
-                                                {...bindPopover(popupState)}
-                                                anchorOrigin={{
-                                                    vertical: "bottom",
-                                                    horizontal: "center",
-                                                }}
-                                                transformOrigin={{
-                                                    vertical: "top",
-                                                    horizontal: "center",
-                                                }}
-                                            >
-                                                <List
-                                                    sx={{
-                                                        width: "100%",
-                                                        maxWidth: 360,
-                                                        bgcolor: "background.paper",
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <label>{user?.username}</label>
+                                {/* User Profile */}
+                                <IconButton
+                                    size="large"
+                                    edge="end"
+                                    aria-label="account of current user"
+                                    aria-haspopup="true"
+                                    color="inherit"
+                                    sx={{ width: 50, height: 50, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'gray', marginLeft: 1 }}
+                                >
+
+                                    <PopupState variant="popover" popupId="demo-popup-popover">
+                                        {(popupState) => (
+                                            <div>
+                                                <AccountCircle
+                                                    variant="contained"
+                                                    {...bindTrigger(popupState)}
+                                                />
+                                                <Popover
+                                                    {...bindPopover(popupState)}
+                                                    anchorOrigin={{
+                                                        vertical: "bottom",
+                                                        horizontal: "center",
+                                                    }}
+                                                    transformOrigin={{
+                                                        vertical: "top",
+                                                        horizontal: "center",
                                                     }}
                                                 >
-                                                    <ListItem
-                                                        alignItems="flex-start"
-                                                        className="tableHover"
+                                                    <List
+                                                        sx={{
+                                                            width: "100%",
+                                                            maxWidth: 360,
+                                                            bgcolor: "background.paper",
+                                                        }}
                                                     >
-                                                        <ListItemAvatar>
-                                                            <AccountCircle />
-                                                        </ListItemAvatar>
-                                                        <ListItemText primary="My Profile" />
-                                                    </ListItem>
-                                                    <Divider variant="inset" component="li" />
-                                                    <ListItem
-                                                        alignItems="flex-start"
-                                                        className="tableHover"
-                                                        onClick={handleLogout}
-                                                    >
-                                                        <ListItemAvatar>
-                                                            <OutputIcon />
-                                                        </ListItemAvatar>
-                                                        <ListItemText sx={{ opacity: open ? 1 : 0 }}>
-                                                            Logout
-                                                        </ListItemText>
-                                                    </ListItem>
+                                                        <ListItem
+                                                            alignItems="flex-start"
+                                                            className="tableHover"
+                                                        >
+                                                            <ListItemAvatar>
+                                                                <AccountCircle />
+                                                            </ListItemAvatar>
+                                                            <ListItemText primary="My Profile" />
+                                                        </ListItem>
+                                                        <Divider variant="inset" component="li" />
+                                                        <ListItem
+                                                            alignItems="flex-start"
+                                                            className="tableHover"
+                                                            onClick={handleLogout}
+                                                        >
+                                                            <ListItemAvatar>
+                                                                <OutputIcon />
+                                                            </ListItemAvatar>
+                                                            <ListItemText sx={{ opacity: open ? 1 : 0 }}>
+                                                                Logout
+                                                            </ListItemText>
+                                                        </ListItem>
 
 
-                                                </List>
-                                            </Popover>
-                                        </div>
-                                    )}
-                                </PopupState>
-                            </IconButton>
+                                                    </List>
+                                                </Popover>
+                                            </div>
+                                        )}
+                                    </PopupState>
+                                </IconButton>
+                            </div>
 
                         </Box>
                         <Box sx={{ display: { xs: "flex", md: "none" } }}>

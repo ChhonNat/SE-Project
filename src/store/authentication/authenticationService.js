@@ -41,6 +41,7 @@ export const userAuthentication = ({ username, password }) => {
       const responseData = response.data.data;
 
       const responseUser = {
+        username: response?.data?.data?.user?.username,
         token: responseData.accessToken,
         refreshToken: responseData.refreshToken,
         isError: false,

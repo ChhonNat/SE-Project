@@ -47,6 +47,7 @@ const UpsertUserForm = (props) => {
 
     const formatKeys = ['birthDate', 'roles'];
 
+
     useEffect(() => {
 
         clearErrors();
@@ -55,8 +56,6 @@ const UpsertUserForm = (props) => {
             Object.keys(user).forEach((key) => {
 
                 if (KEY_POST.user.includes(key)) {
-
-                    console.log(key);
 
                     if (formatKeys.includes(key)) {
                         setValue(key, ConverterService.convertUnixDateToMUI(user[key]))
@@ -81,14 +80,18 @@ const UpsertUserForm = (props) => {
     }
 
     const onError = (data) => {
-        console.log(data);
+
         setIsSubmitForm(true);
+
         if (user?.id) {
             if (watchUser?.password || watchUser?.confirmPassword) {
                 if (watchUser?.password !== watchUser?.confirmPassword)
                     setError('confirmPassword', { message: "Confirm password doesn't match!" });
             }
         }
+
+        if (!watchUser?.roles?.length)
+            setError('roles', { message: 'Role is required!' })
 
     }
 
@@ -132,6 +135,8 @@ const UpsertUserForm = (props) => {
 
                         if (oldRoles?.length) {
 
+                            console.log('oldRoles', oldRoles);
+
                             oldRoles.forEach((ele) => {
 
                                 if (!ele?.id) {
@@ -142,6 +147,9 @@ const UpsertUserForm = (props) => {
 
                             })
                         }
+
+                        if(typeof data[key] === 'string' )
+                        data[key] = oldRoles;
 
                         data[key] = data[key].map((ele) => {
 
@@ -161,7 +169,6 @@ const UpsertUserForm = (props) => {
                 }
             }
         });
-
 
         try {
 
@@ -335,6 +342,7 @@ const UpsertUserForm = (props) => {
                                 size="small"
                                 error={errors?.username}
                                 helperText={errors?.username?.message}
+                                disabled={user?.id}
                             />
                         </Grid>
                         <Grid item xs={12}>
