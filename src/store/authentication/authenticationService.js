@@ -2,6 +2,7 @@ import { authActions } from './authenticationSlice';
 import axios from 'axios';
 import apiLink from '../../constants/app_cont';
 import { LOCAL_STORAGE_KEYS } from '../../constants/local_storage';
+import Swal from 'sweetalert2';
 
 const initialUser = {
   userName: '',
@@ -32,13 +33,24 @@ export const userAuthentication = ({ username, password }) => {
 
       const response = await axios.post(`${apiLink}/api/v1/login`, postData, options)
         .then(function (result) {
+          const { data } = result;
+          const { message, success } = data;
+
+          Swal.fire({
+            title: 'Login',
+            text: message,
+            icon: success ? 'success' : 'error' ,
+            confirmButtonText: 'OK',
+          });
+
           return result;
         })
         .catch((error) => {
-          console.log(error.message);
+          console.log(error?.message);
+          return error;
         });
 
-      const responseData = response.data.data;
+      const responseData = response?.data?.data;
 
       const responseUser = {
         username: response?.data?.data?.user?.username,
@@ -53,12 +65,17 @@ export const userAuthentication = ({ username, password }) => {
     };
 
     try {
+
       const authUser = await authenticates();
+
       localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(authUser));
       dispatch(authActions.setAuthenticate(authUser));
 
     } catch (error) {
 
+      dispatch(authActions.setAuthenticate({ ...initialUser }));
+
+      return;
       dispatch(
         authActions.setAuthenticate({
           ...initialUser,

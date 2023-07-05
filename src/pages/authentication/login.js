@@ -88,6 +88,7 @@ export default function Login() {
               variant="contained"
               color="success"
               onClick={login}
+              disabled={!username || !password}
             >
               login
             </Button>
