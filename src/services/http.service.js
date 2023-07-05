@@ -36,8 +36,6 @@ await axiosAPI.interceptors.response.use((res) => {
 },
     async (err) => {
 
-        console.log('axiosAPI.interceptors.response err', err)
-
         const originalRequest = err?.config;
 
         if (err?.response?.status === HTTP_STATUS.expired && !originalRequest?._retry) {
@@ -65,9 +63,6 @@ await axiosAPI.interceptors.response.use((res) => {
             }
             return axiosAPI(originalRequest);
         }
-
-        console.log('err?.response?.status',err?.response?.status);
-        console.log('HTTP_STATUS.unauthorize',HTTP_STATUS.unauthorize);
 
         /**
          * Unauthorize user

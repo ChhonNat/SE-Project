@@ -45,7 +45,7 @@ const TransitionModal = React.forwardRef(function Transition(props, ref) {
 const CandidateFormModal = (props) => {
 
     const { openCandidateModal, onCloseCandidateModal, modalTitle, candidate, handleEventSuccessed } = props;
-    const { register, handleSubmit, formState, setValue, watch, reset, clearErrors } = useForm({
+    const { register, handleSubmit, formState, setValue, watch, reset, clearErrors, setError } = useForm({
         resolver: zodResolver(CandidateModel.Create)
     });
     const watchCandidate = watch();
@@ -53,6 +53,7 @@ const CandidateFormModal = (props) => {
 
     const [listGenders, setListGenders] = useState([]);
     const [listPositions, setListPositions] = useState([]);
+    const [listPositionLevels, setListPositionLevels] = useState([]);
     const [listLocations, setListLocations] = useState([]);
     const [listBusinesses, setListBusinesses] = useState([]);
     const [listDepartments, setListDepartments] = useState([]);
@@ -78,14 +79,7 @@ const CandidateFormModal = (props) => {
                         const appliedDate = ConverterService.convertUnixDateToMUI(candidate[key]);
                         setValue(key, appliedDate);
 
-                    }
-                    // else if (key === 'shortlistDate') {
-
-                    //     const shortlistDate = ConverterService.convertUnixDateToMUI(candidate[key]);
-                    //     setValue(key, shortlistDate);
-
-                    // } 
-                    else {
+                    } else {
                         setValue(key, candidate[key]);
                     }
                 }
@@ -109,9 +103,12 @@ const CandidateFormModal = (props) => {
         /**Fetch business data */
         fetchData(API_URL.lookup.businessUnit.get, setListBusinesses);
 
+        /**Fetch position level */
+        fetchData(API_URL.lookup.positionLevel.get, setListPositionLevels)
+
         /**fetch department data */
-        if (candidate?.id && candidate?.businessDivisionId)
-            fetchData(API_URL.lookup.departmentById.get + candidate?.businessDivisionId, setListDepartments);
+        if (candidate?.id && candidate?.businessUnitId)
+            fetchData(API_URL.lookup.departmentById.get + candidate?.businessUnitId, setListDepartments);
 
         /**Fetch position data */
         if (candidate?.id && candidate?.departmentId)
@@ -166,7 +163,21 @@ const CandidateFormModal = (props) => {
     }, []);
 
     /**Check form error */
-    const onError = (error, e) => console.log('>>>', error, e);
+    const onError = (error, e) => {
+
+        if (!watchCandidate?.file) {
+            setError('file', { message: 'File is required!' })
+        } else {
+
+            const { file } = watchCandidate;
+            const oneByte = 1048576;
+            const limitTenMB = 10 * oneByte;
+
+            if (file?.size > limitTenMB) {
+                setError('file', { message: 'File is required maximum 10MB!' })
+            }
+        }
+    }
 
     /**
      * METHOD: create candidate
@@ -188,15 +199,6 @@ const CandidateFormModal = (props) => {
                     submitFormData.append(key, appliedDate);
 
                 }
-                // else if (key === 'shortlistDate') {
-
-                //     /**
-                //      * format shorListedDate
-                //      *  */
-                //     const shortlistDate = ConverterService.convertDateToAPI(data[key]);
-                //     submitFormData.append(key, shortlistDate)
-
-                // } 
                 else {
                     submitFormData.append(key, data[key]);
                 }
@@ -341,35 +343,39 @@ const CandidateFormModal = (props) => {
                                 />
                             </Grid>
 
-                            <Grid item xs={12}>
-                                <Link sx={{ cursor: 'pointer' }} onClick={() => setOpenCVModal(true)}>{candidate?.cvFile}</Link>
-                            </Grid>
-
                             {
-                                candidate?.id &&
-                                <Grid item xs={12} paddingBottom={2}>
-                                    {/* Control review candidate checkbox */}
-                                    <FormControl component="fieldset">
+                                candidate?.id && <>
 
-                                        <FormGroup aria-label="position" row>
-                                            <FormControlLabel
-                                                value={STATUS.CANDIDATE.CV_REVIEWED}
-                                                label="Review CV yet?"
-                                                control={
-                                                    <Checkbox
-                                                        onChange={(e) => {
-                                                            setValue('status', e?.target?.checked ? STATUS.CANDIDATE.CV_REVIEWED : STATUS.CANDIDATE.PENDING)
-                                                            setValue('shortlistResult', STATUS.SHORTLIST_RESULT.PENDING)
-                                                        }}
-                                                        checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
-                                                    />
-                                                }
+                                    <Grid item xs={6}>
+                                        <div style={{ paddingTop: 10 }}>
+                                            <Link sx={{ cursor: 'pointer' }} onClick={() => setOpenCVModal(true)}>{candidate?.applicantCode + '.pdf'}</Link>
+                                        </div>
+                                    </Grid>
 
-                                                labelPlacement="end"
-                                            />
-                                        </FormGroup>
-                                    </FormControl>
-                                </Grid>
+                                    <Grid item xs={6}>
+                                        {/* Control review candidate checkbox */}
+                                        <FormControl component="fieldset">
+
+                                            <FormGroup aria-label="position" row>
+                                                <FormControlLabel
+                                                    value={STATUS.CANDIDATE.CV_REVIEWED}
+                                                    label="Review CV yet?"
+                                                    control={
+                                                        <Checkbox
+                                                            onChange={(e) => {
+                                                                setValue('status', e?.target?.checked ? STATUS.CANDIDATE.CV_REVIEWED : STATUS.CANDIDATE.PENDING)
+                                                                setValue('shortlistResult', STATUS.SHORTLIST_RESULT.PENDING)
+                                                            }}
+                                                            checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
+                                                        />
+                                                    }
+
+                                                    labelPlacement="end"
+                                                />
+                                            </FormGroup>
+                                        </FormControl>
+                                    </Grid>
+                                </>
                             }
 
                             {/*Upload file*/}
@@ -397,6 +403,8 @@ const CandidateFormModal = (props) => {
                                     customDatas={listReceivedFromChannels}
                                     handleOnChange={(e) => setValue('receivedChannel', e?.target?.value)}
                                     value={watchCandidate?.receivedChannel || ""}
+                                    isRequire={true}
+                                    err={errors?.receivedChannel?.message}
                                 />
                             </Grid>
 
@@ -420,7 +428,7 @@ const CandidateFormModal = (props) => {
                             </Grid>
 
                             {/* Input Location */}
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <SelectComponent
                                     id="location-id"
                                     label={'Location'}
@@ -431,11 +439,8 @@ const CandidateFormModal = (props) => {
                                     handleOnChange={(e) => setValue('appliedLocationId', e?.target?.value)}
                                     err={errors?.appliedLocationId?.message}
                                 />
-
                                 <br></br>
-
-                 
-                            </Grid>
+                            </Grid> */}
 
                             {/*Select Business */}
                             <Grid item xs={12}>
@@ -444,16 +449,17 @@ const CandidateFormModal = (props) => {
                                     label={<LabelRequire label='Business Unit' />}
                                     size={'small'}
                                     customDatas={listBusinesses}
-                                    value={watchCandidate?.businessDivisionId || ''}
+                                    value={watchCandidate?.businessUnitId || ''}
+                                    bindField="nameEn"
                                     handleOnChange={(e) => {
-                                        setValue('businessDivisionId', e?.target?.value);
+                                        setValue('businessUnitId', e?.target?.value);
                                         setValue('departmentId', null);
                                         setValue('appliedPositionId', null);
                                         setListDepartments([]);
                                         setListPositions([]);
                                         fetchData(API_URL.lookup.departmentById.get + e?.target?.value, setListDepartments);
                                     }}
-                                    err={errors?.businessDivisionId?.message}
+                                    err={errors?.businessUnitId?.message}
                                 />
                             </Grid>
 
@@ -465,11 +471,13 @@ const CandidateFormModal = (props) => {
                                     size={'small'}
                                     customDatas={listDepartments}
                                     value={watchCandidate?.departmentId || ''}
+                                    bindField="nameEn"
                                     handleOnChange={(e) => {
                                         setValue('departmentId', e?.target?.value);
                                         setValue('appliedPositionId', null);
+                                        // fetchData(API_URL.lookup.headDepartment.get + e?.target?.value, setHeadDepartment, 'headDepartment');
+                                        fetchData(`/api/v1/head-departments/business-unit/${watchCandidate?.businessUnitId}/department/` + e?.target?.value, setHeadDepartment, 'headDepartment');
                                         setListPositions([]);
-                                        fetchData(API_URL.lookup.headDepartment.get + e?.target?.value, setHeadDepartment, 'headDepartment');
                                         fetchData(API_URL.lookup.positionById.get + e?.target?.value, setListPositions);
                                     }}
                                     err={errors?.departmentId?.message}
@@ -492,15 +500,6 @@ const CandidateFormModal = (props) => {
                                     helperText={errors?.headDepartmentName?.message}
                                 />
 
-                                {/* <SelectComponent
-                                    id="department-id"
-                                    label={'Head Department'}
-                                    size={'small'}
-                                    customDatas={[headDepartment]}
-                                    handleOnChange={(e) => setValue('headDepartmentId', e?.target?.value)}
-                                    value={watchCandidate?.headDepartmentId || ""}
-                                // err={errors?.positionId?.message}
-                                /> */}
                             </Grid>
 
                             {/* Select Position */}
@@ -512,8 +511,24 @@ const CandidateFormModal = (props) => {
                                     size={'small'}
                                     customDatas={listPositions}
                                     value={watchCandidate?.appliedPositionId || ""}
+                                    bindField="nameEn"
                                     handleOnChange={(e) => setValue('appliedPositionId', e?.target?.value)}
                                     err={errors?.appliedPositionId?.message}
+                                />
+                            </Grid>
+
+                            {/* Select position level */}
+                            <Grid item xs={12}>
+                                <SelectComponent
+                                    id="position-level-id"
+                                    label={'Apply Position Level'}
+                                    isRequire={true}
+                                    size={'small'}
+                                    customDatas={listPositionLevels}
+                                    value={watchCandidate?.appliedPositionLevelId || ""}
+                                    bindField="nameEn"
+                                    handleOnChange={(e) => setValue('appliedPositionLevelId', e?.target?.value)}
+                                    err={errors?.appliedPositionLevelId?.message}
                                 />
                             </Grid>
 

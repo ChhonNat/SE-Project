@@ -1,8 +1,6 @@
 import { string, object, any, number, date } from 'zod';
-
 const UPLOAD_MAX_FILE_SIZE = 500000;
 const ACCET_FILE_UPLOAD = ['image/pdf'];
-
 const Model = object({
     id: any().optional().nullable(),
     applicantCode: string().min(1, { message: "Application code is required!" }),
@@ -13,11 +11,16 @@ const Model = object({
     phoneNumber: string().min(8).min(9),
     email: string().optional().nullable(),
     appliedPositionId: number().min(1, { message: "Position is required!" }),
+    appliedPositionName: string().optional().nullable(),
+    appliedPositionLevelId: number().min(1, { message: "Applied position level is required!" }),
+    appliedPositionLevelName: string().optional().nullable(),
     departmentId: number().min(1, {message: 'Department is required!'}),
-    headDepartmentId: number().min(1, {message: 'Head department ID is required!'}),
-    headDepartmentName: string().min(1,{message: 'Head department is required!'}),
-    businessDivisionId: number().min(1,{message: 'Business unit is required!'}),
-    appliedLocationId: number(),
+    departmentName: string().optional().nullable(),
+    headDepartmentId: number().min(1, {message: 'Head department ID is required!'}).default(101),
+    headDepartmentName: string().min(1,{message: 'Head department is required!'}).default('TEST'),
+    businessUnitId: number().min(1,{message: 'Primary business is required!'}),
+    businessUnitName: string().optional().nullable(),
+    // appliedLocationId: number(),
     appliedDate: string().min(1, { message: "Applied date is required!" }),
     receivedChannel: string().optional().nullable(),
     shortlistDate: string().optional().nullable(),
@@ -30,15 +33,12 @@ const Model = object({
     updatedAt: any().optional().nullable(),
     updatedBy: any().optional().nullable(),
     status: string().optional().nullable().default('Pending'),
-    receivedChannel: string().optional().nullable(),
+    receivedChannel: string().min(1, {message: 'Received from channel is required!'}),
     interviewDate: string().optional().nullable(),
-    file: any().default(null),
-    cvFile: any()
-        // .refine((files) => files?.[0]?.size > UPLOAD_MAX_FILE_SIZE, `Max image size is 5MB.`)
-        // .refine(
-        //     (files) => ACCET_FILE_UPLOAD.includes(files?.[0]?.type),
-        //     "Only .pdf formats are supported."
-        // )
+    //cvFile for preview
+    cvFile: any(),
+    //file for upload
+    file: any().default(null)
 });
 
 const List = {
