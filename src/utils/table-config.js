@@ -38,9 +38,6 @@ const tblCandidate = [
     {
         id: 'phoneNumber', label: 'Phone', sqlField: 'can.phone_number'
     },
-    // {
-    //     id: 'email', label: 'Email', sqlField: 'can.email'
-    // },
     {
         id: 'appliedPositionName', label: 'Apply Position', sqlField: 'pos.name'
     },
@@ -48,19 +45,23 @@ const tblCandidate = [
         id: 'departmentName', label: 'Department'
     },
     {
-        id: 'businessDivisionName', label: 'Primary Business', sqlField: 'pos.name'
+        id: 'businessUnitName', label: 'Primary Business', sqlField: 'pos.name'
     },
     {
-        id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
+        id: 'submitStatus', type: 'status', statusColor: {}, label: "Submit Status"
     },
-    // ...proof,
     {
         id: 'shortlistResult', type: 'status',
         statusColor: { Passed: 'green', Failed: 'red' },
         label: 'Shortlist Result'
     },
     {
-        id: 'status', type: 'status', statusColor: { Hired: 'Green', In_Assessment: 'MediumBlue', CV_Reviewed: 'DarkOrange', In_Interview: 'Maroon' }, label: 'Status'
+        id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
+    },
+    {
+        id: 'status', type: 'status',
+        statusColor: { Hired: 'Green', In_Assessment: 'MediumBlue', CV_Reviewed: 'DarkOrange', In_Interview: 'Maroon' },
+        label: 'Status'
     },
     {
         id: 'action', label: 'Actions',

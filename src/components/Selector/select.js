@@ -61,7 +61,6 @@ const SelectComponent = (props) => {
         else
             setDatas([]);
 
-        console.log(datas);
     }, [data])
 
     return (
