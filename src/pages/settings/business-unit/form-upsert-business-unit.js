@@ -57,8 +57,6 @@ const UpsertBusinessUnitForm = (props) => {
 
     useEffect(() => {
 
-        console.log('message >><<<<',message);
-
         if (!loading) {
 
             Swal.fire({

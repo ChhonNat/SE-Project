@@ -5,14 +5,16 @@ import { HTTP_STATUS } from "../constants/http_status";
 import { API_URL } from "../constants/api_url";
 import Swal from "sweetalert2";
 
+const reqHeaders =  {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'DeviceID': 'xxxxxxx'
+};
+
 //Create axios header config
 const axiosAPI = axios.create({
     baseURL: apiLink,
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'DeviceID': 'xxxxxxx'
-    },
+    headers: reqHeaders
 });
 
 //Intercepter request
@@ -23,7 +25,6 @@ await axiosAPI.interceptors.request.use((config) => {
     if (user?.token) {
         config.headers['Authorization'] = 'Bearer ' + user?.token;
     }
-
     return config;
 }, (err) => {
 
@@ -42,25 +43,38 @@ await axiosAPI.interceptors.response.use((res) => {
 
             originalRequest._retry = true
 
-            const reqNewToken = await refreshAccessToken();
-            const { status, data } = reqNewToken;
+            try {
+
+                const reqNewToken = await refreshAccessToken();
+                console.log('reqNewToken', reqNewToken);
+
+                const { status, data } = reqNewToken;
+
+                if (status === HTTP_STATUS.success) {
+                    const newToken = {
+                        userName: data?.data?.userName,
+                        token: data?.data?.accessToken,
+                        refreshToken: data?.data?.refreshToken,
+                        isError: false,
+                        errorMessage: '',
+                        isAuthenticated: true,
+                        date: Date().toString()
+                    }
 
 
-            if (status === HTTP_STATUS.success) {
-                const newToken = {
-                    userName: data?.data?.userName,
-                    token: data?.data?.accessToken,
-                    refreshToken: data?.data?.refreshToken,
-                    isError: false,
-                    errorMessage: '',
-                    isAuthenticated: true,
-                    date: Date().toString()
+                    localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(newToken));
+                    axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${newToken?.accessToken}`;
                 }
 
+            } catch (error) {
 
-                localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(newToken));
-                axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${newToken?.accessToken}`;
+                console.log('>>>>>>>>>>>>>>>>>>>>>>>>', error);
+
+                //Clear user from localstorage when refresh token expired 
+                localStorage.clear();
+                window.location.replace('/login');
             }
+
             return axiosAPI(originalRequest);
         }
 
@@ -86,16 +100,7 @@ const refreshAccessToken = async () => {
 
     const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
 
-    return await axios.post(apiLink + API_URL.auth.refreshAccessToken,
-        { refreshToken: user?.refreshToken },
-        {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'DeviceID': 'xxxxxxx'
-            },
-        }
-    );
+    return await axios.post(apiLink + API_URL.auth.refreshAccessToken,{ refreshToken: user?.refreshToken }, { headers: reqHeaders });
 };
 
 
