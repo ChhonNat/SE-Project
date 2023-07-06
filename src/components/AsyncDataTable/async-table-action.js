@@ -19,6 +19,7 @@ const AsyncTableAction = (props) => {
 
     const { useActions,
         onHandleEditEvent,
+        onHandleViewEvent,
         onHandleApproveCandidateEvent,
         onHandleReviewCandidateEvent,
         onHandleAssessmentCandidateEvent,
@@ -78,6 +79,15 @@ const AsyncTableAction = (props) => {
                     </Tooltip>
                 }
 
+                {useActions?.view &&
+                    <Tooltip title="View record">
+                        <Button variant="text" size="small" color="primary"
+                            onClick={onHandleViewEvent}>
+                            <VisibilityIcon />
+                        </Button>
+                    </Tooltip>
+                }
+
                 {/* Show button edit result */}
                 {useActions?.editResult &&
                     <Tooltip title="Edit shortlist result">
@@ -101,7 +111,7 @@ const AsyncTableAction = (props) => {
                 {/* Show button to delete the candidate */}
                 {useActions?.delete &&
                     <Tooltip title="Delete record">
-                        <Button variant="text" size="small" color="error"
+                        <Button variant="text" size="small" color="info"
                             onClick={() => setShowDeleteModal(true)}>
                             <DeleteOutlineOutlinedIcon />
                         </Button>
