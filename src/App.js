@@ -138,7 +138,7 @@ const App = () => {
       <Suspense fallback={<Loading />}>
         <Routes>
           {
-            PUBLIC_ROUTES && PUBLIC_ROUTES && PUBLIC_ROUTES.map((route, index) => (
+            PUBLIC_ROUTES && PUBLIC_ROUTES?.length && PUBLIC_ROUTES.map((route, index) => (
               <React.Fragment key={index}>
                 <Route path={route?.path} element={route?.component} />
               </React.Fragment>
