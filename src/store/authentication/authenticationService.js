@@ -33,22 +33,21 @@ export const userAuthentication = ({ username, password }) => {
 
       const response = await axios.post(`${apiLink}/api/v1/login`, postData, options)
         .then(function (result) {
-          const { data } = result;
-          const { message, success } = data;
-
-          if (!success) {
-            Swal.fire({
-              title: 'Login',
-              text: message,
-              icon: 'error',
-              confirmButtonText: 'OK',
-            });
-          }
 
           return result;
         })
         .catch((error) => {
-          console.log(error?.message);
+
+          const { data } = error?.response || {};
+          const { message } = data;
+
+          Swal.fire({
+            title: 'Login',
+            text: message,
+            icon: 'warning',
+            confirmButtonText: 'OK',
+          });
+
           return error;
         });
 
