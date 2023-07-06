@@ -7,7 +7,6 @@ import CandidateInviteFormModal from "./form-invite-candidate.modal";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 import { STATUS } from "../../constants/status";
 import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
-import axiosAPI from "../../services/http.service";
 
 
 const HomeCandidate = () => {
@@ -105,7 +104,10 @@ const HomeCandidate = () => {
             <CandidateFormModal
                 modalTitle="New Candidate"
                 openCandidateModal={openAddCandidateModal}
-                onCloseCandidateModal={() => setOpenAddCandidateModal(false)}
+                onCloseCandidateModal={() => {
+                    setEditCandidate({});
+                    setOpenAddCandidateModal(false)
+                }}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
