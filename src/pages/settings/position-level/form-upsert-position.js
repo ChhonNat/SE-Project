@@ -55,7 +55,6 @@ const UpsertPositionLavelForm = (props) => {
 
     const onError = (data) => {
         setIsSubmitForm(true);
-        console.log(data);
     }
 
 

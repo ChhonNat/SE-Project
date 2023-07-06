@@ -135,8 +135,6 @@ const UpsertUserForm = (props) => {
 
                         if (oldRoles?.length) {
 
-                            console.log('oldRoles', oldRoles);
-
                             oldRoles.forEach((ele) => {
 
                                 if (!ele?.id) {
