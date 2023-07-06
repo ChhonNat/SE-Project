@@ -87,7 +87,7 @@ const CandidateFormModal = (props) => {
 
         }
 
-    }, [candidate])
+    }, [candidate?.id])
 
     /**
      * Fetch position datas
