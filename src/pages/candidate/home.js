@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import CandidateFormModal from "./form-candidate.modal";
+import CandidateFormModal from "./upsert-candidate-form.modal";
 import CandidateInviteFormModal from "./form-invite-candidate.modal";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 import { STATUS } from "../../constants/status";
 import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
+import CandidateFormDetailModal from "./detail-candidate-form.modal";
 
 
 const HomeCandidate = () => {
@@ -15,11 +16,13 @@ const HomeCandidate = () => {
     const [isReload, setIsReload] = useState(false);
     const [openAddCandidateModal, setOpenAddCandidateModal] = useState(false);
     const [openEditCandidateModal, setOpenEditCandidateModal] = useState(false);
+    const [openCandidateDetailModal, setOpenCandidateDetailModal] = useState(false);
     const [openApproveCandidateModal, setOpenApproveCandidateModal] = useState(false);
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
     const [modalTitle, setModalTitle] = useState('');
     const [openStatusModal, setOpenStatusModal] = useState(false);
     const [editCandidate, setEditCandidate] = useState({});
+    const [detailCandidate, setDetailCandidate] = useState({});
 
     // Handle click each candidate to update the info
     const handleEditCandidate = (candidate) => {
@@ -71,6 +74,7 @@ const HomeCandidate = () => {
                         create: true,
                         delete: false,
                         edit: true,
+                        view: true,
                         // editResult: true,
                         // editStatus: true,
                         approveCandidate: [
@@ -88,6 +92,10 @@ const HomeCandidate = () => {
                 onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
                 handleApproveEvent={(data) => handleShortlistCandidate(data)}
                 handleEditEvent={(data) => handleEditCandidate(data)}
+                handleViewEvent={(data) => {
+                    setDetailCandidate(data);
+                    setOpenCandidateDetailModal(true);
+                }}
                 handleReviewEvent={(data) => handleEditCandidate(data)}
                 handleLinkEvent={(data) => handleReviewCandidate(data)}
                 handleResultEvent={(data) => {
@@ -119,6 +127,14 @@ const HomeCandidate = () => {
                 onCloseCandidateModal={() => setOpenEditCandidateModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
+
+             {/* View candiate detail */}
+             <CandidateFormDetailModal 
+                candidate={detailCandidate}
+                openCandidateModal={openCandidateDetailModal}
+                onCloseCandidateModal={() => setOpenCandidateDetailModal(false)}
+             />
+            
 
             {/* Approve candidate form */}
             <CandidateInviteFormModal

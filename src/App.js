@@ -37,7 +37,8 @@ const App = () => {
     } else {
       
       user?.isAuthenticated ? navigate(pathname) : navigate('/login');
-    }
+    };
+
   }, [user])
 
   /**

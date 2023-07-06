@@ -34,6 +34,7 @@ const AsyncDatatable = (props) => {
     handleReviewEvent,
     handleAssessmentEvent,
     handleEditEvent,
+    handleViewEvent,
     handleLinkEvent,
     handleStatusEvent,
     handleResultEvent,
@@ -237,6 +238,7 @@ const AsyncDatatable = (props) => {
                     actions={useTableActions}
                     handleApproveEvent={(record) => handleApproveEvent(record)}
                     handleEditEvent={(record) => handleEditEvent(record)}
+                    handleViewEvent={(record) => handleViewEvent(record)}
                     handleReviewEvent={(record) => handleReviewEvent(record)}
                     handleAssessmentEvent={(record) => handleAssessmentEvent(record)}
                     handleLinkEvent={(record) => handleLinkEvent(record)}
