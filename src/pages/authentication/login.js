@@ -3,16 +3,19 @@ import '../../App.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Container } from '@mui/material';
+import { Container, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { isLogin, userAuthentication } from '../../store/authentication/authenticationService';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../logo/login.png';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 export default function Login() {
 
   const dispatch = useDispatch();
+
+  const [showPwd, setShowPwd] = useState(false);
 
   /**
    * username: developer
@@ -69,14 +72,31 @@ export default function Login() {
             </Grid>
 
             <Grid item xs={12}>
-              <TextField
-                type="password"
+              <FormControl
                 sx={{ width: '100%', paddingBottom: 3 }}
-                onChange={(event) => setPassword(event.target.value)}
-                value={password}
-                label="Password"
-                variant="outlined"
-              />
+              >
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <OutlinedInput
+                  id="password"
+                  label="password"
+                  type={showPwd ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle pwd visibility"
+                        onClick={() => setShowPwd(!showPwd)}
+                        onMouseDown={(e) => e.preventDefault()}
+                        edge="end"
+                        disabled={!password}
+                      >
+                        {showPwd ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  onChange={(event) => setPassword(event.target.value)}
+                  value={password}
+                />
+              </FormControl>
             </Grid>
 
           </Grid>
@@ -84,9 +104,10 @@ export default function Login() {
           <hr />
           <Grid xs={12}>
             <Button
+              type="submit"
               className="btn-submit"
               variant="contained"
-              color="success"
+              color="info"
               onClick={login}
               disabled={!username || !password}
             >
