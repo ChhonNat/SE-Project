@@ -59,7 +59,7 @@ const EnhancedTableHead = (props) => {
                     return (                        
                         <StyledTableCell
                             key={uuid()}
-                            align={headCell?.align || "start"}
+                            align={headCell?.align || "left"}
                             padding={headCell.disablePadding ? 'none' : 'normal'}
                             sortDirection={orderBy === headCell.id ? order : false}
                             sx={{ '&.MuiTableCell-root': { display: visible ? 'table-cell' : 'none' } }}

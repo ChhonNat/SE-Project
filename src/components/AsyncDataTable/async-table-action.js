@@ -1,15 +1,17 @@
-import { Button, ButtonGroup, Slide } from "@mui/material";
+import { Button, ButtonGroup, IconButton, Slide } from "@mui/material";
 import React, { forwardRef, useState } from "react";
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
-import PreviewIcon from '@mui/icons-material/Preview';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DoneOutlineSharpIcon from '@mui/icons-material/DoneOutlineSharp';
 import ConfirmModal from "../Modal/confirm-delete";
 import Tooltip from '@mui/material/Tooltip';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -17,17 +19,21 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const AsyncTableAction = (props) => {
 
-    const { useActions,
+    const {
+        useActions,
         onHandleEditEvent,
         onHandleViewEvent,
+        onHandleMoreEvent,
         onHandleApproveCandidateEvent,
         onHandleReviewCandidateEvent,
         onHandleAssessmentCandidateEvent,
         onHandleEditResult,
         onHandleEditStatus
     } = props;
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showMoreOptionAnchor, setShowMoreOptionAnchor] = useState(false);
+    const openMoreOption = Boolean(showMoreOptionAnchor);
     return (
         <>
             {/* All button actions */}
@@ -36,6 +42,25 @@ const AsyncTableAction = (props) => {
                 variant="contained"
                 aria-label="Disabled elevation buttons"
             >
+
+                {useActions?.view &&
+                    <Tooltip title="View record">
+                        <Button variant="text" size="small" color="primary"
+                            onClick={onHandleViewEvent}>
+                            <VisibilityIcon />
+                        </Button>
+                    </Tooltip>
+                }
+
+                {/* Show button edit the candidate */}
+                {useActions?.edit &&
+                    <Tooltip title="Edit record">
+                        <Button variant="text" size="small" color="inherit"
+                            onClick={onHandleEditEvent}>
+                            <DriveFileRenameOutlineOutlinedIcon />
+                        </Button>
+                    </Tooltip>
+                }
 
                 {/* Show button approve candidate when the candidate passed the shortlist */}
                 {useActions?.approveCandidate &&
@@ -69,25 +94,6 @@ const AsyncTableAction = (props) => {
                     </Tooltip>
                 }
 
-                {/* Show button edit the candidate */}
-                {useActions?.edit &&
-                    <Tooltip title="Edit record">
-                        <Button variant="text" size="small" color="inherit"
-                            onClick={onHandleEditEvent}>
-                            <DriveFileRenameOutlineOutlinedIcon />
-                        </Button>
-                    </Tooltip>
-                }
-
-                {useActions?.view &&
-                    <Tooltip title="View record">
-                        <Button variant="text" size="small" color="primary"
-                            onClick={onHandleViewEvent}>
-                            <VisibilityIcon />
-                        </Button>
-                    </Tooltip>
-                }
-
                 {/* Show button edit result */}
                 {useActions?.editResult &&
                     <Tooltip title="Edit shortlist result">
@@ -116,6 +122,52 @@ const AsyncTableAction = (props) => {
                             <DeleteOutlineOutlinedIcon />
                         </Button>
                     </Tooltip>
+                }
+
+                {/* More options */}
+                {
+                    useActions?.moreOption?.buttons?.length &&
+                    <>
+                        <IconButton
+                            aria-label="more-option"
+                            size="medium"
+                            aria-controls={openMoreOption ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={openMoreOption ? 'true' : undefined}
+                            onClick={(e) => setShowMoreOptionAnchor(e?.currentTarget)}
+                        >
+                            <MoreVertOutlinedIcon />
+                        </IconButton>
+                        <Menu
+                            id="menu"
+                            anchorEl={showMoreOptionAnchor}
+                            open={openMoreOption}
+                            onClose={() => setShowMoreOptionAnchor(null)}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            {
+                                useActions?.moreOption?.buttons?.length && useActions?.moreOption?.buttons.map((button, index) => (
+                                    <MenuItem
+                                        key={index}
+                                        onClick={() => onHandleMoreEvent(button?.eventName || '')}
+                                        disabled={!button?.enable}
+                                    >
+                                        {
+                                            button?.icon &&
+                                            <IconButton size="medium">
+                                                {button?.icon}
+                                            </IconButton>
+                                        }
+                                        {button?.name}
+                                    </MenuItem>
+                                ))
+                            }
+
+                        </Menu>
+                    </>
+
                 }
 
             </ButtonGroup>

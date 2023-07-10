@@ -29,13 +29,14 @@ const AsyncDatatable = (props) => {
     asyncURL,
     headers,
     isReloadData = false,
+    handleViewEvent,
+    handleEditEvent,
+    handleLinkEvent,
+    handleMoreEvent,
     onHandleAddNewEvent,
     handleApproveEvent,
     handleReviewEvent,
     handleAssessmentEvent,
-    handleEditEvent,
-    handleViewEvent,
-    handleLinkEvent,
     handleStatusEvent,
     handleResultEvent,
     useTableActions
@@ -151,11 +152,6 @@ const AsyncDatatable = (props) => {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  useEffect(() => {
-
-    console.log(message);
-  }, [message])
-
   return (
     <Box
       sx={{
@@ -190,7 +186,6 @@ const AsyncDatatable = (props) => {
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
-            // aria-labelledby="tableTitle"
             aria-labelledby="sticky table"
             size={dense ? 'small' : 'medium'}
           >
@@ -236,12 +231,13 @@ const AsyncDatatable = (props) => {
                     checkColumn={checkColumn}
                     pageSize={rowsPerPage}
                     actions={useTableActions}
-                    handleApproveEvent={(record) => handleApproveEvent(record)}
-                    handleEditEvent={(record) => handleEditEvent(record)}
                     handleViewEvent={(record) => handleViewEvent(record)}
+                    handleEditEvent={(record) => handleEditEvent(record)}
+                    handleLinkEvent={(record) => handleLinkEvent(record)}
+                    handleMoreEvent={(eName, record) => handleMoreEvent(eName, record)}
+                    handleApproveEvent={(record) => handleApproveEvent(record)}
                     handleReviewEvent={(record) => handleReviewEvent(record)}
                     handleAssessmentEvent={(record) => handleAssessmentEvent(record)}
-                    handleLinkEvent={(record) => handleLinkEvent(record)}
                     handleStatusEvent={(key, record) => handleStatusEvent(key, record)}
                     handleResultEvent={(key, record) => handleResultEvent(key, record)}
                   />

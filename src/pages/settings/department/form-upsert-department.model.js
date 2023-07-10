@@ -32,10 +32,6 @@ const UpsertDepartmentForm = (props) => {
     const watchData = watch();
     const { errors } = formState;
 
-    // const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
-    // const [isSubmitForm, setIsSubmitForm] = useState(false);
-    // const formatKeys = ['businessDivisions'];
-
     useEffect(() => {
 
         if (editData?.id) {
@@ -44,8 +40,6 @@ const UpsertDepartmentForm = (props) => {
                 setValue(key, editData[key])
             }
         }
-
-        // fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
 
     }, [openModal])
 
@@ -70,23 +64,6 @@ const UpsertDepartmentForm = (props) => {
 
     }, [data, error, loading, message]);
 
-
-    // const fetchData = useCallback(async (asyncUrl, setData) => {
-    //     try {
-
-    //         const reqData = await globalService.getData(asyncUrl);
-    //         const { status, data } = reqData;
-    //         const { success } = data;
-
-    //         if (status === HTTP_STATUS.success) {
-    //             success ? setData(data?.data) : setData([]);
-    //         }
-
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }, [])
-
     const onError = (data) => {
         console.log(data);
         if(data?.businessUnitId)
@@ -103,34 +80,6 @@ const UpsertDepartmentForm = (props) => {
                 postData[key] = data[key];
 
             } else {
-
-                // if (formatKeys.includes(key)) {
-
-                //     const oldBusinessDivisions = [...editData?.businessDivisions];
-                //     const mapBusinessDivision = {};
-
-                //     if (oldBusinessDivisions?.length) {
-
-                //         oldBusinessDivisions.forEach((ele) => {
-
-                //             if (!ele?.id) {
-                //                 mapBusinessDivision = {}
-                //             }
-
-                //             mapBusinessDivision[ele?.id] = ele;
-
-                //         })
-                //     }
-
-                //     data[key] = data[key].map((ele) => {
-
-                //         const isObject = typeof ele === 'object';
-                //         return isObject ?
-                //             { id: ele?.id, recId: ele?.recId } :
-                //             { id: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.id : ele, recId: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.recId : 0 }
-                //     })
-
-                // }
 
                 postData[key] = data[key];
 

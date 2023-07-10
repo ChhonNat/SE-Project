@@ -5,7 +5,7 @@ import { HTTP_STATUS } from "../constants/http_status";
 import { API_URL } from "../constants/api_url";
 import Swal from "sweetalert2";
 
-const reqHeaders =  {
+const reqHeaders = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     'DeviceID': 'xxxxxxx'
@@ -46,7 +46,6 @@ await axiosAPI.interceptors.response.use((res) => {
             try {
 
                 const reqNewToken = await refreshAccessToken();
-                console.log('reqNewToken', reqNewToken);
 
                 const { status, data } = reqNewToken;
 
@@ -67,8 +66,6 @@ await axiosAPI.interceptors.response.use((res) => {
                 }
 
             } catch (error) {
-
-                console.log('>>>>>>>>>>>>>>>>>>>>>>>>', error);
 
                 //Clear user from localstorage when refresh token expired 
                 localStorage.clear();
@@ -93,14 +90,14 @@ await axiosAPI.interceptors.response.use((res) => {
 
         return Promise.reject(err);
 
-    });
+});
 
 //Token refresh token
 const refreshAccessToken = async () => {
 
     const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
 
-    return await axios.post(apiLink + API_URL.auth.refreshAccessToken,{ refreshToken: user?.refreshToken }, { headers: reqHeaders });
+    return await axios.post(apiLink + API_URL.auth.refreshAccessToken, { refreshToken: user?.refreshToken }, { headers: reqHeaders });
 };
 
 

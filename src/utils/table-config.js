@@ -48,15 +48,23 @@ const tblCandidate = [
         id: 'businessUnitName', label: 'Primary Business', sqlField: 'pos.name'
     },
     {
-        id: 'submitStatus', type: 'status', statusColor: {}, label: "Submit Status"
-    },
-    {
-        id: 'shortlistResult', type: 'status',
-        statusColor: { Passed: 'green', Failed: 'red' },
-        label: 'Shortlist Result'
-    },
-    {
         id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
+    },
+    {
+        id: 'shortlistResult', label: 'Shortlist Result'
+    },
+    {
+        id: 'submitStatus', 
+        type: 'status', 
+        statusColor: {
+            Waiting: 'Orange',
+            Submitted_OFCCEO: 'DarkOrange',
+            Sent_TA_Team: 'DarkBlue',
+            Submitted_HOD: 'lightGreen',
+            OFCCEO_Rejected: 'Red',
+            OFCCEO_Verified: 'Green'
+        }, 
+        label: "Submit Status"
     },
     {
         id: 'status', type: 'status',

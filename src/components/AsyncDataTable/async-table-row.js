@@ -25,13 +25,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const TableRows = ({
     displayRecords,
     isSelected,
+    handleViewEvent,
+    handleEditEvent,
+    handleMoreEvent,
+    handleLinkEvent,
+
     handleClick,
     handleApproveEvent,
     handleReviewEvent,
     handleAssessmentEvent,
-    handleEditEvent,
-    handleViewEvent,
-    handleLinkEvent,
     handleResultEvent,
     handleStatusEvent,
     headers,
@@ -118,14 +120,32 @@ const TableRows = ({
                          */
 
                         const isArray = Array.isArray(row[head?.id]);
+
                         const arrayValue = isArray && row[head?.id]?.length ?
                             row[head?.id].map(function (ele) {
                                 return ele[head?.arrayId] || ele;
                             }) : [];
 
-
                         /**Map button action with the condidtion */
                         const buttonAction = {
+
+                            view: actions?.view ? (typeof actions?.view === 'boolean' ?
+                                actions?.view :
+                                checkButtonAction(row, actions?.view)
+                            )
+                                :
+                                false,
+                            edit: actions?.edit ?
+                                (
+                                    typeof actions?.edit === 'boolean' ?
+                                        actions?.edit :
+                                        checkButtonAction(row, actions?.edit))
+                                :
+                                false,
+                            delete: actions?.delete ?
+                                (typeof actions?.delete === 'boolean' ? actions?.delete : actions?.delete?.condition[row[actions?.delete?.field]])
+                                :
+                                false,
                             approveCandidate: actions?.approveCandidate ?
                                 (
                                     typeof actions?.approveCandidate === 'boolean' ?
@@ -147,23 +167,6 @@ const TableRows = ({
                                 (typeof actions?.create === 'boolean' ? actions?.create : actions?.create?.condition[row[actions?.create?.field]])
                                 :
                                 false,
-                            edit: actions?.edit ?
-                                (
-                                    typeof actions?.edit === 'boolean' ?
-                                        actions?.edit :
-                                        checkButtonAction(row, actions?.edit))
-                                :
-                                false,
-                            view: actions?.view ? (typeof actions?.view === 'boolean' ?
-                                actions?.view :
-                                checkButtonAction(row, actions?.view)
-                            )
-                                :
-                                false,
-                            delete: actions?.delete ?
-                                (typeof actions?.delete === 'boolean' ? actions?.delete : actions?.delete?.condition[row[actions?.delete?.field]])
-                                :
-                                false,
                             passedInterview: actions?.passedInterview ?
                                 (typeof actions?.passedInterview === 'boolean' ?
                                     actions?.passedInterview :
@@ -183,8 +186,22 @@ const TableRows = ({
                             )
                                 :
                                 false,
-
+                            moreOption: actions?.moreOption,
                         };
+
+                        // if (buttonAction?.moreOption?.buttons?.length) {
+
+                        //     buttonAction?.moreOption.buttons.forEach((button) => {
+
+                        //         const { visibility } = button;
+
+                        //         if (visibility?.length) {
+                        //             console.log(checkButtonAction(row, visibility));
+                        //             button.enable = checkButtonAction(row, visibility);
+                        //         }
+
+                        //     })
+                        // }
 
                         const visible = head.visible !== undefined ? head.visible : true;
 
@@ -257,11 +274,13 @@ const TableRows = ({
                                         {/* Custom button actions */}
                                         {isAction &&
                                             <AsyncTableAction
+                                                onHandleViewEvent={() => handleViewEvent(row)}
+                                                onHandleEditEvent={() => handleEditEvent(row)}
+                                                onHandleMoreEvent={(eventName) => handleMoreEvent(eventName, row)}
+
                                                 onHandleApproveCandidateEvent={() => handleApproveEvent(row)}
                                                 onHandleReviewCandidateEvent={() => handleReviewEvent(row)}
                                                 onHandleAssessmentCandidateEvent={() => handleAssessmentEvent(row)}
-                                                onHandleEditEvent={() => handleEditEvent(row)}
-                                                onHandleViewEvent={() => handleViewEvent(row)}
                                                 onHandleEditResult={() => handleResultEvent(row)}
                                                 onHandleEditStatus={() => handleStatusEvent(row)}
                                                 useActions={buttonAction}
