@@ -178,12 +178,12 @@ export const PRIVATE_ROUTES = [
             },
 
             /**Sub Business */
-            {
-                name: "Secondary Businesses",
-                path: "sub-business",
-                component: <Settings.subBusinessUnit.home />,
-                icon: <CorporateFareIcon />
-            },
+            // {
+            //     name: "Secondary Businesses",
+            //     path: "sub-business",
+            //     component: <Settings.subBusinessUnit.home />,
+            //     icon: <CorporateFareIcon />
+            // },
 
             /**Department */
             {

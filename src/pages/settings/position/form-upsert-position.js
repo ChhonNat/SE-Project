@@ -33,8 +33,6 @@ const UpsertPositionForm = (props) => {
 
     const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
     const [listPositionLevels, setListPositionLevels] = useState([]);
-    // const [isSubmitForm, setIsSubmitForm] = useState(false);
-    // const formatKeys = ['businessDivisions'];
 
     useEffect(() => {
 
@@ -68,34 +66,6 @@ const UpsertPositionForm = (props) => {
                 postData[key] = data[key];
 
             } else {
-
-                // if (formatKeys.includes(key)) {
-
-                //     const oldBusinessDivisions = [...editData?.businessDivisions];
-                //     const mapBusinessDivision = {};
-
-                //     if (oldBusinessDivisions?.length) {
-
-                //         oldBusinessDivisions.forEach((ele) => {
-
-                //             if (!ele?.id) {
-                //                 mapBusinessDivision = {}
-                //             }
-
-                //             mapBusinessDivision[ele?.id] = ele;
-
-                //         })
-                //     }
-
-                //     data[key] = data[key].map((ele) => {
-
-                //         const isObject = typeof ele === 'object';
-                //         return isObject ?
-                //             { id: ele?.id, recId: ele?.recId } :
-                //             { id: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.id : ele, recId: mapBusinessDivision[ele] ? mapBusinessDivision[ele]?.recId : 0 }
-                //     })
-
-                // }
 
                 postData[key] = data[key];
             }

@@ -23,7 +23,7 @@ const AsyncAutoComplete = (props) => {
     returnValueAs
   } = props;
 
-  const { data, loading, error, sendRequest } = _useHttp();
+  const { data, loading, error, message, sendRequest } = _useHttp();
   const [options, setOptions] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectValue, setSelectValue] = useState({});
@@ -44,8 +44,10 @@ const AsyncAutoComplete = (props) => {
   }, [callToApi])
 
   useEffect(() => {
-    data?.length ? setOptions(data) : setOptions([]);
-  }, [data])
+    if (!loading) {
+      data?.length ? setOptions(data) : setOptions([]);
+    }
+  }, [loading, data, error, message])
 
 
   /**
@@ -79,7 +81,7 @@ const AsyncAutoComplete = (props) => {
    * Check option label
    */
   const checkOptionLabel = () => {
-      
+
   }
 
   /**
@@ -134,7 +136,7 @@ const AsyncAutoComplete = (props) => {
                 </>
               ),
             }}
-            helperText={err && !value &&<span style={{ color: err && !value ? '#d32f2f' : '' }}>{err}</span>}
+            helperText={err && !value && <span style={{ color: err && !value ? '#d32f2f' : '' }}>{err}</span>}
           />
         )}
       />

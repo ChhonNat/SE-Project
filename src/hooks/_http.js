@@ -18,12 +18,14 @@ const _httpReducer = (httpState, action) => {
                 ...httpState,
                 loading: false,
                 data: action.data,
+                message: action?.message
             };
         case 'ERROR':
             return {
                 loading: false,
                 error: action.error,
                 data: [],
+                // message: action?.message
             };
         default:
             throw new Error('Should not get there!');
@@ -36,6 +38,7 @@ const _useHttp = () => {
         loading: true,
         error: null,
         data: null,
+        data1: null,
         message: null
     });
 
@@ -54,16 +57,17 @@ const _useHttp = () => {
                 .then(function (result) {
 
                     const { data, success, message } = result?.data;
-                    data.message = message;
+                    // data.message = message;
 
+                    // if response success return message, if error return error
                     success ?
-                        dispatchHttp({ type: 'RESPONSE', data }) :
-                        dispatchHttp({ type: 'ERROR', error: message });
+                        dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success' }) :
+                        dispatchHttp({ type: 'ERROR', error: message || 'Error' });
                 })
                 .catch((error) => {
 
-                    const { message } = error || '';
-                    dispatchHttp({ type: 'ERROR', message: message });
+                    console.log('Get error>>>>',error);
+                    dispatchHttp({ type: 'ERROR', error: error?.message || 'Error' });
                 });
         }
 
@@ -77,15 +81,18 @@ const _useHttp = () => {
 
                     const { data, success, message } = result?.data;
                     data.message = message;
+                    // data.status = success;
 
+                    // if response success return message, if error return error
                     success ?
-                        dispatchHttp({ type: 'RESPONSE', data }) :
-                        dispatchHttp({ type: 'ERROR', error: message });
+                        dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success' }) :
+                        dispatchHttp({ type: 'ERROR', error: message || 'Error' });
+
                 })
                 .catch((error) => {
 
-                    const { message } = error || '';
-                    dispatchHttp({ type: 'ERROR', message: message });
+                    console.log('put error >>>>>', error);
+                    dispatchHttp({ type: 'ERROR', error: error?.message || 'Error' });
                 });
         }
 
@@ -98,16 +105,16 @@ const _useHttp = () => {
                 .then(function (result) {
 
                     const { data, success, message } = result?.data;
-                    data.message =  message;
 
+                    // if response success return message, if error return error
                     success ?
-                        dispatchHttp({ type: 'RESPONSE', data }) :
-                        dispatchHttp({ type: 'ERROR', error: message });
+                        dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success'}) :
+                        dispatchHttp({ type: 'ERROR', error: message || 'Error' });
                 })
                 .catch((error) => {
 
-                    const { message } = error || '';
-                    dispatchHttp({ type: 'ERROR', message: message });
+                    console.log('put error >>>>>', error);
+                    dispatchHttp({ type: 'ERROR', error: error?.message || 'Error' });
                 });
         }
 
@@ -118,7 +125,7 @@ const _useHttp = () => {
         loading: httpState?.loading,
         data: httpState?.data,
         error: httpState?.error,
-        message: httpState?.data?.message,
+        message: httpState?.message,
         sendRequest,
     };
 };

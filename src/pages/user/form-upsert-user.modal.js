@@ -340,7 +340,7 @@ const UpsertUserForm = (props) => {
                                 size="small"
                                 error={errors?.username}
                                 helperText={errors?.username?.message}
-                                disabled={user?.id}
+                                // disabled={user?.id}
                             />
                         </Grid>
                         <Grid item xs={12}>

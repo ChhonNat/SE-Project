@@ -24,6 +24,7 @@ export const API_URL = {
         editAssessment: API_VERSION + '/assessments/',
         hire: API_VERSION + '/assessments/',
         downloadCVFile: API_VERSION + '/candidates/download?id=',
+        sumitToOFFCEO: API_VERSION + '/candidates/',
 
         lookup: {
             get: API_VERSION + '/candidates/lookup-data'

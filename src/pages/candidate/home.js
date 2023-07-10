@@ -8,21 +8,46 @@ import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 import { STATUS } from "../../constants/status";
 import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
 import CandidateFormDetailModal from "./detail-candidate-form.modal";
-
+import { HowToRegOutlined } from "@mui/icons-material";
+import SendIcon from '@mui/icons-material/Send';
+import CandidateVerifyForm from "./verify-candidate-form.modal";
+import SendTimeExtensionIcon from '@mui/icons-material/SendTimeExtension';
+import CheckIcon from '@mui/icons-material/Check';
 
 const HomeCandidate = () => {
 
     const [selectedData, setSelectedData] = useState({ open: false, row: {} });
     const [isReload, setIsReload] = useState(false);
+
+    const [editCandidate, setEditCandidate] = useState({});
+    const [detailCandidate, setDetailCandidate] = useState({});
+
+    const [modalTitle, setModalTitle] = useState('');
+
     const [openAddCandidateModal, setOpenAddCandidateModal] = useState(false);
     const [openEditCandidateModal, setOpenEditCandidateModal] = useState(false);
     const [openCandidateDetailModal, setOpenCandidateDetailModal] = useState(false);
     const [openApproveCandidateModal, setOpenApproveCandidateModal] = useState(false);
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
-    const [modalTitle, setModalTitle] = useState('');
     const [openStatusModal, setOpenStatusModal] = useState(false);
-    const [editCandidate, setEditCandidate] = useState({});
-    const [detailCandidate, setDetailCandidate] = useState({});
+    const [openVerifyModal, setOpenVerifyModal] = useState(false);
+    const [verifyTypeModal, setVerifyTypeModal] = useState('');
+
+
+    const mapMoreButtonEventName = {
+        "submitToOFFCEO": {
+            handleAction: () => setOpenVerifyModal(true)
+        },
+        "verifyByOFFCEO": {
+            handleAction: () => setOpenVerifyModal(true)
+        },
+        "submitToTA": {
+            handleAction: () => setOpenVerifyModal(true)
+        },
+        "submitToHOD": {
+            handleAction: () => setOpenVerifyModal(true)
+        }
+    };
 
     // Handle click each candidate to update the info
     const handleEditCandidate = (candidate) => {
@@ -70,34 +95,84 @@ const HomeCandidate = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={
                     {
+                        //Actions Tool bar table
                         search: true,
                         create: true,
-                        delete: false,
-                        edit: true,
+
+                        //action each table rows
                         view: true,
-                        // editResult: true,
-                        // editStatus: true,
-                        approveCandidate: [
-                            {
-                                field: 'shortlistResult',
-                                values: [STATUS.SHORTLIST_RESULT.PASSED]
-                            },
-                            {
-                                field: 'status',
-                                values: [STATUS.CANDIDATE.CV_REVIEWED]
-                            }
-                        ],
+                        edit: true,
+                        delete: false,
+                        moreOption: {
+                            buttons: [
+                                {
+                                    name: 'Submit To OFFCEO',
+                                    eventName: 'submitToOFFCEO',
+                                    icon: <SendIcon color="info" />,
+                                    enable: true
+                                    // visibility: [
+                                    //     {
+                                    //         field: 'shortlistResult',
+                                    //         values: [STATUS.SHORTLIST_RESULT.PASSED]
+                                    //     },
+                                    //     {
+                                    //         field: 'status',
+                                    //         values: [STATUS.CANDIDATE.CV_REVIEWED]
+                                    //     },
+                                    // ],
+                                },
+                                {
+                                    name: 'Verify By OFFCEO',
+                                    eventName: 'verifyByOFFCEO',
+                                    icon: <HowToRegOutlined color="success" />,
+                                    enable: true
+                                },
+                                {
+                                    name: 'Submit To TA',
+                                    eventName: 'submitToTA',
+                                    icon: <SendTimeExtensionIcon color="info" />,
+                                    enable: true
+                                },
+                                {
+                                    name: 'Submit To HOD',
+                                    eventName: 'submitToHOD',
+                                    icon: <CheckIcon />,
+                                    enable: true
+                                }
+                            ]
+                        },
+                        // approveCandidate: [
+                        //     {
+                        //         field: 'shortlistResult',
+                        //         values: [STATUS.SHORTLIST_RESULT.PASSED]
+                        //     },
+                        //     {
+                        //         field: 'status',
+                        //         values: [STATUS.CANDIDATE.CV_REVIEWED]
+                        //     }
+                        // ],
                     }
                 }
+
                 onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
-                handleApproveEvent={(data) => handleShortlistCandidate(data)}
-                handleEditEvent={(data) => handleEditCandidate(data)}
+
                 handleViewEvent={(data) => {
                     setDetailCandidate(data);
                     setOpenCandidateDetailModal(true);
                 }}
-                handleReviewEvent={(data) => handleEditCandidate(data)}
+                handleEditEvent={(data) => handleEditCandidate(data)}
                 handleLinkEvent={(data) => handleReviewCandidate(data)}
+                handleMoreEvent={(eName, data) => {
+                    if (!eName)
+                        return false;
+
+                    setEditCandidate(data);
+                    setVerifyTypeModal(eName);
+                    mapMoreButtonEventName[eName].handleAction();
+                }}
+
+                handleApproveEvent={(data) => handleShortlistCandidate(data)}
+                handleReviewEvent={(data) => handleEditCandidate(data)}
                 handleResultEvent={(data) => {
                     setModalTitle('Edit shortlist result');
                     setOpenStatusModal(true);
@@ -128,13 +203,13 @@ const HomeCandidate = () => {
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
-             {/* View candiate detail */}
-             <CandidateFormDetailModal 
+            {/* View candiate detail */}
+            <CandidateFormDetailModal
                 candidate={detailCandidate}
                 openCandidateModal={openCandidateDetailModal}
                 onCloseCandidateModal={() => setOpenCandidateDetailModal(false)}
-             />
-            
+            />
+
 
             {/* Approve candidate form */}
             <CandidateInviteFormModal
@@ -152,10 +227,21 @@ const HomeCandidate = () => {
                 onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
             />
 
+            {/* Update candidate status */}
             <CandidateStatusFormModal
                 title={modalTitle}
+                candidate={editCandidate}
                 open={openStatusModal}
                 onCloseModal={() => setOpenStatusModal(false)}
+            />
+
+            {/* Update candidate submit */}
+            <CandidateVerifyForm
+                eventType={verifyTypeModal}
+                candidate={editCandidate}
+                open={openVerifyModal}
+                onCloseModal={() => setOpenVerifyModal(false)}
+                handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
         </>

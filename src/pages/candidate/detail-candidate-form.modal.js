@@ -49,9 +49,6 @@ const CandidateFormDetailModal = (props) => {
         return a.ranking - b.ranking;
     })
 
-    console.log('ordering', ordering);
-
-
     return (
         <div>
             <Dialog
