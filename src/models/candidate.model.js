@@ -1,9 +1,10 @@
 import { string, object, any, number, date } from 'zod';
 const UPLOAD_MAX_FILE_SIZE = 500000;
 const ACCET_FILE_UPLOAD = ['image/pdf'];
+
 const Model = object({
     id: any().optional().nullable(),
-    applicantCode: string().min(1, { message: "Application code is required!" }),
+    applicantCode: any().optional(),
     firstName: string().min(1, { message: "First name is required!" }),
     lastName: string().min(1, { message: "Last name is required!" }),
     fullName: string().optional().nullable(),
@@ -20,7 +21,6 @@ const Model = object({
     headDepartmentName: string().min(1,{message: 'Head department is required!'}).default('TEST'),
     businessUnitId: number().min(1,{message: 'Primary business is required!'}),
     businessUnitName: string().optional().nullable(),
-    // appliedLocationId: number(),
     appliedDate: string().min(1, { message: "Applied date is required!" }),
     receivedChannel: string().optional().nullable(),
     shortlistDate: string().optional().nullable(),
@@ -41,17 +41,17 @@ const Model = object({
     file: any().default(null)
 });
 
-const List = {
+const List = Object({
     ...Model,
-};
+});
 
-const Create = {
+const Create = Object({
     ...Model,
-};
+});
 
-const Update = {
+const Update = Object({
     ...Model,
-};
+});
 
 
 export const CandidateModel = {

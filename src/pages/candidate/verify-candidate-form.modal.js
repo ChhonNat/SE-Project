@@ -37,7 +37,7 @@ const CandidateVerifyForm = (props) => {
             title: "Are you sure?",
             subTitle: "You want to verify this candidate.",
             actions: {
-                submitLabel: 'Approve',
+                submitLabel: 'Verify',
                 submitStatus: 'OFCCEO_Verified',
                 rejectStatus: 'OFCCEO_Rejected',
                 reject: true
@@ -66,7 +66,7 @@ const CandidateVerifyForm = (props) => {
     const handleSubmit = async (status) => {
 
         const postData = {
-            submitStatus: status ,
+            submitStatus: status,
             remark: remark,
         };
 
