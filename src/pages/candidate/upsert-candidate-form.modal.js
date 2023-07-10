@@ -46,7 +46,7 @@ const CandidateFormModal = (props) => {
 
     const { openCandidateModal, onCloseCandidateModal, modalTitle, candidate, handleEventSuccessed } = props;
     const { register, handleSubmit, formState, setValue, watch, reset, clearErrors, setError } = useForm({
-        resolver: zodResolver(CandidateModel.Create)
+        resolver: zodResolver(candidate?.id ? CandidateModel.Create : CandidateModel?.Update)
     });
     const watchCandidate = watch();
     const { errors } = formState;
@@ -61,33 +61,6 @@ const CandidateFormModal = (props) => {
 
     const [headDepartment, setHeadDepartment] = useState('');
     const [openCVModal, setOpenCVModal] = useState(false);
-
-    /**
-     * Form use for edit data
-     * Add existed candidate data to form
-     */
-    useEffect(() => {
-
-        if (candidate?.id) {
-
-            for (let key in candidate) {
-
-                if (KEY_POST.view_candidate.includes(key)) {
-
-                    if (key === 'appliedDate') {
-
-                        const appliedDate = ConverterService.convertUnixDateToMUI(candidate[key]);
-                        setValue(key, appliedDate);
-
-                    } else {
-                        setValue(key, candidate[key]);
-                    }
-                }
-            }
-
-        }
-
-    }, [candidate?.id])
 
     /**
      * Fetch position datas
@@ -114,7 +87,27 @@ const CandidateFormModal = (props) => {
         if (candidate?.id && candidate?.departmentId)
             fetchData(API_URL.lookup.positionById.get + candidate?.departmentId, setListPositions);
 
-    }, [openCandidateModal]);
+        //Case edit candidate map candidate info to register form
+        if (candidate?.id) {
+
+            for (let key in candidate) {
+
+                if (KEY_POST.view_candidate.includes(key)) {
+
+                    if (key === 'appliedDate') {
+
+                        const appliedDate = ConverterService.convertUnixDateToMUI(candidate[key]);
+                        setValue(key, appliedDate);
+
+                    } else {
+                        setValue(key, candidate[key]);
+                    }
+                }
+            }
+
+        }
+
+    }, [openCandidateModal, candidate]);
 
 
     /**
@@ -140,7 +133,7 @@ const CandidateFormModal = (props) => {
                 } else {
                     setListGenders([]);
                     setListReceivedFromChannels([]);
-                    setValue('applicantCode', null);
+                    // setValue('applicantCode', null);
                 }
             } else if (dataType === 'headDepartment') {
 
@@ -162,11 +155,18 @@ const CandidateFormModal = (props) => {
         }
     }, []);
 
+    console.log('candidate', candidate);
+
     /**Check form error */
     const onError = (error, e) => {
 
+        console.log('error', error);
+
         if (!watchCandidate?.file) {
-            setError('file', { message: 'File is required!' })
+
+            if (!candidate?.id)
+                setError('file', { message: 'File is required!' })
+
         } else {
 
             const { file } = watchCandidate;

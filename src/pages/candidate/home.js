@@ -199,7 +199,11 @@ const HomeCandidate = () => {
                 modalTitle="Edit Candidate"
                 candidate={editCandidate}
                 openCandidateModal={openEditCandidateModal}
-                onCloseCandidateModal={() => setOpenEditCandidateModal(false)}
+                onCloseCandidateModal={() => {
+                    setEditCandidate({})
+                    setOpenEditCandidateModal(false)
+                }
+                }
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
