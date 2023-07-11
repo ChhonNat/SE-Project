@@ -22,7 +22,6 @@ const App = () => {
 
   const [minSidebar, setMinsidebar] = useState(true);
   const user = useSelector((state) => state.userAuthendicated);
-
   const { pathname } = location;
 
   useEffect(() => {
@@ -35,7 +34,7 @@ const App = () => {
 
       user?.isAuthenticated ? navigate('/candidate') : navigate('/login');
     } else {
-      
+
       user?.isAuthenticated ? navigate(pathname) : navigate('/login');
     };
 

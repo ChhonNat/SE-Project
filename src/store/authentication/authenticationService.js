@@ -12,6 +12,7 @@ const initialUser = {
   isError: false,
   errorMessage: '',
   isAuthenticated: false,
+  roles: []
 };
 
 export const userAuthentication = ({ username, password }) => {
@@ -52,14 +53,15 @@ export const userAuthentication = ({ username, password }) => {
         });
 
       const responseData = response?.data?.data;
-
+      
       const responseUser = {
-        username: response?.data?.data?.user?.username,
+        username: responseData?.user?.username,
         token: responseData.accessToken,
         refreshToken: responseData.refreshToken,
         isError: false,
         errorMessage: '',
         isAuthenticated: true,
+        roles: responseData?.user?.grantedAuthorities
       };
 
       return responseUser;

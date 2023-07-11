@@ -1,5 +1,5 @@
 import { Button, ButtonGroup, IconButton, Slide } from "@mui/material";
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
@@ -21,6 +21,7 @@ const AsyncTableAction = (props) => {
 
     const {
         useActions,
+        row,
         onHandleEditEvent,
         onHandleViewEvent,
         onHandleMoreEvent,
@@ -34,6 +35,30 @@ const AsyncTableAction = (props) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showMoreOptionAnchor, setShowMoreOptionAnchor] = useState(false);
     const openMoreOption = Boolean(showMoreOptionAnchor);
+
+    const checkButtonAction = (condition) => {
+
+        if (typeof condition === 'boolean')
+            return condition;
+
+        const trueCondition = [];
+
+        if (condition && condition.length) {
+            condition.forEach((ele, index) => {
+                const { values, field } = condition[index];
+                trueCondition.push(values.includes(row[field]));
+            });
+        }
+
+        if (!trueCondition?.length)
+            return false;
+
+        if (trueCondition?.includes(false))
+            return false;
+
+        return true
+    };
+
     return (
         <>
             {/* All button actions */}
@@ -149,10 +174,11 @@ const AsyncTableAction = (props) => {
                         >
                             {
                                 useActions?.moreOption?.buttons?.length && useActions?.moreOption?.buttons.map((button, index) => (
+                                    !button?.hidden &&
                                     <MenuItem
                                         key={index}
                                         onClick={() => onHandleMoreEvent(button?.eventName || '')}
-                                        disabled={!button?.enable}
+                                        disabled={!checkButtonAction(button?.enable)}
                                     >
                                         {
                                             button?.icon &&
@@ -160,7 +186,9 @@ const AsyncTableAction = (props) => {
                                                 {button?.icon}
                                             </IconButton>
                                         }
-                                        {button?.name}
+                                        <label style={{ fontSize: 13 }}>
+                                            {button?.name}
+                                        </label>
                                     </MenuItem>
                                 ))
                             }

@@ -41,11 +41,21 @@ const CANDIDATE = {
     HIRED: 'Hired'
 };
 
+const SUBMIT_STATUS = {
+    WAITING: "Waiting",
+    SUBMITTED_STATUS: "Submitted_OFCCEO",
+    OFCCEO_VERIFIED: "OFCCEO_Verified",
+    OFCCEO_REJECTED: "OFCCEO_Rejected",
+    SENT_TA_TEAM: "Sent_TA_Team",
+    SUBMITTED_HOD: "Submitted_HOD"
+};
+
 export const STATUS = {
     RECORD,
     SHORTLIST_RESULT,
     INTERVIEW_RESULT,
     INTERVIEW_STATUS,
     ASSESSMENT_RESULT,
-    CANDIDATE
+    CANDIDATE,
+    SUBMIT_STATUS
 };

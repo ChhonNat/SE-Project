@@ -32,24 +32,24 @@ const tblCandidate = [
     {
         id: 'fullName', label: "Candidate's Name", sqlField: 'can.first_name'
     },
-    {
-        id: 'gender', label: 'Gender', sqlField: 'can.gender'
-    },
+    // {
+    //     id: 'gender', label: 'Gender', sqlField: 'can.gender'
+    // },
     {
         id: 'phoneNumber', label: 'Phone', sqlField: 'can.phone_number'
     },
     {
         id: 'appliedPositionName', label: 'Apply Position', sqlField: 'pos.name'
     },
-    {
-        id: 'departmentName', label: 'Department'
-    },
-    {
-        id: 'businessUnitName', label: 'Primary Business', sqlField: 'pos.name'
-    },
-    {
-        id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
-    },
+    // {
+    //     id: 'departmentName', label: 'Department'
+    // },
+    // {
+    //     id: 'businessUnitName', label: 'Primary Business', sqlField: 'pos.name'
+    // },
+    // {
+    //     id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
+    // },
     {
         id: 'shortlistResult', label: 'Shortlist Result'
     },

@@ -1,21 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
+import { ROLE } from "../../constants/roles";
+import { STATUS } from "../../constants/status";
 import { API_URL } from "../../constants/api_url";
+
 import { TABLE_CONFIG } from "../../utils/table-config";
+
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
+import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
+import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
+
 import CandidateFormModal from "./upsert-candidate-form.modal";
 import CandidateInviteFormModal from "./form-invite-candidate.modal";
-import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
-import { STATUS } from "../../constants/status";
-import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
 import CandidateFormDetailModal from "./detail-candidate-form.modal";
+
 import { HowToRegOutlined } from "@mui/icons-material";
 import SendIcon from '@mui/icons-material/Send';
 import CandidateVerifyForm from "./verify-candidate-form.modal";
 import SendTimeExtensionIcon from '@mui/icons-material/SendTimeExtension';
 import CheckIcon from '@mui/icons-material/Check';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import NextPlanIcon from '@mui/icons-material/NextPlan';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const HomeCandidate = () => {
+
+    const user = useSelector((state) => state?.userAuthendicated);
+
+    console.log('user', user);
 
     const [selectedData, setSelectedData] = useState({ open: false, row: {} });
     const [isReload, setIsReload] = useState(false);
@@ -112,55 +126,56 @@ const HomeCandidate = () => {
                                 {
                                     name: 'Submit To OFFCEO',
                                     eventName: 'submitToOFFCEO',
-                                    icon: <SendIcon color="info" />,
-                                    enable: true
-                                    // visibility: [
-                                    //     {
-                                    //         field: 'shortlistResult',
-                                    //         values: [STATUS.SHORTLIST_RESULT.PASSED]
-                                    //     },
-                                    //     {
-                                    //         field: 'status',
-                                    //         values: [STATUS.CANDIDATE.CV_REVIEWED]
-                                    //     },
-                                    // ],
+                                    icon: <NextPlanIcon color="info" />,
+                                    hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA_ADMIN) ? false : true,
+                                    enable: [
+                                        {
+                                            field: 'submitStatus',
+                                            values: [STATUS.SUBMIT_STATUS.WAITING]
+                                        }
+                                    ]
                                 },
                                 {
-                                    name: 'Verify By OFFCEO',
+                                    name: 'Verify',
                                     eventName: 'verifyByOFFCEO',
-                                    icon: <HowToRegOutlined color="success" />,
+                                    icon: <DoneAllIcon color="info" />,
+                                    hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
                                     enable: true
                                 },
                                 {
                                     name: 'Submit To TA',
                                     eventName: 'submitToTA',
-                                    icon: <SendTimeExtensionIcon color="info" />,
+                                    icon: <NextPlanIcon color="info" />,
+                                    hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
+                                    enable: [
+                                        {
+                                            field: 'submitStatus',
+                                            values: [STATUS.SUBMIT_STATUS.OFCCEO_VERIFIED]
+                                        }
+                                    ]
+                                },
+                                {
+                                    name: 'Shortlist',
+                                    eventName: 'shortlistCandidate',
+                                    icon: <CheckCircleOutlineIcon color="info" />,
+                                    hidden: !user?.roles ? true : [ROLE.ROLE_TA, ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
                                     enable: true
                                 },
                                 {
                                     name: 'Submit To HOD',
                                     eventName: 'submitToHOD',
-                                    icon: <CheckIcon />,
-                                    enable: true
+                                    icon: <NextPlanIcon color="info" />,
+                                    hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA) ? false : true,
+                                    enable: [
+                                        {
+                                            field: 'submitStatus',
+                                            values: [STATUS.SUBMIT_STATUS.SENT_TA_TEAM]
+                                        }
+                                    ]
                                 },
-                                {
-                                    name: 'Shortlist Candidate',
-                                    eventName: 'shortlistCandidate',
-                                    icon: <FilterAltIcon />,
-                                    enable: true
-                                }
+
                             ]
                         },
-                        // approveCandidate: [
-                        //     {
-                        //         field: 'shortlistResult',
-                        //         values: [STATUS.SHORTLIST_RESULT.PASSED]
-                        //     },
-                        //     {
-                        //         field: 'status',
-                        //         values: [STATUS.CANDIDATE.CV_REVIEWED]
-                        //     }
-                        // ],
                     }
                 }
 

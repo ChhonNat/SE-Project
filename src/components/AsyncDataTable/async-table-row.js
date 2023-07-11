@@ -48,18 +48,13 @@ const TableRows = ({
         const labelId = `enhanced-table-checkbox-${index}`;
 
         const checkButtonAction = (objData, condition) => {
-
             const trueCondition = [];
-
             if (condition && condition.length) {
-
                 condition.forEach((ele, index) => {
-
                     const { values, field } = condition[index];
                     trueCondition.push(values.includes(row[field]));
                 });
             }
-
 
             if (!trueCondition?.length)
                 return false;
@@ -186,22 +181,8 @@ const TableRows = ({
                             )
                                 :
                                 false,
-                            moreOption: actions?.moreOption,
+                            moreOption: actions?.moreOption
                         };
-
-                        // if (buttonAction?.moreOption?.buttons?.length) {
-
-                        //     buttonAction?.moreOption.buttons.forEach((button) => {
-
-                        //         const { visibility } = button;
-
-                        //         if (visibility?.length) {
-                        //             console.log(checkButtonAction(row, visibility));
-                        //             button.enable = checkButtonAction(row, visibility);
-                        //         }
-
-                        //     })
-                        // }
 
                         const visible = head.visible !== undefined ? head.visible : true;
 
@@ -284,6 +265,7 @@ const TableRows = ({
                                                 onHandleEditResult={() => handleResultEvent(row)}
                                                 onHandleEditStatus={() => handleStatusEvent(row)}
                                                 useActions={buttonAction}
+                                                row={row}
                                             />
                                         }
 
