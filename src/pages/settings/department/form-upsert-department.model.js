@@ -34,7 +34,7 @@ const UpsertDepartmentForm = (props) => {
 
     useEffect(() => {
 
-        if (editData?.id) {
+        if (editData?.id && openModal) {
 
             for (let key in editData) {
                 setValue(key, editData[key])
@@ -66,8 +66,10 @@ const UpsertDepartmentForm = (props) => {
 
     const onError = (data) => {
         console.log(data);
+
         if(data?.businessUnitId)
         setError('businessUnitId',{message: 'Primary business is required!'});
+        
     }
 
     const submit = async (data) => {

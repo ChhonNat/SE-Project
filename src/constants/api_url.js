@@ -18,6 +18,7 @@ export const API_URL = {
         get: API_VERSION + '/candidates/search',
         create: API_VERSION + '/candidates',
         edit: API_VERSION + '/candidates/',
+        detail: API_VERSION + '/candidates/',
         invite: API_VERSION + '/candidates/',
         editResult: API_VERSION + '/interviews/',
         assessment: API_VERSION + '/interviews/',
@@ -25,6 +26,7 @@ export const API_URL = {
         hire: API_VERSION + '/assessments/',
         downloadCVFile: API_VERSION + '/candidates/download?id=',
         sumitToOFFCEO: API_VERSION + '/candidates/',
+        shortlist: API_VERSION +'/candidates/',
 
         lookup: {
             get: API_VERSION + '/candidates/lookup-data'

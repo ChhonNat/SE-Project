@@ -67,44 +67,46 @@ const CandidateFormModal = (props) => {
      */
     useEffect(() => {
 
-        /**Fetch position data */
-        fetchData(API_URL.candidate.lookup.get, null, 'multi');
+        if (openCandidateModal) {
+            /**Fetch position data */
+            fetchData(API_URL.candidate.lookup.get, null, 'multi');
 
-        /**Fetch location data */
-        fetchData(API_URL.lookup.location.get, setListLocations);
+            /**Fetch location data */
+            fetchData(API_URL.lookup.location.get, setListLocations);
 
-        /**Fetch business data */
-        fetchData(API_URL.lookup.businessUnit.get, setListBusinesses);
+            /**Fetch business data */
+            fetchData(API_URL.lookup.businessUnit.get, setListBusinesses);
 
-        /**Fetch position level */
-        fetchData(API_URL.lookup.positionLevel.get, setListPositionLevels)
+            /**Fetch position level */
+            fetchData(API_URL.lookup.positionLevel.get, setListPositionLevels)
 
-        /**fetch department data */
-        if (candidate?.id && candidate?.businessUnitId)
-            fetchData(API_URL.lookup.departmentById.get + candidate?.businessUnitId, setListDepartments);
+            /**fetch department data */
+            if (candidate?.id && candidate?.businessUnitId)
+                fetchData(API_URL.lookup.departmentById.get + candidate?.businessUnitId, setListDepartments);
 
-        /**Fetch position data */
-        if (candidate?.id && candidate?.departmentId)
-            fetchData(API_URL.lookup.positionById.get + candidate?.departmentId, setListPositions);
+            /**Fetch position data */
+            if (candidate?.id && candidate?.departmentId)
+                fetchData(API_URL.lookup.positionById.get + candidate?.departmentId, setListPositions);
 
-        //Case edit candidate map candidate info to register form
-        if (candidate?.id) {
+            //Case edit candidate map candidate info to register form
+            if (candidate?.id) {
 
-            for (let key in candidate) {
+                for (let key in candidate) {
 
-                if (KEY_POST.view_candidate.includes(key)) {
+                    if (KEY_POST.view_candidate.includes(key)) {
 
-                    if (key === 'appliedDate') {
+                        if (key === 'appliedDate') {
 
-                        const appliedDate = ConverterService.convertUnixDateToMUI(candidate[key]);
-                        setValue(key, appliedDate);
+                            const appliedDate = ConverterService.convertUnixDateToMUI(candidate[key]);
+                            setValue(key, appliedDate);
 
-                    } else {
-                        setValue(key, candidate[key]);
+                        } else {
+                            setValue(key, candidate[key]);
+                        }
                     }
                 }
-            }
 
+            }
         }
 
     }, [openCandidateModal, candidate]);
@@ -155,7 +157,6 @@ const CandidateFormModal = (props) => {
         }
     }, []);
 
-    console.log('candidate', candidate);
 
     /**Check form error */
     const onError = (error, e) => {

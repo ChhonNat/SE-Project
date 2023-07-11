@@ -38,23 +38,26 @@ const UpsertHeadDepartmentForm = (props) => {
 
     useEffect(() => {
 
-        if (editData?.id) {
+        if (openModal) {
+            
+            if (editData?.id) {
 
-            for (let key in editData) {
-                setValue(key, editData[key])
+                for (let key in editData) {
+                    setValue(key, editData[key])
+                }
             }
-        }
-        else {
-            clearErrors();
-        }
+            else {
+                clearErrors();
+            }
 
-        //Fetch business unit
-        fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
-        fetchData(API_URL.lookup.positionLevel.get, setListPositionLevels);
+            //Fetch business unit
+            fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
+            fetchData(API_URL.lookup.positionLevel.get, setListPositionLevels);
 
-        if (editData?.id) {
-            fetchData(API_URL.lookup.departmentById.get + editData?.businessUnitId, setListDepartments);
-            fetchData(API_URL.lookup.positionById.get + editData?.departmentId, setListPositions);
+            if (editData?.id) {
+                fetchData(API_URL.lookup.departmentById.get + editData?.businessUnitId, setListDepartments);
+                fetchData(API_URL.lookup.positionById.get + editData?.departmentId, setListPositions);
+            }
         }
 
     }, [openModal])
@@ -100,11 +103,11 @@ const UpsertHeadDepartmentForm = (props) => {
     const onError = (data) => {
         console.log(data);
 
-        if(data?.departmentId)
-        setError('departmentId',{message: 'Department is required!'});
+        if (data?.departmentId)
+            setError('departmentId', { message: 'Department is required!' });
 
-        if(data?.positionId)
-        setError('positionId', {message: 'Position is required!'});
+        if (data?.positionId)
+            setError('positionId', { message: 'Position is required!' });
     }
 
     const submit = async (data) => {

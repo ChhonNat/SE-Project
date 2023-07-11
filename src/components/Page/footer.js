@@ -42,6 +42,7 @@ const FooterComponent = (props) => {
             handleCancel, 
             saveButtunType, 
             saveButtonLabel,
+            cancelButtonLabel,
             rejectButtonLabel, 
             actions 
     } = props;
@@ -63,7 +64,7 @@ const FooterComponent = (props) => {
                         color="error"
                         onClick={handleCancel}
                     >
-                        Cancel
+                        {cancelButtonLabel ? cancelButtonLabel : 'Cancel'}
                     </DangerButton>
                 }
 

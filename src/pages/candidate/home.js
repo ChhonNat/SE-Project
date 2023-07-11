@@ -13,6 +13,7 @@ import SendIcon from '@mui/icons-material/Send';
 import CandidateVerifyForm from "./verify-candidate-form.modal";
 import SendTimeExtensionIcon from '@mui/icons-material/SendTimeExtension';
 import CheckIcon from '@mui/icons-material/Check';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 const HomeCandidate = () => {
 
@@ -45,6 +46,9 @@ const HomeCandidate = () => {
             handleAction: () => setOpenVerifyModal(true)
         },
         "submitToHOD": {
+            handleAction: () => setOpenVerifyModal(true)
+        },
+        "shortlistCandidate": {
             handleAction: () => setOpenVerifyModal(true)
         }
     };
@@ -137,6 +141,12 @@ const HomeCandidate = () => {
                                     name: 'Submit To HOD',
                                     eventName: 'submitToHOD',
                                     icon: <CheckIcon />,
+                                    enable: true
+                                },
+                                {
+                                    name: 'Shortlist Candidate',
+                                    eventName: 'shortlistCandidate',
+                                    icon: <FilterAltIcon />,
                                     enable: true
                                 }
                             ]
