@@ -40,16 +40,20 @@ const UpsertPositionLavelForm = (props) => {
 
     useEffect(() => {
 
-        if (editData?.id) {
+        if (openModal) {
+            
+            if (editData?.id) {
 
-            for (let key in editData) {
-                setValue(key, editData[key])
+                for (let key in editData) {
+                    setValue(key, editData[key])
+                }
             }
-        }
 
-        /**Fetch lookup data businesss and department  */
-        fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
-        // fetchData(API_URL.lookup.department.get, setListDepartments);
+            /**Fetch lookup data businesss and department  */
+            fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
+            // fetchData(API_URL.lookup.department.get, setListDepartments);
+
+        }
 
     }, [openModal])
 

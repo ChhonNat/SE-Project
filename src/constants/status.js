@@ -8,6 +8,7 @@ const SHORTLIST_RESULT = {
     KEEP_IN_POOL: "Keep_In_Pool",
     FAILED: 'Failed',
     PASSED: 'Passed',
+    BLACKLIST: 'Blacklist'
 };
 
 const INTERVIEW_RESULT = {

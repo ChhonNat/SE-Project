@@ -30,7 +30,7 @@ const UpsertSubBusinessUnitForm = (props) => {
 
     useEffect(() => {
 
-        if (editData?.id) {
+        if (editData?.id && openModal) {
 
             for (let key in editData) {
                 setValue(key, editData[key])

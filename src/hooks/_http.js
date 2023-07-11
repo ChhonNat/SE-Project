@@ -42,7 +42,9 @@ const _useHttp = () => {
         message: null
     });
 
-    const sendRequest = useCallback(async (url, method, sendData) => {
+    const sendRequest = 
+        useCallback(
+            async (url, method, sendData) => {
 
         const postData = { ...sendData };
 
@@ -118,7 +120,8 @@ const _useHttp = () => {
                 });
         }
 
-    }, [],
+    }, 
+    [],
     );
 
     return {
