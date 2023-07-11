@@ -2,7 +2,6 @@ import React, { useEffect, useCallback, useState, Fragment } from 'react';
 
 import { Box, Grid, Slide } from '@mui/material';
 
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -10,15 +9,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import FooterComponent from '../../components/Page/footer';
 import TitleComponent from '../../components/Page/title';
-import { ConverterService } from '../../utils/converter';
 import _useHttp from '../../hooks/_http';
 import { API_URL } from '../../constants/api_url';
 import { HTTP_METHODS } from '../../constants/http_method';
-import Swal from 'sweetalert2';
 import { PulseLoader } from 'react-spinners';
-import Moment from 'react-moment';
-
-const shrinkOpt = { shrink: true };
+import moment from 'moment';
 
 const TransitionModal = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -69,7 +64,7 @@ const mapKeyToView = {
             },
             'remark': {
                 ranking: 5,
-                label: 'Submit Remark'
+                label: 'Remark'
             },
             'staffId': {
                 ranking: 6,
@@ -96,7 +91,7 @@ const mapKeyToView = {
             },
             'remark': {
                 ranking: 5,
-                label: 'Shortlist Remark'
+                label: 'Remark'
             },
             'staffId': {
                 ranking: 6,
@@ -110,7 +105,9 @@ const mapRoleName = {
     'ROLE_TA': 'TA',
     'ROLE_TA_ADMIN': 'TA Admin',
     'ROLE_OFCCEO_ADMIN': 'OFCCEO',
-    'ROLE_HIRING_MANAGER': 'Head of Department'
+    'ROLE_HIRING_MANAGER': 'Head of Department',
+    'ROLE_SUPER_ADMIN': 'Super Admin',
+    'ROLE_ADMIN': 'Admin',
 };
 
 const CandidateFormDetailModal = (props) => {
@@ -118,8 +115,6 @@ const CandidateFormDetailModal = (props) => {
     const { openCandidateModal, onCloseCandidateModal, candidate } = props;
     const { data, loading, message, error, sendRequest } = _useHttp();
     const [candidateDetail, setCandidateDetail] = useState({});
-
-    console.log(candidate?.createdAt)
 
     useEffect(() => {
 
@@ -162,7 +157,7 @@ const CandidateFormDetailModal = (props) => {
     return (
         <div>
             <Dialog
-                // TransitionComponent={TransitionModal}
+                TransitionComponent={TransitionModal}
                 open={openCandidateModal}
             >
                 {
@@ -213,7 +208,7 @@ const CandidateFormDetailModal = (props) => {
                                                                 <label>
                                                                     {
                                                                         mapKeyToView[key]?.type === 'date' ?
-                                                                            <Moment unix format='MMM DD, YYYY hh:mm:ss A'>{candidateDetail[key]}</Moment>
+                                                                            moment(candidateDetail[key]).format('MMM DD, YYYY hh:mm:ss A')
                                                                             :
                                                                             candidateDetail[key]
                                                                     }
@@ -246,40 +241,53 @@ const CandidateFormDetailModal = (props) => {
                                                                                         groupByRole(candidateDetail[key])[keyRole]
                                                                                             .map((submitDetail, indexSubmitDetail) => (
                                                                                                 <Fragment key={indexSubmitDetail}>
-                                                                                                    {
-                                                                                                        Object.keys(submitDetail)
-                                                                                                            .sort((a, b) => {
-                                                                                                            })
-                                                                                                            .map((keySubmitDetail, indexKeySubmitDe) =>
-                                                                                                            (mapKeyToView[key].mapSubmitDetail[keySubmitDetail] &&
-                                                                                                                <Grid
-                                                                                                                    key={indexKeySubmitDe}
-                                                                                                                    item
-                                                                                                                    xs={12}
-                                                                                                                    sx={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'Roboto' }}>
-                                                                                                                    <label
-                                                                                                                        style={{
-                                                                                                                            fontWeight: 'bold',
-                                                                                                                            fontSize: 14
-                                                                                                                        }}
-                                                                                                                    >
-                                                                                                                        {mapKeyToView[key]?.mapSubmitDetail[keySubmitDetail]?.label}:
-                                                                                                                    </label>
-                                                                                                                    <label style={{ fontSize: 14 }}>
-                                                                                                                        {
-                                                                                                                            mapKeyToView[key]?.mapSubmitDetail[keySubmitDetail]?.type === 'date' ?
-                                                                                                                                <Moment unix format='MMM DD, YYYY hh:mm:ss A'>{submitDetail[keySubmitDetail]}</Moment>
-                                                                                                                                :
-                                                                                                                                submitDetail[keySubmitDetail]
-                                                                                                                        }
-                                                                                                                    </label>
-                                                                                                                </Grid>
-                                                                                                            ))
-                                                                                                    }
-                                                                                                    <br></br>
+                                                                                                    <Grid
+                                                                                                        container
+                                                                                                        columnSpacing={{
+                                                                                                            xs: 1,
+                                                                                                            sm: 2,
+                                                                                                            md: 3
+                                                                                                        }}
+                                                                                                        paddingBottom={2}
+                                                                                                    >
+                                                                                                        {
+                                                                                                            Object.keys(submitDetail)
+                                                                                                                .sort((a, b) => {
+                                                                                                                })
+                                                                                                                .map((keySubmitDetail, indexKeySubmitDe) =>
+                                                                                                                (mapKeyToView[key].mapSubmitDetail[keySubmitDetail] &&
+
+                                                                                                                    <Grid
+                                                                                                                        key={indexKeySubmitDe}
+                                                                                                                        item
+                                                                                                                        xs={6}
+                                                                                                                        paddingBottom={1}
+                                                                                                                        sx={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'Roboto' }}>
+                                                                                                                        <label
+                                                                                                                            style={{
+                                                                                                                                fontWeight: 'bold',
+                                                                                                                                fontSize: 14
+                                                                                                                            }}
+                                                                                                                        >
+                                                                                                                            {mapKeyToView[key]?.mapSubmitDetail[keySubmitDetail]?.label}:
+                                                                                                                        </label>
+                                                                                                                        <label style={{ fontSize: 14 }}>
+                                                                                                                            {
+                                                                                                                                mapKeyToView[key]?.mapSubmitDetail[keySubmitDetail]?.type === 'date' ?
+                                                                                                                                    moment(submitDetail[keySubmitDetail]).format('MMM DD, YYYY hh:mm:ss A')
+                                                                                                                                    :
+                                                                                                                                    submitDetail[keySubmitDetail]
+                                                                                                                            }
+                                                                                                                        </label>
+                                                                                                                    </Grid>
+
+                                                                                                                ))
+                                                                                                        }
+                                                                                                    </Grid>
                                                                                                 </Fragment>
                                                                                             ))
                                                                                     }
+
                                                                                 </Fragment>
                                                                             ))
                                                                         : <></>
