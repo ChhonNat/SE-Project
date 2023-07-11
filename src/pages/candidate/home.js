@@ -119,7 +119,7 @@ const HomeCandidate = () => {
 
                         //action each table rows
                         view: true,
-                        edit: true,
+                        edit: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_TA_ADMIN) ? true : false,
                         delete: false,
                         moreOption: {
                             buttons: [
