@@ -42,87 +42,87 @@ const _useHttp = () => {
         message: null
     });
 
-    const sendRequest = 
+    const sendRequest =
         useCallback(
             async (url, method, sendData) => {
 
-        const postData = { ...sendData };
+                const postData = { ...sendData };
 
-        dispatchHttp({ type: 'SEND' });
+                dispatchHttp({ type: 'SEND' });
 
-        /**
-         * CASE: send request method = 'GET'
-         */
-        if (method === 'GET') {
+                /**
+                 * CASE: send request method = 'GET'
+                 */
+                if (method === 'GET') {
 
-            await axiosAPI.get(url, postData)
-                .then(function (result) {
+                    await axiosAPI.get(url, postData)
+                        .then(function (result) {
 
-                    const { data, success, message } = result?.data;
-                    // data.message = message;
+                            const { data, success, message } = result?.data;
+                            // data.message = message;
 
-                    // if response success return message, if error return error
-                    success ?
-                        dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success' }) :
-                        dispatchHttp({ type: 'ERROR', error: message || 'Error' });
-                })
-                .catch((error) => {
+                            // if response success return message, if error return error
+                            success ?
+                                dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success' }) :
+                                dispatchHttp({ type: 'ERROR', error: message || 'Error' });
+                        })
+                        .catch((error) => {
 
-                    console.log('Get error>>>>',error);
-                    dispatchHttp({ type: 'ERROR', error: error?.message || 'Error' });
-                });
-        }
+                            console.log('Get error>>>>', error);
+                            dispatchHttp({ type: 'ERROR', error: 'Empty Data!' });
+                        });
+                }
 
-        /**
-        * CASE: send request method = 'POST'
-        */
-        if (method === 'POST') {
+                /**
+                * CASE: send request method = 'POST'
+                */
+                if (method === 'POST') {
 
-            await axiosAPI.post(url, postData)
-                .then(function (result) {
+                    await axiosAPI.post(url, postData)
+                        .then(function (result) {
 
-                    const { data, success, message } = result?.data;
-                    data.message = message;
-                    // data.status = success;
+                            const { data, success, message } = result?.data;
+                            data.message = message;
+                            // data.status = success;
 
-                    // if response success return message, if error return error
-                    success ?
-                        dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success' }) :
-                        dispatchHttp({ type: 'ERROR', error: message || 'Error' });
+                            // if response success return message, if error return error
+                            success ?
+                                dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success' }) :
+                                dispatchHttp({ type: 'ERROR', error: message || 'Error' });
 
-                })
-                .catch((error) => {
+                        })
+                        .catch((error) => {
 
-                    console.log('put error >>>>>', error);
-                    dispatchHttp({ type: 'ERROR', error: error?.message || 'Error' });
-                });
-        }
+                            console.log('put error >>>>>', error);
+                            dispatchHttp({ type: 'ERROR', error: 'Empty Data!' });
+                        });
+                }
 
-        /**
-         * CASE: send request method = 'PUT'
-         */
-        if (method === 'PUT') {
+                /**
+                 * CASE: send request method = 'PUT'
+                 */
+                if (method === 'PUT') {
 
-            await axiosAPI.put(url, postData)
-                .then(function (result) {
+                    await axiosAPI.put(url, postData)
+                        .then(function (result) {
 
-                    const { data, success, message } = result?.data;
+                            const { data, success, message } = result?.data;
 
-                    // if response success return message, if error return error
-                    success ?
-                        dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success'}) :
-                        dispatchHttp({ type: 'ERROR', error: message || 'Error' });
-                })
-                .catch((error) => {
+                            // if response success return message, if error return error
+                            success ?
+                                dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success' }) :
+                                dispatchHttp({ type: 'ERROR', error: message || 'Error' });
+                        })
+                        .catch((error) => {
 
-                    console.log('put error >>>>>', error);
-                    dispatchHttp({ type: 'ERROR', error: error?.message || 'Error' });
-                });
-        }
+                            console.log('put error >>>>>', error);
+                            dispatchHttp({ type: 'ERROR', error: error?.message || 'Error' });
+                        });
+                }
 
-    }, 
-    [],
-    );
+            },
+            [],
+        );
 
     return {
         loading: httpState?.loading,

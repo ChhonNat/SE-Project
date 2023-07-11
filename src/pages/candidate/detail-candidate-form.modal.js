@@ -166,7 +166,7 @@ const CandidateFormDetailModal = (props) => {
                         :
                         <>
                             <DialogTitle>
-                                <TitleComponent title="Detail Candidate" />
+                                <TitleComponent title="Candidate Detail" />
                             </DialogTitle>
                             <DialogContent dividers>
 
