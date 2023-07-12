@@ -6,3 +6,12 @@ export const ROLE = {
     ROLE_HIRING_MANAGER: 'ROLE_HIRING_MANAGER',
     ROLE_OFCCEO_ADMIN: 'ROLE_OFCCEO_ADMIN'
 }
+
+export const MAP_ROLE_NAME = {
+    'ROLE_TA': 'TA',
+    'ROLE_TA_ADMIN': 'TA Admin',
+    'ROLE_OFCCEO_ADMIN': 'OFCCEO',
+    'ROLE_HIRING_MANAGER': 'Head of Department',
+    'ROLE_SUPER_ADMIN': 'Super Admin',
+    'ROLE_ADMIN': 'Admin',
+};
