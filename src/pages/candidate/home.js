@@ -15,19 +15,17 @@ import CandidateFormModal from "./upsert-candidate-form.modal";
 import CandidateInviteFormModal from "./form-invite-candidate.modal";
 import CandidateFormDetailModal from "./detail-candidate-form.modal";
 
-import { HowToRegOutlined } from "@mui/icons-material";
-import SendIcon from '@mui/icons-material/Send';
 import CandidateVerifyForm from "./verify-candidate-form.modal";
-import SendTimeExtensionIcon from '@mui/icons-material/SendTimeExtension';
-import CheckIcon from '@mui/icons-material/Check';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const HomeCandidate = () => {
 
     const user = useSelector((state) => state?.userAuthendicated);
+
+    console.log(user);
 
     const [selectedData, setSelectedData] = useState({ open: false, row: {} });
     const [isReload, setIsReload] = useState(false);
@@ -48,12 +46,18 @@ const HomeCandidate = () => {
 
 
     const mapMoreButtonEventName = {
-        "submitToOFFCEO": {
+        "submitToDHR": {
             handleAction: () => setOpenVerifyModal(true)
         },
-        "verifyByOFFCEO": {
+        "verifyByDHR": {
             handleAction: () => setOpenVerifyModal(true)
         },
+        "approveByOFFCEO": {
+            handleAction: () => setOpenVerifyModal(true)
+        },
+        "rejectByOFFCEO": {
+            handleAction: () => setOpenVerifyModal(true)
+        },  
         "submitToTA": {
             handleAction: () => setOpenVerifyModal(true)
         },
@@ -122,8 +126,8 @@ const HomeCandidate = () => {
                         moreOption: {
                             buttons: [
                                 {
-                                    name: 'Submit To OFFCEO',
-                                    eventName: 'submitToOFFCEO',
+                                    name: 'Submit To DHR',
+                                    eventName: 'submitToDHR',
                                     icon: <NextPlanIcon color="info" />,
                                     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA_ADMIN) ? false : true,
                                     enable: [
@@ -135,23 +139,37 @@ const HomeCandidate = () => {
                                 },
                                 {
                                     name: 'Verify',
-                                    eventName: 'verifyByOFFCEO',
+                                    eventName: 'verifyByDHR',
+                                    icon: <DoneAllIcon color="info" />,
+                                    hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HR_MANAGER) ? false : true,
+                                    enable: true
+                                },
+                                {
+                                    name: 'Approve',
+                                    eventName: 'approveByOFFCEO',
                                     icon: <DoneAllIcon color="info" />,
                                     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
                                     enable: true
                                 },
                                 {
-                                    name: 'Submit To TA',
-                                    eventName: 'submitToTA',
-                                    icon: <NextPlanIcon color="info" />,
+                                    name: 'Reject',
+                                    eventName: 'rejectByOFFCEO',
+                                    icon: <ClearIcon color="info" />,
                                     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
-                                    enable: [
-                                        {
-                                            field: 'submitStatus',
-                                            values: [STATUS.SUBMIT_STATUS.OFCCEO_VERIFIED]
-                                        }
-                                    ]
+                                    enable: true
                                 },
+                                // {
+                                //     name: 'Submit To TA',
+                                //     eventName: 'submitToTA',
+                                //     icon: <NextPlanIcon color="info" />,
+                                //     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
+                                //     enable: [
+                                //         {
+                                //             field: 'submitStatus',
+                                //             values: [STATUS.SUBMIT_STATUS.OFCCEO_VERIFIED]
+                                //         }
+                                //     ]
+                                // },
                                 {
                                     name: 'Shortlist',
                                     eventName: 'shortlistCandidate',

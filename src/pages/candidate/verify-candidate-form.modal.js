@@ -20,48 +20,61 @@ const CandidateVerifyForm = (props) => {
     const [shortlistResult, setShortlistResult] = useState('');
     const [shortlistResults, setShortlistResults] = useState([]);
     const [remark, setRemark] = useState('');
-    const [errors, setErrors] = useState({ shortlistResult: { isError: false, message: '' }});
+    const [errors, setErrors] = useState({ shortlistResult: { isError: false, message: '' } });
 
     //map event when get event from home candidate
     const mapEventType = {
-        "submitToOFFCEO": {
+        "submitToDHR": {
             title: "Are you sure?",
-            subTitle: "You want submit to office CEO.",
+            subTitle: "You want submit to director of HR.",
             actions: {
-                submitLabel: 'Submit To OFFCEO',
+                submitLabel: 'Confirm',
                 submitStatus: 'Submitted_OFCCEO',
-                reject: false,
                 select: false
             }
         },
-        "verifyByOFFCEO": {
+        "verifyByDHR": {
             title: "Are you sure?",
             subTitle: "You want to verify this candidate.",
             actions: {
                 submitLabel: 'Verify',
-                submitStatus: 'OFCCEO_Verified',
-                rejectStatus: 'OFCCEO_Rejected',
-                reject: true,
+                submitStatus: 'Submitted_OFCCEO',
                 select: false
             }
         },
-        "submitToTA": {
+        "approveByOFFCEO": {
             title: "Are you sure?",
-            subTitle: "You want to submit this candidate to TA.",
+            subTitle: "You want to approve this candidate.",
             actions: {
-                submitLabel: 'Submit To TA',
-                submitStatus: 'Sent_TA_Team',
-                reject: false,
+                submitLabel: 'Approve',
+                submitStatus: 'OFCCEO_Verified',
                 select: false
             }
         },
+        "rejectByOFFCEO": {
+            title: "Are you sure?",
+            subTitle: "You want to reject this candidate.",
+            actions: {
+                submitLabel: 'Confirm',
+                submitStatus: 'OFCCEO_Rejected',
+                select: false
+            }
+        },
+        // "submitToTA": {
+        //     title: "Are you sure?",
+        //     subTitle: "You want to submit this candidate to TA.",
+        //     actions: {
+        //         submitLabel: 'Confirm',
+        //         submitStatus: 'Sent_TA_Team',
+        //         select: false
+        //     }
+        // },
         "submitToHOD": {
             title: "Are you sure?",
             subTitle: "You want to submit this candidate to HOD",
             actions: {
-                submitLabel: "Submit to HOD",
+                submitLabel: "Confirm",
                 submitStatus: "Submitted_HOD",
-                reject: false,
                 select: false
             }
         },
@@ -70,7 +83,6 @@ const CandidateVerifyForm = (props) => {
             subTitle: "You want to shortlist this candidate",
             actions: {
                 submitLabel: 'Confirm',
-                reject: false,
                 select: true
             }
         }
@@ -113,8 +125,8 @@ const CandidateVerifyForm = (props) => {
 
         if (eventType && eventType === 'shortlistCandidate') {
 
-            if(!shortlistResult){
-                return setErrors({ shortlistResult : { isError: true, message: 'Shortlist result is required!' }});
+            if (!shortlistResult) {
+                return setErrors({ shortlistResult: { isError: true, message: 'Shortlist result is required!' } });
             }
 
             const postData = {
@@ -198,8 +210,7 @@ const CandidateVerifyForm = (props) => {
                         saveButtonLabel={mapEventType[eventType]?.actions?.submitLabel}
                         handleCancel={onCloseModal}
                         handleSave={() => handleSubmit(mapEventType[eventType]?.actions?.submitStatus)}
-                        handleReject={() => handleSubmit(mapEventType[eventType]?.actions?.rejectStatus)}
-                        actions={{ cancel: true, reject: mapEventType[eventType]?.actions?.reject, submit: true }}
+                        actions={{ cancel: true, submit: true }}
                     />
                 </DialogActions>
             </Dialog>
