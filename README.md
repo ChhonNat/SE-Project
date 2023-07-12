@@ -73,3 +73,70 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 #npm v 7.x.x
 #node v 18.x.x
 
+
++ Process each roles
+
+TA admin:
+    Create CV:
+        shortlist result : waiting
+        submit status: waiting
+        status (candidate): pending
+    Action:
+        submit to hr:
+            submit status: Submitted_DHR
+            status (candidate): Reviewed
+DHR:
+    CV:
+        shorlist result: waiting
+        submit status: Submitted_DHR
+        status (candidate): Reviewed
+    Action:
+        verify && submit to offceo:
+            submit status: DHR_Verified
+            status (candidate): Reviewed
+
+OFFCEO:
+    CV:
+        shorlist result: waiting
+        submit status: Submited_OFFCEO
+        status (candidate): reviewed
+
+    Action:
+        approve && submit to TA:
+            submit status: Submitted_TA_Team || Sent_TA_Team
+            status (candidate): reviewed
+TA_Team:
+    CV:
+        shortlist result:  waiting
+        submit status: Submitted_TA_Team | Sent_TA_Team
+        status (candidate): reviewed
+    Action: 
+        shortlist
+            shortlist result: Passed | Failed | Blacklist | Keep_In_Pool
+        submit to HOD:
+            shortlist result: Passed
+            submit status: Submitted_HOD
+            status (candidate): Shortlisted
+            remark: 'yes .....'
+
+HOD: 
+    CV: 
+        shortlist result: Passed
+        submit status: Submitted_HOD
+        status (candidate): Shortlisted
+        
+    Action:
+        shortlist result: Passed | Failed | Keep_In_Pool
+        set schedule: ''
+        set key person | committee: ['', '', '']
+
+        submit to TA:
+            submit status: Submitted_TA | Sent_TA_Team
+            shortlist result: Passed
+            schedule | interviewDate: '10-10-2023' 
+            committee : ['a','b']
++ Add up
+
+Role: HR
+
+
