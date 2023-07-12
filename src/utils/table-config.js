@@ -1,3 +1,5 @@
+import { STATUS } from "../constants/status";
+
 /** proof of user working on data
  */
 const proof = [
@@ -32,39 +34,26 @@ const tblCandidate = [
     {
         id: 'fullName', label: "Candidate's Name", sqlField: 'can.first_name'
     },
-    // {
-    //     id: 'gender', label: 'Gender', sqlField: 'can.gender'
-    // },
     {
         id: 'phoneNumber', label: 'Phone', sqlField: 'can.phone_number'
     },
     {
         id: 'appliedPositionName', label: 'Apply Position', sqlField: 'pos.name'
     },
-    // {
-    //     id: 'departmentName', label: 'Department'
-    // },
-    // {
-    //     id: 'businessUnitName', label: 'Primary Business', sqlField: 'pos.name'
-    // },
-    // {
-    //     id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
-    // },
     {
         id: 'shortlistResult', label: 'Shortlist Result'
     },
     {
-        id: 'submitStatus', 
-        type: 'status', 
+        id: 'submitStatus',
+        label: "Process Status",
+        type: 'status',
         statusColor: {
-            Waiting: 'Orange',
-            Submitted_OFCCEO: 'DarkOrange',
-            Sent_TA_Team: 'DarkBlue',
-            Submitted_HOD: 'lightGreen',
-            OFCCEO_Rejected: 'Red',
-            OFCCEO_Verified: 'Green'
-        }, 
-        label: "Submit Status"
+            [STATUS.SUBMIT_STATUS.WAITING]: 'Orange',
+            [STATUS.SUBMIT_STATUS.DHR_VERIFIED]: 'lightGreen',
+            [STATUS.SUBMIT_STATUS.DHR_REJECTED]: 'Red',
+            [STATUS.SUBMIT_STATUS.OFCCEO_APPROVED]: 'Green',
+            [STATUS.SUBMIT_STATUS.OFCCEO_REJECTED]: 'Red',
+        },
     },
     {
         id: 'status', type: 'status',
@@ -74,6 +63,18 @@ const tblCandidate = [
     {
         id: 'action', label: 'Actions',
     },
+    // {
+    //     id: 'gender', label: 'Gender', sqlField: 'can.gender'
+    // },
+    // {
+    //     id: 'departmentName', label: 'Department'
+    // },
+    // {
+    //     id: 'businessUnitName', label: 'Primary Business', sqlField: 'pos.name'
+    // },
+    // {
+    //     id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
+    // },
 ];
 
 /***
@@ -521,9 +522,7 @@ const tblUser = [
     {
         id: "action", label: "Actions"
     }
-]
-
-
+];
 
 
 export const TABLE_CONFIG = {
