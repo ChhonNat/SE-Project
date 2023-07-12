@@ -52,12 +52,15 @@ const HomeCandidate = () => {
         "verifyByDHR": {
             handleAction: () => setOpenVerifyModal(true)
         },
+        "rejectByDHR": {
+            handleAction: () => setOpenVerifyModal(true)
+        },
         "approveByOFFCEO": {
             handleAction: () => setOpenVerifyModal(true)
         },
         "rejectByOFFCEO": {
             handleAction: () => setOpenVerifyModal(true)
-        },  
+        },
         "submitToTA": {
             handleAction: () => setOpenVerifyModal(true)
         },
@@ -126,7 +129,7 @@ const HomeCandidate = () => {
                         moreOption: {
                             buttons: [
                                 {
-                                    name: 'Submit To DHR',
+                                    name: 'Submit to DHR',
                                     eventName: 'submitToDHR',
                                     icon: <NextPlanIcon color="info" />,
                                     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA_ADMIN) ? false : true,
@@ -134,6 +137,10 @@ const HomeCandidate = () => {
                                         {
                                             field: 'submitStatus',
                                             values: [STATUS.SUBMIT_STATUS.WAITING]
+                                        },
+                                        {
+                                            field: 'status',
+                                            values: [STATUS.CANDIDATE.CV_REVIEWED]
                                         }
                                     ]
                                 },
@@ -142,22 +149,70 @@ const HomeCandidate = () => {
                                     eventName: 'verifyByDHR',
                                     icon: <DoneAllIcon color="info" />,
                                     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HR_MANAGER) ? false : true,
-                                    enable: true
+                                    enable: [
+                                        {
+                                            field: 'submitStatus',
+                                            values: [STATUS.SUBMIT_STATUS.SUBMITTED_DHR, STATUS.SUBMIT_STATUS.DHR_REJECTED]
+                                        }
+                                    ]
+                                },
+                                {
+
+                                    name: 'Reject',
+                                    eventName: 'rejectByDHR',
+                                    icon: <ClearIcon color="info" />,
+                                    hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HR_MANAGER) ? false : true,
+                                    enable: [
+                                        {
+                                            field: 'submitStatus',
+                                            values: [STATUS.SUBMIT_STATUS.SUBMITTED_DHR, STATUS.SUBMIT_STATUS.DHR_VERIFIED]
+                                        }
+                                    ]
                                 },
                                 {
                                     name: 'Approve',
                                     eventName: 'approveByOFFCEO',
                                     icon: <DoneAllIcon color="info" />,
                                     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
-                                    enable: true
+                                    enable: [
+                                        {
+                                            field: 'submitStatus',
+                                            values: [STATUS.SUBMIT_STATUS.DHR_VERIFIED, STATUS.SUBMIT_STATUS.OFCCEO_REJECTED]
+                                        }
+                                    ]
                                 },
                                 {
                                     name: 'Reject',
                                     eventName: 'rejectByOFFCEO',
                                     icon: <ClearIcon color="info" />,
                                     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
+                                    enable: [
+                                        {
+                                            field: 'submitStatus',
+                                            values: [STATUS.SUBMIT_STATUS.DHR_VERIFIED, STATUS.SUBMIT_STATUS.OFCCEO_APPROVED]
+                                        }
+                                    ]
+                                },
+                                {
+                                    name: 'Shortlist',
+                                    eventName: 'shortlistCandidate',
+                                    icon: <CheckCircleOutlineIcon color="info" />,
+                                    hidden: !user?.roles ? true : [ROLE.ROLE_TA_TEAM, ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
                                     enable: true
                                 },
+                                {
+                                    name: 'Submit To HOD',
+                                    eventName: 'submitToHOD',
+                                    icon: <NextPlanIcon color="info" />,
+                                    hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ? false : true,
+                                    enable: [
+                                        {
+                                            field: 'submitStatus',
+                                            values: [STATUS.SUBMIT_STATUS.OFCCEO_APPROVED]
+                                        }
+                                    ]
+                                },
+
                                 // {
                                 //     name: 'Submit To TA',
                                 //     eventName: 'submitToTA',
@@ -166,29 +221,10 @@ const HomeCandidate = () => {
                                 //     enable: [
                                 //         {
                                 //             field: 'submitStatus',
-                                //             values: [STATUS.SUBMIT_STATUS.OFCCEO_VERIFIED]
+                                //             values: [STATUS.SUBMIT_STATUS.OFFCEO_APPROVED]
                                 //         }
                                 //     ]
                                 // },
-                                {
-                                    name: 'Shortlist',
-                                    eventName: 'shortlistCandidate',
-                                    icon: <CheckCircleOutlineIcon color="info" />,
-                                    hidden: !user?.roles ? true : [ROLE.ROLE_TA, ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
-                                    enable: true
-                                },
-                                {
-                                    name: 'Submit To HOD',
-                                    eventName: 'submitToHOD',
-                                    icon: <NextPlanIcon color="info" />,
-                                    hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA) ? false : true,
-                                    enable: [
-                                        {
-                                            field: 'submitStatus',
-                                            values: [STATUS.SUBMIT_STATUS.SENT_TA_TEAM]
-                                        }
-                                    ]
-                                },
 
                             ]
                         },

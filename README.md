@@ -76,6 +76,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 + Process each roles
 
+1: Verify
+
 TA admin:
     Create CV:
         shortlist result : waiting
@@ -124,7 +126,7 @@ HOD:
         shortlist result: Passed
         submit status: Submitted_HOD
         status (candidate): Shortlisted
-        
+
     Action:
         shortlist result: Passed | Failed | Keep_In_Pool
         set schedule: ''
@@ -135,6 +137,25 @@ HOD:
             shortlist result: Passed
             schedule | interviewDate: '10-10-2023' 
             committee : ['a','b']
+            status (candidate): Shortlisted
+
+2: Interview
+
+TA:
+    CV: 
+        shortlist result: Passed
+        submit status: Submitted_TA | Sent_TA_Team 
+        status (candidate): Shortlisted
+        interviewDate: '10-10-2023'
+        committee: ['a','b']
+
+    Action: 
+        final interviewDate: '11-11-2023'
+        final committee: ['c','d']  
+
+        print form interview
+
+
 + Add up
 
 Role: HR

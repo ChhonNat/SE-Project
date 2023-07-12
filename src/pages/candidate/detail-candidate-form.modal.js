@@ -161,7 +161,7 @@ const CandidateFormDetailModal = (props) => {
                                                                                 fontWeight: 'bold',
                                                                             }}
                                                                         >
-                                                                            {mapKeyToView[key].label}:
+                                                                            {mapKeyToView[key].label}
                                                                         </label>
                                                                         <hr></hr>
                                                                     </Grid>
@@ -183,7 +183,7 @@ const CandidateFormDetailModal = (props) => {
                                                                                                         fontFamily: 'Roboto'
                                                                                                     }}
                                                                                                 >
-                                                                                                    {MAP_ROLE_NAME[keyRole]}:
+                                                                                                    {MAP_ROLE_NAME[keyRole]}
                                                                                                 </label>
                                                                                             </Grid>
                                                                                             <Grid
@@ -211,14 +211,7 @@ const CandidateFormDetailModal = (props) => {
                                                                                                                         <label style={{ fontWeight: 'bold', fontSize: 13 }}>{key === 'submitDetails' ? 'Submitted Status:' : 'Shortlisted Result:'}</label>
                                                                                                                         <label style={{ fontSize: 13 }}>{submitDetail?.submitStatus || submitDetail?.shortlistResult}</label>
                                                                                                                     </Grid>
-                                                                                                                    <Grid
-                                                                                                                        item
-                                                                                                                        xs={12}
-                                                                                                                        sx={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'Roboto' }}
-                                                                                                                    >
-                                                                                                                        <label style={{ fontWeight: 'bold', fontSize: 13 }}>{key === 'submitDetails' ? 'Submitted By:' : 'Shortlisted By:'}</label>
-                                                                                                                        <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
-                                                                                                                    </Grid>
+
                                                                                                                     <Grid
                                                                                                                         item
                                                                                                                         xs={12}
@@ -227,6 +220,16 @@ const CandidateFormDetailModal = (props) => {
                                                                                                                         <label style={{ fontWeight: 'bold', fontSize: 13 }}>{key === 'submitDetails' ? 'Submitted At:' : 'Shortlisted At:'}</label>
                                                                                                                         <label style={{ fontSize: 13 }}>{moment(submitDetail?.submittedAt || submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
                                                                                                                     </Grid>
+
+                                                                                                                    <Grid
+                                                                                                                        item
+                                                                                                                        xs={12}
+                                                                                                                        sx={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'Roboto' }}
+                                                                                                                    >
+                                                                                                                        <label style={{ fontWeight: 'bold', fontSize: 13 }}>{key === 'submitDetails' ? 'Submitted By:' : 'Shortlisted By:'}</label>
+                                                                                                                        <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
+                                                                                                                    </Grid>
+
                                                                                                                     <Grid
                                                                                                                         item
                                                                                                                         xs={12}

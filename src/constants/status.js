@@ -12,17 +12,21 @@ const SHORTLIST_RESULT = {
 };
 
 const SUBMIT_STATUS = {
-    WAITING: "Waiting",
-    SUBMITTED_STATUS: "Submitted_OFCCEO",
-    OFCCEO_VERIFIED: "OFCCEO_Verified",
+    WAITING: "Pending",
+    SUBMITTED_DHR: "Submitted_DHR",
+    DHR_VERIFIED: "DHR_Verified",
+    DHR_REJECTED: "DHR_Rejected",
+    OFCCEO_APPROVED: "OFCCEO_Approved",
     OFCCEO_REJECTED: "OFCCEO_Rejected",
-    SENT_TA_TEAM: "Sent_TA_Team",
-    SUBMITTED_HOD: "Submitted_HOD"
+    SUBMITTED_HOD: "Submitted_HOD",
+    // SUBMITTED_OFCCEO: "Submitted_OFCCEO",
+    // SENT_TA_TEAM: "Sent_TA_Team",
 };
 
 const CANDIDATE = {
     PENDING: 'Pending',
-    CV_REVIEWED: 'CV_Reviewed',
+    CV_REVIEWED: 'Reviewed',
+    CV_SHORTLISTED: 'Shortlisted',
     IN_INTERVIEW: 'IN_Interview',
     IN_ASSESSMENT: 'In_Assessment',
     HIRED: 'Hired'

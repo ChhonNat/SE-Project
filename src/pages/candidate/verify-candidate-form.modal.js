@@ -8,6 +8,7 @@ import FooterComponent from "../../components/Page/footer";
 import _useHttp from "../../hooks/_http";
 import { HTTP_METHODS } from "../../constants/http_method";
 import Swal from "sweetalert2";
+import { STATUS } from "../../constants/status";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -29,7 +30,7 @@ const CandidateVerifyForm = (props) => {
             subTitle: "You want submit to director of HR.",
             actions: {
                 submitLabel: 'Confirm',
-                submitStatus: 'Submitted_OFCCEO',
+                submitStatus: STATUS.SUBMIT_STATUS.SUBMITTED_DHR,
                 select: false
             }
         },
@@ -38,7 +39,16 @@ const CandidateVerifyForm = (props) => {
             subTitle: "You want to verify this candidate.",
             actions: {
                 submitLabel: 'Verify',
-                submitStatus: 'Submitted_OFCCEO',
+                submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
+                select: false
+            }
+        },
+        "rejectByDHR": {
+            title: "Are you sure?",
+            subTitle: "You want to reject this candidate.",
+            actions: {
+                submitLabel: 'Confirm',
+                submitStatus: STATUS.SUBMIT_STATUS.DHR_REJECTED,
                 select: false
             }
         },
@@ -47,7 +57,7 @@ const CandidateVerifyForm = (props) => {
             subTitle: "You want to approve this candidate.",
             actions: {
                 submitLabel: 'Approve',
-                submitStatus: 'OFCCEO_Verified',
+                submitStatus: STATUS.SUBMIT_STATUS.OFCCEO_APPROVED,
                 select: false
             }
         },
@@ -56,8 +66,25 @@ const CandidateVerifyForm = (props) => {
             subTitle: "You want to reject this candidate.",
             actions: {
                 submitLabel: 'Confirm',
-                submitStatus: 'OFCCEO_Rejected',
+                submitStatus: STATUS.SUBMIT_STATUS.OFCCEO_REJECTED,
                 select: false
+            }
+        },
+        "submitToHOD": {
+            title: "Are you sure?",
+            subTitle: "You want to submit this candidate to HOD",
+            actions: {
+                submitLabel: "Confirm",
+                submitStatus: STATUS.SUBMIT_STATUS.SUBMITTED_HOD,
+                select: false
+            }
+        },
+        "shortlistCandidate": {
+            title: "Are you sure?",
+            subTitle: "You want to shortlist this candidate",
+            actions: {
+                submitLabel: 'Confirm',
+                select: true
             }
         },
         // "submitToTA": {
@@ -69,23 +96,6 @@ const CandidateVerifyForm = (props) => {
         //         select: false
         //     }
         // },
-        "submitToHOD": {
-            title: "Are you sure?",
-            subTitle: "You want to submit this candidate to HOD",
-            actions: {
-                submitLabel: "Confirm",
-                submitStatus: "Submitted_HOD",
-                select: false
-            }
-        },
-        'shortlistCandidate': {
-            title: "Are you sure?",
-            subTitle: "You want to shortlist this candidate",
-            actions: {
-                submitLabel: 'Confirm',
-                select: true
-            }
-        }
     }
 
 
