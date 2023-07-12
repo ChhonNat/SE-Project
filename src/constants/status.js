@@ -11,6 +11,23 @@ const SHORTLIST_RESULT = {
     BLACKLIST: 'Blacklist'
 };
 
+const SUBMIT_STATUS = {
+    WAITING: "Waiting",
+    SUBMITTED_STATUS: "Submitted_OFCCEO",
+    OFCCEO_VERIFIED: "OFCCEO_Verified",
+    OFCCEO_REJECTED: "OFCCEO_Rejected",
+    SENT_TA_TEAM: "Sent_TA_Team",
+    SUBMITTED_HOD: "Submitted_HOD"
+};
+
+const CANDIDATE = {
+    PENDING: 'Pending',
+    CV_REVIEWED: 'CV_Reviewed',
+    IN_INTERVIEW: 'IN_Interview',
+    IN_ASSESSMENT: 'In_Assessment',
+    HIRED: 'Hired'
+};
+
 const INTERVIEW_RESULT = {
     WAITING: 'Waiting',
     FAILED: 'Failed',
@@ -30,24 +47,6 @@ const ASSESSMENT_RESULT = {
     SUSPENDED: 'Suspended',
     CANCELLED: 'Cancel',
     OFFERED: 'Offered'
-};
-
-
-const CANDIDATE = {
-    PENDING: 'Pending',
-    CV_REVIEWED: 'CV_Reviewed',
-    IN_INTERVIEW: 'IN_Interview',
-    IN_ASSESSMENT: 'In_Assessment',
-    HIRED: 'Hired'
-};
-
-const SUBMIT_STATUS = {
-    WAITING: "Waiting",
-    SUBMITTED_STATUS: "Submitted_OFCCEO",
-    OFCCEO_VERIFIED: "OFCCEO_Verified",
-    OFCCEO_REJECTED: "OFCCEO_Rejected",
-    SENT_TA_TEAM: "Sent_TA_Team",
-    SUBMITTED_HOD: "Submitted_HOD"
 };
 
 export const STATUS = {
