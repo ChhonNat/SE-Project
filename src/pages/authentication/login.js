@@ -22,7 +22,7 @@ export default function Login() {
    * pwd: dev123
    */
 
-  const [username, setUserName] = useState('developer');
+  const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
   const login = async (event) => {
