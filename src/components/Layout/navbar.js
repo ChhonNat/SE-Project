@@ -335,73 +335,73 @@ const NavbarComponent = ({ open, handleSetMinSidebar }) => {
                                 </PopupState>
                             </IconButton>
 
+                            {/* User Profile */}
+
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <label>{user?.username}</label>
-                                {/* User Profile */}
-                                <IconButton
-                                    size="large"
-                                    edge="end"
-                                    aria-label="account of current user"
-                                    aria-haspopup="true"
-                                    color="inherit"
-                                    sx={{ width: 50, height: 50, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'gray', marginLeft: 1 }}
-                                >
-
-                                    <PopupState variant="popover" popupId="demo-popup-popover">
-                                        {(popupState) => (
-                                            <div>
+                                <PopupState variant="popover" popupId="demo-popup-popover">
+                                    {(popupState) => (
+                                        <div>
+                                            <IconButton
+                                                size="large"
+                                                edge="end"
+                                                aria-label="account of current user"
+                                                aria-haspopup="true"
+                                                color="inherit"
+                                                {...bindTrigger(popupState)}
+                                                sx={{ width: 50, height: 50, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'gray', marginLeft: 1 }}
+                                            >
                                                 <AccountCircle
                                                     variant="contained"
-                                                    {...bindTrigger(popupState)}
                                                 />
-                                                <Popover
-                                                    {...bindPopover(popupState)}
-                                                    anchorOrigin={{
-                                                        vertical: "bottom",
-                                                        horizontal: "center",
-                                                    }}
-                                                    transformOrigin={{
-                                                        vertical: "top",
-                                                        horizontal: "center",
+                                            </IconButton>
+                                            <Popover
+                                                {...bindPopover(popupState)}
+                                                anchorOrigin={{
+                                                    vertical: "bottom",
+                                                    horizontal: "center",
+                                                }}
+                                                transformOrigin={{
+                                                    vertical: "top",
+                                                    horizontal: "center",
+                                                }}
+                                            >
+                                                <List
+                                                    sx={{
+                                                        width: "100%",
+                                                        maxWidth: 360,
+                                                        bgcolor: "background.paper",
                                                     }}
                                                 >
-                                                    <List
-                                                        sx={{
-                                                            width: "100%",
-                                                            maxWidth: 360,
-                                                            bgcolor: "background.paper",
-                                                        }}
+                                                    <ListItem
+                                                        alignItems="flex-start"
+                                                        className="tableHover"
                                                     >
-                                                        <ListItem
-                                                            alignItems="flex-start"
-                                                            className="tableHover"
-                                                        >
-                                                            <ListItemAvatar>
-                                                                <AccountCircle />
-                                                            </ListItemAvatar>
-                                                            <ListItemText primary="My Profile" />
-                                                        </ListItem>
-                                                        <Divider variant="inset" component="li" />
-                                                        <ListItem
-                                                            alignItems="flex-start"
-                                                            className="tableHover"
-                                                            onClick={handleLogout}
-                                                        >
-                                                            <ListItemAvatar>
-                                                                <OutputIcon />
-                                                            </ListItemAvatar>
-                                                            <ListItemText sx={{ opacity: open ? 1 : 0 }}>
-                                                                Logout
-                                                            </ListItemText>
-                                                        </ListItem>
+                                                        <ListItemAvatar>
+                                                            <AccountCircle />
+                                                        </ListItemAvatar>
+                                                        <ListItemText primary="My Profile" />
+                                                    </ListItem>
+                                                    <Divider variant="inset" component="li" />
+                                                    <ListItem
+                                                        alignItems="flex-start"
+                                                        className="tableHover"
+                                                        onClick={handleLogout}
+                                                    >
+                                                        <ListItemAvatar>
+                                                            <OutputIcon />
+                                                        </ListItemAvatar>
+                                                        <ListItemText sx={{ opacity: open ? 1 : 0 }}>
+                                                            Logout
+                                                        </ListItemText>
+                                                    </ListItem>
 
 
-                                                    </List>
-                                                </Popover>
-                                            </div>
-                                        )}
-                                    </PopupState>
-                                </IconButton>
+                                                </List>
+                                            </Popover>
+                                        </div>
+                                    )}
+                                </PopupState>
                             </div>
 
                         </Box>
