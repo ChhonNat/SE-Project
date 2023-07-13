@@ -205,7 +205,11 @@ const TableRows = ({
                             } else {
 
                                 return !head?.Render ?
-                                    <TableCell align={head.align ? head?.align : 'left'} key={uuid()} sx={{ fontSize: 13 }}>
+                                    <TableCell
+                                        align={head.align ? head?.align : 'left'}
+                                        key={uuid()}
+                                        sx={{ fontSize: 13, color: head?.textColor ? head?.textColor[row[head.id]] : '' }}
+                                    >
 
                                         {/* Use table index */}
                                         {showIndex && (index + 1)}

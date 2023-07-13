@@ -54,6 +54,7 @@ const AsyncDatatable = (props) => {
   let rows = useMemo(() => (data?.records ? data?.records : []), [data]);
   let rowCount = useMemo(() => (data?.totalRecord ? data?.totalRecord : 0), [data]);
 
+
   /**
    * Get row data
    */
@@ -73,13 +74,15 @@ const AsyncDatatable = (props) => {
   );
 
   useEffect(() => {
-    const identifier = setTimeout(async () => {
-      getRows(searchText);
-    }, 300);
+    getRows();
+    // const identifier = setTimeout(async () => {
+    // getRows(searchText);
+    // }, 300);
 
-    return () => {
-      clearTimeout(identifier);
-    };
+    // return () => {
+    //   clearTimeout(identifier);
+    // };
+
   }, [searchText, isReloadData, getRows]);
 
 
@@ -202,16 +205,20 @@ const AsyncDatatable = (props) => {
 
               {loading ? Array(rowsPerPage).fill(null).map(() => (
 
-                <TableRow key={uuid()} style={{ height: dense ? 33 : 53 }}>
+                <TableRow key={uuid()} style={{ height: dense ? 23 : 53 }}>
 
                   {headers?.length ? headers.filter((h) => h.visible !== false).map((h) => (
 
-                    <TableCell align='center' key={uuid()} sx={{ textAlign: 'center', padding: '0.8rem 1rem' }}>
+                    <TableCell
+                      align='center'
+                      key={uuid()}
+                      sx={{ textAlign: 'center', padding: '0.5rem 0.5rem' }}
+                    >
                       <Skeleton
                         key={uuid()}
                         variant="rectangular"
                         width="100%"
-                        height={30}
+                        height={25}
                       />
                     </TableCell>
                   ))
