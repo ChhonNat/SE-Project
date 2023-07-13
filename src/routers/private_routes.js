@@ -48,9 +48,9 @@ const Hire = {
 
 const Settings = {
 
-    positionLevel : {
+    positionLevel: {
         home: lazy(() => import('../pages/settings/position-level/home'))
-    },      
+    },
 
     position: {
         home: lazy(() => import('../pages/settings/position/home')),
@@ -62,6 +62,10 @@ const Settings = {
 
     headDepartment: {
         home: lazy(() => import('../pages/settings/head_department/home'))
+    },
+
+    committee: {
+        home: lazy(() => import('../pages/settings/committee/home'))
     },
 
     mainBusiness: {
@@ -197,8 +201,8 @@ export const PRIVATE_ROUTES = [
             {
                 name: "Position Levels",
                 path: "position-level",
-                component: <Settings.positionLevel.home/>,
-                icon: <ElevatorIcon/>,
+                component: <Settings.positionLevel.home />,
+                icon: <ElevatorIcon />,
             },
 
             /**Position */
@@ -214,6 +218,14 @@ export const PRIVATE_ROUTES = [
                 name: "Head Departments",
                 path: "head-department",
                 component: <Settings.headDepartment.home />,
+                icon: <PeopleAltIcon />,
+            },
+
+            /**Committee */
+            {
+                name: "Committees",
+                path: "committee",
+                component: <Settings.committee.home />,
                 icon: <PeopleAltIcon />,
             },
 

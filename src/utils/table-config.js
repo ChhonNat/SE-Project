@@ -374,6 +374,45 @@ const tblHeadDepartment = [
 ];
 
 /**
+ * Committee table
+ */
+const tblCommittee = [
+    {
+        id: 'index', label: 'No.'
+    },
+    {
+        id: 'staffId', label: 'Card ID'
+    },
+    {
+        id: 'fullName', label: 'Name'
+    },
+    {
+        id: 'phoneNumber', label: 'Phone Number'
+    },
+    {
+        id: 'businessUnitName', label: 'Primary Business'
+    },
+    {
+        id: 'departmentName', label: 'Department'
+    },
+    {
+        id: 'positionName', label: 'Position'
+    },
+    {
+        id: 'positionLevelName', label: 'Level'
+    },
+    {
+        id: 'description', label: 'Description'
+    },
+    {
+        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+    },
+    // ...proof,
+    {
+        id: 'action', label: 'Actions'
+    }
+];
+/**
  * Main business table
  */
 
@@ -541,6 +580,7 @@ export const TABLE_CONFIG = {
     tblSubBusinessUnit,
     tblDepartment,
     tblHeadDepartment,
+    tblCommittee,
     tblPosition,
     tblPositionLevel,
     tblReceivingCategory,
