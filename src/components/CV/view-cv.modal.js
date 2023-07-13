@@ -1,9 +1,7 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef } from "react";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Slide } from "@mui/material";
 import TitleComponent from "../Page/title";
 import FooterComponent from "../Page/footer";
-import { CandidateService } from "../../services/candidate.service";
-import { HTTP_STATUS } from "../../constants/http_status";
 import apiLink from "../../constants/app_cont";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
@@ -35,7 +33,7 @@ const CandidateReviewCVModal = (props) => {
                         src={downloadCV}
                         style={
                             {
-                                width: '-webkit-fill-available',
+                                webkitWidth: '-webkit-fill-available',
                                 height: '100%',
                                 width: '100%'
                             }}
