@@ -9,12 +9,16 @@ import _useHttp from "../../hooks/_http";
 import { HTTP_METHODS } from "../../constants/http_method";
 import Swal from "sweetalert2";
 import { STATUS } from "../../constants/status";
+import { useSelector } from "react-redux";
+import { ROLE } from "../../constants/roles";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const CandidateVerifyForm = (props) => {
+
+    const user = useSelector((state) => state?.userAuthendicated);
 
     const { open, onCloseModal, eventType, candidate, handleEventSuccessed } = props;
     const { data, loading, message, error, sendRequest } = _useHttp();
@@ -84,8 +88,8 @@ const CandidateVerifyForm = (props) => {
             subTitle: "You want to shortlist this candidate",
             actions: {
                 submitLabel: 'Confirm',
-                select: true
-            }
+                select: true,
+            },
         },
         // "submitToTA": {
         //     title: "Are you sure?",
@@ -105,7 +109,6 @@ const CandidateVerifyForm = (props) => {
 
             const fetctData = async () => {
 
-                setShortlistResult('');
                 setShortlistResults([]);
 
                 try {
@@ -114,7 +117,23 @@ const CandidateVerifyForm = (props) => {
                     const { success, data } = reqLookup?.data;
 
                     if (success) {
-                        setShortlistResults(data?.shortlistResults);
+
+                        if (data?.shortlistResults?.length && user?.roles?.length) {
+
+                            const filterResultStatusByRole = data?.shortlistResults.filter((resultStatus) => {
+
+                                if(user?.roles?.includes(ROLE.ROLE_TA_TEAM))
+                                return !resultStatus.includes(STATUS.SHORTLIST_RESULT.WAITING);
+
+                                if(user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER))
+                                return !resultStatus.includes(STATUS.SHORTLIST_RESULT.WAITING) && !resultStatus.includes(STATUS.SHORTLIST_RESULT.BLACKLIST);
+                            })
+
+                            setShortlistResults(filterResultStatusByRole);
+                        } else {
+
+                            setShortlistResults([]);
+                        }
                     }
 
                 } catch (error) {
@@ -127,6 +146,10 @@ const CandidateVerifyForm = (props) => {
             setErrors({});
         }
     }, [open])
+
+    useEffect(() => {
+        setShortlistResult(candidate?.shortlistResult);
+    },[candidate?.shortlistResult])
 
 
     //submit method 

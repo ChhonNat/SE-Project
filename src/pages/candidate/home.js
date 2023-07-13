@@ -138,10 +138,10 @@ const HomeCandidate = () => {
                                             field: 'submitStatus',
                                             values: [STATUS.SUBMIT_STATUS.WAITING]
                                         },
-                                        {
-                                            field: 'status',
-                                            values: [STATUS.CANDIDATE.CV_REVIEWED]
-                                        }
+                                        // {
+                                        //     field: 'status',
+                                        //     values: [STATUS.CANDIDATE.CV_REVIEWED]
+                                        // }
                                     ]
                                 },
                                 {

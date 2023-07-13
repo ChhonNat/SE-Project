@@ -46,7 +46,7 @@ const CandidateFormDetailModal = (props) => {
         submitStatus: { rank: 19, label: 'Process Status' },
         submitDetails: { rank: 20, label: 'Processed Details' },
         shortlistDetails: { rank: 21, label: 'Shortlisted Details' }
-    };    
+    };
 
     const { openCandidateModal, onCloseCandidateModal, candidate } = props;
     const { data, loading, message, error, sendRequest } = _useHttp();
@@ -107,22 +107,22 @@ const CandidateFormDetailModal = (props) => {
                             <DialogContent dividers>
 
                                 <Box sx={{ width: '100%' }}>
-                                   
-                                        <Grid
-                                            container
-                                            rowSpacing={2}
-                                            columnSpacing={{
-                                                xs: 1,
-                                                sm: 2,
-                                                md: 3
-                                            }}
-                                            sx={{
-                                               marginBottom: '2rem'
-                                            }}
-                                        >
+
+                                    <Grid
+                                        container
+                                        rowSpacing={2}
+                                        columnSpacing={{
+                                            xs: 1,
+                                            sm: 2,
+                                            md: 3
+                                        }}
+                                        sx={{
+                                            marginBottom: '2rem'
+                                        }}
+                                    >
 
                                         {
-                                            
+
                                             Object.keys(candidateDetail)
                                                 .sort((a, b) => {
                                                     return mapKeyToView[a]?.rank - mapKeyToView[b]?.rank
@@ -135,7 +135,7 @@ const CandidateFormDetailModal = (props) => {
                                                                 item
                                                                 xs={6}
                                                                 sx={{
-                                                                   
+
                                                                     fontSize: 14,
                                                                     display: 'flex',
                                                                     justifyContent: 'space-between',
@@ -158,40 +158,40 @@ const CandidateFormDetailModal = (props) => {
                                                                 </label>
                                                             </Grid>
                                                         }
-                                                        
+
                                                     </React.Fragment>
 
                                                 ))
                                         }
 
-                                        </Grid>
+                                    </Grid>
 
 
-                                        <Grid
-                                            container
-                                            rowSpacing={2}
-                                            columnSpacing={{
-                                                xs: 1,
-                                                sm: 2,
-                                                md: 3
-                                            }}
-                                        >
+                                    <Grid
+                                        container
+                                        rowSpacing={2}
+                                        columnSpacing={{
+                                            xs: 1,
+                                            sm: 2,
+                                            md: 3
+                                        }}
+                                    >
 
-                                            {
+                                        {
 
-                                                Object.keys(candidateDetail)
-                                                    .sort((a, b) => {
-                                                        return mapKeyToView[a]?.rank - mapKeyToView[b]?.rank
-                                                    })
-                                                    
-                                                    .map((key, index) => (
-                                                        <React.Fragment key={index}>
-                                                        
-                                                            {
-                                                                mapKeyToView[key] &&
+                                            Object.keys(candidateDetail)
+                                                .sort((a, b) => {
+                                                    return mapKeyToView[a]?.rank - mapKeyToView[b]?.rank
+                                                })
+
+                                                .map((key, index) => (
+                                                    <React.Fragment key={index}>
+
+                                                        {
+                                                            mapKeyToView[key] &&
                                                                 key === 'submitDetails' &&
                                                                 candidateDetail[key].length > 0 &&
-                                                                typeof candidateDetail[key] === 'object'?
+                                                                typeof candidateDetail[key] === 'object' ?
                                                                 <>
                                                                     <Grid item xs={12}>
                                                                         <label
@@ -206,308 +206,308 @@ const CandidateFormDetailModal = (props) => {
                                                                     </Grid>
                                                                     <Grid item xs={12}>
                                                                         {
-                                                                        Object.keys(groupByRole(candidateDetail[key]))
-                                                                            .map((keyRole, indexRole) => (
-                                                                                <Fragment key={indexRole}>
-                                                                                    <Grid
-                                                                                        item
-                                                                                        xs={12}
-                                                                                        paddingBottom={1}
-                                                                                        sx={{ marginBottom:'0.5rem' , display: 'flex', justifyContent: 'space-between' }}>
-                                                                                        <label
-                                                                                            style={{
-                                                                                                fontWeight: 'bold',
-                                                                                                fontSize: '1rem'
-                                                                                            }}
+                                                                            Object.keys(groupByRole(candidateDetail[key]))
+                                                                                .map((keyRole, indexRole) => (
+                                                                                    <Fragment key={indexRole}>
+                                                                                        <Grid
+                                                                                            item
+                                                                                            xs={12}
+                                                                                            paddingBottom={1}
+                                                                                            sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between' }}>
+                                                                                            <label
+                                                                                                style={{
+                                                                                                    fontWeight: 'bold',
+                                                                                                    fontSize: '1rem'
+                                                                                                }}
+                                                                                            >
+                                                                                                {MAP_ROLE_NAME[keyRole]}
+                                                                                            </label>
+                                                                                        </Grid>
+                                                                                        <Grid
+                                                                                            container
+                                                                                            spacing={{ xs: 2, md: 2 }}
+                                                                                            columns={{ xs: 4, sm: 8, md: 12 }}
+                                                                                            marginBottom={3}
                                                                                         >
-                                                                                            {MAP_ROLE_NAME[keyRole]}
-                                                                                        </label>
-                                                                                    </Grid>
-                                                                                    <Grid
-                                                                                        container
-                                                                                        spacing={{ xs: 2, md: 2 }}
-                                                                                        columns={{ xs: 4, sm: 8, md: 12 }}
-                                                                                        marginBottom={3}
-                                                                                    >
-                                                                                        {
-                                                                                            groupByRole(candidateDetail[key])[keyRole]
-                                                                                                .map((submitDetail, indexSubmitDetail) => (
-                                                                                                    <Fragment key={indexSubmitDetail}>
-                                                                                                        <Grid
-                                                                                                            item
-                                                                                                            xs={6}
-                                                                                                            key={index}
-                                                                                                        >
+                                                                                            {
+                                                                                                groupByRole(candidateDetail[key])[keyRole]
+                                                                                                    .map((submitDetail, indexSubmitDetail) => (
+                                                                                                        <Fragment key={indexSubmitDetail}>
                                                                                                             <Grid
                                                                                                                 item
-                                                                                                                xs={12}
-                                                                                                                sx={{  marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                xs={6}
+                                                                                                                key={index}
                                                                                                             >
-                                                                                                                <label style={{ fontWeight: 'bold', fontSize: 13 }}>Processed Status:</label>
-                                                                                                                <label style={{ fontSize: 13 }}>{submitDetail?.submitStatus || submitDetail?.shortlistResult}</label>
+                                                                                                                <Grid
+                                                                                                                    item
+                                                                                                                    xs={12}
+                                                                                                                    sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                >
+                                                                                                                    <label style={{ fontWeight: 'bold', fontSize: 13 }}>Processed Status:</label>
+                                                                                                                    <label style={{ fontSize: 13 }}>{submitDetail?.submitStatus || submitDetail?.shortlistResult}</label>
+                                                                                                                </Grid>
+
+                                                                                                                {
+                                                                                                                    submitDetail?.submittedAt && <>
+
+                                                                                                                        <Grid
+                                                                                                                            item
+                                                                                                                            xs={12}
+                                                                                                                            rowSpacing={2}
+                                                                                                                            sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                        >
+                                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Submitted At:</label>
+                                                                                                                            <label style={{ fontSize: 13 }}>{moment(submitDetail?.submittedAt || submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
+                                                                                                                        </Grid>
+
+                                                                                                                        <Grid
+                                                                                                                            item
+                                                                                                                            xs={12}
+                                                                                                                            sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                        >
+                                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Submitted By:</label>
+                                                                                                                            <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
+                                                                                                                        </Grid>
+                                                                                                                    </>
+                                                                                                                }
+                                                                                                                {
+                                                                                                                    submitDetail?.approvedAt && <>
+
+                                                                                                                        <Grid
+                                                                                                                            item
+                                                                                                                            xs={12}
+                                                                                                                            sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                        >
+                                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Approved At:</label>
+                                                                                                                            <label style={{ fontSize: 13 }}>{moment(submitDetail?.submittedAt || submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
+                                                                                                                        </Grid>
+
+                                                                                                                        <Grid
+                                                                                                                            item
+                                                                                                                            xs={12}
+                                                                                                                            sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                        >
+                                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Approved By:</label>
+                                                                                                                            <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
+                                                                                                                        </Grid>
+                                                                                                                    </>
+                                                                                                                }
+
+                                                                                                                {
+                                                                                                                    submitDetail?.rejectedAt && <>
+
+                                                                                                                        <Grid
+                                                                                                                            item
+                                                                                                                            xs={12}
+                                                                                                                            sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                        >
+                                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Rejected At:</label>
+                                                                                                                            <label style={{ fontSize: 13 }}>{moment(submitDetail?.submittedAt || submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
+                                                                                                                        </Grid>
+
+                                                                                                                        <Grid
+                                                                                                                            item
+                                                                                                                            xs={12}
+                                                                                                                            sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                        >
+                                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Rejected By:</label>
+                                                                                                                            <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
+                                                                                                                        </Grid>
+                                                                                                                    </>
+                                                                                                                }
+
+                                                                                                                {
+                                                                                                                    submitDetail?.verifiedAt && <>
+
+                                                                                                                        <Grid
+                                                                                                                            item
+                                                                                                                            xs={12}
+                                                                                                                            sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                        >
+                                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Verified At:</label>
+                                                                                                                            <label style={{ fontSize: 13 }}>{moment(submitDetail?.submittedAt || submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
+                                                                                                                        </Grid>
+
+                                                                                                                        <Grid
+                                                                                                                            item
+                                                                                                                            xs={12}
+                                                                                                                            sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                        >
+                                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Verified By:</label>
+                                                                                                                            <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
+                                                                                                                        </Grid>
+                                                                                                                    </>
+                                                                                                                }
+
+                                                                                                                <Grid
+                                                                                                                    item
+                                                                                                                    xs={12}
+                                                                                                                    sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                >
+                                                                                                                    <label style={{ fontWeight: 'bold', fontSize: 13 }}>Remark:</label>
+                                                                                                                    <label style={{ fontSize: 13 }}>{submitDetail?.remark}</label>
+                                                                                                                </Grid>
                                                                                                             </Grid>
+                                                                                                        </Fragment>
+                                                                                                    )
+                                                                                                    )
+                                                                                            }
+                                                                                        </Grid>
 
-                                                                                                            { 
-                                                                                                                submitDetail?.submittedAt && <>
-                                                                                                                
-                                                                                                                    <Grid
-                                                                                                                        item
-                                                                                                                        xs={12}
-                                                                                                                        rowSpacing={2}
-                                                                                                                        sx={{  marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between'}}
-                                                                                                                    >
-                                                                                                                        <label style={{ fontWeight: 'bold', fontSize: 13 }}>Submitted At:</label>
-                                                                                                                        <label style={{ fontSize: 13 }}>{moment(submitDetail?.submittedAt || submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
-                                                                                                                    </Grid>
+                                                                                    </Fragment>
+                                                                                ))
 
-                                                                                                                    <Grid
-                                                                                                                        item
-                                                                                                                        xs={12}
-                                                                                                                        sx={{  marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between'}}
-                                                                                                                    >
-                                                                                                                        <label style={{ fontWeight: 'bold', fontSize: 13 }}>Submitted By:</label>
-                                                                                                                        <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
-                                                                                                                    </Grid>
-                                                                                                                </>
-                                                                                                            }
-                                                                                                            { 
-                                                                                                                submitDetail?.approvedAt && <>
-                                                                                                                
-                                                                                                                    <Grid
-                                                                                                                        item
-                                                                                                                        xs={12}
-                                                                                                                        sx={{ marginBottom:'0.25rem' ,display: 'flex', justifyContent: 'space-between'}}
-                                                                                                                    >
-                                                                                                                        <label style={{ fontWeight: 'bold', fontSize: 13 }}>Approved At:</label>
-                                                                                                                        <label style={{ fontSize: 13 }}>{moment(submitDetail?.submittedAt || submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
-                                                                                                                    </Grid>
-
-                                                                                                                    <Grid
-                                                                                                                        item
-                                                                                                                        xs={12}
-                                                                                                                        sx={{  marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between'}}
-                                                                                                                    >
-                                                                                                                        <label style={{ fontWeight: 'bold', fontSize: 13 }}>Approved By:</label>
-                                                                                                                        <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
-                                                                                                                    </Grid>
-                                                                                                                </>
-                                                                                                            }
-
-                                                                                                            { 
-                                                                                                                submitDetail?.rejectedAt && <>
-                                                                                                                
-                                                                                                                    <Grid
-                                                                                                                        item
-                                                                                                                        xs={12}
-                                                                                                                        sx={{  marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between'}}
-                                                                                                                    >
-                                                                                                                        <label style={{ fontWeight: 'bold', fontSize: 13 }}>Rejected At:</label>
-                                                                                                                        <label style={{ fontSize: 13 }}>{moment(submitDetail?.submittedAt || submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
-                                                                                                                    </Grid>
-
-                                                                                                                    <Grid
-                                                                                                                        item
-                                                                                                                        xs={12}
-                                                                                                                        sx={{  marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between'}}
-                                                                                                                    >
-                                                                                                                        <label style={{ fontWeight: 'bold', fontSize: 13 }}>Rejected By:</label>
-                                                                                                                        <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
-                                                                                                                    </Grid>
-                                                                                                                </>
-                                                                                                            }
-
-                                                                                                            { 
-                                                                                                                submitDetail?.verifiedAt && <>
-                                                                                                                
-                                                                                                                    <Grid
-                                                                                                                        item
-                                                                                                                        xs={12}
-                                                                                                                        sx={{  marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between'}}
-                                                                                                                    >
-                                                                                                                        <label style={{ fontWeight: 'bold', fontSize: 13 }}>Verified At:</label>
-                                                                                                                        <label style={{ fontSize: 13 }}>{moment(submitDetail?.submittedAt || submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
-                                                                                                                    </Grid>
-
-                                                                                                                    <Grid
-                                                                                                                        item
-                                                                                                                        xs={12}
-                                                                                                                        sx={{  marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between'}}
-                                                                                                                    >
-                                                                                                                        <label style={{ fontWeight: 'bold', fontSize: 13 }}>Verified By:</label>
-                                                                                                                        <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
-                                                                                                                    </Grid>
-                                                                                                                </>
-                                                                                                            }
-
-                                                                                                            <Grid
-                                                                                                                item
-                                                                                                                xs={12}
-                                                                                                                sx={{  marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between' }}
-                                                                                                            >
-                                                                                                                <label style={{ fontWeight: 'bold', fontSize: 13 }}>Remark:</label>
-                                                                                                                <label style={{ fontSize: 13 }}>{submitDetail?.remark}</label>
-                                                                                                            </Grid>
-                                                                                                        </Grid>
-                                                                                                    </Fragment>
-                                                                                                )
-                                                                                                )
-                                                                                        }
-                                                                                    </Grid>
-
-                                                                                </Fragment>
-                                                                            ))
-                                                                                
                                                                         }
                                                                     </Grid>
                                                                 </>
                                                                 :
                                                                 <>
                                                                 </>
-                                                            }
-                                                        </React.Fragment>
+                                                        }
+                                                    </React.Fragment>
 
-                                                    ))
-                                            }
-
-
-                                        </Grid>
+                                                ))
+                                        }
 
 
+                                    </Grid>
 
 
-                                    
-                                        <Grid
-                                            container
-                                            rowSpacing={2}
-                                            columnSpacing={{
-                                                xs: 1,
-                                                sm: 2,
-                                                md: 3
-                                            }}
-                                        >
 
-                                            {
+
+
+                                    <Grid
+                                        container
+                                        rowSpacing={2}
+                                        columnSpacing={{
+                                            xs: 1,
+                                            sm: 2,
+                                            md: 3
+                                        }}
+                                    >
+
+                                        {
 
                                             Object.keys(candidateDetail)
                                                 .sort((a, b) => {
                                                     return mapKeyToView[a]?.rank - mapKeyToView[b]?.rank
                                                 })
-                                                
+
                                                 .map((key, index) => (
                                                     <React.Fragment key={index}>
-                                                    
+
                                                         {
                                                             mapKeyToView[key] &&
-                                                            key === 'shortlistDetails' &&
-                                                            candidateDetail[key].length > 0 &&
-                                                            typeof candidateDetail[key] === 'object'?
-                                                            <>
-                                                                <Grid item xs={12}>
-                                                                    <label
-                                                                        style={{
-                                                                            fontWeight: 'bold',
-                                                                            fontSize: '1.25rem'
-                                                                        }}
-                                                                    >
-                                                                        {mapKeyToView[key].label}
-                                                                    </label>
-                                                                    <hr></hr>
-                                                                </Grid>
-                                                                <Grid item xs={12}>
-                                                                    {
-                                                                    Object.keys(groupByRole(candidateDetail[key]))
-                                                                        .map((keyRole, indexRole) => (
-                                                                            <Fragment key={indexRole}>
-                                                                                <Grid
-                                                                                    item
-                                                                                    xs={12}
-                                                                                    paddingBottom={1}
-                                                                                    sx={{  marginBottom:'0.5rem' , display: 'flex', justifyContent: 'space-between' }}>
-                                                                                    <label
-                                                                                        style={{
-                                                                                            fontWeight: 'bold',
-                                                                                            fontSize: '1rem'
-                                                                                        }}
-                                                                                    >
-                                                                                        {MAP_ROLE_NAME[keyRole]}
-                                                                                    </label>
-                                                                                </Grid>
-                                                                                <Grid
-                                                                                    container
-                                                                                    spacing={{ xs: 2, md: 3 }}
-                                                                                    columns={{ xs: 4, sm: 8, md: 12 }}
-                                                                                    paddingBottom={5}
-                                                                                >
-                                                                                    {
-                                                                                        groupByRole(candidateDetail[key])[keyRole]
-                                                                                            .map((submitDetail, indexSubmitDetail) => (
-                                                                                                <Fragment key={indexSubmitDetail}>
-                                                                                                    <Grid
-                                                                                                        item
-                                                                                                        xs={6}
-                                                                                                        key={index}
-                                                                                                    >
-                                                                                                        <Grid
-                                                                                                            item
-                                                                                                            xs={12}
-                                                                                                            sx={{ marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between' }}
-                                                                                                        >
-                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Shortlisted Result:</label>
-                                                                                                            <label style={{ fontSize: 13 }}>{submitDetail?.shortlistResult}</label>
-                                                                                                        </Grid>
+                                                                key === 'shortlistDetails' &&
+                                                                candidateDetail[key].length > 0 &&
+                                                                typeof candidateDetail[key] === 'object' ?
+                                                                <>
+                                                                    <Grid item xs={12}>
+                                                                        <label
+                                                                            style={{
+                                                                                fontWeight: 'bold',
+                                                                                fontSize: '1.25rem'
+                                                                            }}
+                                                                        >
+                                                                            {mapKeyToView[key].label}
+                                                                        </label>
+                                                                        <hr></hr>
+                                                                    </Grid>
+                                                                    <Grid item xs={12}>
+                                                                        {
+                                                                            Object.keys(groupByRole(candidateDetail[key]))
+                                                                                .map((keyRole, indexRole) => (
+                                                                                    <Fragment key={indexRole}>
+                                                                                        <Grid
+                                                                                            item
+                                                                                            xs={12}
+                                                                                            paddingBottom={1}
+                                                                                            sx={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between' }}>
+                                                                                            <label
+                                                                                                style={{
+                                                                                                    fontWeight: 'bold',
+                                                                                                    fontSize: '1rem'
+                                                                                                }}
+                                                                                            >
+                                                                                                {MAP_ROLE_NAME[keyRole]}
+                                                                                            </label>
+                                                                                        </Grid>
+                                                                                        <Grid
+                                                                                            container
+                                                                                            spacing={{ xs: 2, md: 3 }}
+                                                                                            columns={{ xs: 4, sm: 8, md: 12 }}
+                                                                                            paddingBottom={5}
+                                                                                        >
+                                                                                            {
+                                                                                                groupByRole(candidateDetail[key])[keyRole]
+                                                                                                    .map((submitDetail, indexSubmitDetail) => (
+                                                                                                        <Fragment key={indexSubmitDetail}>
+                                                                                                            <Grid
+                                                                                                                item
+                                                                                                                xs={6}
+                                                                                                                key={index}
+                                                                                                            >
+                                                                                                                <Grid
+                                                                                                                    item
+                                                                                                                    xs={12}
+                                                                                                                    sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                >
+                                                                                                                    <label style={{ fontWeight: 'bold', fontSize: 13 }}>Shortlisted Result:</label>
+                                                                                                                    <label style={{ fontSize: 13 }}>{submitDetail?.shortlistResult}</label>
+                                                                                                                </Grid>
 
-                                                                                                    
-                                                                                                            
-                                                                                                        <Grid
-                                                                                                            item
-                                                                                                            xs={12}
-                                                                                                            sx={{ marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between'}}
-                                                                                                        >
-                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Shortlisted At:</label>
-                                                                                                            <label style={{ fontSize: 13 }}>{moment(submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
-                                                                                                        </Grid>
 
-                                                                                                        <Grid
-                                                                                                            item
-                                                                                                            xs={12}
-                                                                                                            sx={{ marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between'}}
-                                                                                                        >
-                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Shortlisted By:</label>
-                                                                                                            <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
-                                                                                                        </Grid>
-                                                                                                        
 
-                                                                                                        <Grid
-                                                                                                            item
-                                                                                                            xs={12}
-                                                                                                            sx={{ marginBottom:'0.25rem' , display: 'flex', justifyContent: 'space-between' }}
-                                                                                                        >
-                                                                                                            <label style={{ fontWeight: 'bold', fontSize: 13 }}>Remark:</label>
-                                                                                                            <label style={{ fontSize: 13 }}>{submitDetail?.remark}</label>
-                                                                                                        </Grid>
-                                                                                                    </Grid>
-                                                                                                </Fragment>
-                                                                                            )
-                                                                                            )
-                                                                                    }
-                                                                                </Grid>
+                                                                                                                <Grid
+                                                                                                                    item
+                                                                                                                    xs={12}
+                                                                                                                    sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                >
+                                                                                                                    <label style={{ fontWeight: 'bold', fontSize: 13 }}>Shortlisted At:</label>
+                                                                                                                    <label style={{ fontSize: 13 }}>{moment(submitDetail?.shortlistedAt).format('MMM DD, YYYY hh:mm:ss A')}</label>
+                                                                                                                </Grid>
 
-                                                                            </Fragment>
-                                                                        ))
-                                                                            
-                                                                    }
-                                                                </Grid>
-                                                            </>
-                                                            :
-                                                            <>
-                                                            </>
+                                                                                                                <Grid
+                                                                                                                    item
+                                                                                                                    xs={12}
+                                                                                                                    sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                >
+                                                                                                                    <label style={{ fontWeight: 'bold', fontSize: 13 }}>Shortlisted By:</label>
+                                                                                                                    <label style={{ fontSize: 13 }}>{submitDetail?.username}, {submitDetail?.staffId}</label>
+                                                                                                                </Grid>
+
+
+                                                                                                                <Grid
+                                                                                                                    item
+                                                                                                                    xs={12}
+                                                                                                                    sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                >
+                                                                                                                    <label style={{ fontWeight: 'bold', fontSize: 13 }}>Remark:</label>
+                                                                                                                    <label style={{ fontSize: 13 }}>{submitDetail?.remark}</label>
+                                                                                                                </Grid>
+                                                                                                            </Grid>
+                                                                                                        </Fragment>
+                                                                                                    )
+                                                                                                    )
+                                                                                            }
+                                                                                        </Grid>
+
+                                                                                    </Fragment>
+                                                                                ))
+
+                                                                        }
+                                                                    </Grid>
+                                                                </>
+                                                                :
+                                                                <>
+                                                                </>
                                                         }
                                                     </React.Fragment>
 
                                                 ))
-                                            }
+                                        }
 
-                                        </Grid>
+                                    </Grid>
 
                                 </Box>
 
