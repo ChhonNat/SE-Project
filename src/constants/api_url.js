@@ -32,6 +32,11 @@ export const API_URL = {
             get: API_VERSION + '/candidates/lookup-data'
         }
     },
+    committeee: {
+        get: API_VERSION + '/committees/search',
+        create: API_VERSION + '/committees',
+        edit: API_VERSION + '/committees/',
+    },
     interview: {
         get: API_VERSION + '/interviews/search',
 

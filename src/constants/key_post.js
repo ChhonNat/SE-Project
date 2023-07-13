@@ -153,6 +153,19 @@ const headDepartment = [
     "status",
 ];
 
+const committeee = [
+    "staffId",
+    "firstName",
+    "lastName",
+    "phoneNumber",
+    "businessUnitId",
+    "positionId",
+    "positionLevelId",
+    "departmentId",
+    "description",
+    "status",
+];
+
 const user = [
     "staffId",
     "firstName",
@@ -184,5 +197,6 @@ export const KEY_POST = {
     subBusinessUnit,
     campus,
     headDepartment,
+    committeee,
     user
 };
