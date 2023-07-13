@@ -166,7 +166,6 @@ const CandidateFormDetailModal = (props) => {
 
                                     </Grid>
 
-
                                     <Grid
                                         container
                                         rowSpacing={2}
@@ -178,7 +177,6 @@ const CandidateFormDetailModal = (props) => {
                                     >
 
                                         {
-
                                             Object.keys(candidateDetail)
                                                 .sort((a, b) => {
                                                     return mapKeyToView[a]?.rank - mapKeyToView[b]?.rank

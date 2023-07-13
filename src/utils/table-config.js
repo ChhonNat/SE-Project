@@ -41,7 +41,13 @@ const tblCandidate = [
         id: 'appliedPositionName', label: 'Apply Position', sqlField: 'pos.name'
     },
     {
-        id: 'shortlistResult', label: 'Shortlist Result'
+        id: 'shortlistResult', 
+        textColor: { 
+            [STATUS.SHORTLIST_RESULT.PASSED]: 'Green',
+            [STATUS.SHORTLIST_RESULT.FAILED]: 'Red',
+            [STATUS.SHORTLIST_RESULT.WAITING]: 'Orange'
+        }, 
+        label: 'Shortlist Result'
     },
     {
         id: 'submitStatus',

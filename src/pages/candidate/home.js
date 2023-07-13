@@ -24,9 +24,6 @@ import ClearIcon from '@mui/icons-material/Clear';
 const HomeCandidate = () => {
 
     const user = useSelector((state) => state?.userAuthendicated);
-
-    console.log(user);
-
     const [selectedData, setSelectedData] = useState({ open: false, row: {} });
     const [isReload, setIsReload] = useState(false);
 
