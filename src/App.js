@@ -21,6 +21,7 @@ const App = () => {
   const location = useLocation();
 
   const [minSidebar, setMinsidebar] = useState(true);
+  // const [minNavbar, setMinNavbar] = useState(true);
   const user = useSelector((state) => state.userAuthendicated);
   const { pathname } = location;
 
@@ -64,8 +65,8 @@ const App = () => {
 
         {/* Navbar component */}
         <Navbar
-          open={minSidebar}
-          handleSetMinSidebar={() => setMinsidebar(!minSidebar)}
+          // open={minNavbar}
+          openNavBar={(val) => val}
         />
 
         {/* Sidebar component */}

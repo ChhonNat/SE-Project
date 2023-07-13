@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { styled, alpha } from "@mui/material/styles";
 
@@ -33,7 +33,7 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS } from "../../constants/local_storage";
 
 
-const NavbarComponent = ({ open, handleSetMinSidebar }) => {
+const NavbarComponent = (props) => {
 
     const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
     const location = useLocation();
@@ -41,11 +41,17 @@ const NavbarComponent = ({ open, handleSetMinSidebar }) => {
     const pageTitle = pathname !== '/' ? pathname.slice(1).replaceAll('/', ' > ') : 'dashboard';
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [open, setOpen] = useState(true);
 
     const handleLogout = () => {
         dispatch(isLogout());
         navigate('/login');
     };
+
+    const handleSetMinSidebar=()=>{
+        setOpen(!open);
+        props.openNavBar(!open);
+    }
 
     return (
         <AppBar position="fixed" open={open} >
