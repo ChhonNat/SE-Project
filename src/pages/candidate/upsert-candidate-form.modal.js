@@ -347,14 +347,13 @@ const CandidateFormModal = (props) => {
                             {
                                 candidate?.id && <>
 
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12}>
                                         <div style={{ paddingTop: 10 }}>
                                             <Link sx={{ cursor: 'pointer' }} onClick={() => setOpenCVModal(true)}>{candidate?.applicantCode + '.pdf'}</Link>
                                         </div>
                                     </Grid>
 
-                                    <Grid item xs={6}>
-                                        {/* Control review candidate checkbox */}
+                                    {/* <Grid item xs={6}>
                                         <FormControl component="fieldset">
 
                                             <FormGroup aria-label="position" row>
@@ -375,7 +374,7 @@ const CandidateFormModal = (props) => {
                                                 />
                                             </FormGroup>
                                         </FormControl>
-                                    </Grid>
+                                    </Grid> */}
                                 </>
                             }
 
