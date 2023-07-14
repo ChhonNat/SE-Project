@@ -45,7 +45,8 @@ const tblCandidate = [
         textColor: { 
             [STATUS.SHORTLIST_RESULT.PASSED]: 'Green',
             [STATUS.SHORTLIST_RESULT.FAILED]: 'Red',
-            [STATUS.SHORTLIST_RESULT.WAITING]: 'Orange'
+            [STATUS.SHORTLIST_RESULT.WAITING]: 'Orange',
+            [STATUS.SHORTLIST_RESULT.KEEP_IN_POOL] : 'Blue'
         }, 
         label: 'Shortlist Result'
     },

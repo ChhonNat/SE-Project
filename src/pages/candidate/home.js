@@ -195,7 +195,17 @@ const HomeCandidate = () => {
                                     eventName: 'shortlistCandidate',
                                     icon: <CheckCircleOutlineIcon color="info" />,
                                     hidden: !user?.roles ? true : [ROLE.ROLE_TA_TEAM, ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
-                                    enable: true
+                                    enable: !user?.roles ? false : (
+                                        user?.roles?.includes(ROLE.ROLE_TA_TEAM) ?
+                                            [
+                                                {
+                                                    field: 'submitStatus',
+                                                    values: [STATUS.SUBMIT_STATUS.OFCCEO_APPROVED, STATUS.SUBMIT_STATUS.SUBMITTED_HOD]
+                                                }
+                                            ]
+                                            :
+                                            true
+                                    )
                                 },
                                 {
                                     name: 'Submit To HOD',
@@ -206,23 +216,13 @@ const HomeCandidate = () => {
                                         {
                                             field: 'submitStatus',
                                             values: [STATUS.SUBMIT_STATUS.OFCCEO_APPROVED]
+                                        },
+                                        {
+                                            field: 'shortlistResult',
+                                            values: !user?.roles ? [] : [STATUS.SHORTLIST_RESULT.PASSED, STATUS.SHORTLIST_RESULT.FAILED, STATUS.SHORTLIST_RESULT.BLACKLIST, STATUS.SHORTLIST_RESULT.KEEP_IN_POOL]
                                         }
                                     ]
-                                },
-
-                                // {
-                                //     name: 'Submit To TA',
-                                //     eventName: 'submitToTA',
-                                //     icon: <NextPlanIcon color="info" />,
-                                //     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
-                                //     enable: [
-                                //         {
-                                //             field: 'submitStatus',
-                                //             values: [STATUS.SUBMIT_STATUS.OFFCEO_APPROVED]
-                                //         }
-                                //     ]
-                                // },
-
+                                }
                             ]
                         },
                     }
