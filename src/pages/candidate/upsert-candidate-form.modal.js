@@ -34,6 +34,7 @@ import { STATUS } from '../../constants/status';
 import { CandidateModel } from '../../models/candidate.model';
 import LabelRequire from '../../components/Label/require';
 import CandidateReviewCVModal from '../../components/CV/view-cv.modal';
+import AsyncAutoComplete from '../../components/AutoComplete/auto-complete';
 
 
 const shrinkOpt = { shrink: true };
@@ -465,21 +466,23 @@ const CandidateFormModal = (props) => {
 
                             {/*Select Department */}
                             <Grid item xs={12}>
-                                <SelectComponent
+
+                                <AsyncAutoComplete
                                     id="department-id"
-                                    label={<LabelRequire label='Department' />}
-                                    size={'small'}
-                                    customDatas={listDepartments}
-                                    value={watchCandidate?.departmentId || ''}
-                                    bindField="nameEn"
-                                    handleOnChange={(e) => {
-                                        setValue('departmentId', e?.target?.value);
+                                    label="Department"
+                                    size="small"
+                                    bindField={'nameEn'}
+                                    handleOnChange={(e, value) => {
+                                        setValue('departmentId', value?.id);
                                         setValue('appliedPositionId', null);
-                                        // fetchData(API_URL.lookup.headDepartment.get + e?.target?.value, setHeadDepartment, 'headDepartment');
-                                        fetchData(`/api/v1/head-departments/business-unit/${watchCandidate?.businessUnitId}/department/` + e?.target?.value, setHeadDepartment, 'headDepartment');
+                                        console.log(value);
+                                        fetchData(`/api/v1/head-departments/business-unit/${watchCandidate?.businessUnitId}/department/` + value?.id, setHeadDepartment, 'headDepartment');
                                         setListPositions([]);
-                                        fetchData(API_URL.lookup.positionById.get + e?.target?.value, setListPositions);
+                                        fetchData(API_URL.lookup.positionById.get + value?.id, setListPositions);
                                     }}
+                                    customDatas={listDepartments}
+                                    value={watchCandidate?.departmentId || null}
+                                    isRequire={true}
                                     err={errors?.departmentId?.message}
                                 />
                             </Grid>
