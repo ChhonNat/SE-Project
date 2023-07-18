@@ -36,7 +36,7 @@ const App = () => {
       user?.isAuthenticated ? navigate('/candidate') : navigate('/login');
     } else {
 
-      user?.isAuthenticated ? navigate(pathname) : navigate('/login');
+      user?.isAuthenticated ? navigate(pathname && pathname !== '/' ? pathname : '/candidate') : navigate('/login');
     };
 
   }, [user])

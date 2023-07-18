@@ -117,7 +117,7 @@ const AsyncAutoComplete = (props) => {
         open={open}
         onOpen={() => { setOpen(true); }}
         onClose={() => { setOpen(false); }}
-        loading={loading}
+        loading={callToApi ? loading : false}
         options={callToApi ? (options?.length ? options : []) : (customDatas?.length ? customDatas : [])}
         isOptionEqualToValue={(option, value) => checkOptionEqToVal(option, value)}
         getOptionLabel={(option) => option[bindField] || ''}

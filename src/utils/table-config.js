@@ -90,24 +90,25 @@ const tblCandidate = [
 const tblInterview = [
     {
         id: 'index', label: 'No.'
-    }, {
+    }, 
+    {
         id: 'applicantCode', type: 'link', statusColor: {}, label: 'Applicant Code'
 
     },
     {
-        id: 'candidateName', label: 'Name'
+        id: 'candidate', obj: { name: 'fullName' } ,label: 'Name'
     },
     {
-        id: 'appliedPositionName', label: 'Apply Position'
+        id: 'appliedPosition', obj: { name: 'nameEn' } ,label: 'Apply Position'
     },
     {
-        id: 'departmentName', label: 'Department'
+        id: 'department',  obj: { name: 'nameEn' },label: 'Department'
     },
     {
-        id: 'headDepartmentName', label: 'Head Department'
+        id: 'headDepartment', obj: { name: 'fullName' } ,label: 'Head Department'
     },
     {
-        id: 'businessDivisionName', label: 'Primary Business',
+        id: 'businessUnit', obj: { name: 'nameEn' } ,label: 'Primary Business',
     },
     {
         id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'

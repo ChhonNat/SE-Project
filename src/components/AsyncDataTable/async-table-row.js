@@ -113,8 +113,9 @@ const TableRows = ({
                         /**
                          * get row is array or object;
                          */
-
                         const isArray = Array.isArray(row[head?.id]);
+
+                        const isObject = typeof row[head?.id] === 'object';
 
                         const arrayValue = isArray && row[head?.id]?.length ?
                             row[head?.id].map(function (ele) {
@@ -233,9 +234,6 @@ const TableRows = ({
                                                         color: head?.statusColor[row[head.id]],
                                                         cursor: actions?.editStatus?.[head?.id] ? 'pointer' : ''
                                                     }}
-                                                // onClick={(e) =>
-                                                //     actions?.editStatus?.[head?.id] ? handleStatusEvent(head?.id, row) : e.preventDefault()
-                                                // }
                                                 >
                                                     {row[head.id]}
                                                 </Typography>
@@ -251,7 +249,8 @@ const TableRows = ({
                                         {!showIndex && !typeDate && !isAction && !isStatus && !isBadge && !isLink &&
                                             (
                                                 !isArray ?
-                                                    row[head.id] :
+                                                    !isObject ? row[head?.id] : row[head?.id] && row[head?.id][head?.obj?.name]
+                                                    :
                                                     arrayValue?.length ? arrayValue.toString() : ''
                                             )
                                         }
