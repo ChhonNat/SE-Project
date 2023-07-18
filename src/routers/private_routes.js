@@ -134,13 +134,13 @@ export const PRIVATE_ROUTES = [
         isDivider: false,
     },
     /**Interview */
-    // {
-    //     name: "Interviews",
-    //     path: "/interview",
-    //     component: <Interview.home />,
-    //     icon: <RecordVoiceOverIcon />,
-    //     isDivider: false,
-    // },
+    {
+        name: "Interviews",
+        path: "/interview",
+        component: <Interview.home />,
+        icon: <RecordVoiceOverIcon />,
+        isDivider: false,
+    },
     /**Assessment */
     // {
     //     name: "Assessments",
