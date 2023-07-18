@@ -20,6 +20,7 @@ import NextPlanIcon from '@mui/icons-material/NextPlan';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ClearIcon from '@mui/icons-material/Clear';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const HomeCandidate = () => {
 
@@ -206,6 +207,13 @@ const HomeCandidate = () => {
                                             :
                                             true
                                     )
+                                },
+                                {
+                                    name: 'Set Schedule',
+                                    eventName: 'setScheduleInterview',
+                                    icon: <CalendarMonthIcon />,
+                                    hidden: !user?.roles ? true : [ROLE.ROLE_TA_TEAM, ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
+                                    enable: true
                                 },
                                 {
                                     name: 'Submit To HOD',
