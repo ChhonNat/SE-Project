@@ -1,23 +1,56 @@
 import React, { useState } from "react";
+
 import { TABLE_CONFIG } from "../../utils/table-config";
 import { API_URL } from "../../constants/api_url";
-import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import AsyncTableAction from "../../components/AsyncDataTable/async-table-action";
 import { STATUS } from "../../constants/status";
+
+import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
+import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
+
 import CandidateAssessmentFormModal from "./form-accessment-candidate.modal";
 import CandidateResultFormModal from "./form-result-candidate.modal";
-import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
+import InterViewResultFormModal from "./interview-result-form.modal";
+import CandidateScheduleFormModal from "./schedule-candidate-form.modal";
+
+import GradingIcon from '@mui/icons-material/Grading';
+import { CalendarMonth, Print } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import { ROLE } from "../../constants/roles";
 
 const HomeInterview = () => {
 
+    const user = useSelector((state) => state?.userAuthendicated);
+
     const [isReload, setIsReload] = useState(false);
-    const [openAssessmentModal, setOpenAssessmentModal] = useState(false);
-    const [openResultModal, setOpenResultModal] = useState(false);
     const [editCandidate, setEditCandidate] = useState({});
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
-    const [modalStatusTitle, setModalStatusTitle] = useState('');
-    const [openModalStatus, setOpenModalStatus] = useState(false);
+    const [openScheduleModal, setOpenScheduleModal] = useState(false);
+    const [openInterviewResultModal, setOpenInterviewResultModal] = useState(false);
+    const [verifyTypeModal, setVerifyTypeModal] = useState('');
+
+    // const [openAssessmentModal, setOpenAssessmentModal] = useState(false);
+    // const [openResultModal, setOpenResultModal] = useState(false);
+    // const [modalStatusTitle, setModalStatusTitle] = useState('');
+    // const [openModalStatus, setOpenModalStatus] = useState(false);
+
+    const mapMoreButtonEventName = {
+        "printInterviewForm": {
+            handleAction: () => window.print()
+        },
+        "firstRoundEvaluate": {
+            handleAction: () => setOpenInterviewResultModal(true)
+        },
+        "secondRoundEvaluate": {
+            handleAction: () => setOpenInterviewResultModal(true)
+        },
+        "setSecondRoundInterview": {
+            handleAction: () => setOpenScheduleModal(true)
+        },
+        "finalSecondRoundSchedule" : {
+            handleAction: () => setOpenScheduleModal(true)
+        }
+    };
 
     return (
         <>
@@ -45,60 +78,96 @@ const HomeInterview = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
-                    // editResult: true,
-                    // editStatus: true,
-                    approveCandidate: [
-                        {
-                            field: 'interviewResult',
-                            values: [STATUS.INTERVIEW_RESULT.PASSED]
-                        },
-                        {
-                            field: 'status',
-                            values: [STATUS.INTERVIEW_STATUS.INVITED]
-                        }
-                    ],
-                    edit: [
-                        {
-                            field: 'interviewResult',
-                            values: [STATUS.INTERVIEW_RESULT.PASSED, STATUS.INTERVIEW_RESULT.FAILED, STATUS.INTERVIEW_RESULT.WAITING]
-                        }
-                    ]
+                    moreOption: {
+                        buttons: [
+                            {
+                                name: 'Print Form',
+                                eventName: 'printInterviewForm',
+                                icon: <Print />,
+                                hidden: false,
+                                enable: true
+                            },
+                            {
+                                name: 'First Round Evaluate',
+                                eventName: 'firstRoundEvaluate',
+                                icon: <GradingIcon color="info" />,
+                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER, ROLE.ROLE_HR_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
+                                enable: true
+                            },
+                            {
+                                name: 'Second Round Schedule',
+                                eventName: 'setSecondRoundInterview',
+                                icon: <CalendarMonth />,
+                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER, ROLE.ROLE_HR_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
+                                enable: true
+                            },
+                            {
+                                name: 'Second Round Evaluate',
+                                eventName: 'secondRoundEvaluate',
+                                icon: <GradingIcon color="info" />,
+                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER, ROLE.ROLE_HR_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
+                                enable: true
+                            },
+                            {
+                                name: 'Final Second Round Schedule',
+                                eventName: 'finalSecondRoundSchedule',
+                                icon: <CalendarMonth />,
+                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ? false : true,
+                                enable: true
+                            }
+                        ]
+                    }
                 }}
-                handleApproveEvent={(data) => {
+                handleMoreEvent={(eName, data) => {
+                    if (!eName)
+                        return false;
+
                     setEditCandidate(data);
-                    setOpenAssessmentModal(true);
+                    setVerifyTypeModal(eName);
+                    mapMoreButtonEventName[eName].handleAction();
                 }}
-                handleEditEvent={(data) => {
-                    setEditCandidate(data);
-                    setOpenResultModal(true)
-                }}
+
                 handleLinkEvent={(data) => {
                     setEditCandidate(data);
                     setOpenReviewCVModal(true);
                 }}
-                handleStatusEvent={(data) => {
-                    setModalStatusTitle('Edit status')
-                    setOpenModalStatus(true)
-                }}
-                handleResultEvent={(data) => {
-                    setModalStatusTitle('Edit interview result')
-                    setOpenModalStatus(true)
-                }}
+
+            // handleEditEvent={(data) => {
+            //     setEditCandidate(data);
+            //     setOpenResultModal(true)
+            // }}
+
+            // handleApproveEvent={(data) => {
+            //     setEditCandidate(data);
+            //     setOpenAssessmentModal(true);
+            // }}
+
+            // handleStatusEvent={(data) => {
+            //     setModalStatusTitle('Edit status')
+            //     setOpenModalStatus(true)
+            // }}
+
+            // handleResultEvent={(data) => {
+            //     setModalStatusTitle('Edit interview result')
+            //     setOpenModalStatus(true)
+            // }}
             />
 
-            {/* /**Make accessment modal */}
-            <CandidateAssessmentFormModal
-                openAssessmentCandidateModal={openAssessmentModal}
-                onCloseAssessmentCandidateModal={() => setOpenAssessmentModal(false)}
-                interview={editCandidate}
+            {/* Second interview schedule modal */}
+            <CandidateScheduleFormModal
+                eventType={verifyTypeModal}
+                candidate={editCandidate}
+                open={openScheduleModal}
+                onCloseModal={() => setOpenScheduleModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
-            {/* Update Candidate Result */}
-            <CandidateResultFormModal
-                openResultCandidateModal={openResultModal}
-                onCloseResultCandidateModal={() => setOpenResultModal(false)}
+            {/* Inter view result modal */}
+            <InterViewResultFormModal
+                eventType={verifyTypeModal}
                 candidate={editCandidate}
+                open={openInterviewResultModal}
+                onCloseModal={() => setOpenInterviewResultModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
@@ -110,12 +179,29 @@ const HomeInterview = () => {
                 onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
             />
 
+            {/* Update Candidate Result */}
+            {/* <CandidateResultFormModal
+                openResultCandidateModal={openResultModal}
+                onCloseResultCandidateModal={() => setOpenResultModal(false)}
+                candidate={editCandidate}
+                handleEventSuccessed={() => setIsReload(!isReload)}
+            /> */}
+
+            {/* /**Make accessment modal */}
+            {/* <CandidateAssessmentFormModal
+                openAssessmentCandidateModal={openAssessmentModal}
+                onCloseAssessmentCandidateModal={() => setOpenAssessmentModal(false)}
+                interview={editCandidate}
+                handleEventSuccessed={() => setIsReload(!isReload)}
+            /> */}
+
+
             {/* Edit candidate result and status */}
-            <CandidateStatusFormModal
+            {/* <CandidateStatusFormModal
                 title={modalStatusTitle}
                 open={openModalStatus}
                 onCloseModal={() => setOpenModalStatus(false)}
-            />
+            /> */}
 
         </>
     )

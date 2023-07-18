@@ -101,20 +101,26 @@ const tblInterview = [
     {
         id: 'appliedPosition', obj: { name: 'nameEn' } ,label: 'Apply Position'
     },
+    // {
+    //     id: 'department',  obj: { name: 'nameEn' },label: 'Department'
+    // },
+    // {
+    //     id: 'headDepartment', obj: { name: 'fullName' } ,label: 'Head Department'
+    // },
+    // {
+    //     id: 'businessUnit', obj: { name: 'nameEn' } ,label: 'Primary Business',
+    // },
     {
-        id: 'department',  obj: { name: 'nameEn' },label: 'Department'
+        id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'First Interview Date'
     },
     {
-        id: 'headDepartment', obj: { name: 'fullName' } ,label: 'Head Department'
+        id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Second Interview Date'
     },
     {
-        id: 'businessUnit', obj: { name: 'nameEn' } ,label: 'Primary Business',
+        id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'First Result'
     },
     {
-        id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'
-    },
-    {
-        id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'
+        id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Second Result'
     },
     {
         id: 'status', type: 'status', statusColor: {}, label: 'Status'
