@@ -112,9 +112,10 @@ const AsyncAutoComplete = (props) => {
     <ThemeProvider theme={err && !value ? customTheme : {}}>
       <Autocomplete
         id={id ? id : "async-auto-complete"}
-        fullWidth
+        // fullWidth
         size={size ? size : "small"}
         open={open}
+        multiple
         onOpen={() => { setOpen(true); }}
         onClose={() => { setOpen(false); }}
         loading={callToApi ? loading : false}
