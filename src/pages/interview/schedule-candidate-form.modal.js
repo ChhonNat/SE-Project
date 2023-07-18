@@ -20,39 +20,30 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const shrinkOpt = { shrink: true };
 
-const CandidateScheduleForm = (props) => {
+const CandidateScheduleFormModal = (props) => {
 
     const { open, onCloseModal, eventType, candidate, handleEventSuccessed } = props;
 
     //map event when get event from home candidate
     const mapEventType = {
-        "setScheduleTest": {
+        "setSecondRoundInterview": {
             title: "Are you sure?",
-            subTitle: "You want to set schedule for test.",
-            actions: {
-                submitLabel: 'Confirm',
-                submitStatus: STATUS.SUBMIT_STATUS.SUBMITTED_DHR,
-                select: false
-            }
-        },
-        "setScheduleInterview": {
-            title: "Are you sure?",
-            subTitle: "You want to set schedule for interview.",
+            subTitle: "You want to set schedule for second interview.",
             actions: {
                 submitLabel: 'Confirm',
                 submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
                 select: false
             }
         },
-        'setFinalScheduleInterview': {
+        "finalSecondRoundSchedule": {
             title: "Are you sure?",
-            subTitle: "You want to set final schedule for interview.",
+            subTitle: "You want to set final schedule for second interview.",
             actions: {
                 submitLabel: 'Confirm',
                 submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
                 select: false
             }
-        }
+        },
     };
 
     return (
@@ -148,4 +139,4 @@ const CandidateScheduleForm = (props) => {
     )
 };
 
-export default CandidateScheduleForm;
+export default CandidateScheduleFormModal;

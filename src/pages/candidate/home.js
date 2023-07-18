@@ -77,6 +77,9 @@ const HomeCandidate = () => {
         },
         "setScheduleInterview": {
             handleAction: () => setOpenScheduleModal(true)
+        },
+        "setFinalScheduleInterview": {
+            handleAction: () => setOpenScheduleModal(true)
         }
     };
 
@@ -222,8 +225,8 @@ const HomeCandidate = () => {
                                     enable: true
                                 },
                                 {
-                                    name: 'Set Interview Schedule',
-                                    eventName: 'setScheduleInterview',
+                                    name: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? 'Set Interview Schedule' : 'Final Interview Schedule',
+                                    eventName:  user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? 'setScheduleInterview' : 'setFinalScheduleInterview',
                                     icon: <CalendarMonthIcon />,
                                     hidden: !user?.roles ? true : [ROLE.ROLE_TA_TEAM, ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
                                     enable: true
