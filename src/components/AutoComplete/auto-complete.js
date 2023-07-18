@@ -115,7 +115,6 @@ const AsyncAutoComplete = (props) => {
         // fullWidth
         size={size ? size : "small"}
         open={open}
-        multiple
         onOpen={() => { setOpen(true); }}
         onClose={() => { setOpen(false); }}
         loading={callToApi ? loading : false}

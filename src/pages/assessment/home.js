@@ -33,8 +33,9 @@ const HomeAssessment = () => {
             */}
 
             <AsyncDatatable
-                asyncURL={API_URL.assessment.get}
-                headers={TABLE_CONFIG.tblAssessment}
+                asyncURL={API_URL.interview.get}
+                // headers={TABLE_CONFIG.tblAssessment}
+                headers={TABLE_CONFIG.tblReferenceCheck}
                 bannerText="All Assessments"
                 searchPlaceHolder="Search"
                 ordinal="asc"

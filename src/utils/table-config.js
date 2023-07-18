@@ -41,13 +41,13 @@ const tblCandidate = [
         id: 'appliedPositionName', label: 'Apply Position', sqlField: 'pos.name'
     },
     {
-        id: 'shortlistResult', 
-        textColor: { 
+        id: 'shortlistResult',
+        textColor: {
             [STATUS.SHORTLIST_RESULT.PASSED]: 'Green',
             [STATUS.SHORTLIST_RESULT.FAILED]: 'Red',
             [STATUS.SHORTLIST_RESULT.WAITING]: 'Orange',
-            [STATUS.SHORTLIST_RESULT.KEEP_IN_POOL] : 'Blue'
-        }, 
+            [STATUS.SHORTLIST_RESULT.KEEP_IN_POOL]: 'Blue'
+        },
         label: 'Shortlist Result'
     },
     {
@@ -90,16 +90,16 @@ const tblCandidate = [
 const tblInterview = [
     {
         id: 'index', label: 'No.'
-    }, 
+    },
     {
         id: 'applicantCode', type: 'link', statusColor: {}, label: 'Applicant Code'
 
     },
     {
-        id: 'candidate', obj: { name: 'fullName' } ,label: 'Name'
+        id: 'candidate', obj: { name: 'fullName' }, label: 'Name'
     },
     {
-        id: 'appliedPosition', obj: { name: 'nameEn' } ,label: 'Apply Position'
+        id: 'appliedPosition', obj: { name: 'nameEn' }, label: 'Apply Position'
     },
     // {
     //     id: 'department',  obj: { name: 'nameEn' },label: 'Department'
@@ -126,6 +126,32 @@ const tblInterview = [
         id: 'status', type: 'status', statusColor: {}, label: 'Status'
     },
     // ...proof,
+    {
+        id: 'action', label: 'Actions'
+    },
+];
+
+
+const tblReferenceCheck = [
+    {
+        id: 'index', label: 'No.'
+    },
+    {
+        id: 'applicantCode', type: 'link', statusColor: {}, label: 'Applicant Code'
+
+    },
+    {
+        id: 'candidate', obj: { name: 'fullName' }, label: 'Name'
+    },
+    {
+        id: 'appliedPosition', obj: { name: 'nameEn' }, label: 'Apply Position'
+    },
+    {
+        id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'
+    },
+    {
+        id: 'status', type: 'status', statusColor: {}, label: 'Status'
+    },
     {
         id: 'action', label: 'Actions'
     },
@@ -582,6 +608,7 @@ export const TABLE_CONFIG = {
     tblCandidate,
     tblInterview,
     tblAssessment,
+    tblReferenceCheck,
     tblHire,
     tblMainBusiness,
     tblBusinessUnit,
