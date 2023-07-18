@@ -26,8 +26,6 @@ import ElevatorIcon from '@mui/icons-material/Elevator';
 /**
  * Import all page components
  */
-const Dashboard = lazy(() => import('../pages/dashboard/dashboard'));
-
 const Candidate = {
     home: lazy(() => import('../pages/candidate/home')),
     // create: lazy(() => import('../pages/candidate/create'))
@@ -35,15 +33,14 @@ const Candidate = {
 
 const Interview = {
     home: lazy(() => import('../pages/interview/home')),
-    // create: lazy(() => import('../pages/interview/create'))
+};
+
+const ReferenceCheck = {
+    home: lazy(() => import('../pages/reference-check/home'))
 };
 
 const Assessment = {
     home: lazy(() => import('../pages/assessment/home'))
-};
-
-const Hire = {
-    home: lazy(() => import('../pages/hire/home'))
 };
 
 const Settings = {
@@ -84,15 +81,6 @@ const Settings = {
         home: lazy(() => import('../pages/settings/campus/home'))
     },
 
-    // receivingCategory: {
-    //     home: lazy(() => import('../pages/settings/receiving_category/home')),
-    //     create: lazy(() => import('../pages/settings/receiving_category/create'))
-    // },
-
-    // recruiter: {
-    //     home: lazy(() => import('../pages/settings/recruiter/home')),
-    // },
-
 };
 
 const User = {
@@ -102,28 +90,6 @@ const User = {
 
 export const PRIVATE_ROUTES = [
 
-    /** Dashboard */
-    // {
-    //     name: "Dashboard",
-    //     path: "/",
-    //     component: <Dashboard />,
-    //     icon: <DashboardIcon />,
-    //     isDivider: false,
-    //     children: [
-
-    //     ]
-    // },
-
-    /**Reports */
-    // {
-    //     name: "Reports",
-    //     path: "/report",
-    //     icon: <AssessmentIcon />,
-    //     isDivider: true,
-    //     children: [
-
-    //     ]
-    // },
 
     /**Candidate */
     {
@@ -141,21 +107,14 @@ export const PRIVATE_ROUTES = [
         icon: <RecordVoiceOverIcon />,
         isDivider: false,
     },
-    /**Assessment */
-    // {
-    //     name: "Assessments",
-    //     path: "/assessment",
-    //     component: <Assessment.home />,
-    //     icon: <PersonSearchIcon />,
-    // },
-    /**Replies */
-    // {
-    //     name: "Hires",
-    //     path: "/hire",
-    //     component: <Hire.home />,
-    //     icon: <HowToRegIcon />,
-    //     isDivider: false,
-    // },
+    /**Interview */
+    {
+        name: "Reference Check",
+        path: "/reference-check",
+        component: <ReferenceCheck.home />,
+        icon: <PersonSearchIcon />,
+    },
+
     /**Settings */
     {
         name: "Settings",
@@ -180,14 +139,6 @@ export const PRIVATE_ROUTES = [
                 component: <Settings.businessUnit.home />,
                 icon: <MeetingRoomIcon />,
             },
-
-            /**Sub Business */
-            // {
-            //     name: "Secondary Businesses",
-            //     path: "sub-business",
-            //     component: <Settings.subBusinessUnit.home />,
-            //     icon: <CorporateFareIcon />
-            // },
 
             /**Department */
             {
@@ -229,34 +180,9 @@ export const PRIVATE_ROUTES = [
                 icon: <PeopleAltIcon />,
             },
 
-            /**Location */
-            // {
-            //     name: 'Campuses',
-            //     path: 'campus',
-            //     component: <Settings.campus.home />,
-            //     icon: <PinDropIcon />
-            // },
-
-            /**Recruiter */
-            // {
-            //     name: "Recruiters",
-            //     path: "recruiter",
-            //     component: <Settings.recruiter.home />,
-            //     icon: <SwitchAccountIcon />,
-            //     /**Children recruiter */
-            //     // children: [
-            //     //     {
-            //     //         name: "Create New Recruiter",
-            //     //         path: "create",
-            //     //         component: <Recruiter.create />
-            //     //     }
-            //     // ]
-            // },
-
-
         ]
     },
-    /**Replies */
+    /**User set up */
     {
         name: "Users",
         path: "/user",

@@ -59,6 +59,14 @@ const AsyncTableAction = (props) => {
         return true
     };
 
+    const enableMoreOption = (buttons) => {
+        if(!buttons || !buttons?.length)
+        return false;
+
+        if(buttons?.length)
+        return !buttons?.every((button) => button?.hidden);
+    }
+
     return (
         <>
             {/* All button actions */}
@@ -151,54 +159,59 @@ const AsyncTableAction = (props) => {
 
                 {/* More options */}
                 {
-                    useActions?.moreOption?.buttons?.length &&
-                    <>
-                        <IconButton
-                            aria-label="more-option"
-                            size="medium"
-                            aria-controls={openMoreOption ? 'basic-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={openMoreOption ? 'true' : undefined}
-                            onClick={(e) => setShowMoreOptionAnchor(e?.currentTarget)}
-                        >
-                            <MoreVertOutlinedIcon />
-                        </IconButton>
-                        <Menu
-                            id="menu"
-                            anchorEl={showMoreOptionAnchor}
-                            open={openMoreOption}
-                            onClose={() => setShowMoreOptionAnchor(null)}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
+                    enableMoreOption(useActions?.moreOption?.buttons) ?
+                        <>
+                            <IconButton
+                                aria-label="more-option"
+                                size="medium"
+                                aria-controls={openMoreOption ? 'basic-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={openMoreOption ? 'true' : undefined}
+                                onClick={(e) => setShowMoreOptionAnchor(e?.currentTarget)}
+                            >
+                                <MoreVertOutlinedIcon />
+                            </IconButton>
                             {
-                                useActions?.moreOption?.buttons?.length && useActions?.moreOption?.buttons.map((button, index) => (
-                                    !button?.hidden &&
-                                    <MenuItem
-                                        key={index}
-                                        onClick={() => onHandleMoreEvent(button?.eventName || '')}
-                                        disabled={!checkButtonAction(button?.enable)}
+                                useActions?.moreOption?.buttons?.length ?
+                                    <Menu
+                                        id="menu"
+                                        anchorEl={showMoreOptionAnchor}
+                                        open={openMoreOption}
+                                        onClose={() => setShowMoreOptionAnchor(null)}
+                                        MenuListProps={{
+                                            'aria-labelledby': 'basic-button',
+                                        }}
                                     >
                                         {
-                                            button?.icon &&
-                                            <IconButton size="medium">
-                                                {button?.icon}
-                                            </IconButton>
+                                            useActions?.moreOption?.buttons.map((button, index) => (
+                                                !button?.hidden &&
+                                                <MenuItem
+                                                    key={index}
+                                                    onClick={() => onHandleMoreEvent(button?.eventName || '')}
+                                                    disabled={!checkButtonAction(button?.enable)}
+                                                >
+                                                    {
+                                                        button?.icon && <>{button?.icon}</>
+                                                        // <IconButton size="medium">
+                                                        // </IconButton>
+                                                    }
+                                                    <label style={{ fontSize: 13, marginLeft: 5, cursor: 'pointer' }}>
+                                                        {button?.name}
+                                                    </label>
+                                                </MenuItem>
+                                            ))
                                         }
-                                        <label style={{ fontSize: 13 }}>
-                                            {button?.name}
-                                        </label>
-                                    </MenuItem>
-                                ))
+
+                                    </Menu>
+                                    :
+                                    <></>
                             }
-
-                        </Menu>
-                    </>
-
+                        </>
+                        :
+                        <></>
                 }
 
-            </ButtonGroup>
+            </ButtonGroup> 
 
 
             {/* Confirm delete modal when click on delete button */}

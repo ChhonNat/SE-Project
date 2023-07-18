@@ -46,43 +46,6 @@ const HomeCandidate = () => {
 
     const [verifyTypeModal, setVerifyTypeModal] = useState('');
 
-
-    const mapMoreButtonEventName = {
-        "submitToDHR": {
-            handleAction: () => setOpenVerifyModal(true)
-        },
-        "verifyByDHR": {
-            handleAction: () => setOpenVerifyModal(true)
-        },
-        "rejectByDHR": {
-            handleAction: () => setOpenVerifyModal(true)
-        },
-        "approveByOFFCEO": {
-            handleAction: () => setOpenVerifyModal(true)
-        },
-        "rejectByOFFCEO": {
-            handleAction: () => setOpenVerifyModal(true)
-        },
-        "submitToTA": {
-            handleAction: () => setOpenVerifyModal(true)
-        },
-        "submitToHOD": {
-            handleAction: () => setOpenVerifyModal(true)
-        },
-        "shortlistCandidate": {
-            handleAction: () => setOpenVerifyModal(true)
-        },
-        "setScheduleTest": {
-            handleAction: () => setOpenScheduleModal(true)
-        },
-        "setScheduleInterview": {
-            handleAction: () => setOpenScheduleModal(true)
-        },
-        "setFinalScheduleInterview": {
-            handleAction: () => setOpenScheduleModal(true)
-        }
-    };
-
     // Handle click each candidate to update the info
     const handleEditCandidate = (candidate) => {
         setEditCandidate(candidate);
@@ -226,7 +189,7 @@ const HomeCandidate = () => {
                                 },
                                 {
                                     name: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? 'Set Interview Schedule' : 'Final Interview Schedule',
-                                    eventName:  user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? 'setScheduleInterview' : 'setFinalScheduleInterview',
+                                    eventName: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? 'setScheduleInterview' : 'setFinalScheduleInterview',
                                     icon: <CalendarMonthIcon />,
                                     hidden: !user?.roles ? true : [ROLE.ROLE_TA_TEAM, ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
                                     enable: true
@@ -266,19 +229,22 @@ const HomeCandidate = () => {
 
                     setEditCandidate(data);
                     setVerifyTypeModal(eName);
-                    mapMoreButtonEventName[eName].handleAction();
+
+                    eName === 'setScheduleTest' ||
+                    eName === 'setScheduleInterview' ||
+                    eName === 'setFinalScheduleInterview' ? setOpenScheduleModal(true) : setOpenVerifyModal(true);
                 }}
 
-            // handleApproveEvent={(data) => handleShortlistCandidate(data)}
-            // handleReviewEvent={(data) => handleEditCandidate(data)}
-            // handleResultEvent={(data) => {
-            //     setModalTitle('Edit shortlist result');
-            //     setOpenStatusModal(true);
-            // }}
-            // handleStatusEvent={(data) => {
-            //     setModalTitle('Edit status');
-            //     setOpenStatusModal(true);
-            // }}
+                handleApproveEvent={(data) => handleShortlistCandidate(data)}
+                handleReviewEvent={(data) => handleEditCandidate(data)}
+                handleResultEvent={(data) => {
+                    setModalTitle('Edit shortlist result');
+                    setOpenStatusModal(true);
+                }}
+                handleStatusEvent={(data) => {
+                    setModalTitle('Edit status');
+                    setOpenStatusModal(true);
+                }}
             />
 
             {/* Create new candidate form */}
