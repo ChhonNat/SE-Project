@@ -244,7 +244,7 @@ const CandidateInviteFormModal = (props) => {
                                     size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('interviewDate')}
-                                    error={errors?.interviewDate}
+                                    error={errors?.interviewDate ? true : false}
                                     helperText={errors?.interviewDate?.message}
                                 />
                             </Grid>

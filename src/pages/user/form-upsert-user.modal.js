@@ -146,8 +146,8 @@ const UpsertUserForm = (props) => {
                             })
                         }
 
-                        if(typeof data[key] === 'string' )
-                        data[key] = oldRoles;
+                        if (typeof data[key] === 'string')
+                            data[key] = oldRoles;
 
                         data[key] = data[key].map((ele) => {
 
@@ -236,7 +236,7 @@ const UpsertUserForm = (props) => {
                                 sx={{ width: '100%' }}
                                 {...register('staffId')}
                                 size="small"
-                                error={errors?.staffId}
+                                error={errors?.staffId ? true : false}
                                 helperText={errors?.staffId?.message}
                             />
                         </Grid>
@@ -246,7 +246,7 @@ const UpsertUserForm = (props) => {
                                 sx={{ width: '100%' }}
                                 {...register('firstName')}
                                 size="small"
-                                error={errors?.firstName}
+                                error={errors?.firstName ? true : false}
                                 helperText={errors?.firstName?.message}
                             />
                         </Grid>
@@ -256,7 +256,7 @@ const UpsertUserForm = (props) => {
                                 sx={{ width: '100%' }}
                                 {...register('secondName')}
                                 size="small"
-                                error={errors?.secondName}
+                                error={errors?.secondName ? true : false}
                                 helperText={errors?.secondName?.message}
                             />
                         </Grid>
@@ -291,7 +291,7 @@ const UpsertUserForm = (props) => {
                                 label={<LabelRequire label="Gender" />}
                                 customDatas={['Male', 'Female']}
                                 size="small"
-                                error={errors?.gender}
+                                error={errors?.gender ? true : false}
                                 handleOnChange={(e) => setValue('gender', e?.target?.value)}
                                 value={watchUser?.gender}
                                 err={errors?.gender?.message}
@@ -305,7 +305,7 @@ const UpsertUserForm = (props) => {
                                 InputLabelProps={shrinkOpt}
                                 {...register('birthDate')}
                                 size="small"
-                                error={errors?.birthDate}
+                                error={errors?.birthDate ? true : false}
                                 helperText={errors?.birthDate?.message}
                             />
                         </Grid>
@@ -316,7 +316,7 @@ const UpsertUserForm = (props) => {
                                 sx={{ width: '100%' }}
                                 {...register('email')}
                                 size="small"
-                                error={errors?.email}
+                                error={errors?.email ? true : false}
                                 helperText={errors?.email?.message}
                             />
                         </Grid>
@@ -327,7 +327,7 @@ const UpsertUserForm = (props) => {
                                 sx={{ width: '100%' }}
                                 {...register('phoneNumber')}
                                 size="small"
-                                error={errors?.phoneNumber}
+                                error={errors?.phoneNumber ? true : false}
                                 helperText={errors?.phoneNumber?.message}
                             />
                         </Grid>
@@ -338,16 +338,16 @@ const UpsertUserForm = (props) => {
                                 sx={{ width: '100%' }}
                                 {...register('username')}
                                 size="small"
-                                error={errors?.username}
+                                error={errors?.username ? true : false}
                                 helperText={errors?.username?.message}
-                                // disabled={user?.id}
+                            // disabled={user?.id}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <FormControl variant="outlined" sx={{ width: '100%' }} size="small">
                                 <InputLabel
                                     htmlFor="outlined-adornment-password"
-                                    error={errors?.password}
+                                    error={errors?.password ? true : false}
                                 >
                                     {user?.id ? "Password" : <LabelRequire label="Password" />}
                                 </InputLabel>
@@ -370,10 +370,10 @@ const UpsertUserForm = (props) => {
                                     label="Password"
                                     size="small"
                                     {...register('password')}
-                                    error={errors?.confirmPassword}
+                                    error={errors?.confirmPassword ? true : false}
                                     helperText={errors?.confirmPassword?.message}
                                 />
-                                <FormHelperText id="error-password" error={errors?.password} >{errors?.password?.message}</FormHelperText>
+                                <FormHelperText id="error-password" error={errors?.password ? true : false} >{errors?.password?.message}</FormHelperText>
                             </FormControl>
                         </Grid>
 
@@ -385,7 +385,7 @@ const UpsertUserForm = (props) => {
                             >
                                 <InputLabel
                                     htmlFor="outlined-adornment-password"
-                                    error={errors?.confirmPassword}
+                                    error={errors?.confirmPassword ? true : false}
                                 >
                                     {user?.id ? "Confirm Password" : <LabelRequire label="Confirm Password" />}
                                 </InputLabel>
@@ -408,10 +408,10 @@ const UpsertUserForm = (props) => {
                                     label="Confirm Password"
                                     size="small"
                                     {...register('confirmPassword')}
-                                    error={errors?.confirmPassword}
+                                    error={errors?.confirmPassword ? true : false}
                                     helperText={errors?.confirmPassword?.message}
                                 />
-                                <FormHelperText id="error-password" error={errors?.confirmPassword} >{errors?.confirmPassword?.message}</FormHelperText>
+                                <FormHelperText id="error-password" error={errors?.confirmPassword ? true : false} >{errors?.confirmPassword?.message}</FormHelperText>
                             </FormControl>
                         </Grid>
 

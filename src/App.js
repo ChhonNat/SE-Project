@@ -1,14 +1,14 @@
 import React, { Suspense, useEffect, useState } from "react";
 import './App.css';
+import Navbar from "./components/Layout/navbar";
+import Sidebar from "./components/Layout/sidebar";
+import MainPageComponent from "./components/Layout/page-wrapper";
 
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isLogin } from "./store/authentication/authenticationService";
 import { PRIVATE_ROUTES } from "./routers/private_routes";
 import { PUBLIC_ROUTES } from "./routers/public_routes";
-import Navbar from "./components/Layout/navbar";
-import Sidebar from "./components/Layout/sidebar";
-import MainPageComponent from "./components/Layout/page-wrapper";
 
 const detectedRoute = [
   '/login'
@@ -20,8 +20,6 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [minSidebar, setMinsidebar] = useState(true);
-  // const [minNavbar, setMinNavbar] = useState(true);
   const user = useSelector((state) => state.userAuthendicated);
   const { pathname } = location;
 
@@ -62,18 +60,11 @@ const App = () => {
   const PrivateRouters = () => {
     return (
       <>
-
         {/* Navbar component */}
-        <Navbar
-          // open={minNavbar}
-          openNavBar={(val) => val}
-        />
+        <Navbar />
 
         {/* Sidebar component */}
-        <Sidebar
-          open={minSidebar}
-          handleMinSidebar={setMinsidebar}
-        />
+        <Sidebar />
         {/* All routes */}
         <Suspense fallback={<Loading />}>
 
@@ -86,7 +77,9 @@ const App = () => {
                   {/* Parent routes */}
                   <Route path={route?.path}
                     element={
-                      <MainPageComponent open={minSidebar} outlet={route.component} />
+                      <MainPageComponent
+                        outlet={route.component}
+                      />
                     }
                     key={index} />
 
@@ -98,7 +91,10 @@ const App = () => {
                       <Route
                         path={childRoute?.path}
                         element={
-                          <MainPageComponent open={minSidebar} outlet={childRoute.component} />
+                          <MainPageComponent
+                            // open={minSidebar} 
+                            outlet={childRoute.component}
+                          />
                         }
                         key={childIndex}
                       />
@@ -110,7 +106,9 @@ const App = () => {
                           <Route path={route?.path + childRoute?.path} key={childChildRouteIndex}>
                             <Route path={childChildRoute?.path}
                               element={
-                                <MainPageComponent open={minSidebar} outlet={childChildRoute.component} />
+                                <MainPageComponent
+                                  outlet={childChildRoute.component}
+                                />
                               }
                               key={childChildRouteIndex}
                             />

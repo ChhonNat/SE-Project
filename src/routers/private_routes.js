@@ -1,26 +1,17 @@
-import { lazy } from "react";
-import React from "react";
+import React, { lazy } from "react";
 
 /**
  * MUI icon
  */
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import ChecklistIcon from '@mui/icons-material/Checklist';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import BusinessIcon from '@mui/icons-material/Business';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
-import DomainIcon from '@mui/icons-material/Domain';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
-import PinDropIcon from '@mui/icons-material/PinDrop';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import CorporateFareIcon from '@mui/icons-material/CorporateFare';
 import ElevatorIcon from '@mui/icons-material/Elevator';
 
 /**

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { styled } from '@mui/material/styles';
+import { LayoutContext } from "../../context/layout-context";
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -19,6 +20,7 @@ const MainPage = styled('main', { shouldForwardProp: (prop) => prop !== 'open' }
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
+        marginLeft: `-${drawerWidth}px`,
         ...(open && {
             transition: theme.transitions.create('margin', {
                 easing: theme.transitions.easing.easeOut,
@@ -39,9 +41,14 @@ const MainPage = styled('main', { shouldForwardProp: (prop) => prop !== 'open' }
  * Layout for all page
  */
 
-const MainPageComponent = ({ open, outlet }) => {
+const MainPageComponent = ({ outlet }) => {
+
+    const { toggleNavbar, setToggleNavbar } = useContext(LayoutContext);
+
     return (
-        <MainPage open={open}>
+        <MainPage
+            open={toggleNavbar}
+        >
             <DrawerHeader />
             {outlet}
         </MainPage>

@@ -212,7 +212,7 @@ const CandidateHireFormModal = (props) => {
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    error={errors?.offerSalary}
+                                    error={errors?.offerSalary ? true : false}
                                     helperText={errors?.offerSalary?.message}
                                     {...register('offerSalary')}
                                 />
@@ -229,7 +229,7 @@ const CandidateHireFormModal = (props) => {
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    error={errors?.hireDate}
+                                    error={errors?.hireDate ? true : false}
                                     helperText={errors?.hireDate?.message}
                                     {...register('hireDate')}
                                 />
@@ -245,7 +245,7 @@ const CandidateHireFormModal = (props) => {
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    error={errors?.joinDate}
+                                    error={errors?.joinDate ? true : false}
                                     helperText={errors?.joinDate?.message}
                                     {...register('joinDate')}
                                 />

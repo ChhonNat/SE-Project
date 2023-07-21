@@ -282,7 +282,7 @@ const CandidateFormModal = (props) => {
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    error={errors?.firstName}
+                                    error={errors?.firstName ? true : false}
                                     helperText={errors?.firstName?.message}
                                     {...register("firstName")}
                                 />
@@ -297,7 +297,7 @@ const CandidateFormModal = (props) => {
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    error={errors?.lastName}
+                                    error={errors?.lastName ? true : false}
                                     helperText={errors?.lastName?.message}
                                     {...register("lastName")}
                                 />
@@ -326,7 +326,7 @@ const CandidateFormModal = (props) => {
                                     fullWidth
                                     size="small"
                                     InputLabelProps={shrinkOpt}
-                                    error={errors?.phoneNumber}
+                                    error={errors?.phoneNumber ? true : false}
                                     helperText={errors?.phoneNumber?.message}
                                     {...register("phoneNumber")}
                                 />
@@ -388,7 +388,7 @@ const CandidateFormModal = (props) => {
                                     inputProps={{ accept: "application/pdf" }}
                                     InputLabelProps={{ shrink: true }}
                                     onChange={(e) => setValue('file', e?.target?.files[0])}
-                                    error={errors?.file}
+                                    error={errors?.file ? true : false}
                                     helperText={errors?.file?.message}
                                 >
                                     Upload
@@ -422,7 +422,7 @@ const CandidateFormModal = (props) => {
                                     size="small"
                                     inputProps={{ format: 'MM/DD/YYYY' }}
                                     InputLabelProps={shrinkOpt}
-                                    error={errors?.appliedDate}
+                                    error={errors?.appliedDate ? true : false}
                                     helperText={errors?.appliedDate?.message}
                                     {...register("appliedDate")}
                                 />
@@ -499,7 +499,7 @@ const CandidateFormModal = (props) => {
                                     size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('headDepartmentName')}
-                                    error={errors?.headDepartmentName}
+                                    error={errors?.headDepartmentName ? true : false}
                                     helperText={errors?.headDepartmentName?.message}
                                 />
 
