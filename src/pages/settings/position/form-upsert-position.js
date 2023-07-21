@@ -147,7 +147,7 @@ const UpsertPositionForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     {...register('nameEn')}
-                                    error={errors?.nameEn}
+                                    error={errors?.nameEn ? true : false}
                                     helperText={errors?.nameEn?.message}
                                 />
                             </Grid>
@@ -160,7 +160,7 @@ const UpsertPositionForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     {...register('nameKh')}
-                                    error={errors?.nameKh}
+                                    error={errors?.nameKh ? true : false}
                                     helperText={errors?.nameKh?.message}
                                 />
                             </Grid>

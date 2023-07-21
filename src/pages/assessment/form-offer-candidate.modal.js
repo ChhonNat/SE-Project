@@ -168,7 +168,7 @@ const CandidateOfferFormModal = (props) => {
                                             max: 5000, min: 1
                                         }
                                     }}
-                                    error={errors?.offerSalary}
+                                    error={errors?.offerSalary ? true : false}
                                     helperText={errors?.offerSalary?.message}
                                     {...register('offerSalary')}
                                 />
@@ -185,7 +185,7 @@ const CandidateOfferFormModal = (props) => {
                                     size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('offerDate')}
-                                    error={errors?.hireDate}
+                                    error={errors?.hireDate ? true : false}
                                     helperText={errors?.hireDate?.message}
                                 />
                             </Grid>
@@ -272,7 +272,7 @@ const CandidateOfferFormModal = (props) => {
                                     size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('signedContractDate')}
-                                    error={errors?.signedContractDate}
+                                    error={errors?.signedContractDate ? true : false}
                                     helperText={errors?.signedContractDate?.message}
                                 />
                             </Grid>

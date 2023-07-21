@@ -34,7 +34,7 @@ const SelectComponent = (props) => {
     /**
      * use custom redux http
      */
-    const { data, loading, error, message ,sendRequest } = _useHttp();
+    const { data, loading, error, message, sendRequest } = _useHttp();
     const [datas, setDatas] = useState([]);
 
     useEffect(() => {
@@ -57,13 +57,17 @@ const SelectComponent = (props) => {
 
     useEffect(() => {
 
-        if(!loading) {
-            error ? setDatas([]) : setDatas(data ? data:[])
+        if (!loading) {
+            error ? setDatas([]) : setDatas(data ? data : [])
         }
     }, [loading, data, error, message])
 
     return (
-        <FormControl fullWidth size={size} error={value ? false : err}>
+        <FormControl
+            fullWidth
+            size={size}
+            error={ err ? (value ? false : true) : false }
+        >
             <InputLabel id={id}>{!isRequire ? label : <LabelRequire label={label} />}</InputLabel>
             <Select
                 id={id}

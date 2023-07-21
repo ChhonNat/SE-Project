@@ -161,7 +161,7 @@ const UpsertCommitteeForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     {...register('staffId')}
-                                    error={errors?.staffId}
+                                    error={errors?.staffId ? true : false}
                                     helperText={errors?.staffId?.message}
                                 />
                             </Grid>
@@ -176,7 +176,7 @@ const UpsertCommitteeForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     {...register('firstName')}
-                                    error={errors?.firstName}
+                                    error={errors?.firstName ? true : false}
                                     helperText={errors?.firstName?.message}
                                 />
                             </Grid>
@@ -190,7 +190,7 @@ const UpsertCommitteeForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     {...register('lastName')}
-                                    error={errors?.lastName}
+                                    error={errors?.lastName ? true : false}
                                     helperText={errors?.lastName?.message}
                                 />
                             </Grid>
@@ -204,7 +204,7 @@ const UpsertCommitteeForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     {...register('phoneNumber')}
-                                    error={errors?.phoneNumber}
+                                    error={errors?.phoneNumber ? true : false}
                                     helperText={errors?.phoneNumber?.message}
                                 />
                             </Grid>

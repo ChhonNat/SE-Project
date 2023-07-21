@@ -127,7 +127,7 @@ const UpsertBusinessUnitForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     {...register('code')}
-                                    error={errors?.code}
+                                    error={errors?.code ? true : false}
                                     helperText={errors?.code?.message}
                                 />
                             </Grid>
@@ -142,7 +142,7 @@ const UpsertBusinessUnitForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     {...register('nameEn')}
-                                    error={errors?.nameEn}
+                                    error={errors?.nameEn ? true : false}
                                     helperText={errors?.nameEn?.message}
                                 />
                             </Grid>
@@ -156,7 +156,7 @@ const UpsertBusinessUnitForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     {...register('nameKh')}
-                                    error={errors?.nameKh}
+                                    error={errors?.nameKh ? true : false}
                                     helperText={errors?.nameKh?.message}
                                 />
                             </Grid>
@@ -170,7 +170,7 @@ const UpsertBusinessUnitForm = (props) => {
                                     fullWidth
                                     size="meduim"
                                     {...register('phone')}
-                                    error={errors?.phone}
+                                    error={errors?.phone ? true : false}
                                     helperText={errors?.phone?.message}
                                 />
                             </Grid>

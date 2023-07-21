@@ -241,7 +241,7 @@ const CandidateAssessmentFormModal = (props) => {
                                     size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('offerDate')}
-                                    error={errors?.offerDate}
+                                    error={errors?.offerDate ? true : false}
                                     helperText={errors?.offerDate?.message}
                                 />
                             </Grid>
