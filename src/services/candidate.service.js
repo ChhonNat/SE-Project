@@ -9,8 +9,12 @@ const editCandidate = (data,id, contentType) => {
     return httpService._put(API_URL.candidate.edit+id, data, contentType);
 }
 
-const inviteCandidateInterview = (data,id, contentType) => {
-    return httpService._put(API_URL.candidate.invite+id+'/invite', data, contentType);
+const inviteFirstInterview = (data,id, contentType) => {
+    return httpService._put(API_URL.candidate.inviteFirstInterView+id+'/invite', data, contentType);
+}
+
+const inviteSecondInterview = (data,id, contentType) => {
+    return httpService._put(API_URL.candidate.inviteSecondInterView+id+'/invite', data, contentType);
 }
 
 const editResultCandidate = (data, id, contentType) => {
@@ -37,7 +41,8 @@ const downloadCVFile = (id) => {
 export const CandidateService = {
     createCandidate,
     editCandidate,
-    inviteCandidateInterview,
+    inviteFirstInterview,
+    inviteSecondInterview,
     editResultCandidate,
     assessmentCandidate,
     editAssessmentCandidate,

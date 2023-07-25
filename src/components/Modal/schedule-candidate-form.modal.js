@@ -1,17 +1,17 @@
 import React, { forwardRef } from "react";
-import TitleComponent from "../../components/Page/title";
-import FooterComponent from "../../components/Page/footer";
-import AsyncAutoComplete from "../../components/AutoComplete/auto-complete";
-import AsyncMultiAutoComplete from "../../components/MultiAutoComplete/auto-complete";
+import TitleComponent from "../Page/title";
+import FooterComponent from "../Page/footer";
+import AsyncAutoComplete from "../AutoComplete/auto-complete";
+import AsyncMultiAutoComplete from "../MultiAutoComplete/auto-complete";
 import InviteInterviewModel from "../../models/invite-interview.model";
 import _useHttp from "../../hooks/_http";
+import Swal from "sweetalert2";
 import { STATUS } from "../../constants/status";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { API_URL } from "../../constants/api_url";
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
 import { CandidateService } from "../../services/candidate.service";
-import Swal from "sweetalert2";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
 
@@ -21,9 +21,9 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const shrinkOpt = { shrink: true };
 
-const CandidateScheduleForm = (props) => {
+const CandidateScheduleFormModal = (props) => {
 
-    const { open, onCloseModal, eventType, candidate, handleEventSuccessed } = props;
+    const { open, onCloseModal, eventType, candidate, handleEventSuccessed, apiService } = props;
     const { register, handleSubmit, formState, setValue, watch, reset, clearErrors } = useForm({ resolver: zodResolver(InviteInterviewModel) });
 
     const watchCandidate = watch();
@@ -49,6 +49,15 @@ const CandidateScheduleForm = (props) => {
                 select: false
             }
         },
+        "setSecondRoundInterview": {
+            title: "Are you sure?",
+            subTitle: "You want to set second schedule for interview.",
+            actions: {
+                submitLabel: 'Confirm',
+                submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
+                select: false
+            }
+        },
         'setFinalScheduleInterview': {
             title: "Are you sure?",
             subTitle: "You want to set final schedule for interview.",
@@ -65,11 +74,14 @@ const CandidateScheduleForm = (props) => {
     };
 
     const onSubmit = async (dataSubmit) => {
-        // console.log('data submit', data);
         try {
 
-            const submitCandidate = await CandidateService.inviteCandidateInterview(dataSubmit, candidate?.id);
-            console.log('submit candidate',submitCandidate);
+            let submitCandidate;
+
+            if (apiService)
+                submitCandidate = await apiService(dataSubmit, candidate?.id)
+            else
+                submitCandidate = await CandidateService.inviteFirstInterview(dataSubmit, candidate?.id);
 
             const { status, data } = submitCandidate;
             const { message } = data;
@@ -156,7 +168,7 @@ const CandidateScheduleForm = (props) => {
                             <Grid item xs={12}>
                                 <AsyncMultiAutoComplete
                                     id="key-person-committee"
-                                    label="Key Person"
+                                    label="Interview Committee"
                                     size="small"
                                     limitTags={10}
                                     callToApi={API_URL.committeee.get}
@@ -201,4 +213,4 @@ const CandidateScheduleForm = (props) => {
     )
 };
 
-export default CandidateScheduleForm;
+export default CandidateScheduleFormModal;
