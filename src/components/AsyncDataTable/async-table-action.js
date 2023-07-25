@@ -158,9 +158,9 @@ const AsyncTableAction = (props) => {
                 }
 
                 {/* More options */}
-                {
+                {/* {
                     enableMoreOption(useActions?.moreOption?.buttons) ?
-                        <>
+                        <> */}
                             <IconButton
                                 aria-label="more-option"
                                 size="medium"
@@ -168,11 +168,12 @@ const AsyncTableAction = (props) => {
                                 aria-haspopup="true"
                                 aria-expanded={openMoreOption ? 'true' : undefined}
                                 onClick={(e) => setShowMoreOptionAnchor(e?.currentTarget)}
+                                disabled={enableMoreOption(useActions?.moreOption?.buttons) ? false : true}
                             >
                                 <MoreVertOutlinedIcon />
                             </IconButton>
-                            {
-                                useActions?.moreOption?.buttons?.length ?
+                            {/* {
+                                useActions?.moreOption?.buttons?.length ? */}
                                     <Menu
                                         id="menu"
                                         anchorEl={showMoreOptionAnchor}
@@ -203,13 +204,13 @@ const AsyncTableAction = (props) => {
                                         }
 
                                     </Menu>
-                                    :
-                                    <></>
-                            }
-                        </>
+                            {/* //         :
+                            //         <></>
+                            // } */}
+                        {/* </>
                         :
                         <></>
-                }
+                } */}
 
             </ButtonGroup> 
 

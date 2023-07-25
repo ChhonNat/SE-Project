@@ -1,18 +1,19 @@
-import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
-import SelectComponent from "../../components/Selector/select";
-import { globalService } from "../../services/global.service";
-import { API_URL } from "../../constants/api_url";
+import React, { forwardRef } from "react";
 import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
-import _useHttp from "../../hooks/_http";
-import { HTTP_METHODS } from "../../constants/http_method";
-import Swal from "sweetalert2";
-import { STATUS } from "../../constants/status";
-import { useSelector } from "react-redux";
-import { ROLE } from "../../constants/roles";
 import AsyncAutoComplete from "../../components/AutoComplete/auto-complete";
 import AsyncMultiAutoComplete from "../../components/MultiAutoComplete/auto-complete";
+import InviteInterviewModel from "../../models/invite-interview.model";
+import _useHttp from "../../hooks/_http";
+import { STATUS } from "../../constants/status";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { API_URL } from "../../constants/api_url";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
+import { CandidateService } from "../../services/candidate.service";
+import Swal from "sweetalert2";
+import { HTTP_STATUS } from "../../constants/http_status";
+import { DATA_STATUS } from "../../constants/data_status";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -23,6 +24,10 @@ const shrinkOpt = { shrink: true };
 const CandidateScheduleForm = (props) => {
 
     const { open, onCloseModal, eventType, candidate, handleEventSuccessed } = props;
+    const { register, handleSubmit, formState, setValue, watch, reset, clearErrors } = useForm({ resolver: zodResolver(InviteInterviewModel) });
+
+    const watchCandidate = watch();
+    const { errors } = formState;
 
     //map event when get event from home candidate
     const mapEventType = {
@@ -55,12 +60,54 @@ const CandidateScheduleForm = (props) => {
         }
     };
 
+    const onError = (error, e) => {
+        console.log('Input error', error);
+    };
+
+    const onSubmit = async (dataSubmit) => {
+        // console.log('data submit', data);
+        try {
+
+            const submitCandidate = await CandidateService.inviteCandidateInterview(dataSubmit, candidate?.id);
+            console.log('submit candidate',submitCandidate);
+
+            const { status, data } = submitCandidate;
+            const { message } = data;
+
+            if (status === HTTP_STATUS.success) {
+
+                if (data?.status === DATA_STATUS.success)
+                    handleEventSuccessed();
+
+                Swal.fire({
+                    title: data?.status === DATA_STATUS.success ? 'Success' : 'Error',
+                    text: message,
+                    icon: data?.status === DATA_STATUS.success ? 'success' : 'error',
+                    confirmButtonText: 'OK',
+                });
+
+                handleCloseModal();
+            }
+
+        } catch (error) {
+            console.log('error', error);
+        }
+    };
+
+    const handleCloseModal = () => {
+        reset();
+        clearErrors();
+        onCloseModal();
+    }
+
+
     return (
         <div>
             <Dialog
                 TransitionComponent={TransitionModal}
                 open={open}
-                fullWidth={true}
+                component="form"
+                onSubmit={handleSubmit(onSubmit, onError)}
             >
                 <DialogTitle>
                     <TitleComponent
@@ -74,53 +121,57 @@ const CandidateScheduleForm = (props) => {
                             <Grid item xs={12}>
                                 <TextField
                                     sx={{ width: '100%' }}
+                                    size="small"
                                     id="schedule"
                                     label="Schedule"
                                     variant="outlined"
-                                    type="date"
+                                    type="datetime-local"
                                     InputLabelProps={shrinkOpt}
+                                    error={errors?.interviewDate ? true : false}
+                                    helperText={errors?.interviewDate?.message || ''}
+                                    {...register('interviewDate')}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <AsyncMultiAutoComplete
+                                <AsyncAutoComplete
                                     id="hod-committee"
+                                    size="small"
                                     label="HOD"
                                     limitTags={10}
-                                    value={[]}
-                                    handleOnChange={(e, val) => console.log(val)}
                                     callToApi={API_URL.headDepartment.get}
                                     httpMethod={'post'}
-                                    reqBody={
-                                        {
-                                            start: 0,
-                                            length: 300,
-                                            searchValue: "",
-                                            orderColumn: "id",
-                                            ordinal: "desc"
-                                        }
-                                    }
+                                    reqBody={{
+                                        start: 0,
+                                        length: 300,
+                                        searchValue: "",
+                                        orderColumn: "id",
+                                        ordinal: "desc"
+                                    }}
                                     bindField={'fullName'}
+                                    value={watchCandidate?.headDepartmentId}
+                                    err={errors?.headDepartmentId?.message}
+                                    handleOnChange={(e, val) => { setValue('headDepartmentId', val?.id) }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <AsyncMultiAutoComplete
                                     id="key-person-committee"
                                     label="Key Person"
+                                    size="small"
                                     limitTags={10}
-                                    value={[]}
-                                    handleOnChange={(e, val) => console.log(val)}
                                     callToApi={API_URL.committeee.get}
                                     httpMethod={'post'}
-                                    reqBody={
-                                        {
-                                            start: 0,
-                                            length: 300,
-                                            searchValue: "",
-                                            orderColumn: "id",
-                                            ordinal: "desc"
-                                        }
-                                    }
+                                    reqBody={{
+                                        start: 0,
+                                        length: 300,
+                                        searchValue: "",
+                                        orderColumn: "id",
+                                        ordinal: "desc"
+                                    }}
                                     bindField={'fullName'}
+                                    value={watchCandidate?.committees}
+                                    err={errors?.committees?.message}
+                                    handleOnChange={(e, val) => setValue('committees', val?.length ? val.map(ele => ele.id) : [])}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -129,8 +180,9 @@ const CandidateScheduleForm = (props) => {
                                     id="Remark"
                                     label="Remark"
                                     multiline
-                                    rows={5}
+                                    rows={2}
                                     variant="outlined"
+                                    {...register('remark')}
                                 />
                             </Grid>
                         </Grid>
@@ -138,6 +190,7 @@ const CandidateScheduleForm = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <FooterComponent
+                        saveButtunType="submit"
                         saveButtonLabel={mapEventType[eventType]?.actions?.submitLabel}
                         handleCancel={onCloseModal}
                         actions={{ cancel: true, submit: true }}

@@ -14,4 +14,4 @@ export const LayoutContextProvider = ({children}) => {
             }
         </LayoutContext.Provider>
     )
-}
+};

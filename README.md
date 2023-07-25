@@ -76,28 +76,32 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 + Process each roles
 
-1: Verify
+----------------------------------------------------
+                    1: Verify
+----------------------------------------------------
 
-TA admin:
+1.1 TA admin:
     Create CV:
         shortlist result : waiting
         submit status: waiting
         status (candidate): pending
+
     Action:
         submit to hr:
             submit status: Submitted_DHR
             status (candidate): Reviewed
-DHR:
+1.2 DHR:
     CV:
         shorlist result: waiting
         submit status: Submitted_DHR
         status (candidate): Reviewed
+
     Action:
         verify && submit to offceo:
             submit status: DHR_Verified
             status (candidate): Reviewed
 
-OFFCEO:
+1.3 OFFCEO:
     CV:
         shorlist result: waiting
         submit status: Submited_OFFCEO
@@ -107,11 +111,12 @@ OFFCEO:
         approve && submit to TA:
             submit status: Submitted_TA_Team || Sent_TA_Team
             status (candidate): reviewed
-TA_Team:
+1.4 TA_Team:
     CV:
         shortlist result:  waiting
         submit status: Submitted_TA_Team | Sent_TA_Team
         status (candidate): reviewed
+
     Action: 
         shortlist
             shortlist result: Passed | Failed | Blacklist | Keep_In_Pool
@@ -121,7 +126,7 @@ TA_Team:
             status (candidate): Shortlisted
             remark: 'yes .....'
 
-HOD: 
+1.5 HOD: 
     CV: 
         shortlist result: Passed
         submit status: Submitted_HOD
@@ -139,9 +144,44 @@ HOD:
             committee : ['a','b']
             status (candidate): Shortlisted
 
-2: Interview
+1.6 HOD:
+    CV: 
+        shortlist result: Passed
 
-TA:
+    Action: 
+        Invite/Set Schedule Interview: date
+        status: In Interview
+
+--------------------------------------------------
+                    2: Interview
+--------------------------------------------------
+
+2.1 HOD
+    CV:
+        Upload first result form
+    
+2.2 HOD: 
+    CV: 
+        Update first evaluate result
+
+
+    If has second interview 
+
+2.3 HOD:
+    CV:
+        Set second interview schedule
+
+2.4 HOD:
+    CV: 
+        Upload second result form
+
+2.5 HOD:
+    CV:
+        Update second evaluate result
+        
+
+
+<!-- TA:
     CV: 
         shortlist result: Passed
         submit status: Submitted_TA | Sent_TA_Team 
@@ -153,11 +193,9 @@ TA:
         final interviewDate: '11-11-2023'
         final committee: ['c','d']  
 
-        print form interview
+        print form interview -->
 
 
-+ Add up
 
-Role: HR
 
 

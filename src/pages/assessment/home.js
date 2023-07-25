@@ -56,12 +56,12 @@ const HomeAssessment = () => {
                         }
                     ]
                 }}
-                handleApproveEvent={
-                    (data) => {
-                        setEditCandidate(data);
-                        setOpenAssessmentModal(true);
-                    }
-                }
+                // handleApproveEvent={
+                //     (data) => {
+                //         setEditCandidate(data);
+                //         setOpenAssessmentModal(true);
+                //     }
+                // }
                 handleEditEvent={
                     (data) => {
                         setEditCandidate(data);

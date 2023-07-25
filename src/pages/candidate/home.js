@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-
-import { ROLE } from "../../constants/roles";
-import { STATUS } from "../../constants/status";
-import { API_URL } from "../../constants/api_url";
-
-import { TABLE_CONFIG } from "../../utils/table-config";
+import React, { useState } from "react";
 
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
-import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
 
 import CandidateFormModal from "./upsert-candidate-form.modal";
-import CandidateInviteFormModal from "./form-invite-candidate.modal";
 import CandidateFormDetailModal from "./detail-candidate-form.modal";
 import CandidateScheduleForm from "./schedule-candidate-form.modal";
 import CandidateVerifyForm from "./verify-candidate-form.modal";
@@ -22,7 +13,12 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ClearIcon from '@mui/icons-material/Clear';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import QuizIcon from '@mui/icons-material/Quiz';
+
+import { useSelector } from "react-redux";
+import { ROLE } from "../../constants/roles";
+import { STATUS } from "../../constants/status";
+import { API_URL } from "../../constants/api_url";
+import { TABLE_CONFIG } from "../../utils/table-config";
 
 const HomeCandidate = () => {
 
@@ -33,14 +29,9 @@ const HomeCandidate = () => {
     const [editCandidate, setEditCandidate] = useState({});
     const [detailCandidate, setDetailCandidate] = useState({});
 
-    const [modalTitle, setModalTitle] = useState('');
-
-    const [openAddCandidateModal, setOpenAddCandidateModal] = useState(false);
-    const [openEditCandidateModal, setOpenEditCandidateModal] = useState(false);
+    const [openUpsertCandidateModal, setOpenUpsertCandidateModal] = useState(false);
     const [openCandidateDetailModal, setOpenCandidateDetailModal] = useState(false);
-    const [openApproveCandidateModal, setOpenApproveCandidateModal] = useState(false);
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
-    const [openStatusModal, setOpenStatusModal] = useState(false);
     const [openVerifyModal, setOpenVerifyModal] = useState(false);
     const [openScheduleModal, setOpenScheduleModal] = useState(false);
 
@@ -49,14 +40,7 @@ const HomeCandidate = () => {
     // Handle click each candidate to update the info
     const handleEditCandidate = (candidate) => {
         setEditCandidate(candidate);
-        setOpenEditCandidateModal(true);
-    };
-
-    // handle click each candidate to update shortlist
-    const handleShortlistCandidate = (candidate) => {
-
-        setEditCandidate(candidate);
-        setOpenApproveCandidateModal(true);
+        setOpenUpsertCandidateModal(true);
     };
 
     //handle review candidate before shortlist
@@ -181,19 +165,20 @@ const HomeCandidate = () => {
                                     )
                                 },
                                 {
-                                    name: 'Set Test Schedule',
-                                    eventName: 'setScheduleTest',
-                                    icon: <QuizIcon />,
-                                    // hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
-                                    hidden: true,
-                                    enable: true
-                                },
-                                {
-                                    name: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? 'Set Interview Schedule' : 'Final Interview Schedule',
+                                    name: 'Invite Interview',
                                     eventName: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? 'setScheduleInterview' : 'setFinalScheduleInterview',
                                     icon: <CalendarMonthIcon />,
-                                    hidden: !user?.roles ? true : [ROLE.ROLE_TA_TEAM, ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
-                                    enable: true
+                                    hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
+                                    enable: !user?.roles ? false : (user?.roles?.includes(ROLE.ROLE_TA_TEAM) ?
+                                        [
+                                            {
+                                                field: 'status',
+                                                values: [STATUS.CANDIDATE.IN_INTERVIEW]
+                                            }
+                                        ]
+                                        :
+                                        true
+                                    ),
                                 },
                                 {
                                     name: 'Submit To HOD',
@@ -210,13 +195,20 @@ const HomeCandidate = () => {
                                             values: !user?.roles ? [] : [STATUS.SHORTLIST_RESULT.PASSED, STATUS.SHORTLIST_RESULT.FAILED, STATUS.SHORTLIST_RESULT.BLACKLIST, STATUS.SHORTLIST_RESULT.KEEP_IN_POOL]
                                         }
                                     ]
-                                }
+                                },
+                                // {
+                                //     name: 'Set Test Schedule',
+                                //     eventName: 'setScheduleTest',
+                                //     icon: <QuizIcon />,
+                                //     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
+                                //     enable: true
+                                // },
                             ]
                         },
                     }
                 }
 
-                onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
+                onHandleAddNewEvent={() => setOpenUpsertCandidateModal(true)}
 
                 handleViewEvent={(data) => {
                     setDetailCandidate(data);
@@ -232,45 +224,22 @@ const HomeCandidate = () => {
                     setVerifyTypeModal(eName);
 
                     eName === 'setScheduleTest' ||
-                    eName === 'setScheduleInterview' ||
-                    eName === 'setFinalScheduleInterview' ? setOpenScheduleModal(true) : setOpenVerifyModal(true);
-                }}
-
-                handleApproveEvent={(data) => handleShortlistCandidate(data)}
-                handleReviewEvent={(data) => handleEditCandidate(data)}
-                handleResultEvent={(data) => {
-                    setModalTitle('Edit shortlist result');
-                    setOpenStatusModal(true);
-                }}
-                handleStatusEvent={(data) => {
-                    setModalTitle('Edit status');
-                    setOpenStatusModal(true);
+                        eName === 'setScheduleInterview' ||
+                        eName === 'setFinalScheduleInterview' ? setOpenScheduleModal(true) : setOpenVerifyModal(true);
                 }}
             />
 
-            {/* Create new candidate form */}
+            {/* Upsert candidate form */}
             <CandidateFormModal
-                modalTitle="New Candidate"
-                openCandidateModal={openAddCandidateModal}
+                candidate={editCandidate}
+                openCandidateModal={openUpsertCandidateModal}
                 onCloseCandidateModal={() => {
                     setEditCandidate({});
-                    setOpenAddCandidateModal(false)
+                    setOpenUpsertCandidateModal(false)
                 }}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
-            {/* Edit candidate form */}
-            <CandidateFormModal
-                modalTitle="Edit Candidate"
-                candidate={editCandidate}
-                openCandidateModal={openEditCandidateModal}
-                onCloseCandidateModal={() => {
-                    setEditCandidate({})
-                    setOpenEditCandidateModal(false)
-                }
-                }
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            />
 
             {/* View candiate detail */}
             <CandidateFormDetailModal
@@ -279,29 +248,12 @@ const HomeCandidate = () => {
                 onCloseCandidateModal={() => setOpenCandidateDetailModal(false)}
             />
 
-
-            {/* Approve candidate form */}
-            <CandidateInviteFormModal
-                candidate={editCandidate}
-                openApproveCandidateModal={openApproveCandidateModal}
-                onCloseApproveCandidateModal={() => setOpenApproveCandidateModal(false)}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            />
-
             {/* Review candidate form */}
             <CandidateReviewCVModal
                 modalTitle="Review CV"
                 id={editCandidate?.id}
                 openReviewCVModal={openReviewCVModal}
                 onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
-            />
-
-            {/* Update candidate status */}
-            <CandidateStatusFormModal
-                title={modalTitle}
-                candidate={editCandidate}
-                open={openStatusModal}
-                onCloseModal={() => setOpenStatusModal(false)}
             />
 
             {/* Update candidate process status */}

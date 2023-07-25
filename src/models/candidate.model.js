@@ -35,6 +35,7 @@ const Model = object({
     status: string().optional().nullable().default('Pending'),
     receivedChannel: string().min(1, {message: 'Received from channel is required!'}),
     interviewDate: string().optional().nullable(),
+    
     //cvFile for preview
     cvFile: any(),
     //file for upload

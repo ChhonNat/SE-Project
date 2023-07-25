@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 
-import { TABLE_CONFIG } from "../../utils/table-config";
-import { API_URL } from "../../constants/api_url";
-import { STATUS } from "../../constants/status";
 
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
-
-import CandidateAssessmentFormModal from "./form-accessment-candidate.modal";
-import CandidateResultFormModal from "./form-result-candidate.modal";
-import CandidateStatusFormModal from "../../components/Candidate/edit-candidate-status";
 import InterViewResultFormModal from "./interview-result-form.modal";
 import CandidateScheduleFormModal from "./schedule-candidate-form.modal";
 
 import GradingIcon from '@mui/icons-material/Grading';
-import { CalendarMonth, Print } from "@mui/icons-material";
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+
+import { CalendarMonth } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { ROLE } from "../../constants/roles";
+import { TABLE_CONFIG } from "../../utils/table-config";
+import { API_URL } from "../../constants/api_url";
 
 const HomeInterview = () => {
 
@@ -28,11 +25,6 @@ const HomeInterview = () => {
     const [openScheduleModal, setOpenScheduleModal] = useState(false);
     const [openInterviewResultModal, setOpenInterviewResultModal] = useState(false);
     const [verifyTypeModal, setVerifyTypeModal] = useState('');
-
-    // const [openAssessmentModal, setOpenAssessmentModal] = useState(false);
-    // const [openResultModal, setOpenResultModal] = useState(false);
-    // const [modalStatusTitle, setModalStatusTitle] = useState('');
-    // const [openModalStatus, setOpenModalStatus] = useState(false);
 
     const mapMoreButtonEventName = {
         "printInterviewForm": {
@@ -47,7 +39,7 @@ const HomeInterview = () => {
         "setSecondRoundInterview": {
             handleAction: () => setOpenScheduleModal(true)
         },
-        "finalSecondRoundSchedule" : {
+        "finalSecondRoundSchedule": {
             handleAction: () => setOpenScheduleModal(true)
         }
     };
@@ -81,40 +73,54 @@ const HomeInterview = () => {
                     moreOption: {
                         buttons: [
                             {
-                                name: 'Print Form',
-                                eventName: 'printInterviewForm',
-                                icon: <Print />,
-                                hidden: false,
+                                name: 'Attach 1st Evaluate Form',
+                                eventName: 'attachFirstEvalForm',
+                                icon: <AttachFileIcon />,
+                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
                                 enable: true
                             },
                             {
-                                name: 'First Round Evaluate',
+                                name: 'Evaluate 1st Interview',
                                 eventName: 'firstRoundEvaluate',
                                 icon: <GradingIcon color="info" />,
-                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER, ROLE.ROLE_HR_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
+                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
                                 enable: true
                             },
                             {
-                                name: 'Second Round Schedule',
+                                name: 'Invite 2nd Interview',
                                 eventName: 'setSecondRoundInterview',
                                 icon: <CalendarMonth />,
-                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER, ROLE.ROLE_HR_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
+                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
                                 enable: true
                             },
                             {
-                                name: 'Second Round Evaluate',
+                                name: 'Attach 2nd Evaluate Form',
+                                eventName: 'attachSecondEvalForm',
+                                icon: <AttachFileIcon />,
+                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
+                                enable: true
+                            },
+                            {
+                                name: 'Evaluate 2nd Interview',
                                 eventName: 'secondRoundEvaluate',
                                 icon: <GradingIcon color="info" />,
-                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER, ROLE.ROLE_HR_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
+                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
                                 enable: true
                             },
-                            {
-                                name: 'Final Second Round Schedule',
-                                eventName: 'finalSecondRoundSchedule',
-                                icon: <CalendarMonth />,
-                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ? false : true,
-                                enable: true
-                            }
+                            // {
+                            //     name: 'Print Form',
+                            //     eventName: 'printInterviewForm',
+                            //     icon: <Print />,
+                            //     hidden: false,
+                            //     enable: true
+                            // },
+                            // {
+                            //     name: 'Final Second Round Schedule',
+                            //     eventName: 'finalSecondRoundSchedule',
+                            //     icon: <CalendarMonth />,
+                            //     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ? false : true,
+                            //     enable: true
+                            // }
                         ]
                     }
                 }}
@@ -131,26 +137,6 @@ const HomeInterview = () => {
                     setEditCandidate(data);
                     setOpenReviewCVModal(true);
                 }}
-
-            // handleEditEvent={(data) => {
-            //     setEditCandidate(data);
-            //     setOpenResultModal(true)
-            // }}
-
-            // handleApproveEvent={(data) => {
-            //     setEditCandidate(data);
-            //     setOpenAssessmentModal(true);
-            // }}
-
-            // handleStatusEvent={(data) => {
-            //     setModalStatusTitle('Edit status')
-            //     setOpenModalStatus(true)
-            // }}
-
-            // handleResultEvent={(data) => {
-            //     setModalStatusTitle('Edit interview result')
-            //     setOpenModalStatus(true)
-            // }}
             />
 
             {/* Second interview schedule modal */}

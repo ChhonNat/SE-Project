@@ -2,8 +2,9 @@ import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
 import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
-import InterviewModel from "../../models/interview.model";
 import SelectComponent from "../../components/Selector/select";
+import VerifyReferenceModel from "../../models/verify-reference.model";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { globalService } from "../../services/global.service";
@@ -26,10 +27,27 @@ const ReferenceResultFormModal = (props) => {
         statuses,
         eventType
     } = props;
-    const { register, handleSubmit, setValue, formState, reset, watch } = useForm({ resolver: zodResolver(InterviewModel) });
 
-    const [listInterviewResults, setListInterviewResults] = useState(['Positive','Negative']);
+    const { register, handleSubmit, setValue, formState, reset, watch, clearErrors } = useForm({ resolver: zodResolver(VerifyReferenceModel) });
+    const watchCandidate = watch();
+    const { errors } = formState;
+    const [listInterviewResults, setListInterviewResults] = useState(['Positive', 'Negative']);
 
+    useEffect(() => {
+
+        console.log('candidate',candidate);
+
+        clearErrors();
+        reset();
+    }, [open])
+
+    const onError = (data) => {
+        console.log('input error', data);
+    }
+
+    const onSubmit = (data) => {
+        console.log('data to submit', data);
+    }
 
     return (
         <div>
@@ -38,6 +56,7 @@ const ReferenceResultFormModal = (props) => {
                 open={open}
                 component="form"
                 fullWidth={true}
+                onSubmit={handleSubmit(onSubmit, onError)}
             >
                 <DialogTitle>
                     <TitleComponent
@@ -53,7 +72,11 @@ const ReferenceResultFormModal = (props) => {
                                     id={'status-id'}
                                     label={selectLabel}
                                     size={'small'}
+                                    isRequired={true}
                                     customDatas={listInterviewResults}
+                                    handleOnChange={(e) => setValue('result', e?.target?.value)}
+                                    value={watchCandidate?.result}
+                                    err={errors?.result?.message}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -62,8 +85,9 @@ const ReferenceResultFormModal = (props) => {
                                     id="Remark"
                                     label="Remark"
                                     multiline
-                                    rows={5}
+                                    rows={2}
                                     variant="outlined"
+                                    {...register('remark')}
                                 />
                             </Grid>
                         </Grid>
