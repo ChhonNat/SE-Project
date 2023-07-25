@@ -114,6 +114,7 @@ const UpsertBusinessUnitForm = (props) => {
                                     handleOnChange={(e) => setValue('mainBusinessUnitId', e?.target?.value)}
                                     err={errors?.mainBusinessUnitId?.message}
                                     isRequire={true}
+                                    size="small"
                                 />
                             </Grid>
 
@@ -125,7 +126,7 @@ const UpsertBusinessUnitForm = (props) => {
                                     label={<LabelRequire label="Code" />}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('code')}
                                     error={errors?.code ? true : false}
                                     helperText={errors?.code?.message}
@@ -140,7 +141,8 @@ const UpsertBusinessUnitForm = (props) => {
                                     label={<span>Name (EN) <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
+
                                     {...register('nameEn')}
                                     error={errors?.nameEn ? true : false}
                                     helperText={errors?.nameEn?.message}
@@ -154,7 +156,8 @@ const UpsertBusinessUnitForm = (props) => {
                                     label={<span>Name (KH) <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
+
                                     {...register('nameKh')}
                                     error={errors?.nameKh ? true : false}
                                     helperText={errors?.nameKh?.message}
@@ -168,7 +171,8 @@ const UpsertBusinessUnitForm = (props) => {
                                     label={<LabelRequire label="Phone" />}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
+
                                     {...register('phone')}
                                     error={errors?.phone ? true : false}
                                     helperText={errors?.phone?.message}
@@ -183,47 +187,8 @@ const UpsertBusinessUnitForm = (props) => {
                                     label="Email"
                                     variant="outlined"
                                     fullWidth
-                                    size="medium"
+                                    size="small"
                                     {...register('email')}
-                                />
-                            </Grid>
-
-                            {/* Address line EN */}
-                            <Grid item xs={12}>
-                                <TextField
-                                    sx={{ width: '100%' }}
-                                    id="address-en"
-                                    label="Address"
-                                    multiline
-                                    rows={3}
-                                    variant="outlined"
-                                    {...register('addressEn')}
-                                />
-                            </Grid>
-
-                            {/* Address line KH */}
-                            <Grid item xs={12}>
-                                <TextField
-                                    sx={{ width: '100%' }}
-                                    id="address-kh"
-                                    label="Address(KH)"
-                                    multiline
-                                    rows={3}
-                                    variant="outlined"
-                                    {...register('addressKh')}
-                                />
-                            </Grid>
-
-                            {/* Description */}
-                            <Grid item xs={12}>
-                                <TextField
-                                    sx={{ width: '100%' }}
-                                    id="description"
-                                    label="Description"
-                                    multiline
-                                    rows={4}
-                                    variant="outlined"
-                                    {...register('description')}
                                 />
                             </Grid>
 
@@ -240,6 +205,47 @@ const UpsertBusinessUnitForm = (props) => {
                                     />
                                 </Grid>
                             }
+                            {/* Address line EN */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    sx={{ width: '100%' }}
+                                    id="address-en"
+                                    label="Address"
+                                    multiline
+                                    rows={2}
+                                    variant="outlined"
+                                    {...register('addressEn')}
+                                    size="small"
+                                />
+                            </Grid>
+
+                            {/* Address line KH */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    sx={{ width: '100%' }}
+                                    id="address-kh"
+                                    label="Address(KH)"
+                                    multiline
+                                    rows={2}
+                                    variant="outlined"
+                                    {...register('addressKh')}
+                                    size="small"
+                                />
+                            </Grid>
+
+                            {/* Description */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    sx={{ width: '100%' }}
+                                    id="description"
+                                    label="Description"
+                                    multiline
+                                    rows={2}
+                                    variant="outlined"
+                                    {...register('description')}
+                                    size="small"
+                                />
+                            </Grid>
                         </Grid>
                     </Box>
                 </DialogContent>

@@ -120,7 +120,7 @@ const CandidateHireFormModal = (props) => {
                                     label="Candidate Name"
                                     variant="outlined"
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('candidateName')}
                                 />
@@ -135,7 +135,7 @@ const CandidateHireFormModal = (props) => {
                                     label="Offer Position"
                                     variant="outlined"
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('offerPositionName')}
                                 />
@@ -150,7 +150,7 @@ const CandidateHireFormModal = (props) => {
                                     label="Business Name"
                                     variant="outlined"
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('businessDivisionName')}
                                 />
@@ -165,7 +165,7 @@ const CandidateHireFormModal = (props) => {
                                     label="Department Name"
                                     variant="outlined"
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('departmentName')}
                                 />
@@ -180,7 +180,7 @@ const CandidateHireFormModal = (props) => {
                                     label="Head Department"
                                     variant="outlined"
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('headDepartmentName')}
                                 />
@@ -195,7 +195,7 @@ const CandidateHireFormModal = (props) => {
                                     label="Location"
                                     variant="outlined"
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     InputLabelProps={shrinkOpt}
                                     {...register('offerLocationName')}
                                 />
@@ -210,7 +210,7 @@ const CandidateHireFormModal = (props) => {
                                     label={<LabelRequire label="Offer Salary" />}
                                     variant="outlined"
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     InputLabelProps={shrinkOpt}
                                     error={errors?.offerSalary ? true : false}
                                     helperText={errors?.offerSalary?.message}
@@ -227,7 +227,7 @@ const CandidateHireFormModal = (props) => {
                                     label={<LabelRequire label="Hire Date" />}
                                     variant="outlined"
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     InputLabelProps={shrinkOpt}
                                     error={errors?.hireDate ? true : false}
                                     helperText={errors?.hireDate?.message}
@@ -243,7 +243,7 @@ const CandidateHireFormModal = (props) => {
                                     label={<LabelRequire label="Join Date" />}
                                     variant="outlined"
                                     fullWidth
-                                    size="small"
+                                    // size="small"
                                     InputLabelProps={shrinkOpt}
                                     error={errors?.joinDate ? true : false}
                                     helperText={errors?.joinDate?.message}

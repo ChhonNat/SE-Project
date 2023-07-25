@@ -110,7 +110,7 @@ const MultiSelectComponent = (props) => {
         <div>
             <FormControl
                 fullWidth
-                size={size ? size : "sm"}
+                size={size ? size : "medium"}
                 error={isSubmit && isRequire && !value?.length ? true : false}>
 
                 <InputLabel id={id}>

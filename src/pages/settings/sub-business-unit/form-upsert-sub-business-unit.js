@@ -197,7 +197,7 @@ const UpsertSubBusinessUnitForm = (props) => {
                                     label="Email"
                                     variant="outlined"
                                     fullWidth
-                                    size="medium"
+                                    size="small"
                                     {...register('email')}
                                 />
                             </Grid>

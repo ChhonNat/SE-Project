@@ -159,7 +159,7 @@ const UpsertCommitteeForm = (props) => {
                                     label={<span>Staff ID <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('staffId')}
                                     error={errors?.staffId ? true : false}
                                     helperText={errors?.staffId?.message}
@@ -174,7 +174,7 @@ const UpsertCommitteeForm = (props) => {
                                     label={<span>First Name <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('firstName')}
                                     error={errors?.firstName ? true : false}
                                     helperText={errors?.firstName?.message}
@@ -188,7 +188,7 @@ const UpsertCommitteeForm = (props) => {
                                     label={<span>Last Name <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('lastName')}
                                     error={errors?.lastName ? true : false}
                                     helperText={errors?.lastName?.message}
@@ -202,7 +202,7 @@ const UpsertCommitteeForm = (props) => {
                                     label={<span>Phone Number <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('phoneNumber')}
                                     error={errors?.phoneNumber ? true : false}
                                     helperText={errors?.phoneNumber?.message}
@@ -216,7 +216,7 @@ const UpsertCommitteeForm = (props) => {
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     customDatas={listBusinessDivisions}
                                     value={watchData?.businessUnitId || ""}
                                     bindField="nameEn"
@@ -232,7 +232,7 @@ const UpsertCommitteeForm = (props) => {
                                 <AsyncAutoComplete
                                     id="department-id"
                                     label="Department"
-                                    size="large"
+                                    size="small"
                                     customDatas={listDepartments}
                                     bindField={'nameEn'}
                                     handleOnChange={(e, value) => {
@@ -253,7 +253,7 @@ const UpsertCommitteeForm = (props) => {
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     customDatas={listPositionLevels}
                                     value={watchData?.positionLevelId || ""}
                                     bindField="nameEn"
@@ -264,7 +264,6 @@ const UpsertCommitteeForm = (props) => {
                                 />
                             </Grid>
 
-
                             <Grid item xs={12}>
                                 <SelectComponent
                                     id="position-id"
@@ -272,24 +271,12 @@ const UpsertCommitteeForm = (props) => {
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     customDatas={listPositions}
                                     value={watchData?.positionId || ""}
                                     bindField="nameEn"
                                     handleOnChange={(e) => setValue('positionId', e?.target?.value)}
                                     err={errors?.positionId?.message}
-                                />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    sx={{ width: '100%' }}
-                                    id="outlined-multiline-static"
-                                    label="Description"
-                                    multiline
-                                    rows={4}
-                                    variant="outlined"
-                                    {...register('description')}
                                 />
                             </Grid>
 
@@ -305,6 +292,20 @@ const UpsertCommitteeForm = (props) => {
                                     />
                                 </Grid>
                             }
+
+                            <Grid item xs={12}>
+                                <TextField
+                                    sx={{ width: '100%' }}
+                                    id="outlined-multiline-static"
+                                    label="Description"
+                                    multiline
+                                    rows={2}
+                                    variant="outlined"
+                                    {...register('description')}
+                                    size="small"
+                                />
+                            </Grid>
+
                         </Grid>
                     </Box>
                 </DialogContent>

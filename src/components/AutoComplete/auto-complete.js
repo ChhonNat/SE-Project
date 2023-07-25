@@ -113,7 +113,7 @@ const AsyncAutoComplete = (props) => {
       <Autocomplete
         id={id ? id : "async-auto-complete"}
         // fullWidth
-        size={size ? size : "small"}
+        size={size ? size : "medium"}
         open={open}
         onOpen={() => { setOpen(true); }}
         onClose={() => { setOpen(false); }}
