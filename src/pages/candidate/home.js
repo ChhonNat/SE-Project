@@ -5,8 +5,8 @@ import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 
 import CandidateFormModal from "./upsert-candidate-form.modal";
 import CandidateFormDetailModal from "./detail-candidate-form.modal";
-import CandidateScheduleForm from "./schedule-candidate-form.modal";
 import CandidateVerifyForm from "./verify-candidate-form.modal";
+import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
 
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
@@ -266,7 +266,7 @@ const HomeCandidate = () => {
             />
 
             {/* Schedule candidate  */}
-            <CandidateScheduleForm
+            <CandidateScheduleFormModal
                 eventType={verifyTypeModal}
                 candidate={editCandidate}
                 open={openScheduleModal}

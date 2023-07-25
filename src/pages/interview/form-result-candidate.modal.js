@@ -160,32 +160,6 @@ const CandidateResultFormModal = (props) => {
                             />
                         </Grid>
 
-                        {/* Status record*/}
-                        {/* <Grid item xs={12}>
-                            <SelectComponent
-                                id="status-id"
-                                label={'Status'}
-                                size={'small'}
-                                customDatas={listInterviewStatuses}
-                                value={watchCandidate?.status || ""}
-                                handleOnChange={(e) => setValue('status', e?.target?.value)}
-                                err={errors?.status?.message}
-                            />
-                        </Grid> */}
-
-                        {/*Interview Result */}
-                        {/* <Grid item xs={12}>
-                            <SelectComponent
-                                id="interview-result-id"
-                                label={'Interview Result'}
-                                size={'small'}
-                                customDatas={listInterviewResults}
-                                value={watchCandidate?.interviewResult || ""}
-                                handleOnChange={(e) => setValue('interviewResult', e?.target?.value)}
-                                err={errors?.interviewResult?.message}
-                            />
-                        </Grid> */}
-
                         {/*Feedback Date*/}
                         <Grid item xs={12}>
                             <TextField

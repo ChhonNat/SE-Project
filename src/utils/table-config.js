@@ -69,19 +69,7 @@ const tblCandidate = [
     },
     {
         id: 'action', label: 'Actions',
-    },
-    // {
-    //     id: 'gender', label: 'Gender', sqlField: 'can.gender'
-    // },
-    // {
-    //     id: 'departmentName', label: 'Department'
-    // },
-    // {
-    //     id: 'businessUnitName', label: 'Primary Business', sqlField: 'pos.name'
-    // },
-    // {
-    //     id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
-    // },
+    }
 ];
 
 /***
@@ -92,7 +80,7 @@ const tblInterview = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'applicantCode', type: 'link', statusColor: {}, label: 'Applicant Code'
+        id: 'candidate', obj: { name: 'applicantCode'}, label: 'Applicant Code'
 
     },
     {

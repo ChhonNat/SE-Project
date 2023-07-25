@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 import InterViewResultFormModal from "./interview-result-form.modal";
-import CandidateScheduleFormModal from "./schedule-candidate-form.modal";
+import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
 
 import GradingIcon from '@mui/icons-material/Grading';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { ROLE } from "../../constants/roles";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import { API_URL } from "../../constants/api_url";
+import { CandidateService } from "../../services/candidate.service";
 
 const HomeInterview = () => {
 
@@ -77,14 +78,14 @@ const HomeInterview = () => {
                                 eventName: 'attachFirstEvalForm',
                                 icon: <AttachFileIcon />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
-                                enable: true
+                                enable: false
                             },
                             {
                                 name: 'Evaluate 1st Interview',
                                 eventName: 'firstRoundEvaluate',
                                 icon: <GradingIcon color="info" />,
                                 hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
-                                enable: true
+                                enable: false
                             },
                             {
                                 name: 'Invite 2nd Interview',
@@ -98,14 +99,14 @@ const HomeInterview = () => {
                                 eventName: 'attachSecondEvalForm',
                                 icon: <AttachFileIcon />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
-                                enable: true
+                                enable: false
                             },
                             {
                                 name: 'Evaluate 2nd Interview',
                                 eventName: 'secondRoundEvaluate',
                                 icon: <GradingIcon color="info" />,
                                 hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
-                                enable: true
+                                enable: false
                             },
                             // {
                             //     name: 'Print Form',
@@ -142,6 +143,7 @@ const HomeInterview = () => {
             {/* Second interview schedule modal */}
             <CandidateScheduleFormModal
                 eventType={verifyTypeModal}
+                apiService={CandidateService.inviteSecondInterview}
                 candidate={editCandidate}
                 open={openScheduleModal}
                 onCloseModal={() => setOpenScheduleModal(false)}
@@ -164,31 +166,6 @@ const HomeInterview = () => {
                 openReviewCVModal={openReviewCVModal}
                 onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
             />
-
-            {/* Update Candidate Result */}
-            {/* <CandidateResultFormModal
-                openResultCandidateModal={openResultModal}
-                onCloseResultCandidateModal={() => setOpenResultModal(false)}
-                candidate={editCandidate}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            /> */}
-
-            {/* /**Make accessment modal */}
-            {/* <CandidateAssessmentFormModal
-                openAssessmentCandidateModal={openAssessmentModal}
-                onCloseAssessmentCandidateModal={() => setOpenAssessmentModal(false)}
-                interview={editCandidate}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            /> */}
-
-
-            {/* Edit candidate result and status */}
-            {/* <CandidateStatusFormModal
-                title={modalStatusTitle}
-                open={openModalStatus}
-                onCloseModal={() => setOpenModalStatus(false)}
-            /> */}
-
         </>
     )
 };
