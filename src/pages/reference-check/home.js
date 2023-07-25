@@ -8,7 +8,7 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 
-import { Print } from "@mui/icons-material";
+import { DoneAll, Print } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { ROLE } from "../../constants/roles";
 
@@ -19,7 +19,6 @@ const HomeAssessment = () => {
     const [editCandidate, setEditCandidate] = useState({});
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
     const [openReferenceResultModal, setOpenReferenceResultModal] = useState(false);
-
     const [isReload, setIsReload] = useState(false);
 
     const mapMoreButtonEventName = {
@@ -71,6 +70,20 @@ const HomeAssessment = () => {
                                 eventName: 'printReferenceForm',
                                 icon: <Print />,
                                 hidden: !user?.roles ? false : user?.roles?.includes(ROLE?.ROLE_TA_TEAM) ? false : true,
+                                enable: true
+                            },
+                            {
+                                name: 'Verify',
+                                eventName: 'verifyJobOffer',
+                                icon: <DoneAll />,
+                                hidden: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_HR_MANAGER) ? false : true,
+                                enable: true
+                            },
+                            {
+                                name: 'Approve',
+                                eventName: 'approveJobOffer',
+                                icon: <DoneAll />,
+                                hidden: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
                                 enable: true
                             }
                         ]

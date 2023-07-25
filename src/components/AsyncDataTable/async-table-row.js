@@ -29,13 +29,6 @@ const TableRows = ({
     handleEditEvent,
     handleMoreEvent,
     handleLinkEvent,
-
-    handleClick,
-    handleApproveEvent,
-    handleReviewEvent,
-    handleAssessmentEvent,
-    handleResultEvent,
-    handleStatusEvent,
     headers,
     checkColumn,
     pageSize,
@@ -142,44 +135,9 @@ const TableRows = ({
                                 (typeof actions?.delete === 'boolean' ? actions?.delete : actions?.delete?.condition[row[actions?.delete?.field]])
                                 :
                                 false,
-                            approveCandidate: actions?.approveCandidate ?
-                                (
-                                    typeof actions?.approveCandidate === 'boolean' ?
-                                        actions?.approveCandidate :
-                                        checkButtonAction(row, actions?.approveCandidate)
-                                    // actions?.approveCandidate?.condition[row[actions?.approveCandidate?.field]]
-                                )
-                                :
-                                false,
-                            reviewCandidate: actions?.reviewCandidate ?
-                                (
-                                    typeof actions?.reviewCandidate === 'boolean' ?
-                                        actions?.reviewCandidate :
-                                        checkButtonAction(row, actions?.reviewCandidate)
-                                )
-                                :
-                                false,
+                           
                             create: actions?.create ?
                                 (typeof actions?.create === 'boolean' ? actions?.create : actions?.create?.condition[row[actions?.create?.field]])
-                                :
-                                false,
-                            passedInterview: actions?.passedInterview ?
-                                (typeof actions?.passedInterview === 'boolean' ?
-                                    actions?.passedInterview :
-                                    checkButtonAction(row, actions?.passedInterview)
-                                )
-                                :
-                                false,
-                            editResult: actions?.editResult ? (typeof actions?.editResult === 'boolean' ?
-                                actions?.editResult :
-                                checkButtonAction(row, actions?.editResult)
-                            )
-                                :
-                                false,
-                            editStatus: actions?.editStatus ? (typeof actions?.editStatus === 'boolean' ?
-                                actions?.editStatus :
-                                checkButtonAction(row, actions?.editStatus)
-                            )
                                 :
                                 false,
                             moreOption: actions?.moreOption
@@ -261,12 +219,6 @@ const TableRows = ({
                                                 onHandleViewEvent={() => handleViewEvent(row)}
                                                 onHandleEditEvent={() => handleEditEvent(row)}
                                                 onHandleMoreEvent={(eventName) => handleMoreEvent(eventName, row)}
-
-                                                onHandleApproveCandidateEvent={() => handleApproveEvent(row)}
-                                                onHandleReviewCandidateEvent={() => handleReviewEvent(row)}
-                                                onHandleAssessmentCandidateEvent={() => handleAssessmentEvent(row)}
-                                                onHandleEditResult={() => handleResultEvent(row)}
-                                                onHandleEditStatus={() => handleStatusEvent(row)}
                                                 useActions={buttonAction}
                                                 row={row}
                                             />

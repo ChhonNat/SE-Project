@@ -9,7 +9,7 @@ const editCandidate = (data,id, contentType) => {
     return httpService._put(API_URL.candidate.edit+id, data, contentType);
 }
 
-const inviteCandidate = (data,id, contentType) => {
+const inviteCandidateInterview = (data,id, contentType) => {
     return httpService._put(API_URL.candidate.invite+id+'/invite', data, contentType);
 }
 
@@ -37,7 +37,7 @@ const downloadCVFile = (id) => {
 export const CandidateService = {
     createCandidate,
     editCandidate,
-    inviteCandidate,
+    inviteCandidateInterview,
     editResultCandidate,
     assessmentCandidate,
     editAssessmentCandidate,

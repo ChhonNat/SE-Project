@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import _useHttp from '../../hooks/_http';
 import { HTTP_METHODS } from '../../constants/http_method';
 import LabelRequire from '../Label/require';
-import { ThemeProvider, createTheme } from '@mui/material';
+import { Box, ThemeProvider, createTheme } from '@mui/material';
 
 const AsyncAutoComplete = (props) => {
 
@@ -17,6 +17,8 @@ const AsyncAutoComplete = (props) => {
     handleOnChange,
     size,
     callToApi,
+    httpMethod,
+    reqBody,
     bindField,
     customDatas,
     err,
@@ -36,7 +38,7 @@ const AsyncAutoComplete = (props) => {
     if (callToApi) {
 
       const fetchData = async () => {
-        await sendRequest(callToApi, HTTP_METHODS.get);
+        await sendRequest(callToApi, httpMethod ? HTTP_METHODS[httpMethod] : HTTP_METHODS.get, reqBody);
       }
 
       fetchData();
@@ -45,7 +47,15 @@ const AsyncAutoComplete = (props) => {
 
   useEffect(() => {
     if (!loading) {
-      data?.length ? setOptions(data) : setOptions([]);
+
+      if (data.hasOwnProperty('records')) {
+        const { records } = data;
+        records?.length ? setOptions(records) : setOptions([]);
+      } else {
+
+        data?.length ? setOptions(data) : setOptions([]);
+      }
+
     }
   }, [loading, data, error, message])
 
@@ -56,8 +66,18 @@ const AsyncAutoComplete = (props) => {
   useEffect(() => {
 
     if (callToApi) {
-      setSelectValue(!data?.length ? {} : data.find((ele) => ele?.id === value));
+
+      if (data?.hasOwnProperty('records')) {
+
+        const { records } = data;
+        setSelectValue(!records?.length ? {} : records.find((ele) => ele?.id === value));
+
+      } else {
+
+        setSelectValue(!data?.length ? {} : data.find((ele) => ele?.id === value));
+      }
     } else {
+      
       setSelectValue(!customDatas?.length ? {} : customDatas.find((ele) => ele?.id === value));
     }
 
@@ -77,12 +97,6 @@ const AsyncAutoComplete = (props) => {
     return searchResult;
   }
 
-  /**
-   * Check option label
-   */
-  const checkOptionLabel = () => {
-
-  }
 
   /**
    * Custom them
@@ -123,6 +137,14 @@ const AsyncAutoComplete = (props) => {
         getOptionLabel={(option) => option[bindField] || ''}
         onChange={handleOnChange}
         value={selectValue}
+        renderOption={(props, option) => (
+          <Box component="li"
+            {...props}
+            key={option?.id}
+          >
+            {option[bindField] || ''}
+          </Box>
+        )}
         renderInput={(params) => (
           <TextField
             {...params}

@@ -27,7 +27,7 @@ const CANDIDATE = {
     PENDING: 'Pending',
     CV_REVIEWED: 'Reviewed',
     CV_SHORTLISTED: 'Shortlisted',
-    IN_INTERVIEW: 'IN_Interview',
+    IN_INTERVIEW: 'In_Interview',
     IN_ASSESSMENT: 'In_Assessment',
     HIRED: 'Hired'
 };

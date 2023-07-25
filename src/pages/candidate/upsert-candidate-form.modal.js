@@ -1,17 +1,10 @@
-import * as React from 'react';
-import { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 
-import { set, useForm } from "react-hook-form";
-import { zodResolver } from '@hookform/resolvers/zod';
-
-import { Box, Button, FormLabel, Grid, IconButton, RadioGroup, Slide } from '@mui/material';
-import Radio from '@mui/material/Radio';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
+import LabelRequire from '../../components/Label/require';
+import CandidateReviewCVModal from '../../components/CV/view-cv.modal';
+import AsyncAutoComplete from '../../components/AutoComplete/auto-complete';
+import Swal from 'sweetalert2';
 import Link from '@mui/material/Link'
-
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -21,20 +14,18 @@ import DialogTitle from '@mui/material/DialogTitle';
 import FooterComponent from '../../components/Page/footer';
 import TitleComponent from '../../components/Page/title';
 import SelectComponent from '../../components/Selector/select';
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Box, Grid, Slide } from '@mui/material';
 import { globalService } from '../../services/global.service';
 import { API_URL } from '../../constants/api_url';
 import { CandidateService } from '../../services/candidate.service';
 import { HTTP_STATUS } from '../../constants/http_status';
-
-import Swal from 'sweetalert2';
 import { DATA_STATUS } from '../../constants/data_status';
 import { ConverterService } from '../../utils/converter';
 import { KEY_POST } from '../../constants/key_post';
-import { STATUS } from '../../constants/status';
 import { CandidateModel } from '../../models/candidate.model';
-import LabelRequire from '../../components/Label/require';
-import CandidateReviewCVModal from '../../components/CV/view-cv.modal';
-import AsyncAutoComplete from '../../components/AutoComplete/auto-complete';
 
 
 const shrinkOpt = { shrink: true };
@@ -45,7 +36,7 @@ const TransitionModal = React.forwardRef(function Transition(props, ref) {
 
 const CandidateFormModal = (props) => {
 
-    const { openCandidateModal, onCloseCandidateModal, modalTitle, candidate, handleEventSuccessed } = props;
+    const { openCandidateModal, onCloseCandidateModal, candidate, handleEventSuccessed } = props;
     const { register, handleSubmit, formState, setValue, watch, reset, clearErrors, setError } = useForm({
         resolver: zodResolver(candidate?.id ? CandidateModel.Create : CandidateModel?.Update)
     });
@@ -136,7 +127,6 @@ const CandidateFormModal = (props) => {
                 } else {
                     setListGenders([]);
                     setListReceivedFromChannels([]);
-                    // setValue('applicantCode', null);
                 }
             } else if (dataType === 'headDepartment') {
 
@@ -265,7 +255,7 @@ const CandidateFormModal = (props) => {
                 onSubmit={handleSubmit(onSubmit, onError)}
             >
                 <DialogTitle>
-                    <TitleComponent title={modalTitle} />
+                    <TitleComponent title={candidate?.id ? 'Edit Candidate' : 'Add Candidate'} />
                 </DialogTitle>
                 <DialogContent dividers>
 
@@ -363,35 +353,11 @@ const CandidateFormModal = (props) => {
 
                             {
                                 candidate?.id && <>
-
                                     <Grid item xs={6}>
                                         <div style={{ paddingTop: 10, display: 'flex', justifyContent: 'end' }}>
                                             <Link sx={{ cursor: 'pointer' }} onClick={() => setOpenCVModal(true)}>{candidate?.applicantCode + '.pdf'}</Link>
                                         </div>
                                     </Grid>
-
-                                    {/* <Grid item xs={6}>
-                                        <FormControl component="fieldset">
-
-                                            <FormGroup aria-label="position" row>
-                                                <FormControlLabel
-                                                    value={STATUS.CANDIDATE.CV_REVIEWED}
-                                                    label="Review CV yet?"
-                                                    control={
-                                                        <Checkbox
-                                                            onChange={(e) => {
-                                                                setValue('status', e?.target?.checked ? STATUS.CANDIDATE.CV_REVIEWED : STATUS.CANDIDATE.PENDING)
-                                                                setValue('shortlistResult', STATUS.SHORTLIST_RESULT.PENDING)
-                                                            }}
-                                                            checked={watchCandidate?.status === STATUS.CANDIDATE.CV_REVIEWED ? true : false}
-                                                        />
-                                                    }
-
-                                                    labelPlacement="end"
-                                                />
-                                            </FormGroup>
-                                        </FormControl>
-                                    </Grid> */}
                                 </>
                             }
 
@@ -427,21 +393,6 @@ const CandidateFormModal = (props) => {
                                     {...register("appliedDate")}
                                 />
                             </Grid>
-
-                            {/* Input Location */}
-                            {/* <Grid item xs={12}>
-                                <SelectComponent
-                                    id="location-id"
-                                    label={'Location'}
-                                    isRequire={true}
-                                    size={'small'}
-                                    customDatas={listLocations}
-                                    value={watchCandidate?.appliedLocationId || ""}
-                                    handleOnChange={(e) => setValue('appliedLocationId', e?.target?.value)}
-                                    err={errors?.appliedLocationId?.message}
-                                />
-                                <br></br>
-                            </Grid> */}
 
                             {/*Select Business */}
                             <Grid item xs={12}>
@@ -497,7 +448,7 @@ const CandidateFormModal = (props) => {
                                     variant="outlined"
                                     fullWidth
                                     size="small"
-                                    // InputLabelProps={shrinkOpt}
+                                    InputLabelProps={shrinkOpt}
                                     {...register('headDepartmentName')}
                                     error={errors?.headDepartmentName ? true : false}
                                     helperText={errors?.headDepartmentName?.message}
