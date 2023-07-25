@@ -65,7 +65,7 @@ const SelectComponent = (props) => {
     return (
         <FormControl
             fullWidth
-            size={size}
+            size={size ? size : 'medium'}
             error={ err ? (value ? false : true) : false }
         >
             <InputLabel id={id}>{!isRequire ? label : <LabelRequire label={label} />}</InputLabel>

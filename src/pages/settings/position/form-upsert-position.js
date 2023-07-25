@@ -145,7 +145,7 @@ const UpsertPositionForm = (props) => {
                                     label={<span>Name <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('nameEn')}
                                     error={errors?.nameEn ? true : false}
                                     helperText={errors?.nameEn?.message}
@@ -158,7 +158,7 @@ const UpsertPositionForm = (props) => {
                                     label={<span>Name(KH) <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('nameKh')}
                                     error={errors?.nameKh ? true : false}
                                     helperText={errors?.nameKh?.message}
@@ -172,7 +172,7 @@ const UpsertPositionForm = (props) => {
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     customDatas={listBusinessDivisions}
                                     value={watchData?.businessUnitId || ""}
                                     bindField="nameEn"
@@ -200,7 +200,7 @@ const UpsertPositionForm = (props) => {
                                 <AsyncAutoComplete
                                     id="department-id"
                                     label="Department"
-                                    size="large"
+                                    size="small"
                                     callToApi={API_URL.lookup.departmentById.get + watchData?.businessUnitId}
                                     bindField={'nameEn'}
                                     handleOnChange={(e, value) => {
@@ -220,7 +220,7 @@ const UpsertPositionForm = (props) => {
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     customDatas={listPositionLevels}
                                     value={watchData?.positionLevelId || ""}
                                     bindField="nameEn"
@@ -230,18 +230,6 @@ const UpsertPositionForm = (props) => {
                                     err={errors?.positionLevelId?.message}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    sx={{ width: '100%' }}
-                                    id="outlined-multiline-static"
-                                    label="Description"
-                                    multiline
-                                    rows={4}
-                                    variant="outlined"
-                                    {...register('description')}
-                                />
-                            </Grid>
-
                             {editData?.id &&
                                 <Grid item xs={12}>
                                     <SelectComponent
@@ -254,6 +242,17 @@ const UpsertPositionForm = (props) => {
                                     />
                                 </Grid>
                             }
+                            <Grid item xs={12}>
+                                <TextField
+                                    sx={{ width: '100%' }}
+                                    id="outlined-multiline-static"
+                                    label="Description"
+                                    multiline
+                                    rows={2}
+                                    variant="outlined"
+                                    {...register('description')}
+                                />
+                            </Grid>
                         </Grid>
                     </Box>
                 </DialogContent>

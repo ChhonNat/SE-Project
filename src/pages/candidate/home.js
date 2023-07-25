@@ -184,7 +184,8 @@ const HomeCandidate = () => {
                                     name: 'Set Test Schedule',
                                     eventName: 'setScheduleTest',
                                     icon: <QuizIcon />,
-                                    hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
+                                    // hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
+                                    hidden: true,
                                     enable: true
                                 },
                                 {

@@ -35,7 +35,7 @@ const CandidateFormDetailModal = (props) => {
         appliedPositionLevelName: { rank: 9, label: 'Applied Position Level' },
         departmentName: { rank: 11, label: 'Department' },
         headDepartmentName: { rank: 12, label: 'Head Department' },
-        businessUnitName: { rank: 10, label: 'Business' },
+        businessUnitName: { rank: 10, label: 'Business Unit' },
         receivedChannel: { rank: 12, label: 'Received Channel' },
         shortlistResult: { rank: 13, label: 'Shortlist Result' },
         createdAt: { rank: 14, label: 'Created At', type: 'date' },
@@ -150,7 +150,7 @@ const CandidateFormDetailModal = (props) => {
                                                                 </label>
                                                                 <label>
                                                                     {
-                                                                        key?.type === 'date' ?
+                                                                        mapKeyToView[key]?.type === 'date' ?
                                                                             moment(candidateDetail[key]).format('MMM DD, YYYY hh:mm:ss A')
                                                                             :
                                                                             candidateDetail[key]
@@ -188,7 +188,7 @@ const CandidateFormDetailModal = (props) => {
                                                         {
                                                             mapKeyToView[key] &&
                                                                 key === 'submitDetails' &&
-                                                                candidateDetail[key].length > 0 &&
+                                                                // candidateDetail[key].length > 0 &&
                                                                 typeof candidateDetail[key] === 'object' ?
                                                                 <>
                                                                     <Grid item xs={12}>
@@ -360,6 +360,7 @@ const CandidateFormDetailModal = (props) => {
                                                                 </>
                                                                 :
                                                                 <>
+
                                                                 </>
                                                         }
                                                     </React.Fragment>
@@ -367,12 +368,7 @@ const CandidateFormDetailModal = (props) => {
                                                 ))
                                         }
 
-
                                     </Grid>
-
-
-
-
 
                                     <Grid
                                         container
@@ -397,7 +393,7 @@ const CandidateFormDetailModal = (props) => {
                                                         {
                                                             mapKeyToView[key] &&
                                                                 key === 'shortlistDetails' &&
-                                                                candidateDetail[key].length > 0 &&
+                                                                // candidateDetail[key].length > 0 &&
                                                                 typeof candidateDetail[key] === 'object' ?
                                                                 <>
                                                                     <Grid item xs={12}>
@@ -491,8 +487,7 @@ const CandidateFormDetailModal = (props) => {
                                                                                         </Grid>
 
                                                                                     </Fragment>
-                                                                                ))
-
+                                                                            ))
                                                                         }
                                                                     </Grid>
                                                                 </>

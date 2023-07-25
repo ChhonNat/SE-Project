@@ -41,7 +41,7 @@ const UpsertPositionLavelForm = (props) => {
     useEffect(() => {
 
         if (openModal) {
-            
+
             if (editData?.id) {
 
                 for (let key in editData) {
@@ -150,7 +150,7 @@ const UpsertPositionLavelForm = (props) => {
                                     label={<span>Name <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('nameEn')}
                                     error={errors?.nameEn ? true : false}
                                     helperText={errors?.nameEn?.message}
@@ -163,7 +163,7 @@ const UpsertPositionLavelForm = (props) => {
                                     label={<span>Name(KH) <b style={{ color: 'red' }}>*</b></span>}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('nameKh')}
                                     error={errors?.nameKh ? true : false}
                                     helperText={errors?.nameKh?.message}
@@ -176,7 +176,7 @@ const UpsertPositionLavelForm = (props) => {
                                     isRequire={true}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     customDatas={listBusinessDivisions}
                                     value={watchData?.businessUnitId || ""}
                                     bindField="nameEn"
@@ -200,7 +200,7 @@ const UpsertPositionLavelForm = (props) => {
                                 <AsyncAutoComplete
                                     id="department-id"
                                     label="Department"
-                                    size="large"
+                                    size="small"
                                     callToApi={API_URL.lookup.department.get}
                                     bindField={'nameEn'}
                                     handleOnChange={(e, value) => {
@@ -211,17 +211,6 @@ const UpsertPositionLavelForm = (props) => {
                                     err={errors?.departmentId?.message}
                                 />
 
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    sx={{ width: '100%' }}
-                                    id="outlined-multiline-static"
-                                    label="Description"
-                                    multiline
-                                    rows={4}
-                                    variant="outlined"
-                                    {...register('description')}
-                                />
                             </Grid>
 
                             {editData?.id &&
@@ -236,6 +225,18 @@ const UpsertPositionLavelForm = (props) => {
                                     />
                                 </Grid>
                             }
+                            <Grid item xs={12}>
+                                <TextField
+                                    sx={{ width: '100%' }}
+                                    id="outlined-multiline-static"
+                                    label="Description"
+                                    multiline
+                                    rows={2}
+                                    variant="outlined"
+                                    {...register('description')}
+                                    size="small"
+                                />
+                            </Grid>
                         </Grid>
                     </Box>
                 </DialogContent>

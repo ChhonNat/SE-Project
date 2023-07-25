@@ -124,7 +124,7 @@ const UpsertDepartmentForm = (props) => {
                                     label={<LabelRequire label="Code" />}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('code')}
                                     error={errors?.code ? true : false}
                                     helperText={errors?.code?.message}
@@ -138,7 +138,7 @@ const UpsertDepartmentForm = (props) => {
                                     label={<LabelRequire label="Name" />}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('nameEn')}
                                     error={errors?.nameEn ? true : false}
                                     helperText={errors?.nameEn?.message}
@@ -152,7 +152,7 @@ const UpsertDepartmentForm = (props) => {
                                     label={<LabelRequire label="Name(KH)" />}
                                     variant="outlined"
                                     fullWidth
-                                    size="meduim"
+                                    size="small"
                                     {...register('nameKh')}
                                     error={errors?.nameKh ? true : false}
                                     helperText={errors?.nameKh?.message}
@@ -163,7 +163,7 @@ const UpsertDepartmentForm = (props) => {
                                 <AsyncAutoComplete
                                     id="primary-business-id"
                                     label="Primary Business"
-                                    size="medium"
+                                    size="small"
                                     callToApi={API_URL.lookup.businessUnit.get}
                                     bindField={'nameEn'}
                                     handleOnChange={(e, value) => {
@@ -199,18 +199,6 @@ const UpsertDepartmentForm = (props) => {
                                 /> */}
                             </Grid>
 
-                            <Grid item xs={12}>
-                                <TextField
-                                    sx={{ width: '100%' }}
-                                    id="outlined-multiline-static"
-                                    label="Description"
-                                    multiline
-                                    rows={4}
-                                    variant="outlined"
-                                    {...register('description')}
-                                />
-                            </Grid>
-
                             {editData?.id &&
                                 <Grid item xs={12}>
                                     <SelectComponent
@@ -223,6 +211,20 @@ const UpsertDepartmentForm = (props) => {
                                     />
                                 </Grid>
                             }
+
+                            <Grid item xs={12}>
+                                <TextField
+                                    sx={{ width: '100%' }}
+                                    id="outlined-multiline-static"
+                                    label="Description"
+                                    multiline
+                                    rows={2}
+                                    variant="outlined"
+                                    {...register('description')}
+                                    size="small"
+                                />
+                            </Grid>
+
                         </Grid>
                     </Box>
                 </DialogContent>

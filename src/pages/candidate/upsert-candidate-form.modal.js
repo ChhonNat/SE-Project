@@ -281,7 +281,7 @@ const CandidateFormModal = (props) => {
                                     variant="outlined"
                                     fullWidth
                                     size="small"
-                                    InputLabelProps={shrinkOpt}
+                                    // InputLabelProps={shrinkOpt}
                                     error={errors?.firstName ? true : false}
                                     helperText={errors?.firstName?.message}
                                     {...register("firstName")}
@@ -296,7 +296,7 @@ const CandidateFormModal = (props) => {
                                     variant="outlined"
                                     fullWidth
                                     size="small"
-                                    InputLabelProps={shrinkOpt}
+                                    // InputLabelProps={shrinkOpt}
                                     error={errors?.lastName ? true : false}
                                     helperText={errors?.lastName?.message}
                                     {...register("lastName")}
@@ -325,14 +325,14 @@ const CandidateFormModal = (props) => {
                                     variant="outlined"
                                     fullWidth
                                     size="small"
-                                    InputLabelProps={shrinkOpt}
+                                    // InputLabelProps={shrinkOpt}
                                     error={errors?.phoneNumber ? true : false}
                                     helperText={errors?.phoneNumber?.message}
                                     {...register("phoneNumber")}
                                 />
                             </Grid>
                             {/* Input Email */}
-                            <Grid item xs={12} paddingBottom={2}>
+                            <Grid item xs={12}>
                                 <TextField
                                     type="email"
                                     id="email"
@@ -340,16 +340,32 @@ const CandidateFormModal = (props) => {
                                     variant="outlined"
                                     fullWidth
                                     size="small"
-                                    InputLabelProps={shrinkOpt}
+                                    // InputLabelProps={shrinkOpt}
                                     {...register("email")}
                                 />
+                            </Grid>
+
+                            {/*Upload file*/}
+                            <Grid item xs={6}>
+                                <TextField
+                                    type='file'
+                                    size='small'
+                                    label={<LabelRequire label={candidate?.id ? "Update CV" : "Upload CV"} />}
+                                    inputProps={{ accept: "application/pdf" }}
+                                    InputLabelProps={shrinkOpt}
+                                    onChange={(e) => setValue('file', e?.target?.files[0])}
+                                    error={errors?.file ? true : false}
+                                    helperText={errors?.file?.message}
+                                >
+                                    Upload
+                                </TextField>
                             </Grid>
 
                             {
                                 candidate?.id && <>
 
-                                    <Grid item xs={12}>
-                                        <div style={{ paddingTop: 10 }}>
+                                    <Grid item xs={6}>
+                                        <div style={{ paddingTop: 10, display: 'flex', justifyContent: 'end' }}>
                                             <Link sx={{ cursor: 'pointer' }} onClick={() => setOpenCVModal(true)}>{candidate?.applicantCode + '.pdf'}</Link>
                                         </div>
                                     </Grid>
@@ -379,24 +395,8 @@ const CandidateFormModal = (props) => {
                                 </>
                             }
 
-                            {/*Upload file*/}
-                            <Grid item xs={6}>
-                                <TextField
-                                    type='file'
-                                    size='small'
-                                    label={<LabelRequire label={candidate?.id ? "Update CV" : "Upload CV"} />}
-                                    inputProps={{ accept: "application/pdf" }}
-                                    InputLabelProps={{ shrink: true }}
-                                    onChange={(e) => setValue('file', e?.target?.files[0])}
-                                    error={errors?.file ? true : false}
-                                    helperText={errors?.file?.message}
-                                >
-                                    Upload
-                                </TextField>
-                            </Grid>
-
                             {/* Select  CV received from*/}
-                            <Grid item xs={6}>
+                            <Grid item xs={12}>
                                 <SelectComponent
                                     id="cv-received-from-id"
                                     label={'CV Received From'}
@@ -497,7 +497,7 @@ const CandidateFormModal = (props) => {
                                     variant="outlined"
                                     fullWidth
                                     size="small"
-                                    InputLabelProps={shrinkOpt}
+                                    // InputLabelProps={shrinkOpt}
                                     {...register('headDepartmentName')}
                                     error={errors?.headDepartmentName ? true : false}
                                     helperText={errors?.headDepartmentName?.message}
