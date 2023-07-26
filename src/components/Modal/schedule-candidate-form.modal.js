@@ -192,7 +192,8 @@ const CandidateScheduleFormModal = (props) => {
                                     id="Remark"
                                     label="Remark"
                                     multiline
-                                    rows={2}
+                                    minRows={2}
+                                    maxRows={10}
                                     variant="outlined"
                                     {...register('remark')}
                                 />

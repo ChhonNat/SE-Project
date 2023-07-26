@@ -3,12 +3,13 @@ import '../../App.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Container, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import { isLogin, userAuthentication } from '../../store/authentication/authenticationService';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../logo/login.png';
+
+import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
+import { userAuthentication } from '../../store/authentication/authenticationService';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 export default function Login() {
@@ -26,7 +27,6 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   const login = async (event) => {
-
     event.preventDefault();
     dispatch(userAuthentication({ username, password }));
   };

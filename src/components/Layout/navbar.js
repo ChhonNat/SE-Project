@@ -23,7 +23,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import Avatar from "@mui/material/Avatar";
 
 import { LayoutContext } from "../../context/layout-context";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { isLogout } from "../../store/authentication/authenticationService";
 import { useNavigate } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS } from "../../constants/local_storage";
@@ -55,12 +55,9 @@ const AppBar = styled(MuiAppBar, {
 const NavbarComponent = () => {
 
     const { toggleNavbar, setToggleNavbar } = useContext(LayoutContext);
-
-    const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const userProfile = useSelector((state) => state?.userAuthendicated);
 
     const handleLogout = () => {
         dispatch(isLogout());
@@ -361,7 +358,7 @@ const NavbarComponent = () => {
                         {/* User Profile */}
 
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <label>{user?.username}</label>
+                            <label>{userProfile?.username}</label>
                             <PopupState variant="popover" popupId="demo-popup-popover">
                                 {(popupState) => (
                                     <div>
