@@ -12,19 +12,20 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-export default function Login() {
-
-  const dispatch = useDispatch();
-
-  const [showPwd, setShowPwd] = useState(false);
 
   /**
    * username: developer
    * pwd: dev123
    */
 
+
+export default function Login() {
+
+  const dispatch = useDispatch();
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [showPwd, setShowPwd] = useState(false);
+
 
   const login = async (event) => {
     event.preventDefault();

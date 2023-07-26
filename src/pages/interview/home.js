@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 
-
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
 import InterViewEvaluateFormModal from "./interview-evaluate-form.modal";
 import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
-
 import GradingIcon from '@mui/icons-material/Grading';
 
 import { CalendarMonth } from "@mui/icons-material";
@@ -37,7 +35,7 @@ const HomeInterview = () => {
         "setSecondRoundInterview": {
             handleAction: () => setOpenScheduleModal(true)
         },
-              // "printInterviewForm": {
+        // "printInterviewForm": {
         //     handleAction: () => window.print()
         // },
         // "finalSecondRoundSchedule": {
@@ -93,7 +91,7 @@ const HomeInterview = () => {
                                 enable: [
                                     {
                                         field: 'interviewProcess',
-                                        values: [STATUS.INTERVIEW_PROCESS.SECOND_INTERVIEW]
+                                        values: [STATUS.INTERVIEW_PROCESS.FIRST_INTERVIEW]
                                     },
                                     {
                                         field: 'status',
@@ -158,7 +156,7 @@ const HomeInterview = () => {
             {/* Inter view result modal */}
             <InterViewEvaluateFormModal
                 eventType={verifyTypeModal}
-                candidate={editCandidate}
+                interview={editCandidate}
                 open={openInterviewResultModal}
                 onCloseModal={() => setOpenInterviewResultModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}

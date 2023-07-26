@@ -1,23 +1,24 @@
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions } from "@mui/material";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import _useHttp from "../../../hooks/_http";
-import { HTTP_METHODS } from "../../../constants/http_method";
 import Swal from "sweetalert2";
-import { ALERT_TIMER } from "../../../constants/app_config";
 import SelectComponent from "../../../components/Selector/select";
-import { STATUS } from "../../../constants/status";
-import MultiSelectComponent from "../../../components/MultiSelector/select";
+
+import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
+import PositionLevelModel from "../../../models/position/position-level.model";
+
+import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions } from "@mui/material";
 import { globalService } from "../../../services/global.service";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { API_URL } from "../../../constants/api_url";
 import { KEY_POST } from "../../../constants/key_post";
-import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
-import PositionLevelModel from "../../../models/position-level.model";
+import { STATUS } from "../../../constants/status";
+import { ALERT_TIMER } from "../../../constants/app_config";
+import { HTTP_METHODS } from "../../../constants/http_method";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -29,14 +30,12 @@ const UpsertPositionLavelForm = (props) => {
     const { openModal, onCloseModal, handleEventSuccessed, title, editData } = props;
     const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({ resolver: zodResolver(PositionLevelModel) });
     const { data, loading, error, message, sendRequest } = _useHttp();
-    const watchData = watch();
     const { errors } = formState;
+    const watchData = watch();
 
     const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
     const [listDepartments, setListDepartments] = useState([]);
     const [isSubmitForm, setIsSubmitForm] = useState(false);
-
-    // const formatKeys = ['businessDivisions'];
 
     useEffect(() => {
 
@@ -51,7 +50,6 @@ const UpsertPositionLavelForm = (props) => {
 
             /**Fetch lookup data businesss and department  */
             fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
-            // fetchData(API_URL.lookup.department.get, setListDepartments);
 
         }
 
@@ -116,7 +114,7 @@ const UpsertPositionLavelForm = (props) => {
         } catch (error) {
             console.log(error);
         }
-    }, [])
+    }, []);
 
     const handleCloseModal = () => {
         reset();

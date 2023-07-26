@@ -1,8 +1,8 @@
 import { authActions } from './authenticationSlice';
-import axios from 'axios';
-import apiLink from '../../constants/app_cont';
 import { LOCAL_STORAGE_KEYS } from '../../constants/local_storage';
 import Swal from 'sweetalert2';
+import axios from 'axios';
+import apiLink from '../../constants/app_cont';
 
 const initialUser = {
   userName: '',
@@ -19,7 +19,6 @@ export const userAuthentication = ({ username, password }) => {
 
 
   return async (dispatch) => {
-
 
     const options = {
       headers: {
