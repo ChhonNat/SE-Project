@@ -134,8 +134,8 @@ const CandidateScheduleFormModal = (props) => {
                                 <TextField
                                     sx={{ width: '100%' }}
                                     size="small"
-                                    id="schedule"
-                                    label="Schedule"
+                                    id="interview-date"
+                                    label="Interview Date"
                                     variant="outlined"
                                     type="datetime-local"
                                     InputLabelProps={shrinkOpt}
@@ -168,7 +168,7 @@ const CandidateScheduleFormModal = (props) => {
                             <Grid item xs={12}>
                                 <AsyncMultiAutoComplete
                                     id="key-person-committee"
-                                    label="Interview Committee"
+                                    label="Interviewer Committee"
                                     size="small"
                                     limitTags={10}
                                     callToApi={API_URL.committeee.get}
