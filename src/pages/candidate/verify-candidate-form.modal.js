@@ -216,6 +216,7 @@ const CandidateVerifyForm = (props) => {
                                     <SelectComponent
                                         id="status-shortlist"
                                         label="Shortlist Result"
+                                        size="small"
                                         value={shortlistResult}
                                         handleOnChange={(e) => setShortlistResult(e?.target?.value)}
                                         customDatas={shortlistResults}
@@ -230,7 +231,8 @@ const CandidateVerifyForm = (props) => {
                                     id="outlined-multiline-static"
                                     label="Remark"
                                     multiline
-                                    rows={5}
+                                    minRows={2}
+                                    maxRows={10}
                                     variant="outlined"
                                     onChange={(e) => setRemark(e?.target?.value)}
                                 />

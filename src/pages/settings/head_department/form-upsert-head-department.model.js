@@ -299,7 +299,8 @@ const UpsertHeadDepartmentForm = (props) => {
                                     id="outlined-multiline-static"
                                     label="Description"
                                     multiline
-                                    rows={2}
+                                    minRows={2}
+                                    maxRows={10}
                                     variant="outlined"
                                     {...register('description')}
                                 />

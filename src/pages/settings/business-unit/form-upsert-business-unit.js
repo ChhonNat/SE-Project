@@ -212,7 +212,8 @@ const UpsertBusinessUnitForm = (props) => {
                                     id="address-en"
                                     label="Address"
                                     multiline
-                                    rows={2}
+                                    minRows={2}
+                                    maxRows={10}
                                     variant="outlined"
                                     {...register('addressEn')}
                                     size="small"
@@ -226,7 +227,8 @@ const UpsertBusinessUnitForm = (props) => {
                                     id="address-kh"
                                     label="Address(KH)"
                                     multiline
-                                    rows={2}
+                                    minRows={2}
+                                    maxRows={10}
                                     variant="outlined"
                                     {...register('addressKh')}
                                     size="small"
@@ -240,7 +242,8 @@ const UpsertBusinessUnitForm = (props) => {
                                     id="description"
                                     label="Description"
                                     multiline
-                                    rows={2}
+                                    minRows={2}
+                                    maxRows={10}
                                     variant="outlined"
                                     {...register('description')}
                                     size="small"
