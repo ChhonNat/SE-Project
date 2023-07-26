@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { useReducer, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import apiLink from '../constants/app_cont';
-import { LOCAL_STORAGE_KEYS } from '../constants/local_storage';
 
 const httpReducer = (httpState, action) => {
   switch (action.type) {

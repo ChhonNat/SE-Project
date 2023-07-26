@@ -3,7 +3,7 @@ import TitleComponent from "../Page/title";
 import FooterComponent from "../Page/footer";
 import AsyncAutoComplete from "../AutoComplete/auto-complete";
 import AsyncMultiAutoComplete from "../MultiAutoComplete/auto-complete";
-import InviteInterviewModel from "../../models/invite-interview.model";
+import InviteInterviewModel from "../../models/interview/invite-interview.model";
 import _useHttp from "../../hooks/_http";
 import Swal from "sweetalert2";
 import { STATUS } from "../../constants/status";

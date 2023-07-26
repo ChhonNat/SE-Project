@@ -3,7 +3,7 @@ import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
 import SelectComponent from "../../components/Selector/select";
 import LabelRequire from "../../components/Label/require";
-import EvaluateInterviewModel from "../../models/evaluate-interview.model";
+import EvaluateInterviewModel from "../../models/interview/evaluate-interview.model";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +11,10 @@ import { globalService } from "../../services/global.service";
 import { API_URL } from "../../constants/api_url";
 import { STATUS } from "../../constants/status";
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
+import { InterviewService } from "../../services/interview.service";
+import { HTTP_STATUS } from "../../constants/http_status";
+import { DATA_STATUS } from "../../constants/data_status";
+import Swal from "sweetalert2";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -21,32 +25,32 @@ const InterViewEvaluateFormModal = (props) => {
     const {
         open,
         onCloseModal,
-        candidate,
+        interview,
         handleEventSuccessed,
         selectLabel,
         eventType
     } = props;
-    const { register, handleSubmit, setValue, formState, reset, watch } = useForm({ resolver: zodResolver(EvaluateInterviewModel) });
+    const { register, handleSubmit, setValue, formState, reset, watch, setError, clearErrors } = useForm({ resolver: zodResolver(EvaluateInterviewModel) });
     const { errors } = formState;
     const watchInterview = watch();
 
     const [listInterviewResults, setListInterviewResults] = useState([]);
 
-    //map event when get event from home candidate
+    //map event when get event from home interview
     const mapEventType = {
         "firstRoundEvaluate": {
-            title: "Are you sure?",
-            subTitle: "You want to evaluate first interview result.",
+            title: "Evaluate first interview",
+            subTitle: "",
             actions: {
-                submitLabel: 'Confirm',
+                submitLabel: 'Evaluate',
                 select: false
             }
         },
         "secondRoundEvaluate": {
-            title: "Are you sure?",
-            subTitle: "You want to evaluate second interview result.",
+            title: "Evaluate second interview",
+            subTitle: "",
             actions: {
-                submitLabel: 'Confirm',
+                submitLabel: 'Evaluate',
                 select: false
             }
         },
@@ -69,7 +73,7 @@ const InterViewEvaluateFormModal = (props) => {
             const { success, data } = req?.data;
 
             if (success && data.hasOwnProperty('interviewResults')) {
-                
+
                 data?.interviewResults?.length ?
                     setListInterviewResults(data?.interviewResults?.filter((result) => {
                         return !result.includes(STATUS.INTERVIEW_RESULT.WAITING) &&
@@ -85,12 +89,50 @@ const InterViewEvaluateFormModal = (props) => {
     }, []);
 
 
-    const handleOnSubmit = (submitData) => {
-        console.log(submitData);
+    const handleOnSubmit = async (submitData) => {
+
+        const formSubmit = new FormData();
+
+        Object.keys(submitData).forEach((key) => {
+            formSubmit.append(key, submitData[key]);
+        });
+
+        const reqSubmitEvaluate = await InterviewService.evaluateInterview(interview?.id, interview?.candidate?.id, formSubmit, 'multipart/form-data');
+
+        const { status, data } = reqSubmitEvaluate;
+        const { message } = data;
+
+        if (status === HTTP_STATUS.success) {
+
+            if (data?.status === DATA_STATUS.success)
+                handleEventSuccessed();
+
+            /**
+             * Alert after request responses
+             */
+            Swal.fire({
+                title: data?.status === DATA_STATUS.success ? 'Success' : 'Error',
+                text: message,
+                icon: data?.status === DATA_STATUS.success ? 'success' : 'error',
+                confirmButtonText: 'OK',
+                size: 200
+            })
+
+            handleCloseModal();
+
+        }
+
     };
 
+    const handleCloseModal = () => {
+        reset();
+        clearErrors();
+        onCloseModal();
+    }
+
     const onError = (errData) => {
-        console.log('Input error',errData);
+        if (!watchInterview?.file)
+            setError('file', { message: 'File is required!' });
     };
 
     return (
@@ -100,7 +142,7 @@ const InterViewEvaluateFormModal = (props) => {
                 open={open}
                 component="form"
                 fullWidth={true}
-                onSubmit={handleSubmit(handleOnSubmit,onError)}
+                onSubmit={handleSubmit(handleOnSubmit, onError)}
             >
                 <DialogTitle>
                     <TitleComponent
@@ -118,7 +160,12 @@ const InterViewEvaluateFormModal = (props) => {
                                     label={<LabelRequire label={"Evaluate Form"} />}
                                     InputLabelProps={{ shrink: true }}
                                     sx={{ width: '100%' }}
-                                    {...register('file')}
+                                    onChange={(e) => {
+                                        setValue('file', e?.target?.files[0]);
+                                        clearErrors('file');
+                                    }}
+                                    error={errors?.file ? true : false}
+                                    helperText={errors?.file?.message}
                                 >
                                     Upload
                                 </TextField>
@@ -129,8 +176,9 @@ const InterViewEvaluateFormModal = (props) => {
                                     label={selectLabel}
                                     size={'small'}
                                     customDatas={listInterviewResults}
-                                    value={watchInterview?.result || ""}
-                                    handleOnChange={(e) => setValue('result',e?.target?.value)}
+                                    value={watchInterview?.interviewResult || ""}
+                                    handleOnChange={(e) => setValue('interviewResult', e?.target?.value)}
+                                    err={errors?.interviewResult?.message}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -151,7 +199,7 @@ const InterViewEvaluateFormModal = (props) => {
                 <DialogActions>
                     <FooterComponent
                         saveButtunType='submit'
-                        saveButtonLabel='Save'
+                        saveButtonLabel='Evaluate'
                         handleCancel={onCloseModal}
                         actions={{ cancel: true, submit: true }}
                     />

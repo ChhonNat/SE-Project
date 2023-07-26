@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
+import PositionModel from "../../../models/position/position.model";
+import UpsertPositionForm from "./form-upsert-position";
+import { KEY_POST } from "../../../constants/key_post";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
-import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import PositionModel from "../../../models/position.model";
-import { KEY_POST } from "../../../constants/key_post";
-import UpsertPositionForm from "./form-upsert-position";
 
 const HomePosition = () => {
 
@@ -50,7 +50,7 @@ const HomePosition = () => {
                 openModal={openPositionModal}
                 editData={editPosition}
                 onCloseModal={() => {
-                    setEditPosition(PositionModel);
+                    setEditPosition({});
                     setOpenPositionModal(false);
                 }}
                 model={PositionModel}

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
+import UpsertPositionForm from "./form-upsert-position";
+import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
+
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
-import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import PositionModel from "../../../models/position.model";
-import { KEY_POST } from "../../../constants/key_post";
-import UpsertPositionForm from "./form-upsert-position";
 
 const HomePositionLevel = () => {
 
@@ -50,7 +49,7 @@ const HomePositionLevel = () => {
                 openModal={openPositionLevelModal}
                 editData={editPositionLevel}
                 onCloseModal={() => {
-                    setEditPositionLevel(PositionModel);
+                    setEditPositionLevel({});
                     setOpenPositionLevelModal(false);
                 }}
                 handleEventSuccessed={() => setIsReload(!isReload)}
