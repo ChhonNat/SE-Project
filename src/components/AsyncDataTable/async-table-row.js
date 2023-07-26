@@ -135,7 +135,7 @@ const TableRows = ({
                                 (typeof actions?.delete === 'boolean' ? actions?.delete : actions?.delete?.condition[row[actions?.delete?.field]])
                                 :
                                 false,
-                           
+
                             create: actions?.create ?
                                 (typeof actions?.create === 'boolean' ? actions?.create : actions?.create?.condition[row[actions?.create?.field]])
                                 :
@@ -200,7 +200,9 @@ const TableRows = ({
 
                                         {/* Use link */}
                                         {
-                                            isLink && <Link sx={{ cursor: 'pointer' }} onClick={() => handleLinkEvent(row)}>{row[head.id]}</Link>
+                                            isLink && <Link sx={{ cursor: 'pointer' }} onClick={() => handleLinkEvent(row)}>
+                                                {!isObject ? row[head.id] : row[head?.id] && row[head?.id][head?.obj?.name]}
+                                            </Link>
                                         }
 
                                         {/* Use normal field */}

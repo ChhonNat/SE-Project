@@ -80,7 +80,7 @@ const tblInterview = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'candidate', obj: { name: 'applicantCode' }, label: 'Applicant Code'
+        id: 'candidate', type: 'link', obj: { name: 'applicantCode' }, label: 'Applicant Code'
 
     },
     {
