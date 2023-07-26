@@ -11,7 +11,7 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -24,6 +24,7 @@ const AsyncTableAction = (props) => {
         row,
         onHandleEditEvent,
         onHandleViewEvent,
+        onHandleViewFileEvent,
         onHandleMoreEvent,
         onHandleApproveCandidateEvent,
         onHandleReviewCandidateEvent,
@@ -60,11 +61,11 @@ const AsyncTableAction = (props) => {
     };
 
     const enableMoreOption = (buttons) => {
-        if(!buttons || !buttons?.length)
-        return false;
+        if (!buttons || !buttons?.length)
+            return false;
 
-        if(buttons?.length)
-        return !buttons?.every((button) => button?.hidden);
+        if (buttons?.length)
+            return !buttons?.every((button) => button?.hidden);
     }
 
     return (
@@ -85,64 +86,21 @@ const AsyncTableAction = (props) => {
                     </Tooltip>
                 }
 
+                {useActions?.viewFile &&
+                    <Tooltip title="View Form">
+                        <Button variant="text" size="small" color="inherit"
+                            onClick={onHandleViewFileEvent}>
+                            <FileOpenIcon />
+                        </Button>
+                    </Tooltip>
+                }
+
                 {/* Show button edit the candidate */}
                 {useActions?.edit &&
                     <Tooltip title="Edit record">
                         <Button variant="text" size="small" color="inherit"
                             onClick={onHandleEditEvent}>
                             <DriveFileRenameOutlineOutlinedIcon />
-                        </Button>
-                    </Tooltip>
-                }
-
-                {/* Show button approve candidate when the candidate passed the shortlist */}
-                {useActions?.approveCandidate &&
-                    <Tooltip title="Invite to interview">
-                        <Button variant="text" size="small" color="success"
-                            onClick={onHandleApproveCandidateEvent}>
-                            <HowToRegOutlinedIcon />
-                        </Button>
-                    </Tooltip>
-                }
-
-                {/* Show button review candidate info to decide about the CV result */}
-                {useActions?.reviewCandidate &&
-                    <Tooltip title="Review candidate">
-                        <Button variant="text" size="small" color="primary"
-                            onClick={onHandleReviewCandidateEvent}
-                        >
-                            <VisibilityIcon />
-                        </Button>
-                    </Tooltip>
-                }
-
-                {
-                    useActions?.passedInterview &&
-                    <Tooltip title="Make assessment">
-                        <Button variant="text" size="small" color="success"
-                            onClick={onHandleAssessmentCandidateEvent}
-                        >
-                            <HowToRegOutlinedIcon />
-                        </Button>
-                    </Tooltip>
-                }
-
-                {/* Show button edit result */}
-                {useActions?.editResult &&
-                    <Tooltip title="Edit shortlist result">
-                        <Button variant="text" size="small" color="info"
-                            onClick={onHandleEditResult}>
-                            <CheckBoxOutlinedIcon />
-                        </Button>
-                    </Tooltip>
-                }
-
-                {/* Show button edit status */}
-                {useActions?.editStatus &&
-                    <Tooltip title="Edit status">
-                        <Button variant="text" size="small" color="secondary"
-                            onClick={onHandleEditStatus}>
-                            <CheckCircleOutlineOutlinedIcon />
                         </Button>
                     </Tooltip>
                 }
@@ -161,58 +119,45 @@ const AsyncTableAction = (props) => {
                 {/* {
                     enableMoreOption(useActions?.moreOption?.buttons) ?
                         <> */}
-                            <IconButton
-                                aria-label="more-option"
-                                size="medium"
-                                aria-controls={openMoreOption ? 'basic-menu' : undefined}
-                                aria-haspopup="true"
-                                aria-expanded={openMoreOption ? 'true' : undefined}
-                                onClick={(e) => setShowMoreOptionAnchor(e?.currentTarget)}
-                                disabled={enableMoreOption(useActions?.moreOption?.buttons) ? false : true}
+                <IconButton
+                    aria-label="more-option"
+                    size="medium"
+                    aria-controls={openMoreOption ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openMoreOption ? 'true' : undefined}
+                    onClick={(e) => setShowMoreOptionAnchor(e?.currentTarget)}
+                    disabled={enableMoreOption(useActions?.moreOption?.buttons) ? false : true}
+                >
+                    <MoreVertOutlinedIcon />
+                </IconButton>
+                <Menu
+                    id="menu"
+                    anchorEl={showMoreOptionAnchor}
+                    open={openMoreOption}
+                    onClose={() => setShowMoreOptionAnchor(null)}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                >
+                    {
+                        useActions?.moreOption?.buttons.map((button, index) => (
+                            !button?.hidden &&
+                            <MenuItem
+                                key={index}
+                                onClick={() => onHandleMoreEvent(button?.eventName || '')}
+                                disabled={!checkButtonAction(button?.enable)}
                             >
-                                <MoreVertOutlinedIcon />
-                            </IconButton>
-                            {/* {
-                                useActions?.moreOption?.buttons?.length ? */}
-                                    <Menu
-                                        id="menu"
-                                        anchorEl={showMoreOptionAnchor}
-                                        open={openMoreOption}
-                                        onClose={() => setShowMoreOptionAnchor(null)}
-                                        MenuListProps={{
-                                            'aria-labelledby': 'basic-button',
-                                        }}
-                                    >
-                                        {
-                                            useActions?.moreOption?.buttons.map((button, index) => (
-                                                !button?.hidden &&
-                                                <MenuItem
-                                                    key={index}
-                                                    onClick={() => onHandleMoreEvent(button?.eventName || '')}
-                                                    disabled={!checkButtonAction(button?.enable)}
-                                                >
-                                                    {
-                                                        button?.icon && <>{button?.icon}</>
-                                                        // <IconButton size="medium">
-                                                        // </IconButton>
-                                                    }
-                                                    <label style={{ fontSize: 13, marginLeft: 5, cursor: 'pointer' }}>
-                                                        {button?.name}
-                                                    </label>
-                                                </MenuItem>
-                                            ))
-                                        }
+                                {button?.icon && <>{button?.icon}</>}
+                                <label style={{ fontSize: 13, marginLeft: 5, cursor: 'pointer' }}>
+                                    {button?.name}
+                                </label>
+                            </MenuItem>
+                        ))
+                    }
 
-                                    </Menu>
-                            {/* //         :
-                            //         <></>
-                            // } */}
-                        {/* </>
-                        :
-                        <></>
-                } */}
+                </Menu>
 
-            </ButtonGroup> 
+            </ButtonGroup>
 
 
             {/* Confirm delete modal when click on delete button */}

@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Slide, TextField } from "@mui/material";
 import SelectComponent from "../../components/Selector/select";
 import { globalService } from "../../services/global.service";
 import { API_URL } from "../../constants/api_url";
@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { STATUS } from "../../constants/status";
 import { useSelector } from "react-redux";
 import { ROLE } from "../../constants/roles";
+import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -122,11 +123,11 @@ const CandidateVerifyForm = (props) => {
 
                             const filterResultStatusByRole = data?.shortlistResults.filter((resultStatus) => {
 
-                                if(user?.roles?.includes(ROLE.ROLE_TA_TEAM))
-                                return !resultStatus.includes(STATUS.SHORTLIST_RESULT.WAITING);
+                                if (user?.roles?.includes(ROLE.ROLE_TA_TEAM))
+                                    return !resultStatus.includes(STATUS.SHORTLIST_RESULT.WAITING);
 
-                                if(user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER))
-                                return !resultStatus.includes(STATUS.SHORTLIST_RESULT.WAITING) && !resultStatus.includes(STATUS.SHORTLIST_RESULT.BLACKLIST);
+                                if (user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER))
+                                    return !resultStatus.includes(STATUS.SHORTLIST_RESULT.WAITING) && !resultStatus.includes(STATUS.SHORTLIST_RESULT.BLACKLIST);
                             })
 
                             setShortlistResults(filterResultStatusByRole);
@@ -149,7 +150,7 @@ const CandidateVerifyForm = (props) => {
 
     useEffect(() => {
         setShortlistResult(candidate?.shortlistResult);
-    },[candidate?.shortlistResult])
+    }, [candidate?.shortlistResult])
 
 
     //submit method 
@@ -206,6 +207,23 @@ const CandidateVerifyForm = (props) => {
                         title={mapEventType[eventType]?.title}
                         subTitle={mapEventType[eventType]?.subTitle}
                     />
+                    {
+                        onCloseModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
                 </DialogTitle>
                 <DialogContent dividers>
                     <Box sx={{ width: '100%' }}>

@@ -5,7 +5,7 @@ import { TABLE_CONFIG } from "../../utils/table-config";
 import CandidateHireFormModal from "./form-hire-candidate.modal";
 import { STATUS } from "../../constants/status";
 import CandidateOfferFormModal from "./form-offer-candidate.modal";
-import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 
 const HomeAssessment = () => {
 
@@ -93,11 +93,11 @@ const HomeAssessment = () => {
             />
 
             {/* Review candidate form */}
-            <CandidateReviewCVModal
+            <ViewFileModal
                 modalTitle="Review CV"
                 id={editCandidate?.candidateId}
-                openReviewCVModal={openReviewCVModal}
-                onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
+                openModal={openReviewCVModal}
+                onCloseModal={() => setOpenReviewCVModal(false)}
             />
 
         </>

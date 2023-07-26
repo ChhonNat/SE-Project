@@ -1,16 +1,18 @@
 import React, { forwardRef, useEffect } from "react";
 import Box from "@mui/material/Box";
-import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions } from "@mui/material";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
+import SelectComponent from "../../../components/Selector/select";
+import _useHttp from "../../../hooks/_http";
+import Swal from "sweetalert2";
+
+import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import _useHttp from "../../../hooks/_http";
 import { HTTP_METHODS } from "../../../constants/http_method";
-import Swal from "sweetalert2";
 import { ALERT_TIMER } from "../../../constants/app_config";
-import SelectComponent from "../../../components/Selector/select";
 import { STATUS } from "../../../constants/status";
+import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -91,6 +93,23 @@ const UpsertForm = (props) => {
             >
                 <DialogTitle>
                     <TitleComponent title={title} />
+                    {
+                        onCloseModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
                 </DialogTitle>
                 <DialogContent dividers>
 

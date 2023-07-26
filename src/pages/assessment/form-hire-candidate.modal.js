@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect } from "react";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Slide, TextField } from "@mui/material";
 import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
 import { useForm } from "react-hook-form";
@@ -13,6 +13,7 @@ import { DATA_STATUS } from "../../constants/data_status";
 import { ALERT_TIMER } from "../../constants/app_config";
 import { AssessmentModel } from "../../models/assessment.model";
 import LabelRequire from "../../components/Label/require";
+import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -106,6 +107,23 @@ const CandidateHireFormModal = (props) => {
             >
                 <DialogTitle>
                     <TitleComponent title="Hire this candidate ?" />
+                    {
+                        onCloseHireCandidateModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseHireCandidateModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
                 </DialogTitle>
                 <DialogContent dividers>
                     <Box sx={{ width: '100%' }}>

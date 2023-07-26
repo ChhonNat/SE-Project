@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Slide, TextField } from "@mui/material";
 import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
 import SelectComponent from "../../components/Selector/select";
@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { globalService } from "../../services/global.service";
 import { API_URL } from "../../constants/api_url";
 import { STATUS } from "../../constants/status";
+import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -35,7 +36,7 @@ const ReferenceResultFormModal = (props) => {
 
     useEffect(() => {
 
-        console.log('candidate',candidate);
+        console.log('candidate', candidate);
 
         clearErrors();
         reset();
@@ -63,6 +64,23 @@ const ReferenceResultFormModal = (props) => {
                         title={'Are you sure?'}
                         subTitle={'You want to verify on reference.'}
                     />
+                    {
+                        onCloseModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
                 </DialogTitle>
                 <DialogContent dividers>
                     <Box sx={{ width: '100%' }}>

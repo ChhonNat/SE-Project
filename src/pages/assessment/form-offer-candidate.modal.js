@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Slide, TextField } from "@mui/material";
 import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
 import { useForm } from "react-hook-form";
@@ -16,6 +16,7 @@ import { globalService } from "../../services/global.service";
 import SelectComponent from "../../components/Selector/select";
 import { AssessmentModel } from "../../models/assessment.model";
 import LabelRequire from "../../components/Label/require";
+import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -148,6 +149,23 @@ const CandidateOfferFormModal = (props) => {
             >
                 <DialogTitle>
                     <TitleComponent title="Offer Candidate" />
+                    {
+                        onCloseOfferCandidateModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseOfferCandidateModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
                 </DialogTitle>
                 <DialogContent dividers>
                     <Box sx={{ width: '100%' }}>

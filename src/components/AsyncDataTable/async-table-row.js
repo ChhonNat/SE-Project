@@ -26,6 +26,7 @@ const TableRows = ({
     displayRecords,
     isSelected,
     handleViewEvent,
+    handleViewFileEvent,
     handleEditEvent,
     handleMoreEvent,
     handleLinkEvent,
@@ -124,6 +125,14 @@ const TableRows = ({
                             )
                                 :
                                 false,
+
+                            viewFile: actions?.viewFile ? (typeof actions?.viewFile === 'boolean' ?
+                                actions?.viewFile :
+                                checkButtonAction(row, actions?.viewFile)
+                            )
+                                :
+                                false,
+
                             edit: actions?.edit ?
                                 (
                                     typeof actions?.edit === 'boolean' ?
@@ -131,6 +140,7 @@ const TableRows = ({
                                         checkButtonAction(row, actions?.edit))
                                 :
                                 false,
+
                             delete: actions?.delete ?
                                 (typeof actions?.delete === 'boolean' ? actions?.delete : actions?.delete?.condition[row[actions?.delete?.field]])
                                 :
@@ -140,6 +150,7 @@ const TableRows = ({
                                 (typeof actions?.create === 'boolean' ? actions?.create : actions?.create?.condition[row[actions?.create?.field]])
                                 :
                                 false,
+
                             moreOption: actions?.moreOption
                         };
 
@@ -219,6 +230,7 @@ const TableRows = ({
                                         {isAction &&
                                             <AsyncTableAction
                                                 onHandleViewEvent={() => handleViewEvent(row)}
+                                                onHandleViewFileEvent={() => handleViewFileEvent(row)}
                                                 onHandleEditEvent={() => handleEditEvent(row)}
                                                 onHandleMoreEvent={(eventName) => handleMoreEvent(eventName, row)}
                                                 useActions={buttonAction}

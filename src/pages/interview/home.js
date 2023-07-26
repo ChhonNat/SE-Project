@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 import InterViewEvaluateFormModal from "./interview-evaluate-form.modal";
 import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
-import GradingIcon from '@mui/icons-material/Grading';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
 
 import { CalendarMonth } from "@mui/icons-material";
 import { useSelector } from "react-redux";
@@ -20,7 +21,7 @@ const HomeInterview = () => {
 
     const [isReload, setIsReload] = useState(false);
     const [editCandidate, setEditCandidate] = useState({});
-    const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
+    const [openFileModal, setOpenFileModal] = useState(false);
     const [openScheduleModal, setOpenScheduleModal] = useState(false);
     const [openInterviewResultModal, setOpenInterviewResultModal] = useState(false);
     const [verifyTypeModal, setVerifyTypeModal] = useState('');
@@ -69,12 +70,23 @@ const HomeInterview = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
+                    view: true,
+                    viewFile: [
+                        {
+                            field: 'interviewResult',
+                            values: [
+                                STATUS.INTERVIEW_RESULT.PASSED,
+                                STATUS.INTERVIEW_RESULT.FAILED,
+                                STATUS.INTERVIEW_RESULT.KEEP_IN_REVIEW
+                            ]
+                        }
+                    ],
                     moreOption: {
                         buttons: [
                             {
                                 name: 'Evaluate 1st Interview',
                                 eventName: 'firstRoundEvaluate',
-                                icon: <GradingIcon color="info" />,
+                                icon: <UploadFileIcon />,
                                 hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
                                 enable: [
                                     {
@@ -102,8 +114,8 @@ const HomeInterview = () => {
                             {
                                 name: 'Evaluate 2nd Interview',
                                 eventName: 'secondRoundEvaluate',
-                                icon: <GradingIcon color="info" />,
-                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
+                                icon: <UploadFileIcon />,
+                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles?.includes(role)) ? false : true,
                                 enable: [
                                     {
                                         field: 'interviewProcess',
@@ -138,8 +150,15 @@ const HomeInterview = () => {
                 }}
 
                 handleLinkEvent={(data) => {
+                    setVerifyTypeModal('viewCV')
                     setEditCandidate(data);
-                    setOpenReviewCVModal(true);
+                    setOpenFileModal(true);
+                }}
+
+                handleViewFileEvent={(data) => {
+                    setVerifyTypeModal('viewEvaluateForm')
+                    setEditCandidate(data);
+                    setOpenFileModal(true)
                 }}
             />
 
@@ -163,11 +182,12 @@ const HomeInterview = () => {
             />
 
             {/* Review candidate form */}
-            <CandidateReviewCVModal
-                modalTitle="Review CV"
-                id={editCandidate?.candidate?.id}
-                openReviewCVModal={openReviewCVModal}
-                onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
+            <ViewFileModal
+                modalTitle={verifyTypeModal === 'viewCV' ? "Review CV" : "Review Evaluate Form"}
+                id={verifyTypeModal === 'viewCV' ? editCandidate?.candidate?.id : editCandidate?.id}
+                downloadFileUrl={API_URL.interview.downloadEvaluateForm}
+                openModal={openFileModal}
+                onCloseModal={() => setOpenFileModal(false)}
             />
         </>
     )
