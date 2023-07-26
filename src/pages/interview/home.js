@@ -165,7 +165,7 @@ const HomeInterview = () => {
             {/* Review candidate form */}
             <CandidateReviewCVModal
                 modalTitle="Review CV"
-                id={editCandidate?.candidateId}
+                id={editCandidate?.candidate?.id}
                 openReviewCVModal={openReviewCVModal}
                 onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
             />
