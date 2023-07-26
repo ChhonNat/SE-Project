@@ -3,11 +3,10 @@ import React, { useState } from "react";
 
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
-import InterViewResultFormModal from "./interview-result-form.modal";
+import InterViewEvaluateFormModal from "./interview-evaluate-form.modal";
 import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
 
 import GradingIcon from '@mui/icons-material/Grading';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 import { CalendarMonth } from "@mui/icons-material";
 import { useSelector } from "react-redux";
@@ -15,6 +14,7 @@ import { ROLE } from "../../constants/roles";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import { API_URL } from "../../constants/api_url";
 import { CandidateService } from "../../services/candidate.service";
+import { STATUS } from "../../constants/status";
 
 const HomeInterview = () => {
 
@@ -28,9 +28,6 @@ const HomeInterview = () => {
     const [verifyTypeModal, setVerifyTypeModal] = useState('');
 
     const mapMoreButtonEventName = {
-        "printInterviewForm": {
-            handleAction: () => window.print()
-        },
         "firstRoundEvaluate": {
             handleAction: () => setOpenInterviewResultModal(true)
         },
@@ -40,9 +37,12 @@ const HomeInterview = () => {
         "setSecondRoundInterview": {
             handleAction: () => setOpenScheduleModal(true)
         },
-        "finalSecondRoundSchedule": {
-            handleAction: () => setOpenScheduleModal(true)
-        }
+              // "printInterviewForm": {
+        //     handleAction: () => window.print()
+        // },
+        // "finalSecondRoundSchedule": {
+        //     handleAction: () => setOpenScheduleModal(true)
+        // }
     };
 
     return (
@@ -74,39 +74,44 @@ const HomeInterview = () => {
                     moreOption: {
                         buttons: [
                             {
-                                name: 'Attach 1st Evaluate Form',
-                                eventName: 'attachFirstEvalForm',
-                                icon: <AttachFileIcon />,
-                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
-                                enable: false
-                            },
-                            {
                                 name: 'Evaluate 1st Interview',
                                 eventName: 'firstRoundEvaluate',
                                 icon: <GradingIcon color="info" />,
                                 hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
-                                enable: false
+                                enable: [
+                                    {
+                                        field: 'interviewProcess',
+                                        values: [STATUS.INTERVIEW_PROCESS.FIRST_INTERVIEW]
+                                    }
+                                ]
                             },
                             {
                                 name: 'Invite 2nd Interview',
                                 eventName: 'setSecondRoundInterview',
                                 icon: <CalendarMonth />,
                                 hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
-                                enable: true
-                            },
-                            {
-                                name: 'Attach 2nd Evaluate Form',
-                                eventName: 'attachSecondEvalForm',
-                                icon: <AttachFileIcon />,
-                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
-                                enable: false
+                                enable: [
+                                    {
+                                        field: 'interviewProcess',
+                                        values: [STATUS.INTERVIEW_PROCESS.SECOND_INTERVIEW]
+                                    },
+                                    {
+                                        field: 'status',
+                                        values: [STATUS.INTERVIEW_STATUS.INVITED]
+                                    }
+                                ]
                             },
                             {
                                 name: 'Evaluate 2nd Interview',
                                 eventName: 'secondRoundEvaluate',
                                 icon: <GradingIcon color="info" />,
                                 hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
-                                enable: false
+                                enable: [
+                                    {
+                                        field: 'interviewProcess',
+                                        values: [STATUS.INTERVIEW_PROCESS.SECOND_INTERVIEW]
+                                    }
+                                ]
                             },
                             // {
                             //     name: 'Print Form',
@@ -151,7 +156,7 @@ const HomeInterview = () => {
             />
 
             {/* Inter view result modal */}
-            <InterViewResultFormModal
+            <InterViewEvaluateFormModal
                 eventType={verifyTypeModal}
                 candidate={editCandidate}
                 open={openInterviewResultModal}
