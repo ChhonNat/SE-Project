@@ -41,6 +41,7 @@ export const API_URL = {
     interview: {
         get: API_VERSION + '/interviews/search',
         evaluate: API_VERSION + '/interviews/',
+        downloadEvaluateForm: API_VERSION + '/interviews/download?id=',
 
         lookup: {
             get: API_VERSION + '/interviews/lookup-data'

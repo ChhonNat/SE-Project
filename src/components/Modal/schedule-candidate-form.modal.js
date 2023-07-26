@@ -10,10 +10,11 @@ import { STATUS } from "../../constants/status";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { API_URL } from "../../constants/api_url";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Slide, TextField } from "@mui/material";
 import { CandidateService } from "../../services/candidate.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
+import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -126,6 +127,23 @@ const CandidateScheduleFormModal = (props) => {
                         title={mapEventType[eventType]?.title}
                         subTitle={mapEventType[eventType]?.subTitle}
                     />
+                    {
+                        onCloseModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
                 </DialogTitle>
                 <DialogContent dividers>
                     <Box sx={{ width: '100%' }}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 
 import LabelRequire from '../../components/Label/require';
-import CandidateReviewCVModal from '../../components/CV/view-cv.modal';
+import ViewFileModal from '../../components/Modal/view-file.modal';
 import AsyncAutoComplete from '../../components/AutoComplete/auto-complete';
 import Swal from 'sweetalert2';
 import Link from '@mui/material/Link'
@@ -17,7 +17,7 @@ import SelectComponent from '../../components/Selector/select';
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Grid, Slide } from '@mui/material';
+import { Box, Grid, IconButton, Slide } from '@mui/material';
 import { globalService } from '../../services/global.service';
 import { API_URL } from '../../constants/api_url';
 import { CandidateService } from '../../services/candidate.service';
@@ -26,6 +26,7 @@ import { DATA_STATUS } from '../../constants/data_status';
 import { ConverterService } from '../../utils/converter';
 import { KEY_POST } from '../../constants/key_post';
 import { CandidateModel } from '../../models/candidate.model';
+import { Close } from '@mui/icons-material';
 
 
 const shrinkOpt = { shrink: true };
@@ -256,6 +257,23 @@ const CandidateFormModal = (props) => {
             >
                 <DialogTitle>
                     <TitleComponent title={candidate?.id ? 'Edit Candidate' : 'Add Candidate'} />
+                    {
+                        onCloseCandidateModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseCandidateModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
                 </DialogTitle>
                 <DialogContent dividers>
 
@@ -499,10 +517,10 @@ const CandidateFormModal = (props) => {
                 </DialogActions>
             </Dialog>
 
-            <CandidateReviewCVModal
+            <ViewFileModal
                 id={candidate?.id}
-                openReviewCVModal={openCVModal}
-                onCloseReviewCVModal={() => setOpenCVModal(false)}
+                openModal={openCVModal}
+                onCloseModal={() => setOpenCVModal(false)}
             />
         </div>
     );

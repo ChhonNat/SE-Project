@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect } from "react";
 import Box from "@mui/material/Box";
-import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions } from "@mui/material";
+import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,7 @@ import LabelRequire from "../../../components/Label/require";
 import BusinessUnitModel from "../../../models/business-unit.model";
 import { KEY_POST } from "../../../constants/key_post";
 import { API_URL } from "../../../constants/api_url";
+import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -95,6 +96,23 @@ const UpsertBusinessUnitForm = (props) => {
             >
                 <DialogTitle>
                     <TitleComponent title={title} />
+                    {
+                        onCloseModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
                 </DialogTitle>
                 <DialogContent dividers>
 

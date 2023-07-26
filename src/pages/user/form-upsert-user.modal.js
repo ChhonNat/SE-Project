@@ -2,7 +2,7 @@ import { Box, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Fo
 import React, { forwardRef, useEffect, useState } from "react";
 import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Close, Visibility, VisibilityOff } from "@mui/icons-material";
 import SelectComponent from "../../components/Selector/select";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -225,6 +225,23 @@ const UpsertUserForm = (props) => {
         >
             <DialogTitle>
                 <TitleComponent title={user?.id ? "Edit user" : "Add new user"} />
+                {
+                    onCloseModal ? (
+                        <IconButton
+                            aria-label="close"
+                            onClick={onCloseModal}
+                            sx={{
+                                position: 'absolute',
+                                right: 8,
+                                top: 8,
+                                color: (theme) => theme.palette.grey[500],
+                            }}
+                        >
+                            <Close />
+                        </IconButton>
+                    ) :
+                        null
+                }
             </DialogTitle>
             <DialogContent dividers>
                 <Box sx={{ width: '100%' }}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useState, Fragment } from 'react';
 
-import { Box, Grid, Slide } from '@mui/material';
+import { Box, Grid, IconButton, Slide } from '@mui/material';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -15,6 +15,7 @@ import { HTTP_METHODS } from '../../constants/http_method';
 import { PulseLoader } from 'react-spinners';
 import moment from 'moment';
 import { MAP_ROLE_NAME } from '../../constants/roles';
+import { Close } from '@mui/icons-material';
 
 const TransitionModal = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -103,6 +104,23 @@ const CandidateFormDetailModal = (props) => {
                         <>
                             <DialogTitle>
                                 <TitleComponent title="Candidate Details" />
+                                {
+                                    onCloseCandidateModal ? (
+                                        <IconButton
+                                            aria-label="close"
+                                            onClick={onCloseCandidateModal}
+                                            sx={{
+                                                position: 'absolute',
+                                                right: 8,
+                                                top: 8,
+                                                color: (theme) => theme.palette.grey[500],
+                                            }}
+                                        >
+                                            <Close />
+                                        </IconButton>
+                                    ) :
+                                        null
+                                }
                             </DialogTitle>
                             <DialogContent dividers>
 
@@ -487,7 +505,7 @@ const CandidateFormDetailModal = (props) => {
                                                                                         </Grid>
 
                                                                                     </Fragment>
-                                                                            ))
+                                                                                ))
                                                                         }
                                                                     </Grid>
                                                                 </>

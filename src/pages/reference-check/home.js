@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 import ReferenceResultFormModal from "./reference-result-form.modal";
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 
@@ -114,11 +114,11 @@ const HomeAssessment = () => {
             />
 
             {/* Review candidate form */}
-            <CandidateReviewCVModal
+            <ViewFileModal
                 modalTitle="Review CV"
                 id={editCandidate?.candidateId}
-                openReviewCVModal={openReviewCVModal}
-                onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
+                openModal={openReviewCVModal}
+                onCloseModal={() => setOpenReviewCVModal(false)}
             />
 
         </>

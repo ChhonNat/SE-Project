@@ -10,11 +10,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { globalService } from "../../services/global.service";
 import { API_URL } from "../../constants/api_url";
 import { STATUS } from "../../constants/status";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Slide, TextField } from "@mui/material";
 import { InterviewService } from "../../services/interview.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
 import Swal from "sweetalert2";
+import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -149,6 +150,23 @@ const InterViewEvaluateFormModal = (props) => {
                         title={mapEventType[eventType]?.title}
                         subTitle={mapEventType[eventType]?.subTitle}
                     />
+                    {
+                        onCloseModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
                 </DialogTitle>
                 <DialogContent dividers>
                     <Box sx={{ width: '100%' }}>

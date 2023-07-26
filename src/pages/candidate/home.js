@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import CandidateReviewCVModal from "../../components/CV/view-cv.modal";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 
 import CandidateFormModal from "./upsert-candidate-form.modal";
 import CandidateFormDetailModal from "./detail-candidate-form.modal";
@@ -249,11 +249,11 @@ const HomeCandidate = () => {
             />
 
             {/* Review candidate form */}
-            <CandidateReviewCVModal
+            <ViewFileModal
                 modalTitle="Review CV"
                 id={editCandidate?.id}
-                openReviewCVModal={openReviewCVModal}
-                onCloseReviewCVModal={() => setOpenReviewCVModal(false)}
+                openModal={openReviewCVModal}
+                onCloseModal={() => setOpenReviewCVModal(false)}
             />
 
             {/* Update candidate process status */}

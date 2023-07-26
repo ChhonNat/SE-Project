@@ -30,6 +30,7 @@ const AsyncDatatable = (props) => {
     headers,
     isReloadData = false,
     handleViewEvent,
+    handleViewFileEvent,
     handleEditEvent,
     handleLinkEvent,
     handleMoreEvent,
@@ -234,6 +235,7 @@ const AsyncDatatable = (props) => {
                     pageSize={rowsPerPage}
                     actions={useTableActions}
                     handleViewEvent={(record) => handleViewEvent(record)}
+                    handleViewFileEvent={(record) => handleViewFileEvent(record)}
                     handleEditEvent={(record) => handleEditEvent(record)}
                     handleLinkEvent={(record) => handleLinkEvent(record)}
                     handleMoreEvent={(eName, record) => handleMoreEvent(eName, record)}

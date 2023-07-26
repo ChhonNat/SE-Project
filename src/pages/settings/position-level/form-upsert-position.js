@@ -9,7 +9,7 @@ import SelectComponent from "../../../components/Selector/select";
 import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
 import PositionLevelModel from "../../../models/position/position-level.model";
 
-import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions } from "@mui/material";
+import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import { globalService } from "../../../services/global.service";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { API_URL } from "../../../constants/api_url";
@@ -19,6 +19,7 @@ import { ALERT_TIMER } from "../../../constants/app_config";
 import { HTTP_METHODS } from "../../../constants/http_method";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -134,6 +135,23 @@ const UpsertPositionLavelForm = (props) => {
             >
                 <DialogTitle>
                     <TitleComponent title={title} />
+                    {
+                        onCloseModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
+                            >
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
                 </DialogTitle>
                 <DialogContent dividers>
 
