@@ -41,16 +41,6 @@ const tblCandidate = [
         id: 'appliedPositionName', label: 'Apply Position', sqlField: 'pos.name'
     },
     {
-        id: 'shortlistResult',
-        textColor: {
-            [STATUS.SHORTLIST_RESULT.PASSED]: 'Green',
-            [STATUS.SHORTLIST_RESULT.FAILED]: 'Red',
-            [STATUS.SHORTLIST_RESULT.WAITING]: 'Orange',
-            [STATUS.SHORTLIST_RESULT.KEEP_IN_POOL]: 'Blue'
-        },
-        label: 'Shortlist Result'
-    },
-    {
         id: 'submitStatus',
         label: "Process Status",
         type: 'status',
@@ -68,6 +58,16 @@ const tblCandidate = [
         label: 'Status'
     },
     {
+        id: 'shortlistResult',
+        textColor: {
+            [STATUS.SHORTLIST_RESULT.PASSED]: 'Green',
+            [STATUS.SHORTLIST_RESULT.FAILED]: 'Red',
+            [STATUS.SHORTLIST_RESULT.WAITING]: 'Orange',
+            [STATUS.SHORTLIST_RESULT.KEEP_IN_POOL]: 'Blue'
+        },
+        label: 'Shortlist Result'
+    },
+    {
         id: 'action', label: 'Actions',
     }
 ];
@@ -80,7 +80,7 @@ const tblInterview = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'candidate', obj: { name: 'applicantCode'}, label: 'Applicant Code'
+        id: 'candidate', obj: { name: 'applicantCode' }, label: 'Applicant Code'
 
     },
     {
@@ -90,21 +90,28 @@ const tblInterview = [
         id: 'appliedPosition', obj: { name: 'nameEn' }, label: 'Apply Position'
     },
     {
-        id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'
+        id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview At'
     },
     {
-        id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'
+        id: 'interviewProcess', type: 'status',
+        statusColor: {
+            [STATUS.INTERVIEW_PROCESS.FIRST_INTERVIEW]: 'black',
+            [STATUS.INTERVIEW_PROCESS.SECOND_INTERVIEW]: 'green'
+        },
+        label: 'Interview Process'
     },
     {
-        id: 'invitedBy', label: 'Invited By'
+        id: 'status', type: 'status', 
+        statusColor: {
+            [STATUS.INTERVIEW_STATUS.INTERVIEWED] : 'Blue'
+        }, 
+        label: 'Status'
     },
     {
-        id: 'invitedAt', type: 'date', dateFormat: 'MMM DD, YYYY' ,label: 'Invited At'
+        id: 'interviewResult',
+        textColor: { Passed: 'green', Failed: 'red', Waiting: 'Orange' },
+        label: 'Result'
     },
-    {
-        id: 'status', type: 'status', statusColor: {}, label: 'Status'
-    },
-    // ...proof,
     {
         id: 'action', label: 'Actions'
     },

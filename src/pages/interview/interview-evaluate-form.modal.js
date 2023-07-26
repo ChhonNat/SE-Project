@@ -1,34 +1,34 @@
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
 import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
-import InterviewModel from "../../models/interview.model";
 import SelectComponent from "../../components/Selector/select";
+import LabelRequire from "../../components/Label/require";
+import EvaluateInterviewModel from "../../models/evaluate-interview.model";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { globalService } from "../../services/global.service";
 import { API_URL } from "../../constants/api_url";
 import { STATUS } from "../../constants/status";
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const InterViewResultFormModal = (props) => {
+const InterViewEvaluateFormModal = (props) => {
 
     const {
         open,
         onCloseModal,
         candidate,
         handleEventSuccessed,
-        title,
         selectLabel,
-        statuses,
         eventType
     } = props;
-    const { register, handleSubmit, setValue, formState, reset, watch } = useForm({ resolver: zodResolver(InterviewModel) });
+    const { register, handleSubmit, setValue, formState, reset, watch } = useForm({ resolver: zodResolver(EvaluateInterviewModel) });
     const { errors } = formState;
-    const watchCandidate = watch();
+    const watchInterview = watch();
 
     const [listInterviewResults, setListInterviewResults] = useState([]);
 
@@ -69,6 +69,7 @@ const InterViewResultFormModal = (props) => {
             const { success, data } = req?.data;
 
             if (success && data.hasOwnProperty('interviewResults')) {
+                
                 data?.interviewResults?.length ?
                     setListInterviewResults(data?.interviewResults?.filter((result) => {
                         return !result.includes(STATUS.INTERVIEW_RESULT.WAITING) &&
@@ -83,6 +84,15 @@ const InterViewResultFormModal = (props) => {
         }
     }, []);
 
+
+    const handleOnSubmit = (submitData) => {
+        console.log(submitData);
+    };
+
+    const onError = (errData) => {
+        console.log('Input error',errData);
+    };
+
     return (
         <div>
             <Dialog
@@ -90,6 +100,7 @@ const InterViewResultFormModal = (props) => {
                 open={open}
                 component="form"
                 fullWidth={true}
+                onSubmit={handleSubmit(handleOnSubmit,onError)}
             >
                 <DialogTitle>
                     <TitleComponent
@@ -101,12 +112,25 @@ const InterViewResultFormModal = (props) => {
                     <Box sx={{ width: '100%' }}>
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                             <Grid item xs={12}>
+                                <TextField
+                                    type='file'
+                                    size='small'
+                                    label={<LabelRequire label={"Evaluate Form"} />}
+                                    InputLabelProps={{ shrink: true }}
+                                    sx={{ width: '100%' }}
+                                    {...register('file')}
+                                >
+                                    Upload
+                                </TextField>
+                            </Grid>
+                            <Grid item xs={12}>
                                 <SelectComponent
                                     id={'status-id'}
                                     label={selectLabel}
                                     size={'small'}
                                     customDatas={listInterviewResults}
-                                    value={watchCandidate?.shortlistResult || ""}
+                                    value={watchInterview?.result || ""}
+                                    handleOnChange={(e) => setValue('result',e?.target?.value)}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -115,8 +139,9 @@ const InterViewResultFormModal = (props) => {
                                     id="Remark"
                                     label="Remark"
                                     multiline
-                                    rows={5}
+                                    rows={2}
                                     variant="outlined"
+                                    {...register('remark')}
                                 />
                             </Grid>
                         </Grid>
@@ -125,7 +150,7 @@ const InterViewResultFormModal = (props) => {
                 <DialogActions>
                     <FooterComponent
                         saveButtunType='submit'
-                        saveButtonLabel='Confirm'
+                        saveButtonLabel='Save'
                         handleCancel={onCloseModal}
                         actions={{ cancel: true, submit: true }}
                     />
@@ -135,4 +160,4 @@ const InterViewResultFormModal = (props) => {
     )
 };
 
-export default InterViewResultFormModal;
+export default InterViewEvaluateFormModal;

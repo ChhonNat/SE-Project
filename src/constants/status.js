@@ -19,8 +19,6 @@ const SUBMIT_STATUS = {
     OFCCEO_APPROVED: "OFCCEO_Approved",
     OFCCEO_REJECTED: "OFCCEO_Rejected",
     SUBMITTED_HOD: "Submitted_HOD",
-    // SUBMITTED_OFCCEO: "Submitted_OFCCEO",
-    // SENT_TA_TEAM: "Sent_TA_Team",
 };
 
 const CANDIDATE = {
@@ -32,18 +30,23 @@ const CANDIDATE = {
     HIRED: 'Hired'
 };
 
+const INTERVIEW_PROCESS = {
+    FIRST_INTERVIEW: "First_Interview",
+    SECOND_INTERVIEW: "Second_Interview"
+};
+
+const INTERVIEW_STATUS = {
+    INVITED: "Invited",
+    INTERVIEWED: "Interviewed",
+    EVALUATED: "Evaluated",
+    CANCELLED: 'Cancel',
+};
+
 const INTERVIEW_RESULT = {
     WAITING: 'Waiting',
     FAILED: 'Failed',
     KEEP_IN_REVIEW: 'Keep_In_Review',
     PASSED: 'Passed',
-    CANCELLED: 'Cancel'
-};
-
-const INTERVIEW_STATUS = {
-    INVITED: 'Invited',
-    INTERVIEWED: 'Interviewed',
-    EVALUATED: 'Evaluated',
     CANCELLED: 'Cancel'
 };
 
@@ -58,6 +61,7 @@ export const STATUS = {
     SHORTLIST_RESULT,
     INTERVIEW_RESULT,
     INTERVIEW_STATUS,
+    INTERVIEW_PROCESS,
     ASSESSMENT_RESULT,
     CANDIDATE,
     SUBMIT_STATUS
