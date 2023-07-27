@@ -14,10 +14,10 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import Add from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 const AsynTableToolbar = (props) => {
 
@@ -27,6 +27,7 @@ const AsynTableToolbar = (props) => {
     dense,
     handleChangeDense,
     handleAddNewEvent,
+    handleRefreshEvent,
     title = 'Datatable',
     searchPlaceHolder = 'Search',
     searchText,
@@ -69,13 +70,8 @@ const AsynTableToolbar = (props) => {
               </Typography>
             ) : (
               <Typography variant="h6" id="tableTitle" component="div"
-                sx={{ 
-                  // background: '#f2eeee', 
-                  // paddingLeft: 2, 
-                  // paddingRight: 2, 
-                  // borderRadius: 2, 
-                  // color: '#1976d2', 
-                  fontWeight: 'bold' 
+                sx={{
+                  fontWeight: 'bold'
                 }}
               >
                 {title}
@@ -112,6 +108,15 @@ const AsynTableToolbar = (props) => {
         </Grid>
 
         <Grid item xs={6} sx={{ textAlign: 'right' }}>
+          <Tooltip title="Refresh Data">
+            <Button
+              sx={{ marginRight: 2, paddingX: 1 }}
+              variant="outlined"
+              onClick={handleRefreshEvent}
+            >
+              <AutorenewIcon />
+            </Button>
+          </Tooltip>
           {useActions?.create && (
             <Tooltip title="Add New">
               <Button

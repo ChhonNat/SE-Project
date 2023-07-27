@@ -14,24 +14,27 @@ import { TABLE_CONFIG } from "../../utils/table-config";
 import { API_URL } from "../../constants/api_url";
 import { CandidateService } from "../../services/candidate.service";
 import { STATUS } from "../../constants/status";
+import InterviewFormDetailModal from "./detail-interview-form.modal";
 
 const HomeInterview = () => {
 
     const user = useSelector((state) => state?.userAuthendicated);
 
     const [isReload, setIsReload] = useState(false);
-    const [editCandidate, setEditCandidate] = useState({});
+    const [editInterview, setEditInterview] = useState({});
     const [openFileModal, setOpenFileModal] = useState(false);
     const [openScheduleModal, setOpenScheduleModal] = useState(false);
-    const [openInterviewResultModal, setOpenInterviewResultModal] = useState(false);
+    const [openInterviewEvaluateModal, setOpenInterviewEvaluateModal] = useState(false);
+    const [openInterviewDetailModal, setOpenInterviewDetailModal] = useState(false);
+
     const [verifyTypeModal, setVerifyTypeModal] = useState('');
 
     const mapMoreButtonEventName = {
         "firstRoundEvaluate": {
-            handleAction: () => setOpenInterviewResultModal(true)
+            handleAction: () => setOpenInterviewEvaluateModal(true)
         },
         "secondRoundEvaluate": {
-            handleAction: () => setOpenInterviewResultModal(true)
+            handleAction: () => setOpenInterviewEvaluateModal(true)
         },
         "setSecondRoundInterview": {
             handleAction: () => setOpenScheduleModal(true)
@@ -70,7 +73,7 @@ const HomeInterview = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
-                    view: true,
+                    // view: true,
                     viewFile: [
                         {
                             field: 'interviewResult',
@@ -107,7 +110,7 @@ const HomeInterview = () => {
                                     },
                                     {
                                         field: 'status',
-                                        values: [STATUS.INTERVIEW_STATUS.INVITED]
+                                        values: [STATUS.INTERVIEW_STATUS.EVALUATED]
                                     }
                                 ]
                             },
@@ -140,33 +143,40 @@ const HomeInterview = () => {
                         ]
                     }
                 }}
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
+
                 handleMoreEvent={(eName, data) => {
                     if (!eName)
                         return false;
 
-                    setEditCandidate(data);
+                    setEditInterview(data);
                     setVerifyTypeModal(eName);
                     mapMoreButtonEventName[eName].handleAction();
                 }}
 
                 handleLinkEvent={(data) => {
                     setVerifyTypeModal('viewCV')
-                    setEditCandidate(data);
+                    setEditInterview(data);
                     setOpenFileModal(true);
                 }}
 
                 handleViewFileEvent={(data) => {
                     setVerifyTypeModal('viewEvaluateForm')
-                    setEditCandidate(data);
+                    setEditInterview(data);
                     setOpenFileModal(true)
                 }}
+
+                // handleViewEvent={(data) => {
+                //     setEditInterview(data);
+                //     setOpenInterviewDetailModal(true);
+                // }}
             />
 
             {/* Second interview schedule modal */}
             <CandidateScheduleFormModal
                 eventType={verifyTypeModal}
                 apiService={CandidateService.inviteSecondInterview}
-                candidate={editCandidate}
+                candidate={editInterview}
                 open={openScheduleModal}
                 onCloseModal={() => setOpenScheduleModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
@@ -175,19 +185,26 @@ const HomeInterview = () => {
             {/* Inter view result modal */}
             <InterViewEvaluateFormModal
                 eventType={verifyTypeModal}
-                interview={editCandidate}
-                open={openInterviewResultModal}
-                onCloseModal={() => setOpenInterviewResultModal(false)}
+                interview={editInterview}
+                open={openInterviewEvaluateModal}
+                onCloseModal={() => setOpenInterviewEvaluateModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
             {/* Review candidate form */}
             <ViewFileModal
                 modalTitle={verifyTypeModal === 'viewCV' ? "Review CV" : "Review Evaluate Form"}
-                id={verifyTypeModal === 'viewCV' ? editCandidate?.candidate?.id : editCandidate?.id}
+                id={verifyTypeModal === 'viewCV' ? editInterview?.candidate?.id : editInterview?.id}
                 downloadFileUrl={API_URL.interview.downloadEvaluateForm}
                 openModal={openFileModal}
                 onCloseModal={() => setOpenFileModal(false)}
+            />
+
+            {/* View detail */}
+            <InterviewFormDetailModal
+                interview={editInterview}
+                openCandidateModal={openInterviewDetailModal}
+                onCloseCandidateModal={() => setOpenInterviewDetailModal(false)}
             />
         </>
     )
