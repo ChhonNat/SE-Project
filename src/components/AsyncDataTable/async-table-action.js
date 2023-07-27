@@ -87,7 +87,7 @@ const AsyncTableAction = (props) => {
                 }
 
                 {useActions?.viewFile &&
-                    <Tooltip title="View Form">
+                    <Tooltip title="View Evaluate Form">
                         <Button variant="text" size="small" color="inherit"
                             onClick={onHandleViewFileEvent}>
                             <FileOpenIcon />

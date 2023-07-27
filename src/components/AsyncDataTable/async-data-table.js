@@ -35,6 +35,7 @@ const AsyncDatatable = (props) => {
     handleLinkEvent,
     handleMoreEvent,
     onHandleAddNewEvent,
+    onHandleRefreshEvent,
     useTableActions
   } = props;
 
@@ -173,6 +174,7 @@ const AsyncDatatable = (props) => {
           dense={dense}
           handleChangeDense={handleChangeDense}
           handleAddNewEvent={onHandleAddNewEvent}
+          handleRefreshEvent={onHandleRefreshEvent}
           title={bannerText}
           searchPlaceHolder={searchPlaceHolder}
           setSearchText={setSearchText}

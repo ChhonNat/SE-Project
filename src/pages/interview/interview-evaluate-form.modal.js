@@ -4,6 +4,7 @@ import FooterComponent from "../../components/Page/footer";
 import SelectComponent from "../../components/Selector/select";
 import LabelRequire from "../../components/Label/require";
 import EvaluateInterviewModel from "../../models/interview/evaluate-interview.model";
+import Swal from "sweetalert2";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,7 +15,6 @@ import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButto
 import { InterviewService } from "../../services/interview.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
-import Swal from "sweetalert2";
 import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
@@ -59,8 +59,11 @@ const InterViewEvaluateFormModal = (props) => {
 
 
     useEffect(() => {
-        if (open)
+
+        if (open) {
+            setValue('interviewProcess', interview?.interviewProcess);
             fetchData(API_URL.interview.lookup.get);
+        }
     }, [open])
 
     /**
@@ -120,7 +123,6 @@ const InterViewEvaluateFormModal = (props) => {
             })
 
             handleCloseModal();
-
         }
 
     };
@@ -132,9 +134,11 @@ const InterViewEvaluateFormModal = (props) => {
     }
 
     const onError = (errData) => {
+
         if (!watchInterview?.file)
             setError('file', { message: 'File is required!' });
     };
+
 
     return (
         <div>

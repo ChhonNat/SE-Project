@@ -29,16 +29,26 @@ const tblCandidate = [
         id: 'index', label: 'No.'
     },
     {
-        id: 'applicantCode', type: 'link', statusColor: {}, label: "Applicant Code", sqlField: 'can.application_number'
+        id: 'applicantCode',
+        label: "Applicant Code",
+        type: 'link',
+        statusColor: {},
+        sqlField: 'can.application_number'
     },
     {
-        id: 'fullName', label: "Candidate's Name", sqlField: 'can.first_name'
+        id: 'fullName',
+        label: "Candidate's Name",
+        sqlField: 'can.first_name'
     },
     {
-        id: 'phoneNumber', label: 'Phone', sqlField: 'can.phone_number'
+        id: 'phoneNumber',
+        label: 'Phone',
+        sqlField: 'can.phone_number'
     },
     {
-        id: 'appliedPositionName', label: 'Apply Position', sqlField: 'pos.name'
+        id: 'appliedPositionName',
+        label: 'Apply Position',
+        sqlField: 'pos.name'
     },
     {
         id: 'submitStatus',
@@ -50,22 +60,28 @@ const tblCandidate = [
             [STATUS.SUBMIT_STATUS.DHR_REJECTED]: 'Red',
             [STATUS.SUBMIT_STATUS.OFCCEO_APPROVED]: 'Green',
             [STATUS.SUBMIT_STATUS.OFCCEO_REJECTED]: 'Red',
-        },
+        }
     },
     {
-        id: 'status', type: 'status',
-        statusColor: { Hired: 'Green', In_Assessment: 'MediumBlue', CV_Reviewed: 'DarkOrange', In_Interview: 'Maroon' },
+        id: 'status',
+        type: 'status',
+        statusColor: {
+            Hired: 'Green',
+            In_Assessment: 'MediumBlue',
+            CV_Reviewed: 'DarkOrange',
+            In_Interview: 'Maroon'
+        },
         label: 'Status'
     },
     {
         id: 'shortlistResult',
+        label: 'Shortlist Result',
         textColor: {
             [STATUS.SHORTLIST_RESULT.PASSED]: 'Green',
             [STATUS.SHORTLIST_RESULT.FAILED]: 'Red',
             [STATUS.SHORTLIST_RESULT.WAITING]: 'Orange',
             [STATUS.SHORTLIST_RESULT.KEEP_IN_POOL]: 'Blue'
         },
-        label: 'Shortlist Result'
     },
     {
         id: 'action', label: 'Actions',
@@ -77,35 +93,47 @@ const tblCandidate = [
  */
 const tblInterview = [
     {
-        id: 'index', label: 'No.'
+        id: 'index', 
+        label: 'No.'
     },
     {
-        id: 'candidate', type: 'link', obj: { name: 'applicantCode' }, label: 'Applicant Code'
-
+        id: 'candidate', 
+        label: 'Applicant Code',
+        type: 'link', 
+        obj: { name: 'applicantCode' }, 
     },
     {
-        id: 'candidate', obj: { name: 'fullName' }, label: 'Name'
+        id: 'candidate', 
+        label: 'Name',
+        obj: { name: 'fullName' }, 
     },
     {
-        id: 'appliedPosition', obj: { name: 'nameEn' }, label: 'Apply Position'
+        id: 'appliedPosition', 
+        label: 'Apply Position',
+        obj: { name: 'nameEn' }, 
     },
     {
-        id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview At'
+        id: 'interviewDate', 
+        label: 'Interview At',
+        type: 'date', 
+        dateFormat: 'MMM DD, YYYY hh:mm:ss A', 
     },
     {
-        id: 'interviewProcess', type: 'status',
+        id: 'interviewProcess',
+        label: 'Interview Process',
+        type: 'status',
         statusColor: {
             [STATUS.INTERVIEW_PROCESS.FIRST_INTERVIEW]: 'black',
             [STATUS.INTERVIEW_PROCESS.SECOND_INTERVIEW]: 'green'
-        },
-        label: 'Interview Process'
+        }
     },
     {
-        id: 'status', type: 'status', 
+        id: 'status', 
+        label: 'Status',
+        type: 'status',
         statusColor: {
-            [STATUS.INTERVIEW_STATUS.INTERVIEWED] : 'Blue'
-        }, 
-        label: 'Status'
+            [STATUS.INTERVIEW_STATUS.INTERVIEWED]: 'Blue'
+        }
     },
     {
         id: 'interviewResult',
@@ -113,33 +141,48 @@ const tblInterview = [
         label: 'Result'
     },
     {
-        id: 'action', label: 'Actions'
+        id: 'action', 
+        label: 'Actions'
     },
 ];
 
 
 const tblReferenceCheck = [
     {
-        id: 'index', label: 'No.'
+        id: 'index', 
+        label: 'No.'
     },
     {
-        id: 'applicantCode', type: 'link', statusColor: {}, label: 'Applicant Code'
-
+        id: 'applicantCode',
+        label: 'Applicant Code',
+        type: 'link', 
+        statusColor: {}, 
     },
     {
-        id: 'candidate', obj: { name: 'fullName' }, label: 'Name'
+        id: 'candidate', 
+        label: 'Name',
+        obj: { name: 'fullName' }, 
     },
     {
-        id: 'appliedPosition', obj: { name: 'nameEn' }, label: 'Apply Position'
+        id: 'appliedPosition', 
+        label: 'Apply Position',
+        obj: { name: 'nameEn' }, 
     },
     {
-        id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'
+        id: 'interviewResult', 
+        label: 'Result',
+        type: 'status', 
+        statusColor: { Passed: 'green', Failed: 'red' }, 
     },
     {
-        id: 'status', type: 'status', statusColor: {}, label: 'Status'
+        id: 'status', 
+        label: 'Status',
+        type: 'status', 
+        statusColor: {}, 
     },
     {
-        id: 'action', label: 'Actions'
+        id: 'action', 
+        label: 'Actions'
     },
 ];
 
@@ -534,7 +577,6 @@ const tblLocation = [
         id: 'action', label: 'Actions'
     }
 ];
-
 
 
 /**
