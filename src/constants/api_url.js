@@ -53,6 +53,7 @@ export const API_URL = {
         get: API_VERSION + '/reference-checks/search',
         detail: API_VERSION + '/reference-checks/',
         evaluateResult: API_VERSION + '/reference-checks/',
+        downloadRefForm: API_VERSION + '/reference-checks/download?id=',
 
         lookup: {
             get: API_VERSION + '/reference-checks/lookup-data'

@@ -12,6 +12,7 @@ import { DoneAll, NextPlan, Print } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { ROLE } from "../../constants/roles";
 import ReferenceFormDetailModal from "./detail-reference-form.modal";
+import { STATUS } from "../../constants/status";
 
 const HomeAssessment = () => {
 
@@ -19,6 +20,7 @@ const HomeAssessment = () => {
 
     const [editCandidate, setEditCandidate] = useState({});
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
+    const [openRefFormModal, setOpenRefFormModal] = useState(false);
     const [openReferenceResultModal, setOpenReferenceResultModal] = useState(false);
     const [openReferenceDetailModal, setOpenReferenceDetailModal] = useState(false);
 
@@ -60,6 +62,15 @@ const HomeAssessment = () => {
                 useTableActions={{
                     search: true,
                     view: true,
+                    viewFile: [
+                        {
+                            field: 'checkResult',
+                            values: [
+                                STATUS.REFERENCE_RESULT.POSITIVE,
+                                STATUS.REFERENCE_RESULT.NEGATIVE
+                            ]
+                        }
+                    ],
                     moreOption: {
                         buttons: [
                             {
@@ -115,12 +126,14 @@ const HomeAssessment = () => {
                     }
                 }
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
-                handleViewEvent={(data) => 
-                    {
-                        setEditCandidate(data);
-                        setOpenReferenceDetailModal(true);
-                    }
-                }
+                handleViewEvent={(data) => {
+                    setEditCandidate(data);
+                    setOpenReferenceDetailModal(true);
+                }}
+                handleViewFileEvent={(data) => {
+                    setEditCandidate(data);
+                    setOpenRefFormModal(true)
+                }}
             />
 
             {/* Reference result form */}
@@ -133,10 +146,11 @@ const HomeAssessment = () => {
 
             {/* Review candidate form */}
             <ViewFileModal
-                modalTitle="Review CV"
-                id={editCandidate?.candidate?.id}
-                openModal={openReviewCVModal}
-                onCloseModal={() => setOpenReviewCVModal(false)}
+                modalTitle="Review Reference Form"
+                id={editCandidate?.id}
+                downloadFileUrl={API_URL.referenceCheck.downloadRefForm}
+                openModal={openRefFormModal}
+                onCloseModal={() => setOpenRefFormModal(false)}
             />
 
             {/* Detail reference form */}
