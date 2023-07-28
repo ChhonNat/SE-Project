@@ -50,11 +50,22 @@ const INTERVIEW_RESULT = {
     CANCELLED: 'Cancel'
 };
 
-const ASSESSMENT_RESULT = {
-    SUSPENDED: 'Suspended',
-    CANCELLED: 'Cancel',
-    OFFERED: 'Offered'
+const REFERENCE_RESULT = {
+    WAITING: 'Waiting',
+    NEGATIVE: 'Negative',
+    POSITIVE: 'Positive'
 };
+
+const REFERENCE_STATUS = {
+    GIVEN_RESULT: 'Given_Result',
+    PENDING: 'Pending'
+};
+
+// const ASSESSMENT_RESULT = {
+//     SUSPENDED: 'Suspended',
+//     CANCELLED: 'Cancel',
+//     OFFERED: 'Offered'
+// };
 
 export const STATUS = {
     RECORD,
@@ -62,7 +73,8 @@ export const STATUS = {
     INTERVIEW_RESULT,
     INTERVIEW_STATUS,
     INTERVIEW_PROCESS,
-    ASSESSMENT_RESULT,
+    REFERENCE_RESULT,
+    REFERENCE_STATUS,
     CANDIDATE,
     SUBMIT_STATUS
 };
