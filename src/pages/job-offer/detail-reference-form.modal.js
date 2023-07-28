@@ -35,7 +35,7 @@ const ReferenceFormDetailModal = (props) => {
         processedAt: { rank: 11, label: 'Proccessed At', type: 'date' },
         processedBy: { rank: 12, label: 'Proccessed By' },
 
-        referenceCheckDetails: { rank: 13, label: 'Reference Checked History' },
+        referenceCheckDetails: { rank: 13, label: 'Reference Checked Details' },
 
     };
 
@@ -87,7 +87,7 @@ const ReferenceFormDetailModal = (props) => {
                         :
                         <>
                             <DialogTitle>
-                                <TitleComponent title="Reference Details" />
+                                <TitleComponent title="Candidate Details" />
                                 {
                                     onCloseReferenceDetailModal ? (
                                         <IconButton
@@ -157,7 +157,7 @@ const ReferenceFormDetailModal = (props) => {
                                                     fontSize: '1.25rem'
                                                 }}
                                             >
-                                                {mapKeyToView['referenceCheckDetails']?.label}
+                                                {mapKeyToView['referenceCheckDetails']?.label}:
                                             </label>
                                             <hr></hr>
 
@@ -170,7 +170,7 @@ const ReferenceFormDetailModal = (props) => {
                                                                 item
                                                                 xs={6}
                                                                 spacing={2}
-                                                                paddingTop={2}
+                                                                paddingTop={4}
                                                                 paddingBottom={1}
                                                                 sx={{
                                                                     fontSize: 14,
@@ -181,7 +181,7 @@ const ReferenceFormDetailModal = (props) => {
                                                                 <label
                                                                     style={{ fontWeight: 'bold' }}
                                                                 >
-                                                                    Checked Result:
+                                                                    Result:
                                                                 </label>
                                                                 <label
                                                                 >

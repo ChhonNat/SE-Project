@@ -13,6 +13,7 @@ import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatRecline
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ElevatorIcon from '@mui/icons-material/Elevator';
+import { HowToReg } from "@mui/icons-material";
 
 /**
  * Import all page components
@@ -30,9 +31,13 @@ const ReferenceCheck = {
     home: lazy(() => import('../pages/reference-check/home'))
 };
 
-const Assessment = {
-    home: lazy(() => import('../pages/assessment/home'))
-};
+const JobOffer = {
+    home: lazy(() => import('../pages/job-offer/home'))
+}
+
+// const Assessment = {
+//     home: lazy(() => import('../pages/assessment/home'))
+// };
 
 const Settings = {
 
@@ -100,12 +105,20 @@ export const PRIVATE_ROUTES = [
     },
     /**Interview */
     {
-        name: "Reference Check",
+        name: "Reference Checks",
         path: "/reference-check",
         component: <ReferenceCheck.home />,
         icon: <PersonSearchIcon />,
     },
 
+    /**Job Offer */
+
+    // {
+    //     name: "Job Offers",
+    //     path: "/job-offer",
+    //     component: <JobOffer.home />,
+    //     icon: <HowToReg />
+    // },
     /**Settings */
     {
         name: "Settings",
