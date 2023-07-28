@@ -51,6 +51,8 @@ export const API_URL = {
     },
     referenceCheck: {
         get: API_VERSION + '/reference-checks/search',
+        detail: API_VERSION + '/reference-checks/',
+        evaluateResult: API_VERSION + '/reference-checks/',
 
         lookup: {
             get: API_VERSION + '/reference-checks/lookup-data'

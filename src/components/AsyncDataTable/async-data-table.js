@@ -71,7 +71,7 @@ const AsyncDatatable = (props) => {
   );
 
   useEffect(() => {
-    getRows();
+    getRows(searchText);
     // const identifier = setTimeout(async () => {
     // getRows(searchText);
     // }, 300);

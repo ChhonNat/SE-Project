@@ -11,6 +11,7 @@ import { TABLE_CONFIG } from "../../utils/table-config";
 import { DoneAll, Print } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { ROLE } from "../../constants/roles";
+import ReferenceFormDetailModal from "./detail-reference-form.modal";
 
 const HomeAssessment = () => {
 
@@ -19,10 +20,12 @@ const HomeAssessment = () => {
     const [editCandidate, setEditCandidate] = useState({});
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
     const [openReferenceResultModal, setOpenReferenceResultModal] = useState(false);
+    const [openReferenceDetailModal, setOpenReferenceDetailModal] = useState(false);
+
     const [isReload, setIsReload] = useState(false);
 
     const mapMoreButtonEventName = {
-        "checkCandidateReference": {
+        "checkReferenceCandidate": {
             handleAction: () => setOpenReferenceResultModal(true)
         },
         "printReferenceForm": {
@@ -56,22 +59,16 @@ const HomeAssessment = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
+                    view: true,
                     moreOption: {
                         buttons: [
                             {
-                                name: 'Reference Check',
-                                eventName: 'checkCandidateReference',
+                                name: 'Check Background Result',
+                                eventName: 'checkReferenceCandidate',
                                 icon: <HowToRegIcon />,
                                 hidden: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ? false : true,
                                 enable: true
                             },
-                            // {
-                            //     name: 'Print Form',
-                            //     eventName: 'printReferenceForm',
-                            //     icon: <Print />,
-                            //     hidden: !user?.roles ? false : user?.roles?.includes(ROLE?.ROLE_TA_TEAM) ? false : true,
-                            //     enable: true
-                            // },
                             {
                                 name: 'Verify',
                                 eventName: 'verifyJobOffer',
@@ -85,7 +82,14 @@ const HomeAssessment = () => {
                                 icon: <DoneAll />,
                                 hidden: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
                                 enable: true
-                            }
+                            },
+                            // {
+                            //     name: 'Print Form',
+                            //     eventName: 'printReferenceForm',
+                            //     icon: <Print />,
+                            //     hidden: !user?.roles ? false : user?.roles?.includes(ROLE?.ROLE_TA_TEAM) ? false : true,
+                            //     enable: true
+                            // },
                         ]
                     }
                 }}
@@ -103,11 +107,18 @@ const HomeAssessment = () => {
                         setOpenReviewCVModal(true);
                     }
                 }
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
+                handleViewEvent={(data) => 
+                    {
+                        setEditCandidate(data);
+                        setOpenReferenceDetailModal(true);
+                    }
+                }
             />
 
             {/* Reference result form */}
             <ReferenceResultFormModal
-                candidate={editCandidate}
+                reference={editCandidate}
                 open={openReferenceResultModal}
                 onCloseModal={() => setOpenReferenceResultModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
@@ -121,6 +132,12 @@ const HomeAssessment = () => {
                 onCloseModal={() => setOpenReviewCVModal(false)}
             />
 
+            {/* Detail reference form */}
+            <ReferenceFormDetailModal
+                reference={editCandidate}
+                openReferenceDetailModal={openReferenceDetailModal}
+                onCloseReferenceDetailModal={() => setOpenReferenceDetailModal(false)}
+            />
         </>
     )
 };

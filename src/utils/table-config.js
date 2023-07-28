@@ -166,14 +166,17 @@ const tblReferenceCheck = [
     {
         id: 'checkResult',
         label: 'Result',
-        type: 'status',
-        statusColor: { Passed: 'green', Failed: 'red' },
+        textColor: {
+            [STATUS.REFERENCE_RESULT.POSITIVE]: 'green',
+            [STATUS.REFERENCE_RESULT.NEGATIVE]: 'red',
+            [STATUS.REFERENCE_RESULT.WAITING]: 'orange'
+        },
     },
     {
         id: 'status',
         label: 'Status',
         type: 'status',
-        statusColor: {},
+        statusColor: {[STATUS.REFERENCE_STATUS.PENDING]:'orange'},
     },
     {
         id: 'action',
