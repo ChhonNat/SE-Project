@@ -213,7 +213,7 @@ const HomeInterview = () => {
             <ViewFileModal
                 modalTitle={verifyTypeModal === 'viewCV' ? "Review CV" : "Review Evaluate Form"}
                 id={verifyTypeModal === 'viewCV' ? editInterview?.candidate?.id : editInterview?.id}
-                downloadFileUrl={API_URL.interview.downloadEvaluateForm}
+                downloadFileUrl={verifyTypeModal === 'viewCV' ? null : API_URL.interview.downloadEvaluateForm}
                 openModal={openFileModal}
                 onCloseModal={() => setOpenFileModal(false)}
             />
