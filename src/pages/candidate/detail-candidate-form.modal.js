@@ -107,8 +107,8 @@ const CandidateFormDetailModal = (props) => {
             <Dialog
                 TransitionComponent={TransitionModal}
                 open={openCandidateModal}
-                fullScreen
-                sx={ !loading ? { paddingX: 40, paddingY: 10 } : {}}
+                PaperProps={!loading ? { sx: { minWidth: '50vw' } } : {}}
+
             >
                 {
                     loading ?
