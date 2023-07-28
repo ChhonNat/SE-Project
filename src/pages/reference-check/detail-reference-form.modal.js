@@ -35,7 +35,7 @@ const ReferenceFormDetailModal = (props) => {
         processedAt: { rank: 11, label: 'Proccessed At', type: 'date' },
         processedBy: { rank: 12, label: 'Proccessed By' },
 
-        referenceCheckDetails: { rank: 13, label: 'Reference Checked History' },
+        referenceCheckDetails: { rank: 13, label: 'Reference Check History' },
 
     };
 
@@ -87,7 +87,7 @@ const ReferenceFormDetailModal = (props) => {
                         :
                         <>
                             <DialogTitle>
-                                <TitleComponent title="Reference Details" />
+                                <TitleComponent title="Reference Check Details" />
                                 {
                                     onCloseReferenceDetailModal ? (
                                         <IconButton
