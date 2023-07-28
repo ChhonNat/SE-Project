@@ -79,7 +79,7 @@ const ReferenceFormDetailModal = (props) => {
             <Dialog
                 TransitionComponent={TransitionModal}
                 open={openReferenceDetailModal}
-                PaperProps={{ sx: { minWidth: '50vw' } }}
+                PaperProps={!loading ? { sx: { minWidth: '50vw' }} : {}}
             >
                 {
                     loading ?

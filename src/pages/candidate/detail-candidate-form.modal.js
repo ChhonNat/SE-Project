@@ -10,10 +10,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import FooterComponent from '../../components/Page/footer';
 import TitleComponent from '../../components/Page/title';
 import _useHttp from '../../hooks/_http';
+import moment from 'moment';
+
 import { API_URL } from '../../constants/api_url';
 import { HTTP_METHODS } from '../../constants/http_method';
 import { PulseLoader } from 'react-spinners';
-import moment from 'moment';
 import { MAP_ROLE_NAME } from '../../constants/roles';
 import { Close } from '@mui/icons-material';
 
@@ -107,7 +108,7 @@ const CandidateFormDetailModal = (props) => {
                 TransitionComponent={TransitionModal}
                 open={openCandidateModal}
                 fullScreen
-                sx={{ paddingX: 40, paddingY: 10 }}
+                sx={ !loading ? { paddingX: 40, paddingY: 10 } : {}}
             >
                 {
                     loading ?
