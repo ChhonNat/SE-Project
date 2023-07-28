@@ -46,9 +46,9 @@ const CandidateFormDetailModal = (props) => {
         updatedBy: { rank: 17, label: 'Updated By' },
         status: { rank: 18, label: 'Status' },
         submitStatus: { rank: 19, label: 'Process Status' },
-        submitDetails: { rank: 20, label: 'Processed Details' },
-        shortlistDetails: { rank: 21, label: 'Shortlisted Details' },
-        interviews: { rank: 22, label: 'Interviewed Details' }
+        submitDetails: { rank: 20, label: 'Processed History' },
+        shortlistDetails: { rank: 21, label: 'Shortlisted History' },
+        interviews: { rank: 22, label: 'Interviewed History' }
     };
 
     const mapStepInterviewLabel = {
@@ -620,7 +620,7 @@ const CandidateFormDetailModal = (props) => {
                                                                                                                     sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
                                                                                                                 >
                                                                                                                     <label style={{ fontWeight: 'bold', fontSize: 13 }}>Interviewed At:</label>
-                                                                                                                    <label style={{ fontSize: 13 }}>{moment(interviewDetail?.interviewDate).format('MMM DD, YYYY hh:mm:ss A')}</label>
+                                                                                                                    <label style={{ fontSize: 13 }}>{moment(interviewDetail?.interviewDate).format('MMM DD, YYYY hh:mm A')}</label>
                                                                                                                 </Grid>
 
                                                                                                                 <Grid
@@ -644,23 +644,23 @@ const CandidateFormDetailModal = (props) => {
                                                                                                                 <Grid
                                                                                                                     item
                                                                                                                     xs={12}
-                                                                                                                    sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
-                                                                                                                >
-                                                                                                                    <label style={{ fontWeight: 'bold', fontSize: 13 }}>Remark:</label>
-                                                                                                                    <label style={{ fontSize: 13 }}>{interviewDetail?.remark}</label>
-                                                                                                                </Grid>
-
-                                                                                                                <Grid
-                                                                                                                    item
-                                                                                                                    xs={12}
                                                                                                                     sx={{ marginBottom: '0rem', display: 'flex', justifyContent: 'space-between' }}
                                                                                                                 >
-                                                                                                                    <label style={{ fontWeight: 'bold', fontSize: 13 }}>Interviewed Committee:</label>
+                                                                                                                    <label style={{ fontWeight: 'bold', fontSize: 13 }}>Committees:</label>
                                                                                                                     <label style={{ fontSize: 13 }}>
                                                                                                                         {interviewDetail?.committees?.map((com, index) => (<span>{com?.fullName}{index + 1 === interviewDetail?.committees?.length ? '' : ',  '}</span>))}
                                                                                                                     </label>
                                                                                                                 </Grid>
 
+                                                                                                                <Grid
+                                                                                                                    item
+                                                                                                                    xs={12}
+                                                                                                                    sx={{ marginBottom: '0.25rem', display: 'flex', justifyContent: 'space-between' }}
+                                                                                                                >
+                                                                                                                    <label style={{ fontWeight: 'bold', fontSize: 13 }}>Remark:</label>
+                                                                                                                    <label style={{ fontSize: 13 }}>{interviewDetail?.remark}</label>
+                                                                                                                </Grid>
+                                                                                                   
                                                                                                                 <Grid
                                                                                                                     item
                                                                                                                     xs={12}

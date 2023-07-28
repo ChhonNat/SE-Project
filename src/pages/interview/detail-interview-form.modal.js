@@ -31,14 +31,14 @@ const InterviewFormDetailModal = (props) => {
         businessUnitName: { rank: 6, label: 'Business Unit' },
         invitedAt: { rank: 7, label: 'Invited At', type: 'date' },
         invitedBy: { rank: 8, label: 'Invited By' },
-        interviewDate: { rank: 9, label: 'Interview At', type: 'date' },
+        interviewDate: { rank: 9, label: 'Interview At', type: 'date', dateFormat: 'MMM DD, YYYY hh:mm A' },
         interviewResult: { rank: 10, label: 'Interview Result' },
         interviewProcess: { rank: 11, label: 'Interview Process' },
         status: { rank: 12, label: 'Status' },
         remark: { rank: 13, label: 'Remark' },
 
-        committees: { rank: 14, label: 'Interviewer Committee' },
-        evaluationDetails: { rank: 15, label: 'Evaluated Details' }
+        committees: { rank: 14, label: 'Interviewer Committees' },
+        evaluationDetails: { rank: 15, label: 'Evaluated History' }
 
     };
 
@@ -96,7 +96,7 @@ const InterviewFormDetailModal = (props) => {
                         :
                         <>
                             <DialogTitle>
-                                <TitleComponent title="Candidate Details" />
+                                <TitleComponent title="Interview Details" />
                                 {
                                     onCloseCandidateModal ? (
                                         <IconButton
@@ -143,7 +143,7 @@ const InterviewFormDetailModal = (props) => {
                                                                     </label>
                                                                     <label>
                                                                         {mapKeyToView[key]?.type === 'date' ?
-                                                                            moment(interviewDetail[key]).format('MMM DD, YYYY hh:mm:ss A')
+                                                                            moment(interviewDetail[key]).format( mapKeyToView[key]?.dateFormat ? mapKeyToView[key]?.dateFormat  : 'MMM DD, YYYY hh:mm:ss A')
                                                                             :
                                                                             interviewDetail[key]
                                                                         }
@@ -154,7 +154,6 @@ const InterviewFormDetailModal = (props) => {
                                                                     <Grid
                                                                         item
                                                                         xs={12}
-                                                                        paddingBottom={4}
                                                                     >
                                                                         <label
                                                                             style={{
@@ -162,7 +161,7 @@ const InterviewFormDetailModal = (props) => {
                                                                                 fontSize: '1.25rem'
                                                                             }}
                                                                         >
-                                                                            {mapKeyToView[key]?.label}:
+                                                                            {mapKeyToView[key]?.label}
                                                                         </label>
                                                                         <hr></hr>
                                                                         
@@ -172,13 +171,13 @@ const InterviewFormDetailModal = (props) => {
                                                                                 <Grid
                                                                                     item
                                                                                     xs={6}
-                                                                                    sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
+                                                                                    sx={{ fontSize: 14, display: 'flex', justifyContent: 'start' }}
                                                                                     paddingTop={2}
                                                                                 >
                                                                                     <label
-                                                                                        style={{ fontWeight: 'bold' }}
+                                                                                        style={{ fontWeight: 'bold', marginRight: 5 }}
                                                                                     >
-                                                                                        Interviewer By:
+                                                                                        - 
                                                                                     </label>
                                                                                     <label
                                                                                     >
@@ -196,7 +195,7 @@ const InterviewFormDetailModal = (props) => {
                                                                                         item
                                                                                         xs={6}
                                                                                         spacing={2}
-                                                                                        paddingTop={4}
+                                                                                        paddingTop={1}
                                                                                         paddingBottom={1}
                                                                                         sx={{ 
                                                                                             fontSize: 14, 
@@ -207,7 +206,7 @@ const InterviewFormDetailModal = (props) => {
                                                                                         <label
                                                                                             style={{ fontWeight: 'bold' }}
                                                                                         >
-                                                                                            Evaluation Result:
+                                                                                            Interviewed Result:
                                                                                         </label>
                                                                                         <label
                                                                                         >
@@ -223,11 +222,11 @@ const InterviewFormDetailModal = (props) => {
                                                                                         <label
                                                                                             style={{ fontWeight: 'bold' }}
                                                                                         >
-                                                                                            Evaluation At:
+                                                                                            Interviewed At:
                                                                                         </label>
                                                                                         <label
                                                                                         >
-                                                                                            {moment(intDetail?.evaluatedAt).format('MMM DD, YYYY hh:mm:ss A')}
+                                                                                            {moment(intDetail?.evaluatedAt).format('MMM DD, YYYY hh:mm A')}
                                                                                         </label>
                                                                                     </Grid>
                                                                                     <Grid
@@ -239,7 +238,7 @@ const InterviewFormDetailModal = (props) => {
                                                                                         <label
                                                                                             style={{ fontWeight: 'bold' }}
                                                                                         >
-                                                                                            Evaluation By:
+                                                                                            Interviewed By:
                                                                                         </label>
                                                                                         <label
                                                                                         >
