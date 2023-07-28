@@ -178,6 +178,27 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 2.5 HOD:
     CV:
         Update second evaluate result
+
+2.6 HOD:
+    CV:
+        Push to TA for reference check
+        
+--------------------------------------------------
+                    3: Reference Check
+--------------------------------------------------
+3.1
+    TA:
+        Do the background check and update the result
+3.2
+    TA:
+        Submit to HOD to offer the salary,...
+3.3
+    HOD:
+        submit to HOD to verify
+3.4
+    HOD: 
+        submit to OFFCEO to approve
+        
         
 
 
