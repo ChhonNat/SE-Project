@@ -4,8 +4,10 @@ import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import ViewFileModal from "../../components/Modal/view-file.modal";
 import InterViewEvaluateFormModal from "./interview-evaluate-form.modal";
 import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
+import InterviewFormDetailModal from "./detail-interview-form.modal";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 import { CalendarMonth } from "@mui/icons-material";
 import { useSelector } from "react-redux";
@@ -14,7 +16,7 @@ import { TABLE_CONFIG } from "../../utils/table-config";
 import { API_URL } from "../../constants/api_url";
 import { CandidateService } from "../../services/candidate.service";
 import { STATUS } from "../../constants/status";
-import InterviewFormDetailModal from "./detail-interview-form.modal";
+import ReferenceCheckModal from "./check-reference-form.modal";
 
 const HomeInterview = () => {
 
@@ -26,6 +28,7 @@ const HomeInterview = () => {
     const [openScheduleModal, setOpenScheduleModal] = useState(false);
     const [openInterviewEvaluateModal, setOpenInterviewEvaluateModal] = useState(false);
     const [openInterviewDetailModal, setOpenInterviewDetailModal] = useState(false);
+    const [openReferenceCheckModal, setOpenReferenceCheckModal] = useState(false);
 
     const [verifyTypeModal, setVerifyTypeModal] = useState('');
 
@@ -39,6 +42,9 @@ const HomeInterview = () => {
         "setSecondRoundInterview": {
             handleAction: () => setOpenScheduleModal(true)
         },
+        "referenceCheck": {
+            handleAction: () => setOpenReferenceCheckModal(true)
+        }
         // "printInterviewForm": {
         //     handleAction: () => window.print()
         // },
@@ -73,7 +79,7 @@ const HomeInterview = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
-                    // view: true,
+                    view: true,
                     viewFile: [
                         {
                             field: 'interviewResult',
@@ -126,6 +132,18 @@ const HomeInterview = () => {
                                     }
                                 ]
                             },
+                            {
+                                name: 'Reference Check',
+                                eventName: 'referenceCheck',
+                                icon: <HowToRegIcon />,
+                                hidden: !user?.roles ? true : [ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles?.includes(role)) ? false : true,
+                                enable: [
+                                    {
+                                        field: 'interviewResult',
+                                        values: [STATUS.INTERVIEW_RESULT.PASSED]
+                                    }
+                                ]
+                            },
                             // {
                             //     name: 'Print Form',
                             //     eventName: 'printInterviewForm',
@@ -166,10 +184,10 @@ const HomeInterview = () => {
                     setOpenFileModal(true)
                 }}
 
-                // handleViewEvent={(data) => {
-                //     setEditInterview(data);
-                //     setOpenInterviewDetailModal(true);
-                // }}
+                handleViewEvent={(data) => {
+                    setEditInterview(data);
+                    setOpenInterviewDetailModal(true);
+                }}
             />
 
             {/* Second interview schedule modal */}
@@ -205,6 +223,14 @@ const HomeInterview = () => {
                 interview={editInterview}
                 openCandidateModal={openInterviewDetailModal}
                 onCloseCandidateModal={() => setOpenInterviewDetailModal(false)}
+            />
+
+            {/* Reference check modal */}
+            <ReferenceCheckModal 
+                interview={editInterview}
+                openReferenceCheckModal={openReferenceCheckModal}
+                onCloseReferenceCheckModal={() => setOpenReferenceCheckModal(false)}
+                handleEventSuccessed={() => setIsReload(!isReload)}
             />
         </>
     )

@@ -93,30 +93,30 @@ const tblCandidate = [
  */
 const tblInterview = [
     {
-        id: 'index', 
+        id: 'index',
         label: 'No.'
     },
     {
-        id: 'candidate', 
+        id: 'candidate',
         label: 'Applicant Code',
-        type: 'link', 
-        obj: { name: 'applicantCode' }, 
+        type: 'link',
+        obj: { name: 'applicantCode' },
     },
     {
-        id: 'candidate', 
+        id: 'candidate',
         label: 'Name',
-        obj: { name: 'fullName' }, 
+        obj: { name: 'fullName' },
     },
     {
-        id: 'appliedPosition', 
+        id: 'appliedPosition',
         label: 'Apply Position',
-        obj: { name: 'nameEn' }, 
+        obj: { name: 'nameEn' },
     },
     {
-        id: 'interviewDate', 
+        id: 'interviewDate',
         label: 'Interview At',
-        type: 'date', 
-        dateFormat: 'MMM DD, YYYY hh:mm:ss A', 
+        type: 'date',
+        dateFormat: 'MMM DD, YYYY hh:mm:ss A',
     },
     {
         id: 'interviewProcess',
@@ -128,7 +128,7 @@ const tblInterview = [
         }
     },
     {
-        id: 'status', 
+        id: 'status',
         label: 'Status',
         type: 'status',
         statusColor: {
@@ -141,7 +141,7 @@ const tblInterview = [
         label: 'Result'
     },
     {
-        id: 'action', 
+        id: 'action',
         label: 'Actions'
     },
 ];
@@ -149,39 +149,34 @@ const tblInterview = [
 
 const tblReferenceCheck = [
     {
-        id: 'index', 
+        id: 'index',
         label: 'No.'
     },
     {
-        id: 'applicantCode',
+        id: 'candidate',
         label: 'Applicant Code',
-        type: 'link', 
-        statusColor: {}, 
+        type: 'link',
+        obj: { name: 'applicantCode' },
     },
     {
-        id: 'candidate', 
-        label: 'Name',
-        obj: { name: 'fullName' }, 
+        id: 'candidate',
+        label: 'Candidate Name',
+        obj: { name: 'fullName' },
     },
     {
-        id: 'appliedPosition', 
-        label: 'Apply Position',
-        obj: { name: 'nameEn' }, 
-    },
-    {
-        id: 'interviewResult', 
+        id: 'checkResult',
         label: 'Result',
-        type: 'status', 
-        statusColor: { Passed: 'green', Failed: 'red' }, 
+        type: 'status',
+        statusColor: { Passed: 'green', Failed: 'red' },
     },
     {
-        id: 'status', 
+        id: 'status',
         label: 'Status',
-        type: 'status', 
-        statusColor: {}, 
+        type: 'status',
+        statusColor: {},
     },
     {
-        id: 'action', 
+        id: 'action',
         label: 'Actions'
     },
 ];
