@@ -16,6 +16,8 @@ import { DATA_STATUS } from "../../constants/data_status";
 import { API_URL } from "../../constants/api_url";
 import { HTTP_METHODS } from "../../constants/http_method";
 import { STATUS } from "../../constants/status";
+import LabelRequire from "../../components/Label/require";
+import { Form } from "react-router-dom";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -31,9 +33,9 @@ const ReferenceResultFormModal = (props) => {
         selectLabel,
     } = props;
 
-    const { register, handleSubmit, setValue, formState, reset, watch, clearErrors } = useForm({ resolver: zodResolver(VerifyReferenceModel) });
+    const { register, handleSubmit, setValue, formState, reset, watch, setError, clearErrors } = useForm({ resolver: zodResolver(VerifyReferenceModel) });
     const { errors } = formState;
-    const watchCandidate = watch();
+    const watchReference = watch();
     const { data, loading, error, message, sendRequest } = _useHttp();
     const [listInterviewResults, setListInterviewResults] = useState();
 
@@ -68,13 +70,21 @@ const ReferenceResultFormModal = (props) => {
 
     const onError = (dataError) => {
         console.log('input error', dataError);
+        if (!watchReference.file)
+            setError('file', { message: 'File is required!' });
     };
 
     const onSubmit = async (dataSubmit) => {
 
         try {
 
-            const submitRefCheck = await referenceService.evaluateResult(reference?.id, reference?.candidate?.id, dataSubmit);
+            const formSubmit = new FormData();
+
+            Object.keys(dataSubmit).forEach((key) => {
+                formSubmit.append(key, dataSubmit[key]);
+            });
+
+            const submitRefCheck = await referenceService.evaluateResult(reference?.id, reference?.candidate?.id, formSubmit, 'multipart/form-data');
 
             const { status, data } = submitRefCheck;
             const { message } = data;
@@ -99,7 +109,7 @@ const ReferenceResultFormModal = (props) => {
             }
 
         } catch (error) {
-            console.log('error',error);
+            console.log('error', error);
         }
     };
 
@@ -139,6 +149,23 @@ const ReferenceResultFormModal = (props) => {
                     <Box sx={{ width: '100%' }}>
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                             <Grid item xs={12}>
+                                <TextField
+                                    type='file'
+                                    size='small'
+                                    label={<LabelRequire label={"Reference Form"} />}
+                                    InputLabelProps={{ shrink: true }}
+                                    sx={{ width: '100%' }}
+                                    onChange={(e) => {
+                                        setValue('file', e?.target?.files[0]);
+                                        clearErrors('file');
+                                    }}
+                                    error={errors?.file ? true : false}
+                                    helperText={errors?.file?.message}
+                                >
+                                    Upload
+                                </TextField>
+                            </Grid>
+                            <Grid item xs={12}>
                                 <SelectComponent
                                     id={'status-id'}
                                     label={selectLabel}
@@ -146,7 +173,7 @@ const ReferenceResultFormModal = (props) => {
                                     isRequired={true}
                                     customDatas={listInterviewResults}
                                     handleOnChange={(e) => setValue('checkResult', e?.target?.value)}
-                                    value={watchCandidate?.checkResult}
+                                    value={watchReference?.checkResult}
                                     err={errors?.checkResult?.message}
                                 />
                             </Grid>

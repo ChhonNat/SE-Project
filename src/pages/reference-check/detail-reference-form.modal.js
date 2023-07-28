@@ -164,9 +164,10 @@ const ReferenceFormDetailModal = (props) => {
                                             {
                                                     referenceDetail['referenceCheckDetails']
                                                     && referenceDetail['referenceCheckDetails'].length ?
-                                                    referenceDetail['referenceCheckDetails'].map((intDetail) => (
+                                                    referenceDetail['referenceCheckDetails'].map((intDetail, indexIntDetail) => (
                                                         <>
                                                             <Grid
+                                                                key={indexIntDetail}
                                                                 item
                                                                 xs={6}
                                                                 spacing={2}
