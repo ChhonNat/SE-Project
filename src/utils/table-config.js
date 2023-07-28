@@ -116,7 +116,7 @@ const tblInterview = [
         id: 'interviewDate',
         label: 'Interview At',
         type: 'date',
-        dateFormat: 'MMM DD, YYYY hh:mm:ss A',
+        dateFormat: 'MMM DD, YYYY hh:mm A',
     },
     {
         id: 'interviewProcess',
