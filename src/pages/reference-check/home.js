@@ -19,10 +19,10 @@ const HomeAssessment = () => {
     const user = useSelector((state) => state?.userAuthendicated);
 
     const [editCandidate, setEditCandidate] = useState({});
-    const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
-    const [openRefFormModal, setOpenRefFormModal] = useState(false);
+    const [openFileFormModal, setOpenFileFormModal] = useState(false);
     const [openReferenceResultModal, setOpenReferenceResultModal] = useState(false);
     const [openReferenceDetailModal, setOpenReferenceDetailModal] = useState(false);
+    const [typeModal, setTypeModal] = useState('');
 
     const [isReload, setIsReload] = useState(false);
 
@@ -111,7 +111,6 @@ const HomeAssessment = () => {
                         ]
                     }
                 }}
-
                 handleMoreEvent={(eName, data) => {
                     if (!eName)
                         return false;
@@ -121,8 +120,9 @@ const HomeAssessment = () => {
                 }}
                 handleLinkEvent={
                     (data) => {
+                        setTypeModal('viewCVFile');
                         setEditCandidate(data);
-                        setOpenReviewCVModal(true);
+                        setOpenFileFormModal(true);
                     }
                 }
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
@@ -131,8 +131,9 @@ const HomeAssessment = () => {
                     setOpenReferenceDetailModal(true);
                 }}
                 handleViewFileEvent={(data) => {
+                    setTypeModal('viewRefForm');
                     setEditCandidate(data);
-                    setOpenRefFormModal(true)
+                    setOpenFileFormModal(true)
                 }}
             />
 
@@ -146,11 +147,11 @@ const HomeAssessment = () => {
 
             {/* Review candidate form */}
             <ViewFileModal
-                modalTitle="Review Reference Form"
-                id={editCandidate?.id}
-                downloadFileUrl={API_URL.referenceCheck.downloadRefForm}
-                openModal={openRefFormModal}
-                onCloseModal={() => setOpenRefFormModal(false)}
+                modalTitle={typeModal === 'viewCVFile' ? '' : 'Review Reference Form'}
+                id={typeModal === 'viewCVFile' ? editCandidate?.candidate?.id : editCandidate?.id}
+                downloadFileUrl={typeModal === 'viewCVFile' ? null : API_URL.referenceCheck.downloadRefForm}
+                openModal={openFileFormModal}
+                onCloseModal={() => setOpenFileFormModal(false)}
             />
 
             {/* Detail reference form */}
