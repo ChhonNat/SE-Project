@@ -11,6 +11,7 @@ import { globalService } from "../../services/global.service";
 import { API_URL } from "../../constants/api_url";
 import { STATUS } from "../../constants/status";
 import { Close } from "@mui/icons-material";
+import LabelRequire from "../../components/Label/require";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -85,6 +86,23 @@ const ReferenceResultFormModal = (props) => {
                 <DialogContent dividers>
                     <Box sx={{ width: '100%' }}>
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                            {/* <Grid item xs={12}>
+                                <TextField
+                                    type='file'
+                                    size='small'
+                                    label={<LabelRequire label={"Evaluate Form"} />}
+                                    InputLabelProps={{ shrink: true }}
+                                    sx={{ width: '100%' }}
+                                    // onChange={(e) => {
+                                    //     setValue('file', e?.target?.files[0]);
+                                    //     clearErrors('file');
+                                    // }}
+                                    // error={errors?.file ? true : false}
+                                    // helperText={errors?.file?.message}
+                                >
+                                    Upload
+                                </TextField>
+                            </Grid> */}
                             <Grid item xs={12}>
                                 <SelectComponent
                                     id={'status-id'}

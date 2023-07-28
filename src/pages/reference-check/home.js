@@ -47,7 +47,7 @@ const HomeAssessment = () => {
             */}
 
             <AsyncDatatable
-                asyncURL={API_URL.interview.get}
+                asyncURL={API_URL.referenceCheck.get}
                 headers={TABLE_CONFIG.tblReferenceCheck}
                 bannerText="All Reference Checks"
                 searchPlaceHolder="Search"
@@ -59,19 +59,19 @@ const HomeAssessment = () => {
                     moreOption: {
                         buttons: [
                             {
-                                name: 'Background Check',
+                                name: 'Reference Check',
                                 eventName: 'checkCandidateReference',
                                 icon: <HowToRegIcon />,
                                 hidden: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ? false : true,
                                 enable: true
                             },
-                            {
-                                name: 'Print Form',
-                                eventName: 'printReferenceForm',
-                                icon: <Print />,
-                                hidden: !user?.roles ? false : user?.roles?.includes(ROLE?.ROLE_TA_TEAM) ? false : true,
-                                enable: true
-                            },
+                            // {
+                            //     name: 'Print Form',
+                            //     eventName: 'printReferenceForm',
+                            //     icon: <Print />,
+                            //     hidden: !user?.roles ? false : user?.roles?.includes(ROLE?.ROLE_TA_TEAM) ? false : true,
+                            //     enable: true
+                            // },
                             {
                                 name: 'Verify',
                                 eventName: 'verifyJobOffer',
@@ -116,7 +116,7 @@ const HomeAssessment = () => {
             {/* Review candidate form */}
             <ViewFileModal
                 modalTitle="Review CV"
-                id={editCandidate?.candidateId}
+                id={editCandidate?.candidate?.id}
                 openModal={openReviewCVModal}
                 onCloseModal={() => setOpenReviewCVModal(false)}
             />
