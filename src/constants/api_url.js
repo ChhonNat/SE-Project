@@ -53,12 +53,16 @@ export const API_URL = {
         get: API_VERSION + '/reference-checks/search',
         detail: API_VERSION + '/reference-checks/',
         evaluateResult: API_VERSION + '/reference-checks/',
+        offerJob: API_VERSION + '/reference-checks/',
         downloadRefForm: API_VERSION + '/reference-checks/download?id=',
 
         lookup: {
             get: API_VERSION + '/reference-checks/lookup-data'
         }
     },  
+    jobOffer: {
+        get: API_VERSION + '/job-offers/search'
+    },
     assessment: {
         get: API_VERSION + '/assessments/search',
 

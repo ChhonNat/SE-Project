@@ -4,21 +4,30 @@ import { STATUS } from "../constants/status";
  */
 const proof = [
     {
-        id: 'createdAt', type: 'date', dateFormat: 'MMM DD, YYYY hh:mm:ss A', label: 'Created At',
+        id: 'createdAt',
+        label: 'Created At',
+        type: 'date',
+        dateFormat: 'MMM DD, YYYY hh:mm:ss A',
     },
     {
-        id: 'createdBy', label: 'Created By',
+        id: 'createdBy',
+        label: 'Created By',
     },
     {
-        id: 'updatedAt', type: 'date', dateFormat: 'MMM DD, YYYY hh:mm:ss A', label: 'Updated At',
+        id: 'updatedAt',
+        label: 'Updated At',
+        type: 'date',
+        dateFormat: 'MMM DD, YYYY hh:mm:ss A',
     },
     {
-        id: 'updatedBy', label: 'Updated By'
+        id: 'updatedBy',
+        label: 'Updated By'
     },
     {
-        id: 'status', type: 'status',
+        id: 'status',
+        label: 'Status',
+        type: 'status',
         statusColor: { ACTIVE: 'green' },
-        label: 'Status'
     }
 ];
 /***
@@ -26,7 +35,8 @@ const proof = [
  */
 const tblCandidate = [
     {
-        id: 'index', label: 'No.'
+        id: 'index',
+        label: 'No.'
     },
     {
         id: 'applicantCode',
@@ -137,8 +147,8 @@ const tblInterview = [
     },
     {
         id: 'interviewResult',
+        label: 'Result',
         textColor: { Passed: 'green', Failed: 'red', Waiting: 'Orange' },
-        label: 'Result'
     },
     {
         id: 'action',
@@ -146,7 +156,7 @@ const tblInterview = [
     },
 ];
 
-
+/**Job reference Table */
 const tblReferenceCheck = [
     {
         id: 'index',
@@ -176,7 +186,7 @@ const tblReferenceCheck = [
         id: 'status',
         label: 'Status',
         type: 'status',
-        statusColor: {[STATUS.REFERENCE_STATUS.PENDING]:'orange'},
+        statusColor: { [STATUS.REFERENCE_STATUS.PENDING]: 'orange' },
     },
     {
         id: 'action',
@@ -184,35 +194,87 @@ const tblReferenceCheck = [
     },
 ];
 
+/**Job Offer table */
+const tblJobOffer = [
+    {
+        id: 'index',
+        label: 'No.'
+    },
+    {
+        id: 'candidate',
+        label: 'Candidate Name',
+        obj: { name: 'fullName' }
+    },
+    {
+        id: 'position',
+        label: 'Position',
+        obj: { name: 'nameEn' }
+    },
+    {
+        id: 'positionLevel',
+        label: 'Position Level',
+        obj: { name: 'nameEn' }
+    },
+    {
+        id: 'department',
+        label: 'Department',
+        obj: { name: 'nameEn' }
+    },
+    {
+        id: 'offerSalary',
+        label: 'Offer Salary',
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { 'pending': 'orange' }
+    },
+    {
+        id: 'action',
+        label: 'Actions'
+    }
+];
 
 /***
  * Assessment Table
  */
 const tblAssessment = [
     {
-        id: 'index', label: 'No.'
+        id: 'index',
+        label: 'No.'
     },
     , {
-        id: 'applicantCode', type: 'link', statusColor: {}, label: 'Applicant Code'
-
+        id: 'applicantCode',
+        label: 'Applicant Code',
+        type: 'link',
+        statusColor: {},
     },
     {
-        id: 'candidateName', label: 'Name'
+        id: 'candidateName',
+        label: 'Name'
     },
     {
-        id: 'offerPositionName', label: 'Offer Position'
+        id: 'offerPositionName',
+        label: 'Offer Position'
     },
     {
-        id: 'departmentName', label: 'Department'
+        id: 'departmentName',
+        label: 'Department'
     },
     {
-        id: 'businessDivisionName', label: 'Primary Business'
+        id: 'businessDivisionName',
+        label: 'Primary Business'
     },
     {
-        id: 'offerSalary', label: 'Offer Salary ($)'
+        id: 'offerSalary',
+        label: 'Offer Salary ($)'
     },
     {
-        id: 'status', type: 'status', statusColor: { Offered: 'Green', Suspended: 'Orange', Cancel: 'Red' }, label: 'Status'
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Offered: 'Green', Suspended: 'Orange', Cancel: 'Red' }
     },
     // {
     //     id: 'headDepartmentName', label: 'Head Department'
@@ -231,39 +293,49 @@ const tblAssessment = [
  */
 const tblHire = [
     {
-        id: 'index', label: 'No.'
+        id: 'index',
+        label: 'No.'
     },
     , {
         id: 'applicantCode',
+        label: 'Applicant Code',
         type: 'link',
-        statusColor: {},
-        label: 'Applicant Code'
+        statusColor: {}
     },
     {
-        id: 'candidateName', label: 'Name'
+        id: 'candidateName',
+        label: 'Name'
     },
     {
-        id: 'hirePositionName', label: 'Hire Position'
+        id: 'hirePositionName',
+        label: 'Hire Position'
     },
     {
-        id: 'departmentName', label: 'Department'
+        id: 'departmentName',
+        label: 'Department'
     },
     {
-        id: 'businessDivisionName', label: 'Primary Business'
+        id: 'businessDivisionName',
+        label: 'Primary Business'
     },
     {
-        id: 'hireDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Hire Date'
+        id: 'hireDate',
+        label: 'Hire Date',
+        type: 'date',
+        dateFormat: 'MMM DD, YYYY'
     },
     {
-        id: 'joinDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Join Date'
+        id: 'joinDate',
+        label: 'Join Date',
+        type: 'date',
+        dateFormat: 'MMM DD, YYYY'
     },
     {
-        id: 'status', type: 'status', statusColor: { Hired: 'Green' }, label: 'Status'
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Hired: 'Green' }
     }
-    // ...proof,
-    // {
-    //     id: 'action', label: 'Actions'
-    // }
 ];
 
 /**
@@ -271,30 +343,40 @@ const tblHire = [
  */
 const tblPosition = [
     {
-        id: 'index', label: 'No.',
+        id: 'index',
+        label: 'No.',
     },
     {
-        id: 'nameEn', label: 'Name',
+        id: 'nameEn',
+        label: 'Name',
     },
     {
-        id: 'nameKh', label: 'Name(KH)',
+        id: 'nameKh',
+        label: 'Name(KH)',
     },
     {
-        id: 'positionLevelName', label: 'Level'
+        id: 'positionLevelName',
+        label: 'Level'
     },
     {
-        id: 'businessUnitName', arrayId: 'name', label: 'Primary Business'
+        id: 'businessUnitName',
+        label: 'Primary Business',
+        arrayId: 'name',
     },
     {
-        id: 'departmentName', label: 'Department'
+        id: 'departmentName',
+        label: 'Department'
     },
     {
-        id: 'description', label: 'Description',
+        id: 'description',
+        label: 'Description',
     },
     {
-        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' },
     },
-    // ...proof,
     {
         id: 'action', label: 'Actions'
     },
@@ -305,29 +387,39 @@ const tblPosition = [
  */
 const tblPositionLevel = [
     {
-        id: 'index', label: 'No.',
+        id: 'index',
+        label: 'No.',
     },
     {
-        id: 'nameEn', label: 'Name',
+        id: 'nameEn',
+        label: 'Name',
     },
     {
-        id: 'nameKh', label: 'Name(KH)'
+        id: 'nameKh',
+        label: 'Name(KH)'
     },
     {
-        id: 'businessUnitName', label: 'Primary Business'
+        id: 'businessUnitName',
+        label: 'Primary Business'
     },
     {
-        id: 'departmentName', arrayId: 'name', label: 'Department Name'
+        id: 'departmentName',
+        label: 'Department Name',
+        arrayId: 'name',
     },
     {
-        id: 'description', label: 'Description',
+        id: 'description',
+        label: 'Description',
     },
     {
-        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' },
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'action',
+        label: 'Actions'
     },
 ];
 
@@ -336,32 +428,40 @@ const tblPositionLevel = [
  */
 const tblRecruiter = [
     {
-        id: 'index', label: 'No.',
+        id: 'index',
+        label: 'No.',
     },
     {
-        id: 'cardId', label: 'Card ID'
+        id: 'cardId',
+        label: 'Card ID'
     },
     {
-        id: 'firstName', label: 'First Name',
+        id: 'firstName',
+        label: 'First Name',
     },
     {
-        id: 'lastName', label: 'Last Name',
+        id: 'lastName',
+        label: 'Last Name',
     },
     {
-        id: 'phoneNumber', label: 'Phone Number'
+        id: 'phoneNumber',
+        label: 'Phone Number'
     },
     {
-        id: 'positionName', label: 'Position'
+        id: 'positionName',
+        label: 'Position'
     },
     {
-        id: 'departmentName', label: 'Department'
+        id: 'departmentName',
+        label: 'Department'
     },
     {
-        id: 'description', label: 'Description'
+        id: 'description',
+        label: 'Description'
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'action',
+        label: 'Actions'
     },
 ];
 
@@ -370,26 +470,35 @@ const tblRecruiter = [
  */
 const tblDepartment = [
     {
-        id: 'index', label: 'No.',
+        id: 'index',
+        label: 'No.',
     },
     {
-        id: 'nameEn', label: 'Name',
+        id: 'nameEn',
+        label: 'Name',
     },
     {
-        id: 'nameKh', label: 'Name(KH)'
+        id: 'nameKh',
+        label: 'Name(KH)'
     },
     {
-        id: 'description', label: 'Description',
+        id: 'description',
+        label: 'Description',
     },
     {
-        id: 'businessUnitName', arrayId: 'name', label: 'Primary Business'
+        id: 'businessUnitName',
+        label: 'Primary Business',
+        arrayId: 'name',
     },
     {
-        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' }
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'action',
+        label: 'Actions'
     },
 ];
 
@@ -399,36 +508,47 @@ const tblDepartment = [
 
 const tblHeadDepartment = [
     {
-        id: 'index', label: 'No.'
+        id: 'index',
+        label: 'No.'
     },
     {
-        id: 'staffId', label: 'Card ID'
+        id: 'staffId',
+        label: 'Card ID'
     },
     {
-        id: 'fullName', label: 'Name'
+        id: 'fullName',
+        label: 'Name'
     },
     {
-        id: 'phoneNumber', label: 'Phone Number'
+        id: 'phoneNumber',
+        label: 'Phone Number'
     },
     {
-        id: 'businessUnitName', label: 'Primary Business'
+        id: 'businessUnitName',
+        label: 'Primary Business'
     },
     {
-        id: 'departmentName', label: 'Department'
+        id: 'departmentName',
+        label: 'Department'
     },
     {
-        id: 'positionName', label: 'Position'
+        id: 'positionName',
+        label: 'Position'
     },
     {
-        id: 'positionLevelName', label: 'Level'
+        id: 'positionLevelName',
+        label: 'Level'
     },
     {
-        id: 'description', label: 'Description'
+        id: 'description',
+        label: 'Description'
     },
     {
-        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' }
     },
-    // ...proof,
     {
         id: 'action', label: 'Actions'
     }
@@ -439,38 +559,50 @@ const tblHeadDepartment = [
  */
 const tblCommittee = [
     {
-        id: 'index', label: 'No.'
+        id: 'index',
+        label: 'No.'
     },
     {
-        id: 'staffId', label: 'Card ID'
+        id: 'staffId',
+        label: 'Card ID'
     },
     {
-        id: 'fullName', label: 'Name'
+        id: 'fullName',
+        label: 'Name'
     },
     {
-        id: 'phoneNumber', label: 'Phone Number'
+        id: 'phoneNumber', 
+        label: 'Phone Number'
     },
     {
-        id: 'businessUnitName', label: 'Primary Business'
+        id: 'businessUnitName', 
+        label: 'Primary Business'
     },
     {
-        id: 'departmentName', label: 'Department'
+        id: 'departmentName', 
+        label: 'Department'
     },
     {
-        id: 'positionName', label: 'Position'
+        id: 'positionName', 
+        label: 'Position'
     },
     {
-        id: 'positionLevelName', label: 'Level'
+        id: 'positionLevelName', 
+        label: 'Level'
     },
     {
-        id: 'description', label: 'Description'
+        id: 'description', 
+        label: 'Description'
     },
     {
-        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+        id: 'status', 
+        label: 'Status',
+        type: 'status', 
+        statusColor: { Active: 'Green', Inactive: 'Red' }
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'action', 
+        label: 'Actions'
     }
 ];
 /**
@@ -479,23 +611,21 @@ const tblCommittee = [
 
 const tblMainBusiness = [
     {
-        id: 'index', label: 'No .'
+        id: 'index', 
+        label: 'No .'
     },
     {
-        id: 'nameEn', label: 'Name'
+        id: 'nameEn', 
+        label: 'Name'
     },
     {
-        id: 'nameKh', label: 'Name(KH)'
+        id: 'nameKh', 
+        label: 'Name(KH)'
     },
     {
-        id: 'description', label: 'Description'
+        id: 'description', 
+        label: 'Description'
     },
-    // {
-    //     id: 'status', label: 'Status'
-    // },
-    // {
-    //     id: 'action', label: 'Actions'
-    // }
 ];
 
 /**
@@ -503,53 +633,69 @@ const tblMainBusiness = [
  */
 const tblBusinessUnit = [
     {
-        id: 'index', label: 'No.',
+        id: 'index', 
+        label: 'No.',
     },
     {
-        id: 'nameEn', label: 'Name',
+        id: 'nameEn', 
+        label: 'Name',
     },
     {
-        id: 'nameKh', label: 'Name(KH)'
+        id: 'nameKh', 
+        label: 'Name(KH)'
     },
     {
-        id: 'mainBusinessUnitName', label: 'Main Primary Business'
+        id: 'mainBusinessUnitName', 
+        label: 'Main Primary Business'
     },
     {
-        id: 'description', label: 'Description',
+        id: 'description', 
+        label: 'Description',
     },
     {
-        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+        id: 'status', 
+        label: 'Status',
+        type: 'status', 
+        statusColor: { Active: 'Green', Inactive: 'Red' }, 
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'action', 
+        label: 'Actions'
     }
 ];
 
 // Sub Primary Business
 const tblSubBusinessUnit = [
     {
-        id: 'index', label: 'No.',
+        id: 'index', 
+        label: 'No.',
     },
     {
-        id: 'nameEn', label: 'Name',
+        id: 'nameEn', 
+        label: 'Name',
     },
     {
-        id: 'nameKh', label: 'Name(KH)'
+        id: 'nameKh',
+        label: 'Name(KH)'
     },
     {
-        id: 'mainBusinessUnitName', label: 'Main Primary Business'
+        id: 'mainBusinessUnitName', 
+        label: 'Main Primary Business'
     },
     {
-        id: 'businessUnitName', label: 'Primary Business'
+        id: 'businessUnitName', 
+        label: 'Primary Business'
     },
     {
-        id: 'description', label: 'Description',
+        id: 'description', 
+        label: 'Description',
     },
     {
-        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+        id: 'status', 
+        type: 'status', 
+        statusColor: { Active: 'Green', Inactive: 'Red' }, 
+        label: 'Status'
     },
-    // ...proof,
     {
         id: 'action', label: 'Actions'
     }
@@ -559,20 +705,26 @@ const tblSubBusinessUnit = [
 
 const tblLocation = [
     {
-        id: 'index', label: 'No.'
+        id: 'index', 
+        label: 'No.'
     },
     {
-        id: 'name', label: 'Name'
+        id: 'name', 
+        label: 'Name'
     },
     {
-        id: 'description', label: 'Description'
+        id: 'description', 
+        label: 'Description'
     },
     {
-        id: 'status', type: 'status', statusColor: { Active: 'Green', Inactive: 'Red' }, label: 'Status'
+        id: 'status', 
+        type: 'status', 
+        statusColor: { Active: 'Green', Inactive: 'Red' }, 
+        label: 'Status'
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'action', 
+        label: 'Actions'
     }
 ];
 
@@ -582,17 +734,20 @@ const tblLocation = [
  */
 const tblReceivingCategory = [
     {
-        id: 'index', label: 'No.',
+        id: 'index', 
+        label: 'No.',
     },
     {
-        id: 'name', label: 'Name',
+        id: 'name', 
+        label: 'Name',
     },
     {
-        id: 'description', label: 'Description',
+        id: 'description', 
+        label: 'Description',
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'action', 
+        label: 'Actions'
     }
 ];
 
@@ -601,31 +756,45 @@ const tblReceivingCategory = [
  */
 const tblUser = [
     {
-        id: "index", label: "No."
+        id: "index", 
+        label: "No."
     },
     {
-        id: 'fullName', label: 'Full Name'
+        id: 'fullName', 
+        label: 'Full Name'
     },
     {
-        id: "username", label: "Username"
+        id: "username", 
+        label: "Username"
     },
     {
-        id: "phoneNumber", label: "Phone Number"
+        id: "phoneNumber", 
+        label: "Phone Number"
     },
     {
-        id: "email", label: "Email"
+        id: "email", 
+        label: "Email"
     },
     {
-        id: "status", type: 'status', statusColor: { Active: 'green', Inactive: 'red' }, label: "Status"
+        id: "status", 
+        label: "Status",
+        type: 'status', 
+        statusColor: { Active: 'green', Inactive: 'red' }, 
     },
     {
-        id: "createdAt", type: "date", dateFormat: 'MMM DD, YYYY', label: "Created At"
+        id: "createdAt", 
+        label: "Created At",
+        type: "date", 
+        dateFormat: 'MMM DD, YYYY'
     },
     {
-        id: "roles", arrayId: "authority", label: "Role"
+        id: "roles", 
+        label: "Role",
+        arrayId: "authority", 
     },
     {
-        id: "action", label: "Actions"
+        id: "action", 
+        label: "Actions"
     }
 ];
 
@@ -633,6 +802,7 @@ const tblUser = [
 export const TABLE_CONFIG = {
     tblCandidate,
     tblInterview,
+    tblJobOffer,
     tblAssessment,
     tblReferenceCheck,
     tblHire,

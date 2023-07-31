@@ -3,15 +3,11 @@ import React, { useState } from "react";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import ViewFileModal from "../../components/Modal/view-file.modal";
 import ReferenceResultFormModal from "./reference-result-form.modal";
-import HowToRegIcon from '@mui/icons-material/HowToReg';
+import ReferenceFormDetailModal from "./detail-reference-form.modal";
 
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
-
-import { DoneAll, Print } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import { ROLE } from "../../constants/roles";
-import ReferenceFormDetailModal from "./detail-reference-form.modal";
 
 const HomeJobOffer = () => {
 
@@ -50,8 +46,8 @@ const HomeJobOffer = () => {
             */}
 
             <AsyncDatatable
-                asyncURL={API_URL.referenceCheck.get}
-                headers={TABLE_CONFIG.tblReferenceCheck}
+                asyncURL={API_URL.jobOffer.get}
+                headers={TABLE_CONFIG.tblJobOffer}
                 bannerText="All Job Offers"
                 searchPlaceHolder="Search"
                 ordinal="asc"
@@ -60,38 +56,6 @@ const HomeJobOffer = () => {
                 useTableActions={{
                     search: true,
                     view: true,
-                    // moreOption: {
-                    //     buttons: [
-                    //         {
-                    //             name: 'Check Background Result',
-                    //             eventName: 'checkReferenceCandidate',
-                    //             icon: <HowToRegIcon />,
-                    //             hidden: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ? false : true,
-                    //             enable: true
-                    //         },
-                    //         {
-                    //             name: 'Verify',
-                    //             eventName: 'verifyJobOffer',
-                    //             icon: <DoneAll />,
-                    //             hidden: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_HR_MANAGER) ? false : true,
-                    //             enable: true
-                    //         },
-                    //         {
-                    //             name: 'Approve',
-                    //             eventName: 'approveJobOffer',
-                    //             icon: <DoneAll />,
-                    //             hidden: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
-                    //             enable: true
-                    //         },
-                    //         // {
-                    //         //     name: 'Print Form',
-                    //         //     eventName: 'printReferenceForm',
-                    //         //     icon: <Print />,
-                    //         //     hidden: !user?.roles ? false : user?.roles?.includes(ROLE?.ROLE_TA_TEAM) ? false : true,
-                    //         //     enable: true
-                    //         // },
-                    //     ]
-                    // }
                 }}
 
                 handleMoreEvent={(eName, data) => {

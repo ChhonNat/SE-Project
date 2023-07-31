@@ -17,7 +17,6 @@ import { API_URL } from "../../constants/api_url";
 import { HTTP_METHODS } from "../../constants/http_method";
 import { STATUS } from "../../constants/status";
 import LabelRequire from "../../components/Label/require";
-import { Form } from "react-router-dom";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;

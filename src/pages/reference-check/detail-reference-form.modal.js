@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, Fragment } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -79,7 +79,7 @@ const ReferenceFormDetailModal = (props) => {
             <Dialog
                 TransitionComponent={TransitionModal}
                 open={openReferenceDetailModal}
-                PaperProps={!loading ? { sx: { minWidth: '50vw' }} : {}}
+                PaperProps={!loading ? { sx: { minWidth: '50vw' } } : {}}
             >
                 {
                     loading ?
@@ -162,15 +162,13 @@ const ReferenceFormDetailModal = (props) => {
                                             <hr></hr>
 
                                             {
-                                                    referenceDetail['referenceCheckDetails']
+                                                referenceDetail['referenceCheckDetails']
                                                     && referenceDetail['referenceCheckDetails'].length ?
                                                     referenceDetail['referenceCheckDetails'].map((intDetail, indexIntDetail) => (
-                                                        <>
+                                                        <Fragment key={indexIntDetail}>
                                                             <Grid
-                                                                key={indexIntDetail}
                                                                 item
                                                                 xs={6}
-                                                                spacing={2}
                                                                 paddingTop={2}
                                                                 paddingBottom={1}
                                                                 sx={{
@@ -237,7 +235,7 @@ const ReferenceFormDetailModal = (props) => {
                                                                     {intDetail?.remark}
                                                                 </label>
                                                             </Grid>
-                                                        </>
+                                                        </Fragment>
                                                     ))
                                                     :
                                                     <></>
