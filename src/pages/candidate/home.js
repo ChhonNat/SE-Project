@@ -5,7 +5,7 @@ import ViewFileModal from "../../components/Modal/view-file.modal";
 
 import CandidateFormModal from "./upsert-candidate-form.modal";
 import CandidateFormDetailModal from "./detail-candidate-form.modal";
-import CandidateVerifyForm from "./process-candidate-form.modal";
+import CandidateProcessForm from "./process-candidate-form.modal";
 import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
 
 import NextPlanIcon from '@mui/icons-material/NextPlan';
@@ -32,8 +32,9 @@ const HomeCandidate = () => {
     const [openUpsertCandidateModal, setOpenUpsertCandidateModal] = useState(false);
     const [openCandidateDetailModal, setOpenCandidateDetailModal] = useState(false);
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
-    const [openVerifyModal, setOpenVerifyModal] = useState(false);
     const [openScheduleModal, setOpenScheduleModal] = useState(false);
+    const [openProcessModal, setOpenProcessModal] = useState(false);
+
 
     const [verifyTypeModal, setVerifyTypeModal] = useState('');
 
@@ -219,7 +220,7 @@ const HomeCandidate = () => {
 
                     eName === 'setScheduleTest' ||
                         eName === 'setScheduleInterview' ||
-                        eName === 'setFinalScheduleInterview' ? setOpenScheduleModal(true) : setOpenVerifyModal(true);
+                        eName === 'setFinalScheduleInterview' ? setOpenScheduleModal(true) : setOpenProcessModal(true);
                 }}
             />
 
@@ -251,11 +252,11 @@ const HomeCandidate = () => {
             />
 
             {/* Update candidate process status */}
-            <CandidateVerifyForm
+            <CandidateProcessForm
                 eventType={verifyTypeModal}
                 candidate={editCandidate}
-                open={openVerifyModal}
-                onCloseModal={() => setOpenVerifyModal(false)}
+                open={openProcessModal}
+                onCloseModal={() => setOpenProcessModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 

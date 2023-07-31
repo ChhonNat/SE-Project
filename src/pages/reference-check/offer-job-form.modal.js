@@ -29,12 +29,12 @@ const OfferJobFormModalFormModal = (props) => {
 
         const { id, interview, candidate } = reference;
 
-        if(!id || !interview?.id || !candidate?.id)
-        return;
+        if (!id || !interview?.id || !candidate?.id)
+            return;
 
         try {
 
-            const submitJobOffer = await referenceService.offerJob(id,interview?.id,candidate?.id, {remark: remark});
+            const submitJobOffer = await referenceService.offerJob(id, interview?.id, candidate?.id, { remark: remark });
 
             const { status, data } = submitJobOffer;
             const { message } = data;
