@@ -17,7 +17,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CandidateVerifyForm = (props) => {
+const CandidateProcessForm = (props) => {
 
     const user = useSelector((state) => state?.userAuthendicated);
 
@@ -271,4 +271,4 @@ const CandidateVerifyForm = (props) => {
     )
 };
 
-export default CandidateVerifyForm;
+export default CandidateProcessForm;
