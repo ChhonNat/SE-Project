@@ -13,15 +13,17 @@ import { useSelector } from "react-redux";
 import { ROLE } from "../../constants/roles";
 import ReferenceFormDetailModal from "./detail-reference-form.modal";
 import { STATUS } from "../../constants/status";
+import OfferJobFormModalFormModal from "./offer-job-form.modal";
 
 const HomeAssessment = () => {
 
     const user = useSelector((state) => state?.userAuthendicated);
 
-    const [editCandidate, setEditCandidate] = useState({});
+    const [editReference, setEditReferencce] = useState({});
     const [openFileFormModal, setOpenFileFormModal] = useState(false);
     const [openReferenceResultModal, setOpenReferenceResultModal] = useState(false);
     const [openReferenceDetailModal, setOpenReferenceDetailModal] = useState(false);
+    const [openOfferJobModal, setOpenOfferJobModal] = useState(false);
     const [typeModal, setTypeModal] = useState('');
 
     const [isReload, setIsReload] = useState(false);
@@ -30,8 +32,8 @@ const HomeAssessment = () => {
         "checkReferenceCandidate": {
             handleAction: () => setOpenReferenceResultModal(true)
         },
-        "printReferenceForm": {
-            handleAction: () => window.print()
+        "offerCandidateJob": {
+            handleAction: () => setOpenOfferJobModal(true)
         }
     };
 
@@ -62,7 +64,8 @@ const HomeAssessment = () => {
                 useTableActions={{
                     search: true,
                     view: true,
-                    viewFile: [
+                    viewEvaluateFile: true,
+                    viewEvaluateFile: [
                         {
                             field: 'checkResult',
                             values: [
@@ -81,11 +84,16 @@ const HomeAssessment = () => {
                                 enable: true
                             },
                             {
-                                name: 'Submit To HOD',
-                                eventName: 'submitToHODToOffer',
+                                name: 'Offer Job',
+                                eventName: 'offerCandidateJob',
                                 icon: <NextPlan />,
-                                hidden: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ? false : true,
-                                enable: false
+                                hidden: !user?.roles ? false : [ROLE.ROLE_TA_TEAM, ROLE.ROLE_TA_ADMIN].some((role) => user?.roles.includes(role)) ? false : true,
+                                enable: [
+                                    {
+                                        field: 'checkResult',
+                                        values: [STATUS.REFERENCE_RESULT.POSITIVE]
+                                    }
+                                ]
                             },
                             {
                                 name: 'Verify',
@@ -115,51 +123,60 @@ const HomeAssessment = () => {
                     if (!eName)
                         return false;
 
-                    setEditCandidate(data);
+                    setEditReferencce(data);
                     mapMoreButtonEventName[eName].handleAction();
                 }}
                 handleLinkEvent={
                     (data) => {
                         setTypeModal('viewCVFile');
-                        setEditCandidate(data);
+                        setEditReferencce(data);
                         setOpenFileFormModal(true);
                     }
                 }
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
                 handleViewEvent={(data) => {
-                    setEditCandidate(data);
+                    setEditReferencce(data);
                     setOpenReferenceDetailModal(true);
                 }}
                 handleViewFileEvent={(data) => {
                     setTypeModal('viewRefForm');
-                    setEditCandidate(data);
+                    setEditReferencce(data);
                     setOpenFileFormModal(true)
                 }}
             />
 
-            {/* Reference result form */}
+            {/* Reference result form modal */}
             <ReferenceResultFormModal
-                reference={editCandidate}
+                reference={editReference}
                 open={openReferenceResultModal}
                 onCloseModal={() => setOpenReferenceResultModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
-            {/* Review candidate form */}
+            {/* Review candidate form modal*/}
             <ViewFileModal
                 modalTitle={typeModal === 'viewCVFile' ? '' : 'Review Reference Form'}
-                id={typeModal === 'viewCVFile' ? editCandidate?.candidate?.id : editCandidate?.id}
+                id={typeModal === 'viewCVFile' ? editReference?.candidate?.id : editReference?.id}
                 downloadFileUrl={typeModal === 'viewCVFile' ? null : API_URL.referenceCheck.downloadRefForm}
                 openModal={openFileFormModal}
                 onCloseModal={() => setOpenFileFormModal(false)}
             />
 
-            {/* Detail reference form */}
+            {/* Detail reference form modal*/}
             <ReferenceFormDetailModal
-                reference={editCandidate}
+                reference={editReference}
                 openReferenceDetailModal={openReferenceDetailModal}
                 onCloseReferenceDetailModal={() => setOpenReferenceDetailModal(false)}
             />
+
+            {/* Offer Job form modal*/}
+            <OfferJobFormModalFormModal 
+                reference={editReference}
+                openOfferJobModal={openOfferJobModal}
+                onCloseOfferJobModal={() => setOpenOfferJobModal(false)}
+                handleEventSuccessed={() => setIsReload(!isReload)}
+            />
+
         </>
     )
 };
