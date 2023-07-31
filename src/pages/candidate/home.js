@@ -5,7 +5,7 @@ import ViewFileModal from "../../components/Modal/view-file.modal";
 
 import CandidateFormModal from "./upsert-candidate-form.modal";
 import CandidateFormDetailModal from "./detail-candidate-form.modal";
-import CandidateVerifyForm from "./verify-candidate-form.modal";
+import CandidateVerifyForm from "./process-candidate-form.modal";
 import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
 
 import NextPlanIcon from '@mui/icons-material/NextPlan';

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import DepartmentModel from "../../../models/department.model";
+import DepartmentModel from "../../../models/department/department.model";
 import { KEY_POST } from "../../../constants/key_post";
 import UpsertDepartmentForm from "./form-upsert-department.model";
 

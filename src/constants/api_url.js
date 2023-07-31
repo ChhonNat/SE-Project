@@ -42,7 +42,7 @@ export const API_URL = {
         get: API_VERSION + '/interviews/search',
         detail: API_VERSION + '/interviews/',
         evaluate: API_VERSION + '/interviews/',
-        referenceCheck: API_VERSION + '/interviews/candidate/',
+        referenceCheck: API_VERSION + '/interviews/',
         downloadEvaluateForm: API_VERSION + '/interviews/download?id=',
 
         lookup: {
