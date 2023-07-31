@@ -8,6 +8,7 @@ import { TABLE_CONFIG } from "../../utils/table-config";
 import { useSelector } from "react-redux";
 import { AttachMoney, DoneAll } from "@mui/icons-material";
 import { ROLE } from "../../constants/roles";
+import { STATUS } from "../../constants/status";
 
 const HomeJobOffer = () => {
 
@@ -51,21 +52,36 @@ const HomeJobOffer = () => {
                                 eventName: 'offer',
                                 icon: <AttachMoney color="info" />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
-                                enable: true
+                                enable: [
+                                    {
+                                        field: 'processStatus',
+                                        values: [STATUS.OFFER_PROCESS.PENDING]
+                                    }
+                                ]
                             },
                             {
                                 name: 'Verify',
                                 eventName: 'verify',
                                 icon: <DoneAll color="info" />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HR_MANAGER) ? false : true,
-                                enable: true
+                                enable: [
+                                    {
+                                        field: 'processStatus',
+                                        values: [STATUS.OFFER_PROCESS.HOD_APPROVED]
+                                    }
+                                ]
                             },
                             {
                                 name: 'Approve',
                                 eventName: 'approve',
                                 icon: <DoneAll color="info" />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
-                                enable: true
+                                enable: [
+                                    {
+                                        field: 'processStatus',
+                                        values: [STATUS.OFFER_PROCESS.DHR_VERIFIED]
+                                    }
+                                ]
                             }
                         ]
                     }

@@ -61,6 +61,13 @@ const REFERENCE_STATUS = {
     PENDING: 'Pending'
 };
 
+const OFFER_PROCESS = {
+    PENDING: "Pending",
+    HOD_APPROVED:"HOD_Approved",
+    DHR_VERIFIED:"DHR_Verified",
+    OFFCEO_APPROVED:"OFCCEO_Approved"
+};
+
 // const ASSESSMENT_RESULT = {
 //     SUSPENDED: 'Suspended',
 //     CANCELLED: 'Cancel',
@@ -69,12 +76,13 @@ const REFERENCE_STATUS = {
 
 export const STATUS = {
     RECORD,
+    CANDIDATE,
+    SUBMIT_STATUS,
     SHORTLIST_RESULT,
     INTERVIEW_RESULT,
     INTERVIEW_STATUS,
     INTERVIEW_PROCESS,
     REFERENCE_RESULT,
     REFERENCE_STATUS,
-    CANDIDATE,
-    SUBMIT_STATUS
+    OFFER_PROCESS
 };
