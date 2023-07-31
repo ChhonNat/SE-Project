@@ -29,7 +29,7 @@ const OfferJobFormModalFormModal = (props) => {
 
         const { id, interview, candidate } = reference;
 
-        if(!id || interview?.id || candidate?.id)
+        if(!id || !interview?.id || !candidate?.id)
         return;
 
         try {
