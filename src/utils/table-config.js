@@ -212,7 +212,7 @@ const tblJobOffer = [
     },
     {
         id: 'positionLevel',
-        label: 'Position Level',
+        label: 'Level',
         obj: { name: 'nameEn' }
     },
     {
@@ -222,7 +222,13 @@ const tblJobOffer = [
     },
     {
         id: 'offerSalary',
-        label: 'Offer Salary',
+        label: 'Salary($)',
+    },
+    {
+        id: 'processStatus',
+        label: 'Process Status',
+        type: 'status',
+        statusColor: { OFCCEO_Approved: 'Green', DHR_Verified: 'LightGreen', HOD_Approved: 'Orange' }
     },
     {
         id: 'status',

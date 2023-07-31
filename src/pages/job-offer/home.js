@@ -1,33 +1,21 @@
 import React, { useState } from "react";
 
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import ViewFileModal from "../../components/Modal/view-file.modal";
-import ReferenceResultFormModal from "./reference-result-form.modal";
-import ReferenceFormDetailModal from "./detail-reference-form.modal";
+import OfferJobFormModal from "./offer-job-form.modal";
 
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import { useSelector } from "react-redux";
+import { AttachMoney, DoneAll } from "@mui/icons-material";
+import { ROLE } from "../../constants/roles";
 
 const HomeJobOffer = () => {
 
     const user = useSelector((state) => state?.userAuthendicated);
-
-    const [editCandidate, setEditCandidate] = useState({});
-    const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
-    const [openReferenceResultModal, setOpenReferenceResultModal] = useState(false);
-    const [openReferenceDetailModal, setOpenReferenceDetailModal] = useState(false);
-
     const [isReload, setIsReload] = useState(false);
-
-    const mapMoreButtonEventName = {
-        "checkReferenceCandidate": {
-            handleAction: () => setOpenReferenceResultModal(true)
-        },
-        "printReferenceForm": {
-            handleAction: () => window.print()
-        }
-    };
+    const [editJobOffer, setEditJobOffer] = useState({});
+    const [openModal, setOpenModal] = useState(false);
+    const [modalType, setModalType] = useState('');
 
     return (
         <>
@@ -55,52 +43,53 @@ const HomeJobOffer = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
-                    view: true,
+                    // view: true,
+                    moreOption: {
+                        buttons: [
+                            {
+                                name: 'Job Offer',
+                                eventName: 'offer',
+                                icon: <AttachMoney color="info" />,
+                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
+                                enable: true
+                            },
+                            {
+                                name: 'Verify',
+                                eventName: 'verify',
+                                icon: <DoneAll color="info" />,
+                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HR_MANAGER) ? false : true,
+                                enable: true
+                            },
+                            {
+                                name: 'Approve',
+                                eventName: 'approve',
+                                icon: <DoneAll color="info" />,
+                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
+                                enable: true
+                            }
+                        ]
+                    }
                 }}
-
                 handleMoreEvent={(eName, data) => {
                     if (!eName)
                         return false;
 
-                    setEditCandidate(data);
-                    mapMoreButtonEventName[eName].handleAction();
+                    setModalType(eName);
+                    setEditJobOffer(data);
+                    setOpenModal(true);
                 }}
-                handleLinkEvent={
-                    (data) => {
-                        setEditCandidate(data);
-                        setOpenReviewCVModal(true);
-                    }
-                }
-                onHandleRefreshEvent={() => setIsReload(!isReload)}
-                handleViewEvent={(data) => 
-                    {
-                        setEditCandidate(data);
-                        setOpenReferenceDetailModal(true);
-                    }
+                onHandleRefreshEvent={() =>
+                    setIsReload(!isReload)
                 }
             />
 
-            {/* Reference result form */}
-            <ReferenceResultFormModal
-                reference={editCandidate}
-                open={openReferenceResultModal}
-                onCloseModal={() => setOpenReferenceResultModal(false)}
+            {/* Offer salary */}
+            <OfferJobFormModal 
+                modalType={modalType}
+                open={openModal}
+                jobOffer={editJobOffer}
+                onCloseModal={() => setOpenModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
-            />
-
-            {/* Review candidate form */}
-            <ViewFileModal
-                modalTitle="Review CV"
-                id={editCandidate?.candidate?.id}
-                openModal={openReviewCVModal}
-                onCloseModal={() => setOpenReviewCVModal(false)}
-            />
-
-            {/* Detail reference form */}
-            <ReferenceFormDetailModal
-                reference={editCandidate}
-                openReferenceDetailModal={openReferenceDetailModal}
-                onCloseReferenceDetailModal={() => setOpenReferenceDetailModal(false)}
             />
         </>
     )
