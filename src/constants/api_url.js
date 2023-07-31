@@ -61,7 +61,9 @@ export const API_URL = {
         }
     },  
     jobOffer: {
-        get: API_VERSION + '/job-offers/search'
+        get: API_VERSION + '/job-offers/search',
+        offerSalary: API_VERSION + '/job-offers/',
+        processJobOffer: API_VERSION + '/job-offers/'
     },
     assessment: {
         get: API_VERSION + '/assessments/search',
