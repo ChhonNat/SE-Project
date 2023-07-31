@@ -14,7 +14,7 @@ import { STATUS } from "../../../constants/status";
 import LabelRequire from "../../../components/Label/require";
 import { KEY_POST } from "../../../constants/key_post";
 import { API_URL } from "../../../constants/api_url";
-import SubBusinessUnitModel from "../../../models/sub-business-unit.model";
+import SubBusinessUnitModel from "../../../models/business/sub-business-unit.model";
 import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {

@@ -19,7 +19,7 @@ const ReferenceCheckModal = (props) => {
     const handleSubmit = async () => {
 
         try {
-            const reqRefCheck = await InterviewService.referenceCheck(interview?.candidate?.id, { remark: remark });
+            const reqRefCheck = await InterviewService.referenceCheck(interview?.id,interview?.candidate?.id, { remark: remark });
             const { status, data } = reqRefCheck;
             const { message } = data;
 
@@ -75,7 +75,7 @@ const ReferenceCheckModal = (props) => {
             <DialogActions>
                 <FooterComponent
                     handleCancel={onCloseReferenceCheckModal}
-                    saveButtonLabel={'Confirm'}
+                    saveButtonLabel={'Process'}
                     actions={{ cancel: true, submit: true }}
                     handleSave={handleSubmit}
                 />

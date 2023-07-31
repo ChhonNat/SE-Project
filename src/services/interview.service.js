@@ -5,8 +5,8 @@ const evaluateInterview = (intId, canId, data, contentType) => {
     return httpService._put(API_URL.interview.evaluate + `${intId}/candidate/${canId}`, data, contentType);
 };
 
-const referenceCheck = (canId, data, contentType) => {
-    return httpService._put(API_URL.interview.referenceCheck + `${canId}/process`, data, contentType );
+const referenceCheck = (intId, canId, data, contentType) => {
+    return httpService._put(API_URL.interview.referenceCheck + `${intId}/candidate/${canId}/process`, data, contentType );
 };
 
 export const InterviewService = {

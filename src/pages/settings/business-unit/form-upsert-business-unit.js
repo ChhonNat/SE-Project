@@ -12,7 +12,7 @@ import { ALERT_TIMER } from "../../../constants/app_config";
 import SelectComponent from "../../../components/Selector/select";
 import { STATUS } from "../../../constants/status";
 import LabelRequire from "../../../components/Label/require";
-import BusinessUnitModel from "../../../models/business-unit.model";
+import BusinessUnitModel from "../../../models/business/business-unit.model";
 import { KEY_POST } from "../../../constants/key_post";
 import { API_URL } from "../../../constants/api_url";
 import { Close } from "@mui/icons-material";

@@ -35,10 +35,6 @@ const JobOffer = {
     home: lazy(() => import('../pages/job-offer/home'))
 }
 
-// const Assessment = {
-//     home: lazy(() => import('../pages/assessment/home'))
-// };
-
 const Settings = {
 
     positionLevel: {
@@ -86,7 +82,6 @@ const User = {
 
 export const PRIVATE_ROUTES = [
 
-
     /**Candidate */
     {
         name: "Candidates",
@@ -103,7 +98,7 @@ export const PRIVATE_ROUTES = [
         icon: <RecordVoiceOverIcon />,
         isDivider: false,
     },
-    /**Interview */
+    /**Reference  Check*/
     {
         name: "Reference Checks",
         path: "/reference-check",
@@ -112,13 +107,12 @@ export const PRIVATE_ROUTES = [
     },
 
     /**Job Offer */
-
-    // {
-    //     name: "Job Offers",
-    //     path: "/job-offer",
-    //     component: <JobOffer.home />,
-    //     icon: <HowToReg />
-    // },
+    {
+        name: "Job Offers",
+        path: "/job-offer",
+        component: <JobOffer.home />,
+        icon: <HowToReg />
+    },
     /**Settings */
     {
         name: "Settings",
@@ -152,7 +146,7 @@ export const PRIVATE_ROUTES = [
                 icon: <ApartmentIcon />,
             },
 
-            // Position label
+            /**Position level*/
             {
                 name: "Position Levels",
                 path: "position-level",
@@ -186,7 +180,7 @@ export const PRIVATE_ROUTES = [
 
         ]
     },
-    /**User set up */
+    /**User setup */
     {
         name: "Users",
         path: "/user",

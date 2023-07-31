@@ -3,7 +3,7 @@ import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import UpsertSubBusinessUnitForm from "./form-upsert-sub-business-unit";
-import SubBusinessUnitModel from "../../../models/sub-business-unit.model";
+import SubBusinessUnitModel from "../../../models/business/sub-business-unit.model";
 
 
 const HomeSubBusiness = () => {

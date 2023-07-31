@@ -34,7 +34,7 @@ const CandidateVerifyForm = (props) => {
             title: "Are you sure?",
             subTitle: "You want submit to director of HR.",
             actions: {
-                submitLabel: 'Confirm',
+                submitLabel: 'Process',
                 submitStatus: STATUS.SUBMIT_STATUS.SUBMITTED_DHR,
                 select: false
             }
@@ -79,7 +79,7 @@ const CandidateVerifyForm = (props) => {
             title: "Are you sure?",
             subTitle: "You want to submit this candidate to HOD",
             actions: {
-                submitLabel: "Confirm",
+                submitLabel: "Process",
                 submitStatus: STATUS.SUBMIT_STATUS.SUBMITTED_HOD,
                 select: false
             }

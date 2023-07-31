@@ -15,7 +15,7 @@ import { globalService } from "../../../services/global.service";
 import { API_URL } from "../../../constants/api_url";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
-import DepartmentModel from "../../../models/department.model";
+import DepartmentModel from "../../../models/department/department.model";
 import MultiSelectComponent from "../../../components/MultiSelector/select";
 import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
 import LabelRequire from "../../../components/Label/require";
