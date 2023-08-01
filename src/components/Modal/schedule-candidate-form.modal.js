@@ -1,16 +1,18 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import TitleComponent from "../Page/title";
 import FooterComponent from "../Page/footer";
 import AsyncAutoComplete from "../AutoComplete/auto-complete";
 import AsyncMultiAutoComplete from "../MultiAutoComplete/auto-complete";
 import InviteInterviewModel from "../../models/interview/invite-interview.model";
+import SelectComponent from "../Selector/select";
 import _useHttp from "../../hooks/_http";
 import Swal from "sweetalert2";
+
 import { STATUS } from "../../constants/status";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { API_URL } from "../../constants/api_url";
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Slide, TextField } from "@mui/material";
+import { Autocomplete, Box, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, IconButton, OutlinedInput, Select, Slide, TextField } from "@mui/material";
 import { CandidateService } from "../../services/candidate.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
@@ -24,11 +26,38 @@ const shrinkOpt = { shrink: true };
 
 const CandidateScheduleFormModal = (props) => {
 
-    const { open, onCloseModal, eventType, candidate, handleEventSuccessed, apiService } = props;
+
+    const { open, onCloseModal, eventType, editData, handleEventSuccessed, apiService } = props;
     const { register, handleSubmit, formState, setValue, watch, reset, clearErrors } = useForm({ resolver: zodResolver(InviteInterviewModel) });
 
-    const watchCandidate = watch();
+    const watchInterview = watch();
     const { errors } = formState;
+    const [hours, setHours] = useState([]);
+    const [minutes, setMinutes] = useState([]);
+
+    useEffect(() => {
+
+        setValue('hour', '01');
+        setValue('min', '00');
+        setValue('meridiem', 'AM');
+
+        const stringH = [];
+        const stringMin = [];
+        const H = [...Array(23).keys()];
+        const Min = [...Array(60).keys()];
+
+        H.forEach((value) => {
+            value++;
+            value < 10 ? stringH.push({ h: '0' + value }) : stringH.push({ h: String(value) });
+        });
+        setHours([...stringH]);
+
+        Min.forEach((value) => {
+            value < 10 ? stringMin.push({ min: '0' + value }) : stringMin.push({ min: String(value) });
+        });
+        setMinutes([...stringMin]);
+
+    }, [])
 
     //map event when get event from home candidate
     const mapEventType = {
@@ -74,15 +103,22 @@ const CandidateScheduleFormModal = (props) => {
         console.log('Input error', error);
     };
 
-    const onSubmit = async (dataSubmit) => {
+    const onSubmit = async (dataInput) => {
+
         try {
 
             let submitCandidate;
+            const dataSubmit = {
+                interviewDate: `${dataInput.interviewDate}T${dataInput.hour}:${dataInput?.min}`,
+                headDepartmentId: dataInput?.headDepartmentId,
+                committees: dataInput?.committees,
+                remark: dataInput?.remark
+            };
 
             if (apiService)
-                submitCandidate = await apiService(dataSubmit, candidate?.id)
+                submitCandidate = await apiService(editData?.id, editData?.candidate?.id, dataSubmit)
             else
-                submitCandidate = await CandidateService.inviteFirstInterview(dataSubmit, candidate?.id);
+                submitCandidate = await CandidateService.inviteFirstInterview(editData?.id,dataSubmit);
 
             const { status, data } = submitCandidate;
             const { message } = data;
@@ -148,19 +184,60 @@ const CandidateScheduleFormModal = (props) => {
                 <DialogContent dividers>
                     <Box sx={{ width: '100%' }}>
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                            <Grid item xs={12}>
+                            <Grid item xs={4}>
                                 <TextField
                                     sx={{ width: '100%' }}
                                     size="small"
                                     id="interview-date"
                                     label="Interview Date"
                                     variant="outlined"
-                                    type="datetime-local"
+                                    type="date"
                                     InputLabelProps={shrinkOpt}
                                     error={errors?.interviewDate ? true : false}
                                     helperText={errors?.interviewDate?.message || ''}
                                     {...register('interviewDate')}
                                 />
+                            </Grid>
+                            <Grid item xs={3}>
+
+                                <Autocomplete
+                                    id="hour"
+                                    size="small"
+                                    freeSolo
+                                    options={hours.map((option) => option.h)}
+                                    renderInput={(params) => <TextField {...params} label="Hour" />}
+                                    onChange={(e, value) => setValue('hour', value)}
+                                    value={watchInterview?.hour}
+                                />
+
+                            </Grid>
+
+                            <Grid item xs={3}>
+
+                                <Autocomplete
+                                    id="minute"
+                                    size="small"
+                                    freeSolo
+                                    options={minutes.map((option) => option.min)}
+                                    renderInput={(params) => <TextField {...params} label="Minute" />}
+                                    onChange={(e, value) => setValue('min', value)}
+                                    value={watchInterview?.min}
+                                />
+
+                            </Grid>
+
+                            <Grid item xs={2}>
+                                <Autocomplete
+                                    id="meridiem"
+                                    size="small"
+                                    freeSolo
+                                    options={['AM', 'PM'].map((option) => option)}
+                                    renderInput={(params) => <TextField {...params} label="" />}
+                                    onChange={(e, value) => setValue('meridiem', value)}
+                                    value={parseInt(watchInterview?.hour) > 12 ? 'PM' : 'AM'}
+                                    disabled
+                                />
+
                             </Grid>
                             <Grid item xs={12}>
                                 <AsyncAutoComplete
@@ -178,7 +255,7 @@ const CandidateScheduleFormModal = (props) => {
                                         ordinal: "desc"
                                     }}
                                     bindField={'fullName'}
-                                    value={watchCandidate?.headDepartmentId}
+                                    value={watchInterview?.headDepartmentId}
                                     err={errors?.headDepartmentId?.message}
                                     handleOnChange={(e, val) => { setValue('headDepartmentId', val?.id) }}
                                 />
@@ -199,7 +276,7 @@ const CandidateScheduleFormModal = (props) => {
                                         ordinal: "desc"
                                     }}
                                     bindField={'fullName'}
-                                    value={watchCandidate?.committees}
+                                    value={watchInterview?.committees}
                                     err={errors?.committees?.message}
                                     handleOnChange={(e, val) => setValue('committees', val?.length ? val.map(ele => ele.id) : [])}
                                 />

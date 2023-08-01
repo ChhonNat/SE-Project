@@ -14,9 +14,9 @@ import { useSelector } from "react-redux";
 import { ROLE } from "../../constants/roles";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import { API_URL } from "../../constants/api_url";
-import { CandidateService } from "../../services/candidate.service";
 import { STATUS } from "../../constants/status";
 import ReferenceCheckModal from "./check-reference-form.modal";
+import { InterviewService } from "../../services/interview.service";
 
 const HomeInterview = () => {
 
@@ -193,8 +193,8 @@ const HomeInterview = () => {
             {/* Second interview schedule modal */}
             <CandidateScheduleFormModal
                 eventType={verifyTypeModal}
-                apiService={CandidateService.inviteSecondInterview}
-                candidate={editInterview}
+                apiService={InterviewService.inviteSecondInterview}
+                editData={editInterview}
                 open={openScheduleModal}
                 onCloseModal={() => setOpenScheduleModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
