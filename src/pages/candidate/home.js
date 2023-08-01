@@ -263,7 +263,7 @@ const HomeCandidate = () => {
             {/* Schedule candidate  */}
             <CandidateScheduleFormModal
                 eventType={verifyTypeModal}
-                candidate={editCandidate}
+                editData={editCandidate}
                 open={openScheduleModal}
                 onCloseModal={() => setOpenScheduleModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}

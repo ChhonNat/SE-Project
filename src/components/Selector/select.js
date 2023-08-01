@@ -28,7 +28,8 @@ const SelectComponent = (props) => {
         customDatas,
         bindField,
         err,
-        returnValueAs
+        returnValueAs,
+        placeHolder
     } = props;
 
     /**
@@ -79,7 +80,7 @@ const SelectComponent = (props) => {
             >
 
                 <MenuItem disabled value="select">
-                    Select
+                    {placeHolder ? placeHolder : 'Select'}
                 </MenuItem>
 
                 {/* data return as:
