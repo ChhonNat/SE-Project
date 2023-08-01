@@ -21,8 +21,25 @@ const TransitionModal = React.forwardRef(function Transition(props, ref) {
 
 const InterviewFormDetailModal = (props) => {
 
-    const mapKeyToView = {
+    const keyDisplays = [
+        'candidateName',
+        'positionName',
+        'positionLevel',
+        'departmentName',
+        'headDepartmentName',
+        'businessUnitName',
+        'invitedAt',
+        'invitedBy',
+        'interviewDate',
+        'interviewResult',
+        'interviewProcess',
+        'status',
+        'remark',
+        'committees',
+        'evaluationDetails',
+    ];
 
+    const mapKeyStringToView = {
         candidateName: { rank: 1, label: 'Candidate' },
         positionName: { rank: 2, label: 'Position' },
         positionLevel: { rank: 3, label: 'Position Level' },
@@ -36,10 +53,11 @@ const InterviewFormDetailModal = (props) => {
         interviewProcess: { rank: 11, label: 'Interview Process' },
         status: { rank: 12, label: 'Status' },
         remark: { rank: 13, label: 'Remark' },
+    };
 
-        committees: { rank: 14, label: 'Interviewer Committees' },
-        evaluationDetails: { rank: 15, label: 'Evaluated History' }
-
+    const mapKeyArrayToView = {
+        committees: { rank: 1, label: 'Interviewer Committees' },
+        evaluationDetails: { rank: 2, label: 'Evaluated History' }
     };
 
     const { openCandidateModal, onCloseCandidateModal, interview } = props;
@@ -78,11 +96,6 @@ const InterviewFormDetailModal = (props) => {
         }
     }, [loading, data, message, error]);
 
-    useEffect(() => {
-        console.log(interviewDetail);
-    }, [interviewDetail])
-
-
     return (
         <div>
             <Dialog
@@ -116,164 +129,162 @@ const InterviewFormDetailModal = (props) => {
                                 }
                             </DialogTitle>
                             <DialogContent dividers>
-
                                 <Box sx={{ width: '100%' }}>
-
                                     <Grid
                                         container
                                         rowSpacing={2}
                                         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                                         sx={{ marginBottom: '2rem' }}
                                     >
-                                        {Object.keys(interviewDetail).sort((a, b) => { return mapKeyToView[a]?.rank - mapKeyToView[b]?.rank }).
-                                            map((key, index) => (
-                                                <React.Fragment key={index}>
-                                                    {
-                                                        mapKeyToView[key] && (
-                                                            typeof interviewDetail[key] !== 'object' ?
-                                                                <Grid
-                                                                    item
-                                                                    xs={6}
-                                                                    sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
-                                                                >
-                                                                    <label
-                                                                        style={{ fontWeight: 'bold' }}
-                                                                    >
-                                                                        {mapKeyToView[key]?.label}:
-                                                                    </label>
-                                                                    <label>
-                                                                        {mapKeyToView[key]?.type === 'date' ?
-                                                                            moment(interviewDetail[key]).format( mapKeyToView[key]?.dateFormat ? mapKeyToView[key]?.dateFormat  : 'MMM DD, YYYY hh:mm:ss A')
-                                                                            :
-                                                                            interviewDetail[key]
-                                                                        }
-                                                                    </label>
-                                                                </Grid>
-                                                                :
-                                                                <>
+                                        {
+                                            keyDisplays
+                                                .map((key, index) => {
+                                                    if (mapKeyStringToView[key] && typeof interviewDetail[key] !== 'object') {
+                                                        return <Grid
+                                                            key={index}
+                                                            item
+                                                            xs={6}
+                                                            sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
+                                                        >
+                                                            <label
+                                                                style={{ fontWeight: 'bold' }}
+                                                            >
+                                                                {mapKeyStringToView[key]?.label}:
+                                                            </label>
+                                                            <label>
+                                                                {mapKeyStringToView[key]?.type === 'date' ?
+                                                                    moment(interviewDetail[key]).format(mapKeyStringToView[key]?.dateFormat ? mapKeyStringToView[key]?.dateFormat : 'MMM DD, YYYY hh:mm:ss A')
+                                                                    :
+                                                                    interviewDetail[key]
+                                                                }
+                                                            </label>
+                                                        </Grid>
+
+                                                    }
+                                                    if (mapKeyArrayToView[key] && typeof interviewDetail[key] == 'object') {
+                                                        return <Grid
+                                                            key={index}
+                                                            item
+                                                            xs={12}
+                                                        >
+                                                            <label
+                                                                style={{
+                                                                    fontWeight: 'bold',
+                                                                    fontSize: '1.25rem'
+                                                                }}
+                                                            >
+                                                                {mapKeyArrayToView[key]?.label}
+                                                            </label>
+                                                            <hr></hr>
+
+                                                            {
+                                                                key === 'committees' && interviewDetail[key] && interviewDetail[key].length &&
+                                                                interviewDetail[key].map((intDetail) => (
                                                                     <Grid
                                                                         item
-                                                                        xs={12}
+                                                                        xs={6}
+                                                                        sx={{ fontSize: 14, display: 'flex', justifyContent: 'start' }}
+                                                                        paddingTop={2}
                                                                     >
                                                                         <label
-                                                                            style={{
-                                                                                fontWeight: 'bold',
-                                                                                fontSize: '1.25rem'
-                                                                            }}
+                                                                            style={{ fontWeight: 'bold', marginRight: 5 }}
                                                                         >
-                                                                            {mapKeyToView[key]?.label}
+                                                                            -
                                                                         </label>
-                                                                        <hr></hr>
-                                                                        
-                                                                        {
-                                                                            key === 'committees' && interviewDetail[key] && interviewDetail[key].length &&
-                                                                            interviewDetail[key].map((intDetail) => (
-                                                                                <Grid
-                                                                                    item
-                                                                                    xs={6}
-                                                                                    sx={{ fontSize: 14, display: 'flex', justifyContent: 'start' }}
-                                                                                    paddingTop={2}
-                                                                                >
-                                                                                    <label
-                                                                                        style={{ fontWeight: 'bold', marginRight: 5 }}
-                                                                                    >
-                                                                                        - 
-                                                                                    </label>
-                                                                                    <label
-                                                                                    >
-                                                                                        {intDetail?.fullName}, {intDetail?.staffId}
-                                                                                    </label>
-                                                                                </Grid>
-                                                                            ))
-                                                                        }
-
-                                                                        {
-                                                                            key === 'evaluationDetails' && interviewDetail[key] && interviewDetail[key].length ?
-                                                                            interviewDetail[key].map((intDetail) => (
-                                                                                <>
-                                                                                    <Grid
-                                                                                        item
-                                                                                        xs={6}
-                                                                                        spacing={2}
-                                                                                        paddingTop={1}
-                                                                                        paddingBottom={1}
-                                                                                        sx={{ 
-                                                                                            fontSize: 14, 
-                                                                                            display: 'flex', 
-                                                                                            justifyContent: 'space-between' 
-                                                                                        }}
-                                                                                    >
-                                                                                        <label
-                                                                                            style={{ fontWeight: 'bold' }}
-                                                                                        >
-                                                                                            Interviewed Result:
-                                                                                        </label>
-                                                                                        <label
-                                                                                        >
-                                                                                            {intDetail?.interviewResult}
-                                                                                        </label>
-                                                                                    </Grid>
-                                                                                    <Grid
-                                                                                        item
-                                                                                        paddingBottom={1}
-                                                                                        xs={6}
-                                                                                        sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
-                                                                                    >
-                                                                                        <label
-                                                                                            style={{ fontWeight: 'bold' }}
-                                                                                        >
-                                                                                            Interviewed At:
-                                                                                        </label>
-                                                                                        <label
-                                                                                        >
-                                                                                            {moment(intDetail?.evaluatedAt).format('MMM DD, YYYY hh:mm A')}
-                                                                                        </label>
-                                                                                    </Grid>
-                                                                                    <Grid
-                                                                                        item
-                                                                                        xs={6}
-                                                                                        paddingBottom={1}
-                                                                                        sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
-                                                                                    >
-                                                                                        <label
-                                                                                            style={{ fontWeight: 'bold' }}
-                                                                                        >
-                                                                                            Interviewed By:
-                                                                                        </label>
-                                                                                        <label
-                                                                                        >
-                                                                                            {intDetail?.username}, {intDetail?.staffId}
-                                                                                        </label>
-                                                                                    </Grid>
-                                                                                    <Grid
-                                                                                        item
-                                                                                        xs={6}
-                                                                                        paddingBottom={1}
-                                                                                        sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
-                                                                                    >
-                                                                                        <label
-                                                                                            style={{ fontWeight: 'bold' }}
-                                                                                        >
-                                                                                            Remark:
-                                                                                        </label>
-                                                                                        <label
-                                                                                        >
-                                                                                            {intDetail?.remark}
-                                                                                        </label>
-                                                                                    </Grid>
-                                                                                </>
-                                                                            ))
-                                                                            :
-                                                                            <></>
-                                                                        }
-
+                                                                        <label
+                                                                        >
+                                                                            {intDetail?.fullName}, {intDetail?.staffId}
+                                                                        </label>
                                                                     </Grid>
+                                                                ))
+                                                            }
 
-                                                                </>
-                                                        )
+                                                            {
+                                                                key === 'evaluationDetails' && interviewDetail[key] && interviewDetail[key].length ?
+                                                                    interviewDetail[key].map((intDetail) => (
+                                                                        <>
+                                                                            <Grid
+                                                                                item
+                                                                                xs={6}
+                                                                                spacing={2}
+                                                                                paddingTop={1}
+                                                                                paddingBottom={1}
+                                                                                sx={{
+                                                                                    fontSize: 14,
+                                                                                    display: 'flex',
+                                                                                    justifyContent: 'space-between'
+                                                                                }}
+                                                                            >
+                                                                                <label
+                                                                                    style={{ fontWeight: 'bold' }}
+                                                                                >
+                                                                                    Interviewed Result:
+                                                                                </label>
+                                                                                <label
+                                                                                >
+                                                                                    {intDetail?.interviewResult}
+                                                                                </label>
+                                                                            </Grid>
+                                                                            <Grid
+                                                                                item
+                                                                                paddingBottom={1}
+                                                                                xs={6}
+                                                                                sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
+                                                                            >
+                                                                                <label
+                                                                                    style={{ fontWeight: 'bold' }}
+                                                                                >
+                                                                                    Interviewed At:
+                                                                                </label>
+                                                                                <label
+                                                                                >
+                                                                                    {moment(intDetail?.evaluatedAt).format('MMM DD, YYYY hh:mm A')}
+                                                                                </label>
+                                                                            </Grid>
+                                                                            <Grid
+                                                                                item
+                                                                                xs={6}
+                                                                                paddingBottom={1}
+                                                                                sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
+                                                                            >
+                                                                                <label
+                                                                                    style={{ fontWeight: 'bold' }}
+                                                                                >
+                                                                                    Interviewed By:
+                                                                                </label>
+                                                                                <label
+                                                                                >
+                                                                                    {intDetail?.username}, {intDetail?.staffId}
+                                                                                </label>
+                                                                            </Grid>
+                                                                            <Grid
+                                                                                item
+                                                                                xs={6}
+                                                                                paddingBottom={1}
+                                                                                sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
+                                                                            >
+                                                                                <label
+                                                                                    style={{ fontWeight: 'bold' }}
+                                                                                >
+                                                                                    Remark:
+                                                                                </label>
+                                                                                <label
+                                                                                >
+                                                                                    {intDetail?.remark}
+                                                                                </label>
+                                                                            </Grid>
+                                                                        </>
+                                                                    ))
+                                                                    :
+                                                                    <></>
+                                                            }
+
+                                                        </Grid>
+
                                                     }
-                                                </React.Fragment>
-                                            ))}
+                                                })
+                                        }
+
                                     </Grid>
                                 </Box>
 
