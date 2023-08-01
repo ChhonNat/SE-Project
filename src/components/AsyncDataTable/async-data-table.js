@@ -201,31 +201,33 @@ const AsyncDatatable = (props) => {
             />
             <TableBody>
 
-              {loading ? Array(rowsPerPage).fill(null).map(() => (
+              {loading ?
 
-                <TableRow key={uuid()} style={{ height: dense ? 23 : 53 }}>
+                Array(rowsPerPage).fill(null).map(() => (
 
-                  {headers?.length ? headers.filter((h) => h.visible !== false).map((h) => (
+                  <TableRow key={uuid()} style={{ height: dense ? 23 : 53 }}>
 
-                    <TableCell
-                      align='center'
-                      key={uuid()}
-                      sx={{ textAlign: 'center', padding: '0.5rem 0.5rem' }}
-                    >
-                      <Skeleton
+                    {headers?.length ? headers.filter((h) => h.visible !== false).map((h) => (
+
+                      <TableCell
+                        align='center'
                         key={uuid()}
-                        variant="rectangular"
-                        width="100%"
-                        height={25}
-                      />
-                    </TableCell>
-                  ))
-                    :
-                    <></>
-                  }
-                </TableRow>
+                        sx={{ textAlign: 'center', padding: '0.1rem 0.1rem' }}
+                      >
+                        <Skeleton
+                          key={uuid()}
+                          variant="rectangular"
+                          width="100%"
+                          height={25}
+                        />
+                      </TableCell>
+                    ))
+                      :
+                      <></>
+                    }
+                  </TableRow>
 
-              ))
+                ))
                 :
                 <>
                   <TableRows

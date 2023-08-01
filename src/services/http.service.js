@@ -50,19 +50,13 @@ await axiosAPI.interceptors.response.use((res) => {
                 const { status, data } = reqNewToken;
 
                 if (status === HTTP_STATUS.success) {
-                    const newToken = {
-                        userName: data?.data?.userName,
-                        token: data?.data?.accessToken,
-                        refreshToken: data?.data?.refreshToken,
-                        isError: false,
-                        errorMessage: '',
-                        isAuthenticated: true,
-                        date: Date().toString()
-                    }
 
+                    const refreshUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+                    refreshUser.token = data?.data?.accessToken;
+                    refreshUser.refreshToken = data?.data?.refreshToken;
 
-                    localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(newToken));
-                    axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${newToken?.accessToken}`;
+                    localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(refreshUser));
+                    axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${refreshUser?.accessToken}`;
                 }
 
             } catch (error) {
@@ -90,7 +84,7 @@ await axiosAPI.interceptors.response.use((res) => {
 
         return Promise.reject(err);
 
-});
+    });
 
 //Token refresh token
 const refreshAccessToken = async () => {
