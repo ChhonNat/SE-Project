@@ -17,6 +17,7 @@ import { CandidateService } from "../../services/candidate.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
 import { Close } from "@mui/icons-material";
+import LabelRequire from "../Label/require";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -28,7 +29,7 @@ const CandidateScheduleFormModal = (props) => {
 
 
     const { open, onCloseModal, eventType, editData, handleEventSuccessed, apiService } = props;
-    const { register, handleSubmit, formState, setValue, watch, reset, clearErrors } = useForm({ resolver: zodResolver(InviteInterviewModel) });
+    const { register, handleSubmit, formState, setValue, watch, reset, setError, clearErrors } = useForm({ resolver: zodResolver(InviteInterviewModel) });
 
     const watchInterview = watch();
     const { errors } = formState;
@@ -37,27 +38,32 @@ const CandidateScheduleFormModal = (props) => {
 
     useEffect(() => {
 
-        setValue('hour', '01');
-        setValue('min', '00');
-        setValue('meridiem', 'AM');
+        if (open) {
 
-        const stringH = [];
-        const stringMin = [];
-        const H = [...Array(23).keys()];
-        const Min = [...Array(60).keys()];
+            clearErrors();
 
-        H.forEach((value) => {
-            value++;
-            value < 10 ? stringH.push({ h: '0' + value }) : stringH.push({ h: String(value) });
-        });
-        setHours([...stringH]);
+            setValue('hour', '01');
+            setValue('min', '00');
+            setValue('meridiem', 'AM');
 
-        Min.forEach((value) => {
-            value < 10 ? stringMin.push({ min: '0' + value }) : stringMin.push({ min: String(value) });
-        });
-        setMinutes([...stringMin]);
+            const stringH = [];
+            const stringMin = [];
+            const H = [...Array(23).keys()];
+            const Min = [...Array(60).keys()];
 
-    }, [])
+            H.forEach((value) => {
+                value++;
+                value < 10 ? stringH.push({ h: '0' + value }) : stringH.push({ h: String(value) });
+            });
+            setHours([...stringH]);
+
+            Min.forEach((value) => {
+                value < 10 ? stringMin.push({ min: '0' + value }) : stringMin.push({ min: String(value) });
+            });
+            setMinutes([...stringMin]);
+        }
+
+    }, [open])
 
     //map event when get event from home candidate
     const mapEventType = {
@@ -99,8 +105,13 @@ const CandidateScheduleFormModal = (props) => {
         }
     };
 
-    const onError = (error, e) => {
+    const onError = (error) => {
         console.log('Input error', error);
+        if (error?.hour)
+            setError('hour', { message: 'Hour is required!' })
+
+        if (error?.min)
+            setError('min', { message: 'Minute is required!' })
     };
 
     const onSubmit = async (dataInput) => {
@@ -118,7 +129,7 @@ const CandidateScheduleFormModal = (props) => {
             if (apiService)
                 submitCandidate = await apiService(editData?.id, editData?.candidate?.id, dataSubmit)
             else
-                submitCandidate = await CandidateService.inviteFirstInterview(editData?.id,dataSubmit);
+                submitCandidate = await CandidateService.inviteFirstInterview(editData?.id, dataSubmit);
 
             const { status, data } = submitCandidate;
             const { message } = data;
@@ -189,7 +200,7 @@ const CandidateScheduleFormModal = (props) => {
                                     sx={{ width: '100%' }}
                                     size="small"
                                     id="interview-date"
-                                    label="Interview Date"
+                                    label={<LabelRequire label="Interview Date" />}
                                     variant="outlined"
                                     type="date"
                                     InputLabelProps={shrinkOpt}
@@ -205,7 +216,14 @@ const CandidateScheduleFormModal = (props) => {
                                     size="small"
                                     freeSolo
                                     options={hours.map((option) => option.h)}
-                                    renderInput={(params) => <TextField {...params} label="Hour" />}
+                                    renderInput={(params) =>
+                                        <TextField
+                                            {...params}
+                                            label={<LabelRequire label="Hour" />}
+                                            error={errors?.hour && !watchInterview?.hour ? true : false}
+                                            helperText={errors?.hour?.message && !watchInterview?.hour ? errors?.hour?.message : ''}
+                                        />
+                                    }
                                     onChange={(e, value) => setValue('hour', value)}
                                     value={watchInterview?.hour}
                                 />
@@ -219,7 +237,13 @@ const CandidateScheduleFormModal = (props) => {
                                     size="small"
                                     freeSolo
                                     options={minutes.map((option) => option.min)}
-                                    renderInput={(params) => <TextField {...params} label="Minute" />}
+                                    renderInput={(params) =>
+                                        <TextField
+                                            {...params}
+                                            label={<LabelRequire label="Minute" />}
+                                            error={errors?.min && !watchInterview?.min ? true : false}
+                                            helperText={errors?.min?.message && !watchInterview?.min ? errors?.min?.message : ''}
+                                        />}
                                     onChange={(e, value) => setValue('min', value)}
                                     value={watchInterview?.min}
                                 />
@@ -233,7 +257,7 @@ const CandidateScheduleFormModal = (props) => {
                                     freeSolo
                                     options={['AM', 'PM'].map((option) => option)}
                                     renderInput={(params) => <TextField {...params} label="" />}
-                                    onChange={(e, value) => setValue('meridiem', value)}
+                                    onChange={(e, value) => setValue('meridiem', value)} yar
                                     value={parseInt(watchInterview?.hour) > 12 ? 'PM' : 'AM'}
                                     disabled
                                 />
