@@ -64,8 +64,7 @@ const HomeAssessment = () => {
                 useTableActions={{
                     search: true,
                     view: true,
-                    viewEvaluateFile: true,
-                    viewEvaluateFile: [
+                    viewFile: [
                         {
                             field: 'checkResult',
                             values: [
