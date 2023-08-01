@@ -53,7 +53,6 @@ const UpsertPositionForm = (props) => {
     }, [openModal])
 
     const onError = (data) => {
-        // setIsSubmitForm(true);
         console.log(data);
     }
 

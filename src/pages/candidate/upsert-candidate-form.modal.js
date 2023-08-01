@@ -444,7 +444,6 @@ const CandidateFormModal = (props) => {
                                     handleOnChange={(e, value) => {
                                         setValue('departmentId', value?.id);
                                         setValue('appliedPositionId', null);
-                                        console.log(value);
                                         fetchData(`/api/v1/head-departments/business-unit/${watchCandidate?.businessUnitId}/department/` + value?.id, setHeadDepartment, 'headDepartment');
                                         setListPositions([]);
                                         fetchData(API_URL.lookup.positionById.get + value?.id, setListPositions);
