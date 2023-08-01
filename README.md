@@ -165,19 +165,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
         Update first evaluate result
 
 
-    If has second interview 
-
+If has second interview 
+------------    
 2.3 HOD:
     CV:
         Set second interview schedule
-
 2.4 HOD:
     CV: 
         Upload second result form
-
 2.5 HOD:
     CV:
         Update second evaluate result
+------------
 
 2.6 HOD:
     CV:
