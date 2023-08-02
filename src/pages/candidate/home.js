@@ -178,7 +178,16 @@ const HomeCandidate = () => {
                                             }
                                         ]
                                         :
-                                        true
+                                        [
+                                            {
+                                                field: 'status',
+                                                values: [STATUS.CANDIDATE.CV_SHORTLISTED]
+                                            },
+                                            {
+                                                field: 'shortlistResult',
+                                                values: [STATUS.SHORTLIST_RESULT.PASSED]
+                                            }
+                                        ]
                                     ),
                                 },
                                 {

@@ -218,7 +218,7 @@ const tblJobOffer = [
     },
     {
         id: 'positionLevel',
-        label: 'Level',
+        label: 'Position Level',
         obj: { name: 'nameEn' }
     },
     {

@@ -10,13 +10,15 @@ import { AttachMoney, DoneAll } from "@mui/icons-material";
 import { ROLE } from "../../constants/roles";
 import { STATUS } from "../../constants/status";
 import ViewFileModal from "../../components/Modal/view-file.modal";
+import JobOfferFormDetailModal from "./detail-offer-form.modal";
 
 const HomeJobOffer = () => {
 
     const user = useSelector((state) => state?.userAuthendicated);
     const [isReload, setIsReload] = useState(false);
     const [editJobOffer, setEditJobOffer] = useState({});
-    const [openModal, setOpenModal] = useState(false);
+    const [openOfferModal, setOpenOfferModal] = useState(false);
+    const [openOfferDetailModal, setOpenOfferDetailModal] = useState(false);
     const [openFileModal, setOpenFileModal] = useState(false);
     const [modalType, setModalType] = useState('');
 
@@ -64,6 +66,7 @@ const HomeJobOffer = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
+                    view: true,
                     viewFile: true,
                     viewSecFile: true,
                     moreOption: {
@@ -73,36 +76,39 @@ const HomeJobOffer = () => {
                                 eventName: 'offer',
                                 icon: <AttachMoney color="info" />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
-                                enable: [
-                                    {
-                                        field: 'processStatus',
-                                        values: [STATUS.OFFER_PROCESS.PENDING]
-                                    }
-                                ]
+                                enable: true
+                                // [
+                                //     {
+                                //         field: 'processStatus',
+                                //         values: [STATUS.OFFER_PROCESS.PENDING]
+                                //     }
+                                // ]
                             },
                             {
                                 name: 'Verify',
                                 eventName: 'verify',
                                 icon: <DoneAll color="info" />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HR_MANAGER) ? false : true,
-                                enable: [
-                                    {
-                                        field: 'processStatus',
-                                        values: [STATUS.OFFER_PROCESS.HOD_APPROVED]
-                                    }
-                                ]
+                                enable: true
+                                // [
+                                //     {
+                                //         field: 'processStatus',
+                                //         values: [STATUS.OFFER_PROCESS.HOD_APPROVED]
+                                //     }
+                                // ]
                             },
                             {
                                 name: 'Approve',
                                 eventName: 'approve',
                                 icon: <DoneAll color="info" />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
-                                enable: [
-                                    {
-                                        field: 'processStatus',
-                                        values: [STATUS.OFFER_PROCESS.DHR_VERIFIED]
-                                    }
-                                ]
+                                enable: true
+                                    // [
+                                    //     {
+                                    //         field: 'processStatus',
+                                    //         values: [STATUS.OFFER_PROCESS.DHR_VERIFIED]
+                                    //     }
+                                    // ]
                             }
                         ]
                     }
@@ -120,7 +126,7 @@ const HomeJobOffer = () => {
 
                     setModalType(eName);
                     setEditJobOffer(data);
-                    setOpenModal(true);
+                    setOpenOfferModal(true);
                 }}
                 onHandleRefreshEvent={() =>
                     setIsReload(!isReload)
@@ -135,14 +141,18 @@ const HomeJobOffer = () => {
                     setEditJobOffer(data);
                     setOpenFileModal(true)
                 }}
+                handleViewEvent={(data) => {
+                    setEditJobOffer(data);
+                    setOpenOfferDetailModal(true);
+                }}
             />
 
             {/* Offer salary */}
             <OfferJobFormModal
                 modalType={modalType}
-                open={openModal}
+                open={openOfferModal}
                 jobOffer={editJobOffer}
-                onCloseModal={() => setOpenModal(false)}
+                onCloseModal={() => setOpenOfferModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
 
@@ -153,6 +163,13 @@ const HomeJobOffer = () => {
                 downloadFileUrl={mapFileModal[modalType]?.downloadFileUrlL}
                 openModal={openFileModal}
                 onCloseModal={() => setOpenFileModal(false)}
+            />
+
+            {/* Detail Job Offer */}
+            <JobOfferFormDetailModal
+                editJobOffer={editJobOffer}
+                openModal={openOfferDetailModal}
+                onCloseModal={() => setOpenOfferDetailModal(false)}
             />
         </>
     )
