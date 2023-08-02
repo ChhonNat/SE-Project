@@ -33,58 +33,71 @@ await axiosAPI.interceptors.request.use((config) => {
 
 //Intercepter response
 await axiosAPI.interceptors.response.use((res) => {
+
     return res;
-},
-    async (err) => {
+}, async (err) => {
 
-        const originalRequest = err?.config;
+    const originalRequest = err?.config;
 
-        if (err?.response?.status === HTTP_STATUS.expired && !originalRequest?._retry) {
+    if (err?.response?.status === HTTP_STATUS.Forbidden) {
 
-            originalRequest._retry = true
+        const { message } = err?.response?.data || 'Something went wrong!';
+        const isInvalidToken = "Invalid token";
+        const isAccessDenied = "Access denied";
 
-            try {
+        if (message === isInvalidToken) {
 
-                const reqNewToken = await refreshAccessToken();
+            //Clear user from localstorage when refresh token expired 
+            localStorage.clear();
+            window.location.replace('/login');
 
-                const { status, data } = reqNewToken;
-
-                if (status === HTTP_STATUS.success) {
-
-                    const refreshUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
-                    refreshUser.token = data?.data?.accessToken;
-                    refreshUser.refreshToken = data?.data?.refreshToken;
-
-                    localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(refreshUser));
-                    axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${refreshUser?.accessToken}`;
-                }
-
-            } catch (error) {
-
-                //Clear user from localstorage when refresh token expired 
-                localStorage.clear();
-                window.location.replace('/login');
-            }
-
-            return axiosAPI(originalRequest);
-        }
-
-        /**
-         * Unauthorize user
-         */
-        if (err?.response?.status === HTTP_STATUS.unauthorize) {
+        } else if (message === isAccessDenied) {
 
             return Swal.fire({
-                title: 'Accesss denied',
-                text: "You don't have the permission on this page!",
+                title: 'Warning',
+                text: `${message}!`,
                 icon: 'info',
                 confirmButtonText: 'OK',
             });
+
+        } else {
+
+            if (!originalRequest?._retry) {
+
+                originalRequest._retry = true
+
+                try {
+
+                    const reqNewToken = await refreshAccessToken();
+
+                    const { status, data } = reqNewToken;
+
+                    if (status === HTTP_STATUS.success) {
+
+                        const refreshUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+                        refreshUser.token = data?.data?.accessToken;
+                        refreshUser.refreshToken = data?.data?.refreshToken;
+
+                        localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(refreshUser));
+                        axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${refreshUser?.accessToken}`;
+                    }
+
+                } catch (error) {
+
+                    //Clear user from localstorage when refresh token expired 
+                    localStorage.clear();
+                    window.location.replace('/login');
+                }
+
+                return axiosAPI(originalRequest);
+
+            }
         }
+    }
 
-        return Promise.reject(err);
+    return Promise.reject(err);
 
-    });
+});
 
 //Token refresh token
 const refreshAccessToken = async () => {

@@ -93,7 +93,7 @@ const _useHttp = () => {
                         })
                         .catch((error) => {
 
-                            console.log('put error >>>>>', error);
+                            console.log('post error >>>>>', error);
                             dispatchHttp({ type: 'ERROR', error: 'Empty Data!' });
                         });
                 }
