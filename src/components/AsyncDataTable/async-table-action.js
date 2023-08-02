@@ -25,12 +25,8 @@ const AsyncTableAction = (props) => {
         onHandleEditEvent,
         onHandleViewEvent,
         onHandleViewFileEvent,
+        onHandleViewSecFileEvent,
         onHandleMoreEvent,
-        onHandleApproveCandidateEvent,
-        onHandleReviewCandidateEvent,
-        onHandleAssessmentCandidateEvent,
-        onHandleEditResult,
-        onHandleEditStatus
     } = props;
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -94,6 +90,16 @@ const AsyncTableAction = (props) => {
                         </Button>
                     </Tooltip>
                 }
+
+                {useActions?.viewSecFile &&
+                    <Tooltip title="View Reference Form">
+                        <Button variant="text" size="small" color="info"
+                            onClick={onHandleViewSecFileEvent}>
+                            <FileOpenIcon />
+                        </Button>
+                    </Tooltip>
+                }
+
 
                 {/* Show button edit the candidate */}
                 {useActions?.edit &&

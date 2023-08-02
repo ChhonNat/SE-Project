@@ -4,7 +4,6 @@ import FooterComponent from "../Page/footer";
 import AsyncAutoComplete from "../AutoComplete/auto-complete";
 import AsyncMultiAutoComplete from "../MultiAutoComplete/auto-complete";
 import InviteInterviewModel from "../../models/interview/invite-interview.model";
-import SelectComponent from "../Selector/select";
 import _useHttp from "../../hooks/_http";
 import Swal from "sweetalert2";
 
@@ -18,6 +17,7 @@ import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
 import { Close } from "@mui/icons-material";
 import LabelRequire from "../Label/require";
+import { ConverterService } from "../../utils/converter";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -38,13 +38,14 @@ const CandidateScheduleFormModal = (props) => {
 
     useEffect(() => {
 
+        setValue('interviewDate',);
+        setValue('hour', '01');
+        setValue('min', '00');
+        setValue('meridiem', 'AM');
+
         if (open) {
 
             clearErrors();
-
-            setValue('hour', '01');
-            setValue('min', '00');
-            setValue('meridiem', 'AM');
 
             const stringH = [];
             const stringMin = [];

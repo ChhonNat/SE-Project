@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { AttachMoney, DoneAll } from "@mui/icons-material";
 import { ROLE } from "../../constants/roles";
 import { STATUS } from "../../constants/status";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 
 const HomeJobOffer = () => {
 
@@ -16,7 +17,26 @@ const HomeJobOffer = () => {
     const [isReload, setIsReload] = useState(false);
     const [editJobOffer, setEditJobOffer] = useState({});
     const [openModal, setOpenModal] = useState(false);
+    const [openFileModal, setOpenFileModal] = useState(false);
     const [modalType, setModalType] = useState('');
+
+    const mapFileModal = {
+        'viewCVFile': {
+            modalTitle: 'View CV',
+            viewFileById: editJobOffer?.candidate?.id,
+            downloadFileUrl: null
+        },
+        'viewEvaluateForm': {
+            modalTitle: 'View Evaluate Form',
+            viewFileById: editJobOffer?.interview?.id,
+            downloadFileUrlL: API_URL.interview.downloadEvaluateForm
+        },
+        'viewReferenceForm': {
+            modalTitle: 'View Reference Form',
+            viewFileById: editJobOffer?.referenceCheck?.id,
+            downloadFileUrlL: API_URL.referenceCheck.downloadRefForm
+        }
+    }
 
     return (
         <>
@@ -44,7 +64,8 @@ const HomeJobOffer = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
-                    // view: true,
+                    viewFile: true,
+                    viewSecFile: true,
                     moreOption: {
                         buttons: [
                             {
@@ -86,6 +107,13 @@ const HomeJobOffer = () => {
                         ]
                     }
                 }}
+                handleLinkEvent={
+                    (data) => {
+                        setModalType('viewCVFile');
+                        setEditJobOffer(data);
+                        setOpenFileModal(true);
+                    }
+                }
                 handleMoreEvent={(eName, data) => {
                     if (!eName)
                         return false;
@@ -97,15 +125,34 @@ const HomeJobOffer = () => {
                 onHandleRefreshEvent={() =>
                     setIsReload(!isReload)
                 }
+                handleViewFileEvent={(data) => {
+                    setModalType('viewEvaluateForm');
+                    setEditJobOffer(data);
+                    setOpenFileModal(true)
+                }}
+                handleViewSecFileEvent={(data) => {
+                    setModalType('viewReferenceForm');
+                    setEditJobOffer(data);
+                    setOpenFileModal(true)
+                }}
             />
 
             {/* Offer salary */}
-            <OfferJobFormModal 
+            <OfferJobFormModal
                 modalType={modalType}
                 open={openModal}
                 jobOffer={editJobOffer}
                 onCloseModal={() => setOpenModal(false)}
                 handleEventSuccessed={() => setIsReload(!isReload)}
+            />
+
+            {/* View Form */}
+            <ViewFileModal
+                modalTitle={mapFileModal[modalType]?.modalTitle}
+                id={mapFileModal[modalType]?.viewFileById}
+                downloadFileUrl={mapFileModal[modalType]?.downloadFileUrlL}
+                openModal={openFileModal}
+                onCloseModal={() => setOpenFileModal(false)}
             />
         </>
     )

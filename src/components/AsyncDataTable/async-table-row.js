@@ -27,6 +27,7 @@ const TableRows = ({
     isSelected,
     handleViewEvent,
     handleViewFileEvent,
+    handleViewSecFileEvent,
     handleEditEvent,
     handleMoreEvent,
     handleLinkEvent,
@@ -133,6 +134,14 @@ const TableRows = ({
                                 :
                                 false,
 
+                            viewSecFile: actions?.viewSecFile ? (typeof actions?.viewSecFile === 'boolean' ?
+                                actions?.viewSecFile :
+                                checkButtonAction(row, actions?.viewSecFile)
+                            )
+                                :
+                                false
+                            ,
+
                             edit: actions?.edit ?
                                 (
                                     typeof actions?.edit === 'boolean' ?
@@ -231,6 +240,7 @@ const TableRows = ({
                                             <AsyncTableAction
                                                 onHandleViewEvent={() => handleViewEvent(row)}
                                                 onHandleViewFileEvent={() => handleViewFileEvent(row)}
+                                                onHandleViewSecFileEvent={() => handleViewSecFileEvent(row)}
                                                 onHandleEditEvent={() => handleEditEvent(row)}
                                                 onHandleMoreEvent={(eventName) => handleMoreEvent(eventName, row)}
                                                 useActions={buttonAction}

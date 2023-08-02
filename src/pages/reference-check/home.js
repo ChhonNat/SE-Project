@@ -64,7 +64,7 @@ const HomeAssessment = () => {
                 useTableActions={{
                     search: true,
                     view: true,
-                    viewFile: [
+                    viewSecFile: [
                         {
                             field: 'checkResult',
                             values: [
@@ -137,7 +137,7 @@ const HomeAssessment = () => {
                     setEditReferencce(data);
                     setOpenReferenceDetailModal(true);
                 }}
-                handleViewFileEvent={(data) => {
+                handleViewSecFileEvent={(data) => {
                     setTypeModal('viewRefForm');
                     setEditReferencce(data);
                     setOpenFileFormModal(true)

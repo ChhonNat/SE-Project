@@ -202,6 +202,12 @@ const tblJobOffer = [
     },
     {
         id: 'candidate',
+        label: 'Applicant Code',
+        type: 'link',
+        obj: { name: 'applicantCode' },
+    },
+    {
+        id: 'candidate',
         label: 'Candidate Name',
         obj: { name: 'fullName' }
     },
