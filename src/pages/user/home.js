@@ -19,19 +19,19 @@ const HomeUser = () => {
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
-                useTableActions={
-                    {
+                useTableActions={{
                         search: true,
+                        refresh: true,
                         create: true,
                         edit: true
-                    }
-                }
+                }}
                 onHandleAddNewEvent={() => setOpenModal(true)}
                 handleEditEvent={(data) => {
                     setEditUser(data);
                     setOpenModal(true)
                 }}
                 isReloadData={isReload ? true : false}
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
 
             {/* Create and Update form */}

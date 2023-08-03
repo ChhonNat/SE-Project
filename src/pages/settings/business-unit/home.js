@@ -36,12 +36,18 @@ const HomeBusiness = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true, edit: true }}
+                useTableActions={{ 
+                    search: true, 
+                    refresh: true,
+                    create: true, 
+                    edit: true 
+                }}
                 onHandleAddNewEvent={() => setOpenBusinessUnitModal(true)}
                 handleEditEvent={(data) => {
                     setEditBusinessUnit(data);
                     setOpenBusinessUnitModal(true);
                 }}
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
 
             {/* Modal create and update */}

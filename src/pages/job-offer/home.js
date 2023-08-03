@@ -66,6 +66,7 @@ const HomeJobOffer = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
+                    refresh: true,
                     view: true,
                     viewFile: true,
                     viewSecFile: true,

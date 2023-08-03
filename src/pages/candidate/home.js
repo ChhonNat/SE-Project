@@ -80,7 +80,7 @@ const HomeCandidate = () => {
                         //Actions Tool bar table
                         search: true,
                         create: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_TA_ADMIN) ? true : false,
-
+                        refresh: true,
                         //action each table rows
                         view: true,
                         edit: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_TA_ADMIN) ? true : false,

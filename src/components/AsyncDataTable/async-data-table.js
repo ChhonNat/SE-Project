@@ -1,18 +1,20 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
-import { TableBody, TableRow } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import uuid from 'react-uuid';
 import _useHttp from '../../hooks/_http';
-import { Divider, Skeleton, Typography } from '@mui/material';
-
 import ToolBar from './async-tool-bar';
 import EnhancedTableHead from './async-table-head';
 import TableRows from './async-table-row';
+
+import { TableBody, TableRow } from '@mui/material';
+import { Divider, Skeleton, Typography } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
+
 
 /**
  * Full async table custom
@@ -45,7 +47,7 @@ const AsyncDatatable = (props) => {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(true);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchText, setSearchText] = useState('');
   const { data, loading, error, message, sendRequest } = _useHttp();
 
@@ -72,14 +74,13 @@ const AsyncDatatable = (props) => {
   );
 
   useEffect(() => {
+    const identifier = setTimeout(async () => {
     getRows(searchText);
-    // const identifier = setTimeout(async () => {
-    // getRows(searchText);
-    // }, 300);
+    }, 200);
 
-    // return () => {
-    //   clearTimeout(identifier);
-    // };
+    return () => {
+      clearTimeout(identifier);
+    };
 
   }, [searchText, isReloadData, getRows]);
 
@@ -153,6 +154,8 @@ const AsyncDatatable = (props) => {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
+
+
   return (
     <Box
       sx={{
@@ -182,9 +185,11 @@ const AsyncDatatable = (props) => {
           searchText={searchText}
           useActions={useTableActions}
         />
-
-        <Divider />
-
+        {loading ?
+          <Box sx={{ width: '100%' }}><LinearProgress /></Box> 
+          :
+          <Divider />
+        }
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -201,57 +206,74 @@ const AsyncDatatable = (props) => {
               headers={headers}
             />
             <TableBody>
+              {
+                loading ?
+                  <>
+                  </>
+                  // Array(rowsPerPage).fill(null).map(() => (
 
-              {loading ?
+                  //   <TableRow key={uuid()} style={{ height: dense ? 23 : 53 }}>
 
-                Array(rowsPerPage).fill(null).map(() => (
+                  //     {headers?.length ? headers.filter((h) => h.visible !== false).map((h) => (
 
-                  <TableRow key={uuid()} style={{ height: dense ? 23 : 53 }}>
+                  //       <TableCell
+                  //         align='center'
+                  //         key={uuid()}
+                  //         sx={{ textAlign: 'center', padding: '0.1rem 0.1rem' }}
+                  //       >
+                  //         <Skeleton
+                  //           key={uuid()}
+                  //           variant="rectangular"
+                  //           width="100%"
+                  //           height={25}
+                  //         />
+                  //       </TableCell>
+                  //     ))
+                  //       :
+                  //       <></>
+                  //     }
+                  //   </TableRow>
 
-                    {headers?.length ? headers.filter((h) => h.visible !== false).map((h) => (
+                  // ))
+                  :
+                  <>
+                    <TableRows
+                      displayRecords={rows}
+                      isSelected={isSelected}
+                      handleClick={handleClick}
+                      headers={headers}
+                      checkColumn={checkColumn}
+                      pageSize={rowsPerPage}
+                      actions={useTableActions}
+                      handleViewEvent={(record) => handleViewEvent(record)}
+                      handleViewFileEvent={(record) => handleViewFileEvent(record)}
+                      handleViewSecFileEvent={(record) => handleViewSecFileEvent(record)}
+                      handleEditEvent={(record) => handleEditEvent(record)}
+                      handleLinkEvent={(record) => handleLinkEvent(record)}
+                      handleMoreEvent={(eName, record) => handleMoreEvent(eName, record)}
+                    />
+                    {
 
-                      <TableCell
-                        align='center'
-                        key={uuid()}
-                        sx={{ textAlign: 'center', padding: '0.1rem 0.1rem' }}
-                      >
-                        <Skeleton
-                          key={uuid()}
-                          variant="rectangular"
-                          width="100%"
-                          height={25}
-                        />
-                      </TableCell>
-                    ))
-                      :
-                      <></>
+                      (!error && rows?.length === 0) ? (
+                        <TableRow
+                          style={{
+                            height: (dense ? 20 : 33) * 2,
+                          }}
+                        >
+                          <TableCell
+                            align='center'
+                            colSpan={headers?.length + 1}
+                            sx={{ textAlign: 'center' }}
+                          >
+                            <Typography variant="error">Data Empty...!</Typography>
+                          </TableCell>
+                        </TableRow>
+                      ) : ""
                     }
-                  </TableRow>
-
-                ))
-                :
-                <>
-                  <TableRows
-                    displayRecords={rows}
-                    isSelected={isSelected}
-                    handleClick={handleClick}
-                    headers={headers}
-                    checkColumn={checkColumn}
-                    pageSize={rowsPerPage}
-                    actions={useTableActions}
-                    handleViewEvent={(record) => handleViewEvent(record)}
-                    handleViewFileEvent={(record) => handleViewFileEvent(record)}
-                    handleViewSecFileEvent={(record) => handleViewSecFileEvent(record)}
-                    handleEditEvent={(record) => handleEditEvent(record)}
-                    handleLinkEvent={(record) => handleLinkEvent(record)}
-                    handleMoreEvent={(eName, record) => handleMoreEvent(eName, record)}
-                  />
-                  {
-
-                    (!error && rows?.length === 0) ? (
+                    {error && (
                       <TableRow
                         style={{
-                          height: (dense ? 20 : 33) * 2,
+                          height: (dense ? 33 : 53) * 2,
                         }}
                       >
                         <TableCell
@@ -259,28 +281,12 @@ const AsyncDatatable = (props) => {
                           colSpan={headers?.length + 1}
                           sx={{ textAlign: 'center' }}
                         >
-                          <Typography variant="error">Data Empty...!</Typography>
+                          <Typography variant="error">{error}</Typography>
                         </TableCell>
                       </TableRow>
-                    ) : ""
-                  }
-                  {error && (
-                    <TableRow
-                      style={{
-                        height: (dense ? 33 : 53) * 2,
-                      }}
-                    >
-                      <TableCell
-                        align='center'
-                        colSpan={headers?.length + 1}
-                        sx={{ textAlign: 'center' }}
-                      >
-                        <Typography variant="error">{error}</Typography>
-                      </TableCell>
-                    </TableRow>
-                  )}
+                    )}
 
-                </>
+                  </>
 
               }
             </TableBody>

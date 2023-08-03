@@ -108,15 +108,19 @@ const AsynTableToolbar = (props) => {
         </Grid>
 
         <Grid item xs={6} sx={{ textAlign: 'right' }}>
-          <Tooltip title="Refresh Data">
-            <Button
-              sx={{ marginRight: 2, paddingX: 1 }}
-              variant="outlined"
-              onClick={handleRefreshEvent}
-            >
-              <AutorenewIcon />
-            </Button>
-          </Tooltip>
+          {
+            useActions?.refresh && (
+              <Tooltip title="Refresh Data">
+                <Button
+                  sx={{ marginRight: 2, paddingX: 1 }}
+                  variant="outlined"
+                  onClick={handleRefreshEvent}
+                >
+                  <AutorenewIcon />
+                </Button>
+              </Tooltip>
+            )
+          }
           {useActions?.create && (
             <Tooltip title="Add New">
               <Button

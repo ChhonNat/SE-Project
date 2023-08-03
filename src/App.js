@@ -43,7 +43,7 @@ const App = () => {
    * Loading while while route fallback
    */
   const Loading = () => {
-    return <p className="global-loading">Loading...</p>
+    return <p className="global-loading"></p>
   };
 
 

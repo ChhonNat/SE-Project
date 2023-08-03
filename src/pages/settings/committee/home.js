@@ -35,12 +35,18 @@ const HomeCommittee = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true, edit: true }}
+                useTableActions={{ 
+                    search: true, 
+                    refresh: true,
+                    create: true, 
+                    edit: true 
+                }}
                 onHandleAddNewEvent={() => setOpenCommitteeModal(true)}
                 handleEditEvent={(data) => {
                     setEditCommittee(data);
                     setOpenCommitteeModal(true);
                 }}
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
 
             {/* Form create and update head department */}

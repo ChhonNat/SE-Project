@@ -35,12 +35,18 @@ const HomeHeadDepartment = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true, edit: true }}
+                useTableActions={{ 
+                    search: true, 
+                    refresh: true,
+                    create: true, 
+                    edit: true 
+                }}
                 onHandleAddNewEvent={() => setOpenHeadDepartmentModal(true)}
                 handleEditEvent={(data) => {
                     setEditHeadDepartment(data);
                     setOpenHeadDepartmentModal(true);
                 }}
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
 
             {/* Form create and update head department */}

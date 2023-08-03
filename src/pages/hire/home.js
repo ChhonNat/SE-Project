@@ -31,7 +31,11 @@ const HomeHire = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true }}
+                useTableActions={{ 
+                    search: true,
+                    refresh: true
+                }}
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
         </>
     )

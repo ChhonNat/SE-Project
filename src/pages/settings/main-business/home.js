@@ -36,7 +36,11 @@ const HomeMainBusiness = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: false, edit: false }}
+                useTableActions={{ 
+                    search: true, 
+                    create: false, 
+                    edit: false 
+                }}
                 onHandleAddNewEvent={() => setOpenMainBusinessModal(true)}
                 handleEditEvent={(data) => {
                     setEditMainBusiness(data);
