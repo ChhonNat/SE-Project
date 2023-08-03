@@ -216,6 +216,33 @@ If has second interview
         print form interview -->
 
 
+-------------------------------------
+UI
+            Candidate
+                TA: 
+                    Shortlists: OFFCEO_APPROVED
+                    Status: Pending
+                    Shortlist Result: Waiting
+                        Action: 
+                            Shortlist
+                    Shortlists : OFFCEO_APPROVED
+                    Status: Shortlisted
+                    Shortlist Result: Passed
+                        Action:
+                            Submit to HOD
+                    Shortlists: Submitted_HOD
+                    Status: Shortlisted
+                    Shortlist Result: Passed
+                Hiring Manager:
 
+
+
+
+-------------
+API
+
+        Candidate
+            Hiring Manager:
+                Set Validate in invite interview before shortlist by hiring manager
 
 

@@ -51,7 +51,17 @@ const AsyncDatatable = (props) => {
   const [searchText, setSearchText] = useState('');
   const { data, loading, error, message, sendRequest } = _useHttp();
 
-  let rows = useMemo(() => (data?.records ? data?.records : []), [data]);
+  const [initialData, setInitialData] = useState([]);
+
+  useEffect(() => {
+
+    if (!loading) {
+      setInitialData([...data?.records]);
+    }
+  }, [loading])
+  
+
+  let rows = useMemo(() => (data?.records ? data?.records : initialData), [data]);
   let rowCount = useMemo(() => (data?.totalRecord ? data?.totalRecord : 0), [data]);
 
 
@@ -78,6 +88,7 @@ const AsyncDatatable = (props) => {
     const identifier = setTimeout(async () => {
       getRows(searchText);
     }, 300);
+    
     return () => {
       clearTimeout(identifier);
     };
@@ -151,7 +162,6 @@ const AsyncDatatable = (props) => {
   }, []);
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
 
 
   return (
@@ -239,9 +249,9 @@ const AsyncDatatable = (props) => {
               }
               {error && (
                 <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * 2,
-                  }}
+                // style={{
+                //   height: (dense ? 33 : 53) * 2,
+                // }}
                 >
                   <TableCell
                     align='center'

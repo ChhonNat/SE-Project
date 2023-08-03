@@ -118,6 +118,10 @@ const HomeInterview = () => {
                                     {
                                         field: 'status',
                                         values: [STATUS.INTERVIEW_STATUS.EVALUATED]
+                                    },
+                                    {
+                                        field: 'interviewResult',
+                                        values: [STATUS.INTERVIEW_RESULT.PASSED]
                                     }
                                 ]
                             },

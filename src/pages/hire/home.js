@@ -3,10 +3,14 @@ import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 
 const HomeHire = () => {
 
-    const [isReload, setIsReload] = useState(false)
+    const [isReload, setIsReload] = useState(false);
+    const [modalType, setModalType] = useState('');
+    const [editHire, setEditHire] = useState({});
+    const [openFileModal, setOpenFileModal] = useState(false);
 
     return (
         <>
@@ -36,7 +40,27 @@ const HomeHire = () => {
                     refresh: true
                 }}
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
+                handleLinkEvent={
+                    (data) => {
+                        setModalType('viewCVFile');
+                        setEditHire(data);
+                        setOpenFileModal(true);
+                    }
+                }
             />
+
+
+            {/* View File */}
+            {
+                openFileModal &&
+                <ViewFileModal
+                    modalTitle={'View CV'}
+                    id={editHire?.candidate?.id}
+                    downloadFileUrl={API_URL.hire.downloadCVFile}
+                    openModal={openFileModal}
+                    onCloseModal={() => setOpenFileModal(false)}
+                />
+            }
 
         </>
     )

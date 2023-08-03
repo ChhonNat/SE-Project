@@ -3,14 +3,6 @@ const RECORD = {
     INACTIVE: 'Inactive'
 };
 
-const SHORTLIST_RESULT = {
-    WAITING: 'Waiting',
-    KEEP_IN_POOL: "Keep_In_Pool",
-    FAILED: 'Failed',
-    PASSED: 'Passed',
-    BLACKLIST: 'Blacklist'
-};
-
 const SUBMIT_STATUS = {
     WAITING: "Pending",
     SUBMITTED_DHR: "Submitted_DHR",
@@ -23,12 +15,22 @@ const SUBMIT_STATUS = {
 
 const CANDIDATE = {
     PENDING: 'Pending',
-    CV_REVIEWED: 'Reviewed',
-    CV_SHORTLISTED: 'Shortlisted',
+    SHORTLISTED: 'Shortlisted',
     IN_INTERVIEW: 'In_Interview',
-    IN_ASSESSMENT: 'In_Assessment',
+    IN_EVALUATION: 'In_Evaluation',
+    IN_REFERENCE_CHECK: 'In_Reference_Check',
+    IN_JOB_OFFER: 'In_Job_Offer',
     HIRED: 'Hired'
 };
+
+const SHORTLIST_RESULT = {
+    WAITING: 'Waiting',
+    KEEP_IN_POOL: "Keep_In_Pool",
+    FAILED: 'Failed',
+    PASSED: 'Passed',
+    BLACKLIST: 'Blacklist'
+};
+
 
 const INTERVIEW_PROCESS = {
     FIRST_INTERVIEW: "First_Interview",
@@ -68,11 +70,12 @@ const OFFER_PROCESS = {
     OFFCEO_APPROVED:"OFCCEO_Approved"
 };
 
-// const ASSESSMENT_RESULT = {
-//     SUSPENDED: 'Suspended',
-//     CANCELLED: 'Cancel',
-//     OFFERED: 'Offered'
-// };
+const OFFER_STATUS = {
+    PENDING: "pending",
+    OFFERED: "Offered",
+    HIRED: "Hired",
+    REJECTED: "Rejected"
+};
 
 export const STATUS = {
     RECORD,
@@ -84,5 +87,6 @@ export const STATUS = {
     INTERVIEW_PROCESS,
     REFERENCE_RESULT,
     REFERENCE_STATUS,
-    OFFER_PROCESS
+    OFFER_PROCESS,
+    OFFER_STATUS
 };

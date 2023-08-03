@@ -176,7 +176,15 @@ const TableRows = ({
                                         padding="none"
                                         key={uuid()}
                                         align="center"
-                                        sx={{ '&.MuiTableCell-root': { display: visible ? 'table-cell' : 'none' }, fontSize: 13 }}
+                                        sx={{
+                                            '&.MuiTableCell-root':
+                                                { 
+                                                    display: visible ? 'table-cell' : 'none',
+                                                    lineHeight: '1.75rem',
+                                                    paddingY: 'unset !important'
+                                                }, 
+                                                fontSize: 13
+                                        }}
                                     >
                                         {row[head.id]}
                                     </TableCell>
@@ -187,7 +195,15 @@ const TableRows = ({
                                     <TableCell
                                         align={head.align ? head?.align : 'left'}
                                         key={uuid()}
-                                        sx={{ fontSize: 13, color: head?.textColor ? head?.textColor[row[head.id]] : '' }}
+                                        sx={{ 
+                                            fontSize: 13, 
+                                            color: head?.textColor ? head?.textColor[row[head.id]] : '',
+                                            '&.MuiTableCell-root':
+                                            { 
+                                                lineHeight: '1.75rem',
+                                                paddingY: 'unset !important'
+                                            },
+                                        }}
                                     >
 
                                         {/* Use table index */}

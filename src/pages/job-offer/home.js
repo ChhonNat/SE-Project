@@ -77,7 +77,10 @@ const HomeJobOffer = () => {
                                 eventName: 'offer',
                                 icon: <AttachMoney color="info" />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
-                                enable: true
+                                enable: [{
+                                    field: 'processStatus',
+                                    values: [STATUS.OFFER_PROCESS.PENDING, STATUS.OFFER_PROCESS.HOD_APPROVED]
+                                }]
                             },
                             {
                                 name: 'Verify',
@@ -164,7 +167,7 @@ const HomeJobOffer = () => {
                 />
             }
 
-            {/* View Form */}
+            {/* View file*/}
             {
                 openFileModal &&
                 <ViewFileModal

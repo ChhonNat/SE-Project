@@ -153,17 +153,25 @@ const HomeCandidate = () => {
                                     eventName: 'shortlistCandidate',
                                     icon: <CheckCircleOutlineIcon color="info" />,
                                     hidden: !user?.roles ? true : [ROLE.ROLE_TA_TEAM, ROLE.ROLE_HIRING_MANAGER].some((role) => user?.roles.includes(role)) ? false : true,
-                                    enable: !user?.roles ? false : (
-                                        user?.roles?.includes(ROLE.ROLE_TA_TEAM) ?
-                                            [
-                                                {
-                                                    field: 'submitStatus',
-                                                    values: [STATUS.SUBMIT_STATUS.OFCCEO_APPROVED, STATUS.SUBMIT_STATUS.SUBMITTED_HOD]
-                                                }
-                                            ]
-                                            :
-                                            true
-                                    )
+                                    enable: !user?.roles ? false : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ?
+                                        [
+                                            {
+                                                field: 'submitStatus',
+                                                values: [STATUS.SUBMIT_STATUS.OFCCEO_APPROVED]
+                                            }
+                                        ]
+                                        :
+                                        [
+                                            {
+                                                field: 'submitStatus',
+                                                values: [STATUS.SUBMIT_STATUS.SUBMITTED_HOD]
+                                            },
+                                            {
+                                                field: 'status',
+                                                values: [STATUS.CANDIDATE.SHORTLISTED]
+                                            }
+                                        ]
+
                                 },
                                 {
                                     name: 'Invite Interview',
@@ -181,7 +189,7 @@ const HomeCandidate = () => {
                                         [
                                             {
                                                 field: 'status',
-                                                values: [STATUS.CANDIDATE.CV_SHORTLISTED]
+                                                values: [STATUS.CANDIDATE.SHORTLISTED]
                                             },
                                             {
                                                 field: 'shortlistResult',

@@ -75,7 +75,8 @@ export const API_URL = {
         }
     },
     hire: {
-        get: API_VERSION + '/hire-applicants/search'
+        get: API_VERSION + '/hire-applicants/search',
+        downloadCVFile: API_VERSION + '/hire-applicants/download?id=',
     },
     positionLevel: {
         get: API_VERSION + '/position-levels/search',
