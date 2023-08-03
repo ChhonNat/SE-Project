@@ -152,6 +152,8 @@ const AsyncDatatable = (props) => {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
+
+
   return (
     <Box
       sx={{
