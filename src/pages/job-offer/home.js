@@ -37,7 +37,7 @@ const HomeJobOffer = () => {
             modalTitle: 'View Reference Form',
             viewFileById: editJobOffer?.referenceCheck?.id,
             downloadFileUrlL: API_URL.referenceCheck.downloadRefForm
-        }
+        },
     }
 
     return (
@@ -78,38 +78,42 @@ const HomeJobOffer = () => {
                                 icon: <AttachMoney color="info" />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
                                 enable: true
-                                // [
-                                //     {
-                                //         field: 'processStatus',
-                                //         values: [STATUS.OFFER_PROCESS.PENDING]
-                                //     }
-                                // ]
                             },
                             {
                                 name: 'Verify',
                                 eventName: 'verify',
                                 icon: <DoneAll color="info" />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HR_MANAGER) ? false : true,
-                                enable: true
-                                // [
-                                //     {
-                                //         field: 'processStatus',
-                                //         values: [STATUS.OFFER_PROCESS.HOD_APPROVED]
-                                //     }
-                                // ]
+                                enable: [
+                                    {
+                                        field: 'processStatus',
+                                        values: [STATUS.OFFER_PROCESS.HOD_APPROVED]
+                                    }
+                                ]
                             },
                             {
                                 name: 'Approve',
                                 eventName: 'approve',
                                 icon: <DoneAll color="info" />,
                                 hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
-                                enable: true
-                                    // [
-                                    //     {
-                                    //         field: 'processStatus',
-                                    //         values: [STATUS.OFFER_PROCESS.DHR_VERIFIED]
-                                    //     }
-                                    // ]
+                                enable: [
+                                    {
+                                        field: 'processStatus',
+                                        values: [STATUS.OFFER_PROCESS.DHR_VERIFIED]
+                                    }
+                                ]
+                            },
+                            {
+                                name: 'Hire',
+                                eventName: 'hire',
+                                icon: <DoneAll color="success" />,
+                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA_ADMIN) ? false : true,
+                                enable: [
+                                    {
+                                        field: 'processStatus',
+                                        values: [STATUS.OFFER_PROCESS.OFFCEO_APPROVED]
+                                    }
+                                ]
                             }
                         ]
                     }
@@ -149,29 +153,39 @@ const HomeJobOffer = () => {
             />
 
             {/* Offer salary */}
-            <OfferJobFormModal
-                modalType={modalType}
-                open={openOfferModal}
-                jobOffer={editJobOffer}
-                onCloseModal={() => setOpenOfferModal(false)}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            />
+            {
+                openOfferModal &&
+                <OfferJobFormModal
+                    modalType={modalType}
+                    open={openOfferModal}
+                    jobOffer={editJobOffer}
+                    onCloseModal={() => setOpenOfferModal(false)}
+                    handleEventSuccessed={() => setIsReload(!isReload)}
+                />
+            }
 
             {/* View Form */}
-            <ViewFileModal
-                modalTitle={mapFileModal[modalType]?.modalTitle}
-                id={mapFileModal[modalType]?.viewFileById}
-                downloadFileUrl={mapFileModal[modalType]?.downloadFileUrlL}
-                openModal={openFileModal}
-                onCloseModal={() => setOpenFileModal(false)}
-            />
+            {
+                openFileModal &&
+                <ViewFileModal
+                    modalTitle={mapFileModal[modalType]?.modalTitle}
+                    id={mapFileModal[modalType]?.viewFileById}
+                    downloadFileUrl={mapFileModal[modalType]?.downloadFileUrlL}
+                    openModal={openFileModal}
+                    onCloseModal={() => setOpenFileModal(false)}
+                />
+            }
 
             {/* Detail Job Offer */}
-            <JobOfferFormDetailModal
-                editJobOffer={editJobOffer}
-                openModal={openOfferDetailModal}
-                onCloseModal={() => setOpenOfferDetailModal(false)}
-            />
+            {
+                openOfferDetailModal &&
+                <JobOfferFormDetailModal
+                    editJobOffer={editJobOffer}
+                    openModal={openOfferDetailModal}
+                    onCloseModal={() => setOpenOfferDetailModal(false)}
+                />
+            }
+
         </>
     )
 };

@@ -303,6 +303,10 @@ const tblHire = [
         label: 'Status',
         type: 'status',
         statusColor: { Hired: 'Green' }
+    },
+    {
+        id: 'action',
+        label: 'Actions'
     }
 ];
 

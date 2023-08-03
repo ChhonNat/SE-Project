@@ -74,21 +74,19 @@ const AsyncDatatable = (props) => {
   );
 
   useEffect(() => {
-    const identifier = setTimeout(async () => {
-    getRows(searchText);
-    }, 200);
 
+    const identifier = setTimeout(async () => {
+      getRows(searchText);
+    }, 300);
     return () => {
       clearTimeout(identifier);
     };
-
   }, [searchText, isReloadData, getRows]);
 
 
   useEffect(() => {
     setPage(0);
   }, [searchText]);
-
 
   /**
    * Short data
@@ -154,8 +152,6 @@ const AsyncDatatable = (props) => {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-
-
   return (
     <Box
       sx={{
@@ -186,7 +182,7 @@ const AsyncDatatable = (props) => {
           useActions={useTableActions}
         />
         {loading ?
-          <Box sx={{ width: '100%' }}><LinearProgress /></Box> 
+          <Box sx={{ width: '100%' }}><LinearProgress /></Box>
           :
           <Divider />
         }
@@ -206,7 +202,55 @@ const AsyncDatatable = (props) => {
               headers={headers}
             />
             <TableBody>
+              <TableRows
+                displayRecords={rows}
+                isSelected={isSelected}
+                handleClick={handleClick}
+                headers={headers}
+                checkColumn={checkColumn}
+                pageSize={rowsPerPage}
+                actions={useTableActions}
+                handleViewEvent={(record) => handleViewEvent(record)}
+                handleViewFileEvent={(record) => handleViewFileEvent(record)}
+                handleViewSecFileEvent={(record) => handleViewSecFileEvent(record)}
+                handleEditEvent={(record) => handleEditEvent(record)}
+                handleLinkEvent={(record) => handleLinkEvent(record)}
+                handleMoreEvent={(eName, record) => handleMoreEvent(eName, record)}
+              />
               {
+
+                (!error && rows?.length === 0) ? (
+                  <TableRow
+                    style={{
+                      height: (dense ? 20 : 33) * 2,
+                    }}
+                  >
+                    <TableCell
+                      align='center'
+                      colSpan={headers?.length + 1}
+                      sx={{ textAlign: 'center' }}
+                    >
+                      <Typography variant="error">Data Empty...!</Typography>
+                    </TableCell>
+                  </TableRow>
+                ) : ""
+              }
+              {error && (
+                <TableRow
+                  style={{
+                    height: (dense ? 33 : 53) * 2,
+                  }}
+                >
+                  <TableCell
+                    align='center'
+                    colSpan={headers?.length + 1}
+                    sx={{ textAlign: 'center' }}
+                  >
+                    <Typography variant="error">{error}</Typography>
+                  </TableCell>
+                </TableRow>
+              )}
+              {/* {
                 loading ?
                   <>
                   </>
@@ -288,7 +332,7 @@ const AsyncDatatable = (props) => {
 
                   </>
 
-              }
+              } */}
             </TableBody>
           </Table>
         </TableContainer>

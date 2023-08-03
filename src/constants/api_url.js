@@ -64,7 +64,8 @@ export const API_URL = {
         get: API_VERSION + '/job-offers/search',
         detail: API_VERSION + '/job-offers/',
         offerSalary: API_VERSION + '/job-offers/',
-        processJobOffer: API_VERSION + '/job-offers/'
+        processJobOffer: API_VERSION + '/job-offers/',
+        hire: API_VERSION + '/job-offers/'
     },
     assessment: {
         get: API_VERSION + '/assessments/search',

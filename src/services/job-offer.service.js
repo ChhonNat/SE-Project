@@ -9,8 +9,12 @@ const processJobOffer = (offId, canId, data, contentType) => {
     return httpService._put(API_URL.jobOffer.processJobOffer + `${offId}/candidate/${canId}/process`, data, contentType);
 };
 
+const hire = (offId, canId, data, contentType) => {
+    return httpService._put(API_URL.jobOffer.hire+`${offId}/candidate/${canId}/hire`,data,contentType);
+}
 
 export const jobOfferService = {
     jobOffer,
-    processJobOffer
+    processJobOffer,
+    hire
 };

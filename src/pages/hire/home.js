@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
+
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
-import AsyncTableAction from "../../components/AsyncDataTable/async-table-action";
 
 const HomeHire = () => {
 
@@ -31,12 +31,13 @@ const HomeHire = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ 
+                useTableActions={{
                     search: true,
                     refresh: true
                 }}
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
+
         </>
     )
 };
