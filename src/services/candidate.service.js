@@ -34,7 +34,7 @@ const downloadCVFile = (id) => {
 }
 
 
-export const CandidateService = {
+export const candidateService = {
     createCandidate,
     editCandidate,
     inviteFirstInterview,

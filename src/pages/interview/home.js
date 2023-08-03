@@ -16,7 +16,7 @@ import { TABLE_CONFIG } from "../../utils/table-config";
 import { API_URL } from "../../constants/api_url";
 import { STATUS } from "../../constants/status";
 import ReferenceCheckModal from "./check-reference-form.modal";
-import { InterviewService } from "../../services/interview.service";
+import { interviewService } from "../../services/interview.service";
 
 const HomeInterview = () => {
 
@@ -193,7 +193,7 @@ const HomeInterview = () => {
             {/* Second interview schedule modal */}
             <CandidateScheduleFormModal
                 eventType={verifyTypeModal}
-                apiService={InterviewService.inviteSecondInterview}
+                apiService={interviewService.inviteSecondInterview}
                 editData={editInterview}
                 open={openScheduleModal}
                 onCloseModal={() => setOpenScheduleModal(false)}

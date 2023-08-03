@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { API_URL } from "../../constants/api_url";
 import { Autocomplete, Box, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, IconButton, OutlinedInput, Select, Slide, TextField } from "@mui/material";
-import { CandidateService } from "../../services/candidate.service";
+import { candidateService } from "../../services/candidate.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
 import { Close } from "@mui/icons-material";
@@ -130,7 +130,7 @@ const CandidateScheduleFormModal = (props) => {
             if (apiService)
                 submitCandidate = await apiService(editData?.id, editData?.candidate?.id, dataSubmit)
             else
-                submitCandidate = await CandidateService.inviteFirstInterview(editData?.id, dataSubmit);
+                submitCandidate = await candidateService.inviteFirstInterview(editData?.id, dataSubmit);
 
             const { status, data } = submitCandidate;
             const { message } = data;
@@ -141,9 +141,9 @@ const CandidateScheduleFormModal = (props) => {
                     handleEventSuccessed();
 
                 Swal.fire({
-                    title: data?.status === DATA_STATUS.success ? 'Success' : 'Error',
+                    title: data?.status === DATA_STATUS.success ? 'Success' : 'Warning',
                     text: message,
-                    icon: data?.status === DATA_STATUS.success ? 'success' : 'error',
+                    icon: data?.status === DATA_STATUS.success ? 'success' : 'warning',
                     confirmButtonText: 'OK',
                 });
 

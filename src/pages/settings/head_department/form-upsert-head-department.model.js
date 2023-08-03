@@ -1,22 +1,24 @@
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
+import SelectComponent from "../../../components/Selector/select";
+import HeadDepartmentModel from "../../../models/department/head-department.model";
+import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
+import Swal from "sweetalert2";
+import _useHttp from "../../../hooks/_http";
+
+import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import _useHttp from "../../../hooks/_http";
 import { HTTP_METHODS } from "../../../constants/http_method";
-import Swal from "sweetalert2";
 import { ALERT_TIMER } from "../../../constants/app_config";
-import SelectComponent from "../../../components/Selector/select";
 import { STATUS } from "../../../constants/status";
 import { globalService } from "../../../services/global.service";
 import { API_URL } from "../../../constants/api_url";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
-import HeadDepartmentModel from "../../../models/department/head-department.model";
-import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
+
 import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
@@ -182,7 +184,6 @@ const UpsertHeadDepartmentForm = (props) => {
                                 />
                             </Grid>
 
-
                             <Grid item xs={12}>
                                 <TextField
                                     type="text"
@@ -244,6 +245,7 @@ const UpsertHeadDepartmentForm = (props) => {
                                     err={errors?.businessUnitId?.message}
                                 />
                             </Grid>
+
                             <Grid item xs={12}>
                                 <AsyncAutoComplete
                                     id="department-id"
@@ -298,19 +300,6 @@ const UpsertHeadDepartmentForm = (props) => {
                                 />
                             </Grid>
 
-                            {editData?.id &&
-                                <Grid item xs={12}>
-                                    <SelectComponent
-                                        id="status-id"
-                                        label={'Status'}
-                                        size={'small'}
-                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
-                                        value={watchData?.status || ""}
-                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
-                                    />
-                                </Grid>
-                            }
-
                             <Grid item xs={12}>
                                 <TextField
                                     sx={{ width: '100%' }}
@@ -323,6 +312,20 @@ const UpsertHeadDepartmentForm = (props) => {
                                     {...register('description')}
                                 />
                             </Grid>
+
+                            {editData?.id &&
+                                <Grid item xs={12}>
+                                    <SelectComponent
+                                        id="status-id"
+                                        label={'Status'}
+                                        size={'small'}
+                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
+                                        value={watchData?.status || ""}
+                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
+                                    />
+                                </Grid>
+                            }
+                            
                         </Grid>
                     </Box>
                 </DialogContent>

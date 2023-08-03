@@ -74,7 +74,7 @@ export const API_URL = {
         }
     },
     hire: {
-        get: API_VERSION + '/hires/search'
+        get: API_VERSION + '/hire-applicants/search'
     },
     positionLevel: {
         get: API_VERSION + '/position-levels/search',

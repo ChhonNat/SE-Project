@@ -12,7 +12,7 @@ import { globalService } from "../../services/global.service";
 import { API_URL } from "../../constants/api_url";
 import { STATUS } from "../../constants/status";
 import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Slide, TextField } from "@mui/material";
-import { InterviewService } from "../../services/interview.service";
+import { interviewService } from "../../services/interview.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
 import { Close } from "@mui/icons-material";
@@ -101,7 +101,7 @@ const InterViewEvaluateFormModal = (props) => {
             formSubmit.append(key, submitData[key]);
         });
 
-        const reqSubmitEvaluate = await InterviewService.evaluateInterview(interview?.id, interview?.candidate?.id, formSubmit, 'multipart/form-data');
+        const reqSubmitEvaluate = await interviewService.evaluateInterview(interview?.id, interview?.candidate?.id, formSubmit, 'multipart/form-data');
 
         const { status, data } = reqSubmitEvaluate;
         const { message } = data;

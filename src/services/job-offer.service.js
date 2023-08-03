@@ -10,7 +10,7 @@ const processJobOffer = (offId, canId, data, contentType) => {
 };
 
 
-export const offerService = {
+export const jobOfferService = {
     jobOffer,
     processJobOffer
 };

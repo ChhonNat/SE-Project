@@ -1,9 +1,9 @@
 import axios from "axios";
 import apiLink from "../constants/app_cont";
+import Swal from "sweetalert2";
 import { LOCAL_STORAGE_KEYS } from "../constants/local_storage";
 import { HTTP_STATUS } from "../constants/http_status";
 import { API_URL } from "../constants/api_url";
-import Swal from "sweetalert2";
 
 const reqHeaders = {
     'Accept': 'application/json',
@@ -54,9 +54,9 @@ await axiosAPI.interceptors.response.use((res) => {
         } else if (message === isAccessDenied) {
 
             return Swal.fire({
-                title: 'Warning',
+                title: 'Restricted Page',
                 text: `${message}!`,
-                icon: 'info',
+                icon: 'warning',
                 confirmButtonText: 'OK',
             });
 

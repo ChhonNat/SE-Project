@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from "react";
 import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
-import { InterviewService } from "../../services/interview.service";
+import { interviewService } from "../../services/interview.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, TextField } from "@mui/material";
@@ -19,7 +19,7 @@ const ReferenceCheckModal = (props) => {
     const handleSubmit = async () => {
 
         try {
-            const reqRefCheck = await InterviewService.referenceCheck(interview?.id,interview?.candidate?.id, { remark: remark });
+            const reqRefCheck = await interviewService.referenceCheck(interview?.id,interview?.candidate?.id, { remark: remark });
             const { status, data } = reqRefCheck;
             const { message } = data;
 

@@ -1,20 +1,21 @@
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Slide, TextField } from "@mui/material";
 import React, { forwardRef, useEffect, useState } from "react";
 import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
-import { Close, Visibility, VisibilityOff } from "@mui/icons-material";
 import SelectComponent from "../../components/Selector/select";
+import MultiSelectComponent from "../../components/MultiSelector/select";
+import LabelRequire from "../../components/Label/require";
+import Swal from "sweetalert2";
+
+import { Box, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Slide, TextField } from "@mui/material";
+import { Close, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import LabelRequire from "../../components/Label/require";
 import { KEY_POST } from "../../constants/key_post";
 import { userService } from "../../services/user.service.";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
-import Swal from "sweetalert2";
 import { UserModel } from "../../models/user.model";
 import { ConverterService } from "../../utils/converter";
-import MultiSelectComponent from "../../components/MultiSelector/select";
 import { API_URL } from "../../constants/api_url";
 
 const shrinkOpt = { shrink: true };
@@ -292,16 +293,6 @@ const UpsertUserForm = (props) => {
                                 handleEventChange={(e) => setValue('roles', e)}
                                 err={errors?.roles?.message}
                             />
-
-                            {/* <SelectComponent
-                                label={<LabelRequire label="Role" />}
-                                customDatas={['Test', 'Test1']}
-                                size="small"
-                                error={errors?.roleId}
-                                helperText={errors?.roleId?.message}
-
-                            /> */}
-
                         </Grid>
                         <Grid item xs={12}>
                             <SelectComponent

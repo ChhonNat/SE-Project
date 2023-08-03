@@ -14,6 +14,7 @@ import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ElevatorIcon from '@mui/icons-material/Elevator';
 import { HowToReg } from "@mui/icons-material";
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
 /**
  * Import all page components
@@ -33,7 +34,11 @@ const ReferenceCheck = {
 
 const JobOffer = {
     home: lazy(() => import('../pages/job-offer/home'))
-}
+};
+
+const Hire = {
+    home: lazy(() => import('../pages/hire/home'))
+};
 
 const Settings = {
 
@@ -67,11 +72,7 @@ const Settings = {
 
     subBusinessUnit: {
         home: lazy(() => import('../pages/settings/sub-business-unit/home'))
-    },
-
-    campus: {
-        home: lazy(() => import('../pages/settings/campus/home'))
-    },
+    }
 
 };
 
@@ -105,13 +106,19 @@ export const PRIVATE_ROUTES = [
         component: <ReferenceCheck.home />,
         icon: <PersonSearchIcon />,
     },
-
     /**Job Offer */
     {
         name: "Job Offers",
         path: "/job-offer",
         component: <JobOffer.home />,
         icon: <HowToReg />
+    },
+    /**Hire*/
+    {
+        name: "Hire Applicants",
+        path: "/hire",
+        component: <Hire.home />,
+        icon: <AssignmentIndIcon />
     },
     /**Settings */
     {
@@ -164,7 +171,7 @@ export const PRIVATE_ROUTES = [
 
             /**Department */
             {
-                name: "Head Departments",
+                name: "HODs",
                 path: "head-department",
                 component: <Settings.headDepartment.home />,
                 icon: <PeopleAltIcon />,

@@ -20,7 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Grid, IconButton, Slide } from '@mui/material';
 import { globalService } from '../../services/global.service';
 import { API_URL } from '../../constants/api_url';
-import { CandidateService } from '../../services/candidate.service';
+import { candidateService } from '../../services/candidate.service';
 import { HTTP_STATUS } from '../../constants/http_status';
 import { DATA_STATUS } from '../../constants/data_status';
 import { ConverterService } from '../../utils/converter';
@@ -203,10 +203,10 @@ const CandidateFormModal = (props) => {
             let submitCandidateForm;
 
             if (candidate?.id) {
-                submitCandidateForm = await CandidateService.editCandidate(submitFormData, candidate?.id, 'multipart/form-data');
+                submitCandidateForm = await candidateService.editCandidate(submitFormData, candidate?.id, 'multipart/form-data');
             } else {
 
-                submitCandidateForm = await CandidateService.createCandidate(submitFormData, 'multipart/form-data');
+                submitCandidateForm = await candidateService.createCandidate(submitFormData, 'multipart/form-data');
             }
 
             const { status, data } = submitCandidateForm;

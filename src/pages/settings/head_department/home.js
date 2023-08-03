@@ -30,7 +30,7 @@ const HomeHeadDepartment = () => {
             <AsyncDatatable
                 asyncURL={API_URL.headDepartment.get}
                 headers={TABLE_CONFIG.tblHeadDepartment}
-                bannerText="All Head Departments"
+                bannerText="All HODs"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
@@ -45,7 +45,7 @@ const HomeHeadDepartment = () => {
 
             {/* Form create and update head department */}
             <UpsertHeadDepartmentForm
-                title={editHeadDepartment?.id ? "Edit head department" : "Add head department"}
+                title={editHeadDepartment?.id ? "Edit HOD" : "Add HOD"}
                 openModal={openHeadDepartmentModal}
                 onCloseModal={() => {
                     setEditHeadDepartment({});

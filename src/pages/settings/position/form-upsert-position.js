@@ -200,18 +200,6 @@ const UpsertPositionForm = (props) => {
                                     err={errors?.businessUnitId?.message}
                                 />
 
-                                {/* <MultiSelectComponent
-                                    id="business-unit-id"
-                                    label="Primary Business"
-                                    isRequire={true}
-                                    isSubmit={isSubmitForm}
-                                    customDatas={listBusinessDivisions}
-                                    value={watchData?.businessDivisions || []}
-                                    bindField="nameEn"
-                                    handleEventChange={(e) => setValue('businessDivisions', e)}
-                                    err={errors?.businessDivisions?.message}
-                                /> */}
-
                             </Grid>
                             <Grid item xs={12}>
                                 <AsyncAutoComplete
@@ -247,18 +235,7 @@ const UpsertPositionForm = (props) => {
                                     err={errors?.positionLevelId?.message}
                                 />
                             </Grid>
-                            {editData?.id &&
-                                <Grid item xs={12}>
-                                    <SelectComponent
-                                        id="status-id"
-                                        label={'Status'}
-                                        size={'small'}
-                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
-                                        value={watchData?.status || ""}
-                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
-                                    />
-                                </Grid>
-                            }
+
                             <Grid item xs={12}>
                                 <TextField
                                     sx={{ width: '100%' }}
@@ -271,6 +248,20 @@ const UpsertPositionForm = (props) => {
                                     {...register('description')}
                                 />
                             </Grid>
+
+                            {editData?.id &&
+                                <Grid item xs={12}>
+                                    <SelectComponent
+                                        id="status-id"
+                                        label={'Status'}
+                                        size={'small'}
+                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
+                                        value={watchData?.status || ""}
+                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
+                                    />
+                                </Grid>
+                            }
+
                         </Grid>
                     </Box>
                 </DialogContent>

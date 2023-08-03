@@ -1,24 +1,23 @@
-import React, { forwardRef, useCallback, useEffect, useState } from "react";
+import React, { forwardRef, useEffect } from "react";
 import Box from "@mui/material/Box";
-import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import _useHttp from "../../../hooks/_http";
-import { HTTP_METHODS } from "../../../constants/http_method";
-import Swal from "sweetalert2";
-import { ALERT_TIMER } from "../../../constants/app_config";
 import SelectComponent from "../../../components/Selector/select";
-import { STATUS } from "../../../constants/status";
-import { globalService } from "../../../services/global.service";
-import { API_URL } from "../../../constants/api_url";
-import { HTTP_STATUS } from "../../../constants/http_status";
-import { KEY_POST } from "../../../constants/key_post";
 import DepartmentModel from "../../../models/department/department.model";
-import MultiSelectComponent from "../../../components/MultiSelector/select";
 import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
 import LabelRequire from "../../../components/Label/require";
+import Swal from "sweetalert2";
+import _useHttp from "../../../hooks/_http";
+
+import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { HTTP_METHODS } from "../../../constants/http_method";
+import { ALERT_TIMER } from "../../../constants/app_config";
+import { STATUS } from "../../../constants/status";
+import { API_URL } from "../../../constants/api_url";
+import { KEY_POST } from "../../../constants/key_post";
+
 import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
@@ -191,44 +190,7 @@ const UpsertDepartmentForm = (props) => {
                                     isRequire={true}
                                     err={errors?.businessUnitId?.message}
                                 />
-                                {/* <MultiSelectComponent
-                                    id="business-id"
-                                    label="Primary Business"
-                                    isRequire={true}
-                                    isSubmit={isSubmitForm}
-                                    customDatas={listBusinessDivisions}
-                                    value={watchData?.businessDivisions || []}
-                                    bindField="nameEn"
-                                    handleEventChange={(e) => setValue('businessDivisions', e)}
-                                    err={errors?.businessDivisions?.message}
-                                /> */}
-                                {/* <SelectComponent
-                                    id="primary-business-id"
-                                    label="Primary Business"
-                                    isRequire={true}
-                                    variant="outlined"
-                                    fullWidth
-                                    size="meduim"
-                                    customDatas={listBusinessDivisions}
-                                    value={watchData?.businessDivisions || ""}
-                                    bindField="nameEn"
-                                    handleOnChange={(e) => setValue('businessDivisions', e?.target?.value)}
-                                    err={errors?.businessDivisions?.message}
-                                /> */}
                             </Grid>
-
-                            {editData?.id &&
-                                <Grid item xs={12}>
-                                    <SelectComponent
-                                        id="status-id"
-                                        label={'Status'}
-                                        size={'small'}
-                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
-                                        value={watchData?.status || ""}
-                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
-                                    />
-                                </Grid>
-                            }
 
                             <Grid item xs={12}>
                                 <TextField
@@ -243,6 +205,19 @@ const UpsertDepartmentForm = (props) => {
                                     size="small"
                                 />
                             </Grid>
+
+                            {editData?.id &&
+                                <Grid item xs={12}>
+                                    <SelectComponent
+                                        id="status-id"
+                                        label={'Status'}
+                                        size={'small'}
+                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
+                                        value={watchData?.status || ""}
+                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
+                                    />
+                                </Grid>
+                            }
 
                         </Grid>
                     </Box>

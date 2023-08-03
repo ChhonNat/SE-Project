@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
-import { offerService } from "../../services/job-offer.service";
+import { jobOfferService } from "../../services/job-offer.service";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -76,11 +76,11 @@ const OfferJobFormModal = (props) => {
                 setError('offerSalary', { message: 'Offer salary is required!' })
                 return;
             }
-            reqSubmit = await offerService.jobOffer(id, candidate?.id, { offerSalary: parseFloat(offerSalary), remark: remark });
+            reqSubmit = await jobOfferService.jobOffer(id, candidate?.id, { offerSalary: parseFloat(offerSalary), remark: remark });
 
         } else {
 
-            reqSubmit = await offerService.processJobOffer(id, candidate?.id, { processStatus: mapModalType[modalType]?.proStatus, remark: remark });
+            reqSubmit = await jobOfferService.processJobOffer(id, candidate?.id, { processStatus: mapModalType[modalType]?.proStatus, remark: remark });
         }
     
 

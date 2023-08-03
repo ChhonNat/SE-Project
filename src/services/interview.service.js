@@ -15,7 +15,7 @@ const referenceCheck = (intId, canId, data, contentType) => {
 
 
 
-export const InterviewService = {
+export const interviewService = {
     inviteSecondInterview,
     evaluateInterview,
     referenceCheck

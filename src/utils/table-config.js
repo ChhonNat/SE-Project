@@ -248,57 +248,6 @@ const tblJobOffer = [
     }
 ];
 
-/***
- * Assessment Table
- */
-const tblAssessment = [
-    {
-        id: 'index',
-        label: 'No.'
-    },
-    , {
-        id: 'applicantCode',
-        label: 'Applicant Code',
-        type: 'link',
-        statusColor: {},
-    },
-    {
-        id: 'candidateName',
-        label: 'Name'
-    },
-    {
-        id: 'offerPositionName',
-        label: 'Offer Position'
-    },
-    {
-        id: 'departmentName',
-        label: 'Department'
-    },
-    {
-        id: 'businessDivisionName',
-        label: 'Primary Business'
-    },
-    {
-        id: 'offerSalary',
-        label: 'Offer Salary ($)'
-    },
-    {
-        id: 'status',
-        label: 'Status',
-        type: 'status',
-        statusColor: { Offered: 'Green', Suspended: 'Orange', Cancel: 'Red' }
-    },
-    // {
-    //     id: 'headDepartmentName', label: 'Head Department'
-    // },
-    // ...proof,
-    // {
-    //     id: 'createdBy', label: 'Created By'
-    // },
-    {
-        id: 'action', label: 'Actions'
-    }
-];
 
 /**
  * Hire Table
@@ -308,39 +257,46 @@ const tblHire = [
         id: 'index',
         label: 'No.'
     },
-    , {
-        id: 'applicantCode',
+    {
+        id: 'candidate',
         label: 'Applicant Code',
         type: 'link',
-        statusColor: {}
+        obj: { name: 'applicantCode' },
     },
     {
-        id: 'candidateName',
-        label: 'Name'
+        id: 'candidate',
+        label: 'Name',
+        obj: { name: 'fullName' },
     },
     {
-        id: 'hirePositionName',
-        label: 'Hire Position'
+        id: 'position',
+        label: 'Hire Position',
+        obj: { name: 'nameEn' },
     },
     {
-        id: 'departmentName',
-        label: 'Department'
+        id: 'department',
+        label: 'Department',
+        obj: { name: 'nameEn' },
     },
     {
-        id: 'businessDivisionName',
-        label: 'Primary Business'
+        id: 'headDepartment',
+        label: 'HOD',
+        obj: { name: 'fullName' },
     },
     {
-        id: 'hireDate',
-        label: 'Hire Date',
+        id: 'businessUnit',
+        label: 'Primary Business',
+        obj: { name: 'nameEn' }
+    },
+    {
+        id: 'hiredAt',
+        label: 'Hired At',
         type: 'date',
-        dateFormat: 'MMM DD, YYYY'
+        dateFormat: 'MMM DD, YYYY hh:mm:ss A'
     },
     {
-        id: 'joinDate',
-        label: 'Join Date',
-        type: 'date',
-        dateFormat: 'MMM DD, YYYY'
+        id: 'hiredBy',
+        label: 'Hired By',
     },
     {
         id: 'status',
@@ -740,29 +696,6 @@ const tblLocation = [
     }
 ];
 
-
-/**
- * Receiving Category Table
- */
-const tblReceivingCategory = [
-    {
-        id: 'index', 
-        label: 'No.',
-    },
-    {
-        id: 'name', 
-        label: 'Name',
-    },
-    {
-        id: 'description', 
-        label: 'Description',
-    },
-    {
-        id: 'action', 
-        label: 'Actions'
-    }
-];
-
 /**
  * User management
  */
@@ -797,7 +730,7 @@ const tblUser = [
         id: "createdAt", 
         label: "Created At",
         type: "date", 
-        dateFormat: 'MMM DD, YYYY'
+        dateFormat: 'MMM DD, YYYY hh:mm:ss A'
     },
     {
         id: "roles", 
@@ -815,7 +748,6 @@ export const TABLE_CONFIG = {
     tblCandidate,
     tblInterview,
     tblJobOffer,
-    tblAssessment,
     tblReferenceCheck,
     tblHire,
     tblMainBusiness,
@@ -826,7 +758,6 @@ export const TABLE_CONFIG = {
     tblCommittee,
     tblPosition,
     tblPositionLevel,
-    tblReceivingCategory,
     tblRecruiter,
     tblLocation,
     tblUser

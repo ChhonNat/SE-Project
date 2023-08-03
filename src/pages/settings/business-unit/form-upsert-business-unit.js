@@ -210,19 +210,6 @@ const UpsertBusinessUnitForm = (props) => {
                                 />
                             </Grid>
 
-                            {/* Status */}
-                            {editData?.id &&
-                                <Grid item xs={12}>
-                                    <SelectComponent
-                                        id="status-id"
-                                        label={'Status'}
-                                        size={'small'}
-                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
-                                        value={watchData?.status || ""}
-                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
-                                    />
-                                </Grid>
-                            }
                             {/* Address line EN */}
                             <Grid item xs={12}>
                                 <TextField
@@ -267,6 +254,21 @@ const UpsertBusinessUnitForm = (props) => {
                                     size="small"
                                 />
                             </Grid>
+
+                            {/* Status */}
+                            {editData?.id &&
+                                <Grid item xs={12}>
+                                    <SelectComponent
+                                        id="status-id"
+                                        label={'Status'}
+                                        size={'small'}
+                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
+                                        value={watchData?.status || ""}
+                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
+                                    />
+                                </Grid>
+                            }
+
                         </Grid>
                     </Box>
                 </DialogContent>

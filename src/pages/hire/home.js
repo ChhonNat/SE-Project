@@ -26,7 +26,7 @@ const HomeHire = () => {
             <AsyncDatatable
                 asyncURL={API_URL.hire.get}
                 headers={TABLE_CONFIG.tblHire}
-                bannerText="All Hires"
+                bannerText="All Hire Applicants"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"

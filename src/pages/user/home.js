@@ -36,16 +36,20 @@ const HomeUser = () => {
 
             {/* Create and Update form */}
 
-            <UpsertUserForm
-                open={openModal}
-                onCloseModal={() => {
-                    setEditUser({})
-                    setOpenModal(false)
-                }
-                }
-                handleEventSuccessed={() => setIsReload(!isReload)}
-                user={editUser}
-            />
+            {
+                openModal &&
+                <UpsertUserForm
+                    open={openModal}
+                    onCloseModal={() => {
+                        setEditUser({})
+                        setOpenModal(false)
+                    }
+                    }
+                    handleEventSuccessed={() => setIsReload(!isReload)}
+                    user={editUser}
+                />
+            }
+
         </>
     )
 }

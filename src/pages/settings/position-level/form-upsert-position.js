@@ -5,7 +5,6 @@ import TitleComponent from "../../../components/Page/title";
 import _useHttp from "../../../hooks/_http";
 import Swal from "sweetalert2";
 import SelectComponent from "../../../components/Selector/select";
-
 import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
 import PositionLevelModel from "../../../models/position/position-level.model";
 
@@ -199,17 +198,6 @@ const UpsertPositionLavelForm = (props) => {
                                     handleOnChange={(e) => setValue('businessUnitId', e?.target?.value)}
                                     err={errors?.businessUnitId?.message}
                                 />
-                                {/* <MultiSelectComponent
-                                    id="business-unit-id"
-                                    label="Primary Business"
-                                    isRequire={true}
-                                    isSubmit={isSubmitForm}
-                                    customDatas={listBusinessDivisions}
-                                    value={watchData?.businessDivisions || []}
-                                    bindField="nameEn"
-                                    handleEventChange={(e) => setValue('businessDivisions', e)}
-                                    err={errors?.businessDivisions?.message}
-                                /> */}
                             </Grid>
                             <Grid item xs={12}>
 
@@ -228,19 +216,6 @@ const UpsertPositionLavelForm = (props) => {
                                 />
 
                             </Grid>
-
-                            {editData?.id &&
-                                <Grid item xs={12}>
-                                    <SelectComponent
-                                        id="status-id"
-                                        label={'Status'}
-                                        size={'small'}
-                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
-                                        value={watchData?.status || ""}
-                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
-                                    />
-                                </Grid>
-                            }
                             <Grid item xs={12}>
                                 <TextField
                                     sx={{ width: '100%' }}
@@ -254,6 +229,18 @@ const UpsertPositionLavelForm = (props) => {
                                     size="small"
                                 />
                             </Grid>
+                            {editData?.id &&
+                                <Grid item xs={12}>
+                                    <SelectComponent
+                                        id="status-id"
+                                        label={'Status'}
+                                        size={'small'}
+                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
+                                        value={watchData?.status || ""}
+                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
+                                    />
+                                </Grid>
+                            }
                         </Grid>
                     </Box>
                 </DialogContent>

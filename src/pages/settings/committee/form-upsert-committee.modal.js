@@ -298,19 +298,6 @@ const UpsertCommitteeForm = (props) => {
                                 />
                             </Grid>
 
-                            {editData?.id &&
-                                <Grid item xs={12}>
-                                    <SelectComponent
-                                        id="status-id"
-                                        label={'Status'}
-                                        size={'small'}
-                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
-                                        value={watchData?.status || ""}
-                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
-                                    />
-                                </Grid>
-                            }
-
                             <Grid item xs={12}>
                                 <TextField
                                     sx={{ width: '100%' }}
@@ -324,6 +311,19 @@ const UpsertCommitteeForm = (props) => {
                                     size="small"
                                 />
                             </Grid>
+                            
+                            {editData?.id &&
+                                <Grid item xs={12}>
+                                    <SelectComponent
+                                        id="status-id"
+                                        label={'Status'}
+                                        size={'small'}
+                                        customDatas={[STATUS.RECORD.ACTIVE, STATUS.RECORD.INACTIVE]}
+                                        value={watchData?.status || ""}
+                                        handleOnChange={(e) => setValue('status', e?.target?.value)}
+                                    />
+                                </Grid>
+                            }
 
                         </Grid>
                     </Box>
