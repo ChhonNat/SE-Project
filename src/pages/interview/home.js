@@ -79,6 +79,7 @@ const HomeInterview = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
+                    refresh: true,
                     view: true,
                     viewFile: [
                         {

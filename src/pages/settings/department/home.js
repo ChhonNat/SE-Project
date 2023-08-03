@@ -38,12 +38,18 @@ const HomeDepartment = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true, edit: true }}
+                useTableActions={{ 
+                    search: true, 
+                    refresh: true,
+                    create: true, 
+                    edit: true 
+                }}
                 onHandleAddNewEvent={() => setOpenDepartmentModal(true)}
                 handleEditEvent={(data) => {
                     setEditDepartment(data);
                     setOpenDepartmentModal(true);
                 }}
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
 
             

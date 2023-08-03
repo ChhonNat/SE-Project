@@ -63,6 +63,7 @@ const HomeAssessment = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
+                    refresh: true,
                     view: true,
                     viewSecFile: [
                         {

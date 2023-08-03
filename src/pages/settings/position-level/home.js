@@ -35,12 +35,18 @@ const HomePositionLevel = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true, edit: true }}
+                useTableActions={{ 
+                    search: true, 
+                    refresh: true,
+                    create: true, 
+                    edit: true 
+                }}
                 onHandleAddNewEvent={() => setOpenPositionLevelModal(true)}
                 handleEditEvent={(data) => {
                     setEditPositionLevel(data);
                     setOpenPositionLevelModal(true);
                 }}
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
 
             {/* Modal create and update */}
