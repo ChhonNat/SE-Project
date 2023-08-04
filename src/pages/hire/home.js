@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
+
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
-import AsyncTableAction from "../../components/AsyncDataTable/async-table-action";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 
 const HomeHire = () => {
 
-    const [isReload, setIsReload] = useState(false)
+    const [isReload, setIsReload] = useState(false);
+    const [modalType, setModalType] = useState('');
+    const [editHire, setEditHire] = useState({});
+    const [openFileModal, setOpenFileModal] = useState(false);
 
     return (
         <>
@@ -26,20 +30,38 @@ const HomeHire = () => {
             <AsyncDatatable
                 asyncURL={API_URL.hire.get}
                 headers={TABLE_CONFIG.tblHire}
-                bannerText="All Hires"
+                bannerText="All Hire Applicants"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true }}
-                // customActions={
-                //     <AsyncTableAction
-                //         useActions={{ approveCandidate: true, edit: true, delete: true }}
-                //     // onHandleEditEvent={() => setOpenEditCandidateModal(true)}
-                //     // onHandleApproveCandidateEvent={() => setOpenApproveCandidateModal(true)}
-                //     />
-                // }
+                useTableActions={{
+                    search: true,
+                    refresh: true
+                }}
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
+                handleLinkEvent={
+                    (data) => {
+                        setModalType('viewCVFile');
+                        setEditHire(data);
+                        setOpenFileModal(true);
+                    }
+                }
             />
+
+
+            {/* View File */}
+            {
+                openFileModal &&
+                <ViewFileModal
+                    modalTitle={'View CV'}
+                    id={editHire?.candidate?.id}
+                    downloadFileUrl={API_URL.hire.downloadCVFile}
+                    openModal={openFileModal}
+                    onCloseModal={() => setOpenFileModal(false)}
+                />
+            }
+
         </>
     )
 };

@@ -1,3 +1,9 @@
+
+html,body,#root,h1,h2,h3,h4,h5,h6{
+
+  font-family: 'Roboto', 'Battambang', sans-serif !important;
+}
+
 .html {
   overflow: hidden !important;
 }
@@ -149,4 +155,26 @@
   position: absolute;
   top: 50%;
   left: 50%;
+}
+
+.swal2-container .swal2-popup {
+    width: unset!important;
+    min-width: 24em;
+} 
+.swal2-container .swal2-icon{
+    font-size: 0.6rem!important;
+    margin-top: 1.75rem !important;
+}
+
+
+.swal2-container .swal2-title {
+  padding: unset!important;
+}
+
+.swal2-container .swal2-html-container{
+  font-size: 1em!important;
+}
+
+.swal2-container .swal2-actions {
+  margin-top: 0.8em !important;
 }

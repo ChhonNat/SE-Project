@@ -1,11 +1,51 @@
 import React from "react";
 import { Grid, Button } from "@mui/material";
-import SaveIcon from '@mui/icons-material/Save';
-import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+
+import { styled } from '@mui/material/styles';
+import { purple, blue, red, orange } from "@mui/material/colors";
+
+const DangerButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(red[500]),
+    border: 0,
+    backgroundColor: red[400],
+    '&:hover': {
+        backgroundColor: red[700],
+        border: 0,
+    },
+}));
+
+const PrimaryButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(blue[500]),
+    border: 0,
+    backgroundColor: blue[400],
+    '&:hover': {
+        backgroundColor: blue[700],
+        border: 0,
+    },
+}));
+
+const WarningButton = styled(Button)(({theme}) => ({
+    color: 'white',
+    border: 0,
+    backgroundColor: orange[400],
+    '&:hover': {
+        backgroundColor: orange[700],
+        border: 0,
+    }
+}))
 
 const FooterComponent = (props) => {
 
-    const {handleSave, handleCancel, saveButtunType } = props;
+    const { 
+            handleSave, 
+            handleReject,
+            handleCancel, 
+            saveButtunType, 
+            saveButtonLabel,
+            cancelButtonLabel,
+            rejectButtonLabel, 
+            actions 
+    } = props;
 
     return (
         <>
@@ -17,24 +57,38 @@ const FooterComponent = (props) => {
                 columnGap={2}
                 paddingX={2}
             >
+                {
+                    actions?.cancel &&
+                    <DangerButton
+                        variant="outlined"
+                        color="error"
+                        onClick={handleCancel}
+                    >
+                        {cancelButtonLabel ? cancelButtonLabel : 'Cancel'}
+                    </DangerButton>
+                }
 
-                <Button
-                    variant="outlined"
-                    // startIcon={<ClearOutlinedIcon />}
-                    color="error"
-                    onClick={handleCancel}
-                >
-                    Cancel
-                </Button>
+                {
+                    actions?.reject &&
+                    <WarningButton
+                        variant="outlined"
+                        type={saveButtunType || 'button'}
+                        onClick={handleReject}
+                    >
+                        {rejectButtonLabel ? rejectButtonLabel : 'Reject'}
+                    </WarningButton>
+                }
 
-                <Button
-                    variant="outlined"
-                    // endIcon={<SaveIcon />}
-                    type={saveButtunType || 'button'}
-                    onClick={handleSave}
-                >
-                    Save
-                </Button>
+                {
+                    actions?.submit &&
+                    <PrimaryButton
+                        variant="outlined"
+                        type={saveButtunType || 'button'}
+                        onClick={handleSave}
+                    >
+                        {saveButtonLabel ? saveButtonLabel : 'Save'}
+                    </PrimaryButton>
+                }
 
             </Grid>
             <br></br>

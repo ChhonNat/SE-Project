@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Link, Tab, TableCell, TableRow, Typography } from '@mui/material';
+import { Link, Tab, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import Moment from 'react-moment';
 import uuid from 'react-uuid';
 import AsyncTableAction from './async-table-action';
+import EditIcon from '@mui/icons-material/Edit';
+import Button from '@mui/material/Button';
 
 /**
  * Style Body Table 
@@ -23,11 +25,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const TableRows = ({
     displayRecords,
     isSelected,
-    handleClick,
-    handleApproveEvent,
-    handleReviewEvent,
-    handleAssessmentEvent,
+    handleViewEvent,
+    handleViewFileEvent,
+    handleViewSecFileEvent,
     handleEditEvent,
+    handleMoreEvent,
     handleLinkEvent,
     headers,
     checkColumn,
@@ -41,18 +43,13 @@ const TableRows = ({
         const labelId = `enhanced-table-checkbox-${index}`;
 
         const checkButtonAction = (objData, condition) => {
-
             const trueCondition = [];
-
             if (condition && condition.length) {
-
                 condition.forEach((ele, index) => {
-
                     const { values, field } = condition[index];
                     trueCondition.push(values.includes(row[field]));
                 });
             }
-
 
             if (!trueCondition?.length)
                 return false;
@@ -108,30 +105,43 @@ const TableRows = ({
                          */
                         const isLink = head?.type === 'link';
 
+                        /**
+                         * get row is array or object;
+                         */
+                        const isArray = Array.isArray(row[head?.id]);
+
+                        const isObject = typeof row[head?.id] === 'object';
+
+                        const arrayValue = isArray && row[head?.id]?.length ?
+                            row[head?.id].map(function (ele) {
+                                return ele[head?.arrayId] || ele;
+                            }) : [];
 
                         /**Map button action with the condidtion */
                         const buttonAction = {
-                            approveCandidate: actions?.approveCandidate ?
-                                (
-                                    typeof actions?.approveCandidate === 'boolean' ?
-                                        actions?.approveCandidate :
-                                        checkButtonAction(row, actions?.approveCandidate)
-                                    // actions?.approveCandidate?.condition[row[actions?.approveCandidate?.field]]
-                                )
+
+                            view: actions?.view ? (typeof actions?.view === 'boolean' ?
+                                actions?.view :
+                                checkButtonAction(row, actions?.view)
+                            )
                                 :
                                 false,
-                            reviewCandidate: actions?.reviewCandidate ?
-                                (
-                                    typeof actions?.reviewCandidate === 'boolean' ?
-                                        actions?.reviewCandidate :
-                                        checkButtonAction(row, actions?.reviewCandidate)
-                                )
+
+                            viewFile: actions?.viewFile ? (typeof actions?.viewFile === 'boolean' ?
+                                actions?.viewFile :
+                                checkButtonAction(row, actions?.viewFile)
+                            )
                                 :
                                 false,
-                            create: actions?.create ?
-                                (typeof actions?.create === 'boolean' ? actions?.create : actions?.create?.condition[row[actions?.create?.field]])
+
+                            viewSecFile: actions?.viewSecFile ? (typeof actions?.viewSecFile === 'boolean' ?
+                                actions?.viewSecFile :
+                                checkButtonAction(row, actions?.viewSecFile)
+                            )
                                 :
-                                false,
+                                false
+                            ,
+
                             edit: actions?.edit ?
                                 (
                                     typeof actions?.edit === 'boolean' ?
@@ -139,17 +149,18 @@ const TableRows = ({
                                         checkButtonAction(row, actions?.edit))
                                 :
                                 false,
+
                             delete: actions?.delete ?
                                 (typeof actions?.delete === 'boolean' ? actions?.delete : actions?.delete?.condition[row[actions?.delete?.field]])
                                 :
                                 false,
-                            passedInterview: actions?.passedInterview ?
-                                (typeof actions?.passedInterview === 'boolean' ?
-                                    actions?.passedInterview :
-                                    checkButtonAction(row, actions?.passedInterview)
-                                )
+
+                            create: actions?.create ?
+                                (typeof actions?.create === 'boolean' ? actions?.create : actions?.create?.condition[row[actions?.create?.field]])
                                 :
                                 false,
+
+                            moreOption: actions?.moreOption
                         };
 
                         const visible = head.visible !== undefined ? head.visible : true;
@@ -165,7 +176,15 @@ const TableRows = ({
                                         padding="none"
                                         key={uuid()}
                                         align="center"
-                                        sx={{ '&.MuiTableCell-root': { display: visible ? 'table-cell' : 'none' }, fontSize: 13 }}
+                                        sx={{
+                                            '&.MuiTableCell-root':
+                                                { 
+                                                    display: visible ? 'table-cell' : 'none',
+                                                    lineHeight: '1.75rem',
+                                                    paddingY: 'unset !important'
+                                                }, 
+                                                fontSize: 13
+                                        }}
                                     >
                                         {row[head.id]}
                                     </TableCell>
@@ -173,7 +192,19 @@ const TableRows = ({
                             } else {
 
                                 return !head?.Render ?
-                                    <TableCell align={head.align} key={uuid()} sx={{ fontSize: 13 }}>
+                                    <TableCell
+                                        align={head.align ? head?.align : 'left'}
+                                        key={uuid()}
+                                        sx={{ 
+                                            fontSize: 13, 
+                                            color: head?.textColor ? head?.textColor[row[head.id]] : '',
+                                            '&.MuiTableCell-root':
+                                            { 
+                                                lineHeight: '1.75rem',
+                                                paddingY: 'unset !important'
+                                            },
+                                        }}
+                                    >
 
                                         {/* Use table index */}
                                         {showIndex && (index + 1)}
@@ -184,46 +215,59 @@ const TableRows = ({
                                         {/* Use badge style */}
                                         {
                                             isStatus &&
-
-                                            <Typography variant="h6" id="tableTitle" component="div"
-                                                sx={{
-                                                    background: '#f2eeee',
-                                                    paddingLeft: 1,
-                                                    paddingRight: 1,
-                                                    borderRadius: 2,
-                                                    fontWeight: 'bold',
-                                                    width: 'max-content',
-                                                    fontSize: 12,
-                                                    color: head?.statusColor[row[head.id]],
-                                                }}
-                                            >
-                                                {row[head.id]}
-                                            </Typography>
+                                            <Tooltip title={actions?.editStatus?.[head?.id] ? 'Edit ' + head?.label : ''}>
+                                                <Typography variant="h6" id="tableTitle" component="div"
+                                                    sx={{
+                                                        background: '#f5f5f5',
+                                                        paddingLeft: 1,
+                                                        paddingRight: 1,
+                                                        borderRadius: 2,
+                                                        fontWeight: 'bold',
+                                                        width: 'max-content',
+                                                        fontSize: 12,
+                                                        color: head?.statusColor[row[head.id]],
+                                                        cursor: actions?.editStatus?.[head?.id] ? 'pointer' : ''
+                                                    }}
+                                                >
+                                                    {row[head.id]}
+                                                </Typography>
+                                            </Tooltip>
                                         }
 
                                         {/* Use link */}
                                         {
-                                            isLink && <Link sx={{ cursor: 'pointer' }} onClick={() => handleLinkEvent(row)}>{row[head.id]}</Link>
+                                            isLink && <Link sx={{ cursor: 'pointer' }} onClick={() => handleLinkEvent(row)}>
+                                                {!isObject ? row[head.id] : row[head?.id] && row[head?.id][head?.obj?.name]}
+                                            </Link>
                                         }
 
                                         {/* Use normal field */}
-                                        {!showIndex && !typeDate && !isAction && !isStatus && !isBadge && !isLink && row[head.id]}
+                                        {!showIndex && !typeDate && !isAction && !isStatus && !isBadge && !isLink &&
+                                            (
+                                                !isArray ?
+                                                    !isObject ? row[head?.id] : row[head?.id] && row[head?.id][head?.obj?.name]
+                                                    :
+                                                    arrayValue?.length ? arrayValue.toString() : ''
+                                            )
+                                        }
 
                                         {/* Custom button actions */}
                                         {isAction &&
                                             <AsyncTableAction
-                                                onHandleApproveCandidateEvent={() => handleApproveEvent(row)}
-                                                onHandleReviewCandidateEvent={() => handleReviewEvent(row)}
-                                                onHandleAssessmentCandidateEvent={() => handleAssessmentEvent(row)}
+                                                onHandleViewEvent={() => handleViewEvent(row)}
+                                                onHandleViewFileEvent={() => handleViewFileEvent(row)}
+                                                onHandleViewSecFileEvent={() => handleViewSecFileEvent(row)}
                                                 onHandleEditEvent={() => handleEditEvent(row)}
+                                                onHandleMoreEvent={(eventName) => handleMoreEvent(eventName, row)}
                                                 useActions={buttonAction}
+                                                row={row}
                                             />
                                         }
 
                                     </TableCell>
                                     :
                                     <TableCell
-                                        align={head.align}
+                                        align={head.align ? head.align : 'left'}
                                         key={uuid()}
                                         sx={{ fontSize: 13 }}>
                                         {head.Render(row[head.id], row)}
