@@ -330,7 +330,7 @@ export default function MiniDrawer() {
               <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>
+                    <TableCell align="inherit">
                       Request that requires your actions <br></br>
                       <p className="supDescr">
                         Group: <span style={{ color: "black" }}>Support</span>
@@ -352,7 +352,7 @@ export default function MiniDrawer() {
                         "&:last-child td, &:last-child th": { border: 0 },
                       }}
                     >
-                      <TableCell component="th" scope="row">
+                      <TableCell align="left" component="th" scope="row">
                         {row.name}
                       </TableCell>
                       <TableCell align="right">{row.carbs}</TableCell>
@@ -367,7 +367,7 @@ export default function MiniDrawer() {
               <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ border: "none" }}>
+                    <TableCell align="left" style={{ border: "none" }}>
                       Request that requires your actions <br></br>
                       <p className="supDescr">This month</p>
                     </TableCell>
@@ -381,6 +381,7 @@ export default function MiniDrawer() {
                 <TableBody>
                   <TableRow style={{ border: "none" }}>
                     <TableCell
+                      align="left"
                       component="th"
                       scope="row"
                       style={{ color: "gray", fontSize: "12px" }}
@@ -394,7 +395,7 @@ export default function MiniDrawer() {
                     </TableCell>
                   </TableRow>
                   <TableRow className="tableHover">
-                    <TableCell component="th" scope="row">
+                    <TableCell align="inherit" component="th" scope="row">
                       <Checkbox label="Label" />
                       Finish ticket update
                     </TableCell>
@@ -405,7 +406,7 @@ export default function MiniDrawer() {
                     </TableCell>
                   </TableRow>
                   <TableRow className="tableHover">
-                    <TableCell component="th" scope="row">
+                    <TableCell align="center" component="th" scope="row">
                       <Checkbox label="Label" />
                       Create new ticket example
                     </TableCell>

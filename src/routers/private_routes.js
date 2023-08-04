@@ -1,29 +1,24 @@
-import { lazy } from "react";
-import React from "react";
+import React, { lazy } from "react";
 
 /**
  * MUI icon
  */
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import ChecklistIcon from '@mui/icons-material/Checklist';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import BusinessIcon from '@mui/icons-material/Business';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
-import DomainIcon from '@mui/icons-material/Domain';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
-import PinDropIcon from '@mui/icons-material/PinDrop';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ElevatorIcon from '@mui/icons-material/Elevator';
+import { HowToReg } from "@mui/icons-material";
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+
 /**
  * Import all page components
  */
-const Dashboard = lazy(() => import('../pages/dashboard/dashboard'));
-
 const Candidate = {
     home: lazy(() => import('../pages/candidate/home')),
     // create: lazy(() => import('../pages/candidate/create'))
@@ -31,11 +26,14 @@ const Candidate = {
 
 const Interview = {
     home: lazy(() => import('../pages/interview/home')),
-    // create: lazy(() => import('../pages/interview/create'))
 };
 
-const Assessment = {
-    home: lazy(() => import('../pages/assessment/home'))
+const ReferenceCheck = {
+    home: lazy(() => import('../pages/reference-check/home'))
+};
+
+const JobOffer = {
+    home: lazy(() => import('../pages/job-offer/home'))
 };
 
 const Hire = {
@@ -44,65 +42,46 @@ const Hire = {
 
 const Settings = {
 
-    position: {
-        home: lazy(() => import('../pages/settings/position/home')),
-        create: lazy(() => import('../pages/settings/position/create'))
+    positionLevel: {
+        home: lazy(() => import('../pages/settings/position-level/home'))
     },
 
-    recruiter: {
-        home: lazy(() => import('../pages/settings/recruiter/home')),
-        create: lazy(() => import('../pages/settings/recruiter/create'))
+    position: {
+        home: lazy(() => import('../pages/settings/position/home')),
     },
 
     department: {
         home: lazy(() => import('../pages/settings/department/home')),
-        create: lazy(() => import('../pages/settings/department/create'))
     },
 
     headDepartment: {
         home: lazy(() => import('../pages/settings/head_department/home'))
     },
 
+    committee: {
+        home: lazy(() => import('../pages/settings/committee/home'))
+    },
+
+    mainBusiness: {
+        home: lazy(() => import('../pages/settings/main-business/home'))
+    },
+
     businessUnit: {
-        home: lazy(() => import('../pages/settings/business/home')),
-        create: lazy(() => import('../pages/settings/business/home'))
+        home: lazy(() => import('../pages/settings/business-unit/home')),
     },
 
-    location: {
-        home: lazy(() => import('../pages/settings/location/home'))
-    },
+    subBusinessUnit: {
+        home: lazy(() => import('../pages/settings/sub-business-unit/home'))
+    }
 
-    // receivingCategory: {
-    //     home: lazy(() => import('../pages/settings/receiving_category/home')),
-    //     create: lazy(() => import('../pages/settings/receiving_category/create'))
-    // },
-}
+};
+
+const User = {
+    home: lazy(() => import('../pages/user/home'))
+};
 
 
 export const PRIVATE_ROUTES = [
-
-    /** Dashboard */
-    // {
-    //     name: "Dashboard",
-    //     path: "/",
-    //     component: <Dashboard />,
-    //     icon: <DashboardIcon />,
-    //     isDivider: false,
-    //     children: [
-
-    //     ]
-    // },
-
-    /**Reports */
-    // {
-    //     name: "Reports",
-    //     path: "/report",
-    //     icon: <AssessmentIcon />,
-    //     isDivider: true,
-    //     children: [
-
-    //     ]
-    // },
 
     /**Candidate */
     {
@@ -120,20 +99,26 @@ export const PRIVATE_ROUTES = [
         icon: <RecordVoiceOverIcon />,
         isDivider: false,
     },
-    /**Assessment */
+    /**Reference  Check*/
     {
-        name: "Assessments",
-        path: "/assessment",
-        component: <Assessment.home />,
+        name: "Reference Checks",
+        path: "/reference-check",
+        component: <ReferenceCheck.home />,
         icon: <PersonSearchIcon />,
     },
-    /**Replies */
+    /**Job Offer */
     {
-        name: "Hires",
+        name: "Job Offers",
+        path: "/job-offer",
+        component: <JobOffer.home />,
+        icon: <HowToReg />
+    },
+    /**Hire*/
+    {
+        name: "Hire Applicants",
         path: "/hire",
         component: <Hire.home />,
-        icon: <HowToRegIcon />,
-        isDivider: false,
+        icon: <AssignmentIndIcon />
     },
     /**Settings */
     {
@@ -144,29 +129,21 @@ export const PRIVATE_ROUTES = [
         /**Children settings */
         children: [
 
-            /**Position */
+            // Main business
             {
-                name: "Positions",
-                path: "position",
-                component: <Settings.position.home />,
-                icon: <AirlineSeatReclineNormalIcon />,
+                name: "Main Businesses",
+                path: "main-business",
+                component: <Settings.mainBusiness.home />,
+                icon: <BusinessIcon />
             },
 
-            /**Recruiter */
-            // {
-            //     name: "Recruiters",
-            //     path: "recruiter",
-            //     component: <Settings.recruiter.home />,
-            //     icon: <SwitchAccountIcon />,
-            //     /**Children recruiter */
-            //     // children: [
-            //     //     {
-            //     //         name: "Create New Recruiter",
-            //     //         path: "create",
-            //     //         component: <Recruiter.create />
-            //     //     }
-            //     // ]
-            // },
+            /**Business */
+            {
+                name: "Primary Businesses",
+                path: "business",
+                component: <Settings.businessUnit.home />,
+                icon: <MeetingRoomIcon />,
+            },
 
             /**Department */
             {
@@ -176,29 +153,46 @@ export const PRIVATE_ROUTES = [
                 icon: <ApartmentIcon />,
             },
 
+            /**Position level*/
+            {
+                name: "Position Levels",
+                path: "position-level",
+                component: <Settings.positionLevel.home />,
+                icon: <ElevatorIcon />,
+            },
+
+            /**Position */
+            {
+                name: "Positions",
+                path: "position",
+                component: <Settings.position.home />,
+                icon: <AirlineSeatReclineNormalIcon />,
+            },
+
             /**Department */
             {
-                name: "Head Departments",
+                name: "HODs",
                 path: "head-department",
                 component: <Settings.headDepartment.home />,
-                icon: <DomainIcon />,
+                icon: <PeopleAltIcon />,
             },
 
-            /**Business */
+            /**Committee */
             {
-                name: "Businesses",
-                path: "business",
-                component: <Settings.businessUnit.home />,
-                icon: <MeetingRoomIcon />,
+                name: "Committees",
+                path: "committee",
+                component: <Settings.committee.home />,
+                icon: <PeopleAltIcon />,
             },
 
-            /**Location */
-            {
-                name: 'Locations',
-                path: 'location',
-                component: <Settings.location.home />,
-                icon: <PinDropIcon />
-            }
         ]
+    },
+    /**User setup */
+    {
+        name: "Users",
+        path: "/user",
+        component: <User.home />,
+        icon: <AccountCircleIcon />,
+        isDivider: false,
     }
 ];

@@ -1,12 +1,42 @@
 import React, { useState } from "react";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
+
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
-import AsyncTableAction from "../../components/AsyncDataTable/async-table-action";
+import ViewFileModal from "../../components/Modal/view-file.modal";
+import HireFormDetailModal from "./detail-hire-form.modal";
 
 const HomeHire = () => {
 
-    const [isReload, setIsReload] = useState(false)
+    const [isReload, setIsReload] = useState(false);
+    const [editHire, setEditHire] = useState({});
+    const [openFileModal, setOpenFileModal] = useState(false);
+    const [openHireDetailModal, setOpenHireDetailModal] = useState(false);
+
+    const [modalType, setModalType] = useState('');
+
+    const mapFileModal = {
+        'viewCVFile': {
+            modalTitle: 'View CV',
+            viewFileById: editHire?.candidate?.id,
+            downloadFileUrl: null
+        },
+        'viewJobOfferForm': {
+            modalTitle: 'View Job Offer Form',
+            viewFileById: editHire?.id,
+            downloadFileUrl: API_URL.hire.downloadCVFile
+        },
+        // 'viewEvaluateForm': {
+        //     modalTitle: 'View Evaluate Form',
+        //     viewFileById: editHire?.interview?.id,
+        //     downloadFileUrl: API_URL.interview.downloadEvaluateForm
+        // },
+        // 'viewReferenceForm': {
+        //     modalTitle: 'View Reference Form',
+        //     viewFileById: editHire?.referenceCheck?.id,
+        //     downloadFileUrl: API_URL.referenceCheck.downloadRefForm
+        // },
+    }
 
     return (
         <>
@@ -26,20 +56,59 @@ const HomeHire = () => {
             <AsyncDatatable
                 asyncURL={API_URL.hire.get}
                 headers={TABLE_CONFIG.tblHire}
-                bannerText="All Hires"
+                bannerText="All Hire Applicants"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true }}
-                // customActions={
-                //     <AsyncTableAction
-                //         useActions={{ approveCandidate: true, edit: true, delete: true }}
-                //     // onHandleEditEvent={() => setOpenEditCandidateModal(true)}
-                //     // onHandleApproveCandidateEvent={() => setOpenApproveCandidateModal(true)}
-                //     />
-                // }
+                useTableActions={{
+                    search: true,
+                    refresh: true,
+                    view: true,
+                    viewThirdFile: true
+                }}
+                onHandleRefreshEvent={() => setIsReload(!isReload)}
+                handleLinkEvent={
+                    (data) => {
+                        setModalType('viewCVFile');
+                        setEditHire(data);
+                        setOpenFileModal(true);
+                    }
+                }
+                handleViewEvent={(data) => {
+                    setEditHire(data);
+                    setOpenHireDetailModal(true);
+                }}
+                handleViewThirdFileEvent={(data) => {
+                    setModalType('viewJobOfferForm');
+                    setEditHire(data);
+                    setOpenFileModal(true)
+                }}
             />
+
+
+            {/* View File */}
+            {
+                openFileModal &&
+                <ViewFileModal
+                    modalTitle={mapFileModal[modalType]?.modalTitle}
+                    id={mapFileModal[modalType]?.viewFileById}
+                    downloadFileUrl={mapFileModal[modalType]?.downloadFileUrl}
+                    openModal={openFileModal}
+                    onCloseModal={() => setOpenFileModal(false)}
+                />
+            }
+
+            {/* View Hire Detail */}
+            {
+                openHireDetailModal &&
+                <HireFormDetailModal
+                    openModal={openHireDetailModal}
+                    onCloseModal={() => setOpenHireDetailModal(false)}
+                    editHire={editHire}
+                />
+            }
+
         </>
     )
 };

@@ -74,64 +74,175 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 #node v 18.x.x
 
 
-----
-departmentName
-businessDivisionName
-shortListDate
-shortListResult : passed
------
-recruiterName
-headDepartmentName
-interviewDate
++ Process each roles
+
+----------------------------------------------------
+                    1: Verify
+----------------------------------------------------
+
+1.1 TA admin:
+    Create CV:
+        shortlist result : waiting
+        submit status: waiting
+        status (candidate): pending
+
+    Action:
+        submit to hr:
+            submit status: Submitted_DHR
+            status (candidate): Reviewed
+1.2 DHR:
+    CV:
+        shorlist result: waiting
+        submit status: Submitted_DHR
+        status (candidate): Reviewed
+
+    Action:
+        verify && submit to offceo:
+            submit status: DHR_Verified
+            status (candidate): Reviewed
+
+1.3 OFFCEO:
+    CV:
+        shorlist result: waiting
+        submit status: Submited_OFFCEO
+        status (candidate): reviewed
+
+    Action:
+        approve && submit to TA:
+            submit status: Submitted_TA_Team || Sent_TA_Team
+            status (candidate): reviewed
+1.4 TA_Team:
+    CV:
+        shortlist result:  waiting
+        submit status: Submitted_TA_Team | Sent_TA_Team
+        status (candidate): reviewed
+
+    Action: 
+        shortlist
+            shortlist result: Passed | Failed | Blacklist | Keep_In_Pool
+        submit to HOD:
+            shortlist result: Passed
+            submit status: Submitted_HOD
+            status (candidate): Shortlisted
+            remark: 'yes .....'
+
+1.5 HOD: 
+    CV: 
+        shortlist result: Passed
+        submit status: Submitted_HOD
+        status (candidate): Shortlisted
+
+    Action:
+        shortlist result: Passed | Failed | Keep_In_Pool
+        set schedule: ''
+        set key person | committee: ['', '', '']
+
+        submit to TA:
+            submit status: Submitted_TA | Sent_TA_Team
+            shortlist result: Passed
+            schedule | interviewDate: '10-10-2023' 
+            committee : ['a','b']
+            status (candidate): Shortlisted
+
+1.6 HOD:
+    CV: 
+        shortlist result: Passed
+
+    Action: 
+        Invite/Set Schedule Interview: date
+        status: In Interview
+
+--------------------------------------------------
+                    2: Interview
+--------------------------------------------------
+
+2.1 HOD
+    CV:
+        Upload first result form
+    
+2.2 HOD: 
+    CV: 
+        Update first evaluate result
+
+
+If has second interview 
+------------    
+2.3 HOD:
+    CV:
+        Set second interview schedule
+2.4 HOD:
+    CV: 
+        Upload second result form
+2.5 HOD:
+    CV:
+        Update second evaluate result
+------------
+
+2.6 HOD:
+    CV:
+        Push to TA for reference check
+        
+--------------------------------------------------
+                    3: Reference Check
+--------------------------------------------------
+3.1
+    TA:
+        Do the background check and update the result
+3.2
+    TA:
+        Submit to HOD to offer the salary,...
+3.3
+    HOD:
+        submit to HOD to verify
+3.4
+    HOD: 
+        submit to OFFCEO to approve
+        
+        
+
+
+<!-- TA:
+    CV: 
+        shortlist result: Passed
+        submit status: Submitted_TA | Sent_TA_Team 
+        status (candidate): Shortlisted
+        interviewDate: '10-10-2023'
+        committee: ['a','b']
+
+    Action: 
+        final interviewDate: '11-11-2023'
+        final committee: ['c','d']  
+
+        print form interview -->
+
+
+-------------------------------------
+UI
+            Candidate
+                TA: 
+                    Shortlists: OFFCEO_APPROVED
+                    Status: Pending
+                    Shortlist Result: Waiting
+                        Action: 
+                            Shortlist
+                    Shortlists : OFFCEO_APPROVED
+                    Status: Shortlisted
+                    Shortlist Result: Passed
+                        Action:
+                            Submit to HOD
+                    Shortlists: Submitted_HOD
+                    Status: Shortlisted
+                    Shortlist Result: Passed
+                Hiring Manager:
 
 
 
-CandidateStatus(Status):  
--    Pending,
--    Reviewed,
--    In_Interview,
--    In_Assessment,
--    Hired
 
-ShortlistResult: 
--    Passed,
--    Failed
+-------------
+API
 
-interviewResult:
--    Passed, 
--    Failed
+        Candidate
+            Hiring Manager:
+                Set Validate in invite interview before shortlist by hiring manager
 
-Interview status:
--    Pending, 
--    Interviewed, 
--    Suspended, 
--    Cancel
 
-feedBackChannel: 
--    Telegram, 
--    Mail, 
--    Phone Call, 
--    SMS, 
--    Other
-
-2023-06-14
-
---------------
-Create
-- Candidate -> Pending
-
---------------
-Review
-- Candidate -> Pending -> Reviewed
-
---------------
-Shortlist
-- Candidate -> Pending -> Reviewed -> (Passed|Failed) -> In_Interview(Passed)
-
---------------
-Interview
-- Candidate -> Pending -> Reviewed -> In_Interview -> (Passed|Failed) -> In_Accessment(Passed)
-
---------------
---------------
-Candidate => ShortlistResult = 'Passed' && status = 'CV_Reviewed'
