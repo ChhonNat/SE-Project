@@ -31,12 +31,12 @@ const HomeJobOffer = () => {
         'viewEvaluateForm': {
             modalTitle: 'View Evaluate Form',
             viewFileById: editJobOffer?.interview?.id,
-            downloadFileUrlL: API_URL.interview.downloadEvaluateForm
+            downloadFileUrl: API_URL.interview.downloadEvaluateForm
         },
         'viewReferenceForm': {
             modalTitle: 'View Reference Form',
             viewFileById: editJobOffer?.referenceCheck?.id,
-            downloadFileUrlL: API_URL.referenceCheck.downloadRefForm
+            downloadFileUrl: API_URL.referenceCheck.downloadRefForm
         },
     }
 
@@ -173,7 +173,7 @@ const HomeJobOffer = () => {
                 <ViewFileModal
                     modalTitle={mapFileModal[modalType]?.modalTitle}
                     id={mapFileModal[modalType]?.viewFileById}
-                    downloadFileUrl={mapFileModal[modalType]?.downloadFileUrlL}
+                    downloadFileUrl={mapFileModal[modalType]?.downloadFileUrl}
                     openModal={openFileModal}
                     onCloseModal={() => setOpenFileModal(false)}
                 />

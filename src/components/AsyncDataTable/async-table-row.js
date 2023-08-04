@@ -28,6 +28,7 @@ const TableRows = ({
     handleViewEvent,
     handleViewFileEvent,
     handleViewSecFileEvent,
+    handleViewThirdFileEvent,
     handleEditEvent,
     handleMoreEvent,
     handleLinkEvent,
@@ -142,6 +143,14 @@ const TableRows = ({
                                 false
                             ,
 
+                            viewThirdFile: actions?.viewThirdFile ? (typeof actions?.viewThirdFile === 'boolean' ?
+                                actions?.viewThirdFile :
+                                checkButtonAction(row, actions?.viewThirdFile)
+                            )
+                                :
+                                false
+                            ,
+
                             edit: actions?.edit ?
                                 (
                                     typeof actions?.edit === 'boolean' ?
@@ -178,12 +187,12 @@ const TableRows = ({
                                         align="center"
                                         sx={{
                                             '&.MuiTableCell-root':
-                                                { 
-                                                    display: visible ? 'table-cell' : 'none',
-                                                    lineHeight: '1.75rem',
-                                                    paddingY: 'unset !important'
-                                                }, 
-                                                fontSize: 13
+                                            {
+                                                display: visible ? 'table-cell' : 'none',
+                                                lineHeight: '1.75rem',
+                                                paddingY: 'unset !important'
+                                            },
+                                            fontSize: 13
                                         }}
                                     >
                                         {row[head.id]}
@@ -195,11 +204,11 @@ const TableRows = ({
                                     <TableCell
                                         align={head.align ? head?.align : 'left'}
                                         key={uuid()}
-                                        sx={{ 
-                                            fontSize: 13, 
+                                        sx={{
+                                            fontSize: 13,
                                             color: head?.textColor ? head?.textColor[row[head.id]] : '',
                                             '&.MuiTableCell-root':
-                                            { 
+                                            {
                                                 lineHeight: '1.75rem',
                                                 paddingY: 'unset !important'
                                             },
@@ -257,6 +266,7 @@ const TableRows = ({
                                                 onHandleViewEvent={() => handleViewEvent(row)}
                                                 onHandleViewFileEvent={() => handleViewFileEvent(row)}
                                                 onHandleViewSecFileEvent={() => handleViewSecFileEvent(row)}
+                                                onHandleViewThirdFileEvent={() => handleViewThirdFileEvent(row)}
                                                 onHandleEditEvent={() => handleEditEvent(row)}
                                                 onHandleMoreEvent={(eventName) => handleMoreEvent(eventName, row)}
                                                 useActions={buttonAction}
