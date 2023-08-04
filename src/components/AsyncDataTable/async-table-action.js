@@ -26,6 +26,7 @@ const AsyncTableAction = (props) => {
         onHandleViewEvent,
         onHandleViewFileEvent,
         onHandleViewSecFileEvent,
+        onHandleViewThirdFileEvent,
         onHandleMoreEvent,
     } = props;
 
@@ -71,13 +72,14 @@ const AsyncTableAction = (props) => {
                 disableElevation
                 variant="contained"
                 aria-label="Disabled elevation buttons"
+                size="small"
             >
 
                 {useActions?.view &&
                     <Tooltip title="View record">
                         <Button variant="text" size="small" color="primary"
                             onClick={onHandleViewEvent}>
-                            <VisibilityIcon />
+                            <VisibilityIcon fontSize="small"/>
                         </Button>
                     </Tooltip>
                 }
@@ -86,16 +88,28 @@ const AsyncTableAction = (props) => {
                     <Tooltip title="View Evaluate Form">
                         <Button variant="text" size="small" color="inherit"
                             onClick={onHandleViewFileEvent}>
-                            <FileOpenIcon />
+                            <FileOpenIcon fontSize="small" />
                         </Button>
                     </Tooltip>
                 }
 
                 {useActions?.viewSecFile &&
                     <Tooltip title="View Reference Form">
-                        <Button variant="text" size="small" color="info"
+                        <Button
+                            variant="text"
+                            size="small" 
+                            color="info"
                             onClick={onHandleViewSecFileEvent}>
-                            <FileOpenIcon />
+                            <FileOpenIcon fontSize="small"/>
+                        </Button>
+                    </Tooltip>
+                }
+
+                {useActions?.viewThirdFile &&
+                    <Tooltip title="View Job Offer Form">
+                        <Button variant="text" size="small" color="success"
+                            onClick={onHandleViewThirdFileEvent}>
+                            <FileOpenIcon fontSize="small" />
                         </Button>
                     </Tooltip>
                 }
@@ -106,7 +120,7 @@ const AsyncTableAction = (props) => {
                     <Tooltip title="Edit record">
                         <Button variant="text" size="small" color="inherit"
                             onClick={onHandleEditEvent}>
-                            <DriveFileRenameOutlineOutlinedIcon />
+                            <DriveFileRenameOutlineOutlinedIcon fontSize="small"/>
                         </Button>
                     </Tooltip>
                 }
@@ -116,7 +130,7 @@ const AsyncTableAction = (props) => {
                     <Tooltip title="Delete record">
                         <Button variant="text" size="small" color="info"
                             onClick={() => setShowDeleteModal(true)}>
-                            <DeleteOutlineOutlinedIcon />
+                            <DeleteOutlineOutlinedIcon fontSize="small"/>
                         </Button>
                     </Tooltip>
                 }
@@ -134,7 +148,7 @@ const AsyncTableAction = (props) => {
                     onClick={(e) => setShowMoreOptionAnchor(e?.currentTarget)}
                     disabled={enableMoreOption(useActions?.moreOption?.buttons) ? false : true}
                 >
-                    <MoreVertOutlinedIcon />
+                    <MoreVertOutlinedIcon fontSize="small" />
                 </IconButton>
                 <Menu
                     id="menu"

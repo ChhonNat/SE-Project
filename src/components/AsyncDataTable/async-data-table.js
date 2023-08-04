@@ -34,6 +34,7 @@ const AsyncDatatable = (props) => {
     handleViewEvent,
     handleViewFileEvent,
     handleViewSecFileEvent,
+    handleViewThirdFileEvent,
     handleEditEvent,
     handleLinkEvent,
     handleMoreEvent,
@@ -225,6 +226,7 @@ const AsyncDatatable = (props) => {
                 handleViewEvent={(record) => handleViewEvent(record)}
                 handleViewFileEvent={(record) => handleViewFileEvent(record)}
                 handleViewSecFileEvent={(record) => handleViewSecFileEvent(record)}
+                handleViewThirdFileEvent={(record) => handleViewThirdFileEvent(record)}
                 handleEditEvent={(record) => handleEditEvent(record)}
                 handleLinkEvent={(record) => handleLinkEvent(record)}
                 handleMoreEvent={(eName, record) => handleMoreEvent(eName, record)}

@@ -4,13 +4,39 @@ import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import ViewFileModal from "../../components/Modal/view-file.modal";
+import HireFormDetailModal from "./detail-hire-form.modal";
 
 const HomeHire = () => {
 
     const [isReload, setIsReload] = useState(false);
-    const [modalType, setModalType] = useState('');
     const [editHire, setEditHire] = useState({});
     const [openFileModal, setOpenFileModal] = useState(false);
+    const [openHireDetailModal, setOpenHireDetailModal] = useState(false);
+
+    const [modalType, setModalType] = useState('');
+
+    const mapFileModal = {
+        'viewCVFile': {
+            modalTitle: 'View CV',
+            viewFileById: editHire?.candidate?.id,
+            downloadFileUrl: null
+        },
+        'viewJobOfferForm': {
+            modalTitle: 'View Job Offer Form',
+            viewFileById: editHire?.id,
+            downloadFileUrl: API_URL.hire.downloadCVFile
+        },
+        // 'viewEvaluateForm': {
+        //     modalTitle: 'View Evaluate Form',
+        //     viewFileById: editHire?.interview?.id,
+        //     downloadFileUrl: API_URL.interview.downloadEvaluateForm
+        // },
+        // 'viewReferenceForm': {
+        //     modalTitle: 'View Reference Form',
+        //     viewFileById: editHire?.referenceCheck?.id,
+        //     downloadFileUrl: API_URL.referenceCheck.downloadRefForm
+        // },
+    }
 
     return (
         <>
@@ -37,7 +63,9 @@ const HomeHire = () => {
                 isReloadData={isReload ? true : false}
                 useTableActions={{
                     search: true,
-                    refresh: true
+                    refresh: true,
+                    view: true,
+                    viewThirdFile: true
                 }}
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
                 handleLinkEvent={
@@ -47,6 +75,15 @@ const HomeHire = () => {
                         setOpenFileModal(true);
                     }
                 }
+                handleViewEvent={(data) => {
+                    setEditHire(data);
+                    setOpenHireDetailModal(true);
+                }}
+                handleViewThirdFileEvent={(data) => {
+                    setModalType('viewJobOfferForm');
+                    setEditHire(data);
+                    setOpenFileModal(true)
+                }}
             />
 
 
@@ -54,11 +91,21 @@ const HomeHire = () => {
             {
                 openFileModal &&
                 <ViewFileModal
-                    modalTitle={'View CV'}
-                    id={editHire?.candidate?.id}
-                    downloadFileUrl={API_URL.hire.downloadCVFile}
+                    modalTitle={mapFileModal[modalType]?.modalTitle}
+                    id={mapFileModal[modalType]?.viewFileById}
+                    downloadFileUrl={mapFileModal[modalType]?.downloadFileUrl}
                     openModal={openFileModal}
                     onCloseModal={() => setOpenFileModal(false)}
+                />
+            }
+
+            {/* View Hire Detail */}
+            {
+                openHireDetailModal &&
+                <HireFormDetailModal
+                    openModal={openHireDetailModal}
+                    onCloseModal={() => setOpenHireDetailModal(false)}
+                    editHire={editHire}
                 />
             }
 
