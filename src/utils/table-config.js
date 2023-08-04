@@ -1,22 +1,33 @@
+import { STATUS } from "../constants/status";
+
 /** proof of user working on data
  */
 const proof = [
     {
-        id: 'createdAt', type: 'date', dateFormat: 'MMM DD, YYYY hh:mm:ss A', label: 'Created At',
+        id: 'createdAt',
+        label: 'Created At',
+        type: 'date',
+        dateFormat: 'MMM DD, YYYY hh:mm:ss A',
     },
     {
-        id: 'createdBy', label: 'Created By',
+        id: 'createdBy',
+        label: 'Created By',
     },
     {
-        id: 'updatedAt', type: 'date', dateFormat: 'MMM DD, YYYY hh:mm:ss A', label: 'Updated At',
+        id: 'updatedAt',
+        label: 'Updated At',
+        type: 'date',
+        dateFormat: 'MMM DD, YYYY hh:mm:ss A',
     },
     {
-        id: 'updatedBy', label: 'Updated By'
+        id: 'updatedBy',
+        label: 'Updated By'
     },
     {
-        id: 'status', type: 'status',
+        id: 'status',
+        label: 'Status',
+        type: 'status',
         statusColor: { ACTIVE: 'green' },
-        label: 'Status'
     }
 ];
 /***
@@ -24,47 +35,70 @@ const proof = [
  */
 const tblCandidate = [
     {
-        id: 'index', label: 'No.'
+        id: 'index',
+        label: 'No.'
     },
     {
-        id: 'applicationCode', type: 'link', statusColor: {}, label: "Application Code", sqlField: 'can.application_number'
+        id: 'applicantCode',
+        label: "Applicant Code",
+        type: 'link',
+        statusColor: {},
+        sqlField: 'can.application_number'
     },
     {
-        id: 'fullName', label: "Candidate's Name", sqlField: 'can.first_name'
+        id: 'fullName',
+        label: "Candidate's Name",
+        sqlField: 'can.first_name'
     },
     {
-        id: 'gender', label: 'Gender', sqlField: 'can.gender'
+        id: 'phoneNumber',
+        label: 'Phone',
+        sqlField: 'can.phone_number'
     },
     {
-        id: 'phoneNumber', label: 'Phone', sqlField: 'can.phone_number'
-    },
-    // {
-    //     id: 'email', label: 'Email', sqlField: 'can.email'
-    // },
-    {
-        id: 'appliedPositionName', label: 'Position Apply for', sqlField: 'pos.name'
+        id: 'appliedPositionName',
+        label: 'Apply Position',
+        sqlField: 'pos.name'
     },
     {
-        id: 'departmentName', label: 'Department Name'
+        id: 'submitStatus',
+        label: "Shortlist Status",
+        type: 'status',
+        statusColor: {
+            [STATUS.SUBMIT_STATUS.WAITING]: 'Orange',
+            [STATUS.SUBMIT_STATUS.DHR_VERIFIED]: 'lightGreen',
+            [STATUS.SUBMIT_STATUS.DHR_REJECTED]: 'Red',
+            [STATUS.SUBMIT_STATUS.OFCCEO_APPROVED]: 'Green',
+            [STATUS.SUBMIT_STATUS.OFCCEO_REJECTED]: 'Red',
+        }
     },
     {
-        id: 'businessDivisionName', label: 'Business Division', sqlField: 'pos.name'
+        id: 'status',
+        type: 'status',
+        statusColor: {
+            [STATUS.CANDIDATE.PENDING]: 'Orange',
+            [STATUS.CANDIDATE.SHORTLISTED]: 'DarkOrange',
+            [STATUS.CANDIDATE.IN_INTERVIEW]: 'Maroon',
+            [STATUS.CANDIDATE.IN_EVALUATION]: 'MediumBlue',
+            [STATUS.CANDIDATE.IN_REFERENCE_CHECK]: '',
+            [STATUS.CANDIDATE.IN_JOB_OFFER]: '',
+            [STATUS.CANDIDATE.HIRED]: 'Green',
+        },
+        label: 'Status'
     },
     {
-        id: 'shortlistDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Shortlist Date', sqlField: 'can.short_list_date'
-    },
-    // ...proof,
-    {
-        id: 'shortlistResult', type: 'status',
-        statusColor: { Passed: 'green', Failed: 'red' },
-        label: 'Shortlist Result'
-    },
-    {
-        id: 'status', type: 'status', statusColor: { Hired: 'Green', In_Assessment: 'MediumBlue', CV_Reviewed: 'DarkOrange', In_Interview: 'Maroon' }, label: 'Status'
+        id: 'shortlistResult',
+        label: 'Shortlist Result',
+        textColor: {
+            [STATUS.SHORTLIST_RESULT.PASSED]: 'Green',
+            [STATUS.SHORTLIST_RESULT.FAILED]: 'Red',
+            [STATUS.SHORTLIST_RESULT.WAITING]: 'Orange',
+            [STATUS.SHORTLIST_RESULT.KEEP_IN_POOL]: 'Blue'
+        },
     },
     {
         id: 'action', label: 'Actions',
-    },
+    }
 ];
 
 /***
@@ -72,121 +106,211 @@ const tblCandidate = [
  */
 const tblInterview = [
     {
-        id: 'index', label: 'No.'
-    }, {
-        id: 'applicationCode', type: 'link', statusColor: {}, label: 'Application Code'
-
+        id: 'index',
+        label: 'No.'
     },
     {
-        id: 'candidateName', label: 'Name'
+        id: 'candidate',
+        label: 'Applicant Code',
+        type: 'link',
+        obj: { name: 'applicantCode' },
     },
     {
-        id: 'appliedPositionName', label: 'Apply Position'
+        id: 'candidate',
+        label: 'Name',
+        obj: { name: 'fullName' },
     },
     {
-        id: 'departmentName', label: 'Department'
+        id: 'appliedPosition',
+        label: 'Apply Position',
+        obj: { name: 'nameEn' },
     },
     {
-        id: 'headDepartmentName', label: 'Head Department'
+        id: 'interviewDate',
+        label: 'Interview At',
+        type: 'date',
+        dateFormat: 'MMM DD, YYYY hh:mm A',
     },
     {
-        id: 'businessDivisionName', label: 'Business Division',
+        id: 'interviewProcess',
+        label: 'Interview Process',
+        type: 'status',
+        statusColor: {
+            [STATUS.INTERVIEW_PROCESS.FIRST_INTERVIEW]: 'black',
+            [STATUS.INTERVIEW_PROCESS.SECOND_INTERVIEW]: 'green'
+        }
     },
     {
-        id: 'interviewDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Interview Date'
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: {
+            [STATUS.INTERVIEW_STATUS.INTERVIEWED]: 'Blue'
+        }
     },
     {
-        id: 'status', type: 'status', statusColor: {}, label: 'Status'
+        id: 'interviewResult',
+        label: 'Result',
+        textColor: { Passed: 'green', Failed: 'red', Waiting: 'Orange' },
     },
     {
-        id: 'interviewResult', type: 'status', statusColor: { Passed: 'green', Failed: 'red' }, label: 'Result'
-    },
-    // ...proof,
-    {
-        id: 'action', label: 'Actions'
+        id: 'action',
+        label: 'Actions'
     },
 ];
 
+/**Job reference Table */
+const tblReferenceCheck = [
+    {
+        id: 'index',
+        label: 'No.'
+    },
+    {
+        id: 'candidate',
+        label: 'Applicant Code',
+        type: 'link',
+        obj: { name: 'applicantCode' },
+    },
+    {
+        id: 'candidate',
+        label: 'Candidate Name',
+        obj: { name: 'fullName' },
+    },
+    {
+        id: 'checkResult',
+        label: 'Result',
+        textColor: {
+            [STATUS.REFERENCE_RESULT.POSITIVE]: 'green',
+            [STATUS.REFERENCE_RESULT.NEGATIVE]: 'red',
+            [STATUS.REFERENCE_RESULT.WAITING]: 'orange'
+        },
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { [STATUS.REFERENCE_STATUS.PENDING]: 'orange' },
+    },
+    {
+        id: 'action',
+        label: 'Actions'
+    },
+];
 
-/***
- * Assessment Table
- */
-const tblAssessment = [
+/**Job Offer table */
+const tblJobOffer = [
     {
-        id: 'index', label: 'No.'
-    },
-    , {
-        id: 'applicationCode', type: 'status', statusColor: {}, label: 'Application Code'
-
+        id: 'index',
+        label: 'No.'
     },
     {
-        id: 'candidateName', label: 'Name'
+        id: 'candidate',
+        label: 'Applicant Code',
+        type: 'link',
+        obj: { name: 'applicantCode' },
     },
     {
-        id: 'offerPositionName', label: 'Offer Position'
+        id: 'candidate',
+        label: 'Candidate Name',
+        obj: { name: 'fullName' }
     },
     {
-        id: 'departmentName', label: 'Department'
+        id: 'position',
+        label: 'Position',
+        obj: { name: 'nameEn' }
     },
     {
-        id: 'businessDivisionName', label: 'Business Division'
+        id: 'positionLevel',
+        label: 'Position Level',
+        obj: { name: 'nameEn' }
     },
     {
-        id: 'offerSalary', label: 'Offer Salary ($)'
+        id: 'department',
+        label: 'Department',
+        obj: { name: 'nameEn' }
     },
     {
-        id: 'status', type: 'status', statusColor: { Offered: 'Green', Suspended: 'Orange', Cancel: 'Red' }, label: 'Status'
+        id: 'offerSalary',
+        label: 'Salary($)',
     },
-    // {
-    //     id: 'headDepartmentName', label: 'Head Department'
-    // },
-    // ...proof,
-    // {
-    //     id: 'createdBy', label: 'Created By'
-    // },
     {
-        id: 'action', label: 'Actions'
+        id: 'processStatus',
+        label: 'Process Status',
+        type: 'status',
+        statusColor: { OFCCEO_Approved: 'Green', DHR_Verified: 'LightGreen', HOD_Approved: 'Orange' }
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { 'pending': 'orange' }
+    },
+    {
+        id: 'action',
+        label: 'Actions'
     }
 ];
+
 
 /**
  * Hire Table
  */
 const tblHire = [
     {
-        id: 'index', label: 'No.'
+        id: 'index',
+        label: 'No.'
     },
-    , {
-        id: 'applicationCode',
+    {
+        id: 'candidate',
+        label: 'Applicant Code',
         type: 'link',
-        statusColor: {},
-        label: 'Application Code'
+        obj: { name: 'applicantCode' },
     },
     {
-        id: 'candidateName', label: 'Name'
+        id: 'candidate',
+        label: 'Name',
+        obj: { name: 'fullName' },
     },
     {
-        id: 'hirePositionName', label: 'Hire Position'
+        id: 'position',
+        label: 'Hire Position',
+        obj: { name: 'nameEn' },
     },
     {
-        id: 'departmentName', label: 'Department'
+        id: 'department',
+        label: 'Department',
+        obj: { name: 'nameEn' },
     },
     {
-        id: 'businessDivisionName', label: 'Business Division'
+        id: 'headDepartment',
+        label: 'HOD',
+        obj: { name: 'fullName' },
     },
     {
-        id: 'hireDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Hire Date'
+        id: 'businessUnit',
+        label: 'Primary Business',
+        obj: { name: 'nameEn' }
     },
     {
-        id: 'joinDate', type: 'date', dateFormat: 'MMM DD, YYYY', label: 'Join Date'
+        id: 'hiredAt',
+        label: 'Hired At',
+        type: 'date',
+        dateFormat: 'MMM DD, YYYY hh:mm:ss A'
     },
     {
-        id: 'status', type: 'status', statusColor: { Hired: 'Green' }, label: 'Status'
+        id: 'hiredBy',
+        label: 'Hired By',
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Hired: 'Green' }
+    },
+    {
+        id: 'action',
+        label: 'Actions'
     }
-    // ...proof,
-    // {
-    //     id: 'action', label: 'Actions'
-    // }
 ];
 
 /**
@@ -194,17 +318,83 @@ const tblHire = [
  */
 const tblPosition = [
     {
-        id: 'index', label: 'No.',
+        id: 'index',
+        label: 'No.',
     },
     {
-        id: 'name', label: 'Name',
+        id: 'nameEn',
+        label: 'Name',
     },
     {
-        id: 'description', label: 'Description',
+        id: 'nameKh',
+        label: 'Name(KH)',
     },
-    // ...proof,
+    {
+        id: 'positionLevelName',
+        label: 'Level'
+    },
+    {
+        id: 'businessUnitName',
+        label: 'Primary Business',
+        arrayId: 'name',
+    },
+    {
+        id: 'departmentName',
+        label: 'Department'
+    },
+    {
+        id: 'description',
+        label: 'Description',
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' },
+    },
     {
         id: 'action', label: 'Actions'
+    },
+];
+
+/**
+ * Position level table
+ */
+const tblPositionLevel = [
+    {
+        id: 'index',
+        label: 'No.',
+    },
+    {
+        id: 'nameEn',
+        label: 'Name',
+    },
+    {
+        id: 'nameKh',
+        label: 'Name(KH)'
+    },
+    {
+        id: 'businessUnitName',
+        label: 'Primary Business'
+    },
+    {
+        id: 'departmentName',
+        label: 'Department Name',
+        arrayId: 'name',
+    },
+    {
+        id: 'description',
+        label: 'Description',
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' },
+    },
+    {
+        id: 'action',
+        label: 'Actions'
     },
 ];
 
@@ -213,32 +403,40 @@ const tblPosition = [
  */
 const tblRecruiter = [
     {
-        id: 'index', label: 'No.',
+        id: 'index',
+        label: 'No.',
     },
     {
-        id: 'cardId', label: 'Card ID'
+        id: 'cardId',
+        label: 'Card ID'
     },
     {
-        id: 'firstName', label: 'First Name',
+        id: 'firstName',
+        label: 'First Name',
     },
     {
-        id: 'lastName', label: 'Last Name',
+        id: 'lastName',
+        label: 'Last Name',
     },
     {
-        id: 'phoneNumber', label: 'Phone Number'
+        id: 'phoneNumber',
+        label: 'Phone Number'
     },
     {
-        id: 'positionName', label: 'Position Name'
+        id: 'positionName',
+        label: 'Position'
     },
     {
-        id: 'departmentName', label: 'Department Name'
+        id: 'departmentName',
+        label: 'Department'
     },
     {
-        id: 'description', label: 'Description'
+        id: 'description',
+        label: 'Description'
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'action',
+        label: 'Actions'
     },
 ];
 
@@ -247,17 +445,35 @@ const tblRecruiter = [
  */
 const tblDepartment = [
     {
-        id: 'index', label: 'No.',
+        id: 'index',
+        label: 'No.',
     },
     {
-        id: 'name', label: 'Name',
+        id: 'nameEn',
+        label: 'Name',
     },
     {
-        id: 'description', label: 'Description',
+        id: 'nameKh',
+        label: 'Name(KH)'
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'description',
+        label: 'Description',
+    },
+    {
+        id: 'businessUnitName',
+        label: 'Primary Business',
+        arrayId: 'name',
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' }
+    },
+    {
+        id: 'action',
+        label: 'Actions'
     },
 ];
 
@@ -267,105 +483,289 @@ const tblDepartment = [
 
 const tblHeadDepartment = [
     {
-        id: 'index', label: 'No.'
+        id: 'index',
+        label: 'No.'
     },
     {
-        id: 'cardId', label: 'Card ID'
+        id: 'staffId',
+        label: 'Card ID'
     },
     {
-        id: 'firstName', label: 'First Name'
+        id: 'fullName',
+        label: 'Name'
     },
     {
-        id: 'lastName', label: 'Last Name'
+        id: 'phoneNumber',
+        label: 'Phone Number'
     },
     {
-        id: 'phoneNumber', label: 'Phone Number'
+        id: 'businessUnitName',
+        label: 'Primary Business'
     },
     {
-        id: 'positionName', label: 'Position Name'
+        id: 'departmentName',
+        label: 'Department'
     },
     {
-        id: 'departmentName', label: 'Department Name'
+        id: 'positionName',
+        label: 'Position'
     },
-    // ...proof,
+    {
+        id: 'positionLevelName',
+        label: 'Level'
+    },
+    {
+        id: 'description',
+        label: 'Description'
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' }
+    },
     {
         id: 'action', label: 'Actions'
     }
 ];
 
+/**
+ * Committee table
+ */
+const tblCommittee = [
+    {
+        id: 'index',
+        label: 'No.'
+    },
+    {
+        id: 'staffId',
+        label: 'Card ID'
+    },
+    {
+        id: 'fullName',
+        label: 'Name'
+    },
+    {
+        id: 'phoneNumber',
+        label: 'Phone Number'
+    },
+    {
+        id: 'businessUnitName',
+        label: 'Primary Business'
+    },
+    {
+        id: 'departmentName',
+        label: 'Department'
+    },
+    {
+        id: 'positionName',
+        label: 'Position'
+    },
+    {
+        id: 'positionLevelName',
+        label: 'Level'
+    },
+    {
+        id: 'description',
+        label: 'Description'
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' }
+    },
+    {
+        id: 'action',
+        label: 'Actions'
+    }
+];
+/**
+ * Main business table
+ */
+
+const tblMainBusiness = [
+    {
+        id: 'index',
+        label: 'No .'
+    },
+    {
+        id: 'nameEn',
+        label: 'Name'
+    },
+    {
+        id: 'nameKh',
+        label: 'Name(KH)'
+    },
+    {
+        id: 'description',
+        label: 'Description'
+    },
+];
 
 /**
  * Business Table
  */
-const tblBusiness = [
+const tblBusinessUnit = [
     {
-        id: 'index', label: 'No.',
+        id: 'index',
+        label: 'No.',
     },
     {
-        id: 'name', label: 'Name',
+        id: 'nameEn',
+        label: 'Name',
     },
     {
-        id: 'description', label: 'Description',
+        id: 'nameKh',
+        label: 'Name(KH)'
     },
-    // ...proof,
+    {
+        id: 'mainBusinessUnitName',
+        label: 'Main Primary Business'
+    },
+    {
+        id: 'description',
+        label: 'Description',
+    },
+    {
+        id: 'status',
+        label: 'Status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' },
+    },
+    {
+        id: 'action',
+        label: 'Actions'
+    }
+];
+
+// Sub Primary Business
+const tblSubBusinessUnit = [
+    {
+        id: 'index',
+        label: 'No.',
+    },
+    {
+        id: 'nameEn',
+        label: 'Name',
+    },
+    {
+        id: 'nameKh',
+        label: 'Name(KH)'
+    },
+    {
+        id: 'mainBusinessUnitName',
+        label: 'Main Primary Business'
+    },
+    {
+        id: 'businessUnitName',
+        label: 'Primary Business'
+    },
+    {
+        id: 'description',
+        label: 'Description',
+    },
+    {
+        id: 'status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' },
+        label: 'Status'
+    },
     {
         id: 'action', label: 'Actions'
     }
 ];
-
 
 /**Location Table */
 
 const tblLocation = [
     {
-        id: 'index', label: 'No.'
+        id: 'index',
+        label: 'No.'
     },
     {
-        id: 'name', label: 'Location Name'
+        id: 'name',
+        label: 'Name'
     },
     {
-        id: 'description', label: 'Description'
+        id: 'description',
+        label: 'Description'
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: 'status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' },
+        label: 'Status'
+    },
+    {
+        id: 'action',
+        label: 'Actions'
     }
 ];
-
-
 
 /**
- * Receiving Category Table
+ * User management
  */
-const tblReceivingCategory = [
+const tblUser = [
     {
-        id: 'index', label: 'No.',
+        id: "index",
+        label: "No."
     },
     {
-        id: 'name', label: 'Name',
+        id: 'fullName',
+        label: 'Full Name'
     },
     {
-        id: 'description', label: 'Description',
+        id: "username",
+        label: "Username"
     },
-    // ...proof,
     {
-        id: 'action', label: 'Actions'
+        id: "phoneNumber",
+        label: "Phone Number"
+    },
+    {
+        id: "email",
+        label: "Email"
+    },
+    {
+        id: "status",
+        label: "Status",
+        type: 'status',
+        statusColor: { Active: 'green', Inactive: 'red' },
+    },
+    {
+        id: "createdAt",
+        label: "Created At",
+        type: "date",
+        dateFormat: 'MMM DD, YYYY hh:mm:ss A'
+    },
+    {
+        id: "roles",
+        label: "Role",
+        arrayId: "authority",
+    },
+    {
+        id: "action",
+        label: "Actions"
     }
 ];
-
-
 
 
 export const TABLE_CONFIG = {
     tblCandidate,
     tblInterview,
-    tblAssessment,
+    tblJobOffer,
+    tblReferenceCheck,
     tblHire,
-    tblBusiness,
+    tblMainBusiness,
+    tblBusinessUnit,
+    tblSubBusinessUnit,
     tblDepartment,
     tblHeadDepartment,
+    tblCommittee,
     tblPosition,
-    tblReceivingCategory,
+    tblPositionLevel,
     tblRecruiter,
-    tblLocation
+    tblLocation,
+    tblUser
 };

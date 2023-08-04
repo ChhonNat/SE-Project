@@ -1,17 +1,111 @@
 import axios from "axios";
 import apiLink from "../constants/app_cont";
+import Swal from "sweetalert2";
+import { LOCAL_STORAGE_KEYS } from "../constants/local_storage";
+import { HTTP_STATUS } from "../constants/http_status";
+import { API_URL } from "../constants/api_url";
 
-const userLogined = JSON.parse(localStorage.getItem('recruitmentUser'));
+const reqHeaders = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'DeviceID': 'xxxxxxx'
+};
 
+//Create axios header config
 const axiosAPI = axios.create({
     baseURL: apiLink,
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userLogined?.token,
-        'DeviceID': 'xxxxxxx'
-    },
+    headers: reqHeaders
 });
+
+//Intercepter request
+await axiosAPI.interceptors.request.use((config) => {
+
+    const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+
+    if (user?.token) {
+        config.headers['Authorization'] = 'Bearer ' + user?.token;
+    }
+    return config;
+}, (err) => {
+
+    Promise.reject(err);
+});
+
+//Intercepter response
+await axiosAPI.interceptors.response.use((res) => {
+
+    return res;
+}, async (err) => {
+
+    const originalRequest = err?.config;
+
+    if (err?.response?.status === HTTP_STATUS.Forbidden) {
+
+        const { message } = err?.response?.data || 'Something went wrong!';
+        const isInvalidToken = "Invalid token";
+        const isAccessDenied = "Access denied";
+
+        if (message === isInvalidToken) {
+
+            //Clear user from localstorage when refresh token expired 
+            localStorage.clear();
+            window.location.replace('/login');
+
+        } else if (message === isAccessDenied) {
+
+            return Swal.fire({
+                title: 'Restricted Page',
+                text: `${message}!`,
+                icon: 'warning',
+                confirmButtonText: 'OK',
+            });
+
+        } else {
+
+            if (!originalRequest?._retry) {
+
+                originalRequest._retry = true
+
+                try {
+
+                    const reqNewToken = await refreshAccessToken();
+
+                    const { status, data } = reqNewToken;
+
+                    if (status === HTTP_STATUS.success) {
+
+                        const refreshUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+                        refreshUser.token = data?.data?.accessToken;
+                        refreshUser.refreshToken = data?.data?.refreshToken;
+
+                        localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(refreshUser));
+                        axiosAPI.defaults.headers.common['Authorization'] = `Bearer ${refreshUser?.accessToken}`;
+                    }
+
+                } catch (error) {
+
+                    //Clear user from localstorage when refresh token expired 
+                    localStorage.clear();
+                    window.location.replace('/login');
+                }
+
+                return axiosAPI(originalRequest);
+
+            }
+        }
+    }
+
+    return Promise.reject(err);
+
+});
+
+//Token refresh token
+const refreshAccessToken = async () => {
+
+    const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+
+    return await axios.post(apiLink + API_URL.auth.refreshAccessToken, { refreshToken: user?.refreshToken }, { headers: reqHeaders });
+};
 
 
 /**
@@ -43,7 +137,7 @@ const _post = async (endpoint_url, params, contentType) => {
  * @returns return the response after deleted
  */
 const _delete = async (endpoint_url, params, contentType) => {
-    return axiosAPI.delete(endpoint_url, params, { headers: { 'Content-Type': contentType ? contentType : 'application/json' }});
+    return axiosAPI.delete(endpoint_url, params, { headers: { 'Content-Type': contentType ? contentType : 'application/json' } });
 };
 
 
@@ -54,7 +148,7 @@ const _delete = async (endpoint_url, params, contentType) => {
  * @returns return the response after updated
  */
 const _put = async (endpoint_url, params, contentType) => {
-    return axiosAPI.put(endpoint_url, params, { headers: { 'Content-Type': contentType ? contentType : 'application/json' }})
+    return axiosAPI.put(endpoint_url, params, { headers: { 'Content-Type': contentType ? contentType : 'application/json' } })
 };
 
 export default axiosAPI;

@@ -97,7 +97,7 @@ const TableComponent = (props) => {
                                 {headerColumns && headerColumns.length && headerColumns.map((column) => (
                                     <TableCell
                                         key={column?.id}
-                                        align={column?.align}
+                                        align={column?.align ? column?.align : 'inherit'}
                                         style={{ minWidth: column?.minWidth, fontWeight: 'bold', fontSize: 13, fontFamily: 'inherit' }}
                                     >
                                         {column?.label}
@@ -146,7 +146,7 @@ const TableComponent = (props) => {
                                                             const isUseIndex = column?.id === 'index';
                                                             const value = row[column?.id];
                                                             return (
-                                                                <TableCell key={column?.id} align={column?.align} sx={{ fontSize: 13, fontFamily: 'inherit' }}>
+                                                                <TableCell key={column?.id} align={column?.align ? column?.align : 'inherit'} sx={{ fontSize: 13, fontFamily: 'inherit' }}>
 
                                                                     {
                                                                         isUseIndex ? (index + 1)

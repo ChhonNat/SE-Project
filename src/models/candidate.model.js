@@ -1,25 +1,29 @@
 import { string, object, any, number, date } from 'zod';
-
 const UPLOAD_MAX_FILE_SIZE = 500000;
 const ACCET_FILE_UPLOAD = ['image/pdf'];
 
 const Model = object({
     id: any().optional().nullable(),
-    applicationCode: string().min(1, { message: "Application code is required!" }),
-    firstName: string().min(1, { message: "Firstname is required!" }),
-    lastName: string().min(1, { message: "Lastname is required!" }),
+    applicantCode: any().optional(),
+    firstName: string().min(1, { message: "First name is required!" }),
+    lastName: string().min(1, { message: "Last name is required!" }),
     fullName: string().optional().nullable(),
     gender: string().min(1, { message: "Gender is required!" }),
     phoneNumber: string().min(8).min(9),
-    email: string().email(),
+    email: string().optional().nullable(),
     appliedPositionId: number().min(1, { message: "Position is required!" }),
-    departmentId: number(),
-    headDepartmentId: number(),
-    businessDivisionId: number(),
-    appliedLocationId: number(),
-    appliedDate: string().min(1, { message: "Applied date is required" }),
+    appliedPositionName: string().optional().nullable(),
+    appliedPositionLevelId: number().min(1, { message: "Applied position level is required!" }),
+    appliedPositionLevelName: string().optional().nullable(),
+    departmentId: number().min(1, {message: 'Department is required!'}),
+    departmentName: string().optional().nullable(),
+    headDepartmentId: number().min(1, {message: 'Head department ID is required!'}).default(101),
+    headDepartmentName: string().min(1,{message: 'Head department is required!'}).default('TEST'),
+    businessUnitId: number().min(1,{message: 'Primary business is required!'}),
+    businessUnitName: string().optional().nullable(),
+    appliedDate: string().min(1, { message: "Applied date is required!" }),
     receivedChannel: string().optional().nullable(),
-    shortlistDate: string().min(1, { message: "Shorlist date is required" }),
+    shortlistDate: string().optional().nullable(),
     shortlistWeek: string().optional().nullable(),
     shortlistMonth: string().optional().nullable(),
     shortlistResult: string().optional().nullable().default('Pending'),
@@ -29,28 +33,26 @@ const Model = object({
     updatedAt: any().optional().nullable(),
     updatedBy: any().optional().nullable(),
     status: string().optional().nullable().default('Pending'),
-    receivedChannel: string().optional().nullable(),
+    receivedChannel: string().min(1, {message: 'Received from channel is required!'}),
     interviewDate: string().optional().nullable(),
-    file: any().default(null),
-    cvFile: any()
-        // .refine((files) => files?.[0]?.size > UPLOAD_MAX_FILE_SIZE, `Max image size is 5MB.`)
-        // .refine(
-        //     (files) => ACCET_FILE_UPLOAD.includes(files?.[0]?.type),
-        //     "Only .pdf formats are supported."
-        // )
+    
+    //cvFile for preview
+    cvFile: any(),
+    //file for upload
+    file: any().default(null)
 });
 
-const List = {
+const List = Object({
     ...Model,
-};
+});
 
-const Create = {
+const Create = Object({
     ...Model,
-};
+});
 
-const Update = {
+const Update = Object({
     ...Model,
-};
+});
 
 
 export const CandidateModel = {
