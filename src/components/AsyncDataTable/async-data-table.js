@@ -56,10 +56,10 @@ const AsyncDatatable = (props) => {
 
   useEffect(() => {
 
-    if (!loading) {
+    if (!loading && !error) {
       setInitialData([...data?.records]);
     }
-  }, [loading])
+  }, [loading, error])
   
 
   let rows = useMemo(() => (data?.records ? data?.records : initialData), [data]);
