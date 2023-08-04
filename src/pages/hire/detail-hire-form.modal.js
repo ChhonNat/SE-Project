@@ -10,9 +10,6 @@ import moment from 'moment';
 
 import { Box, Grid, IconButton, Slide } from '@mui/material';
 import { Close } from '@mui/icons-material';
-// import { API_URL } from '../../constants/api_url';
-// import { HTTP_METHODS } from '../../constants/http_method';
-// import { PulseLoader } from 'react-spinners';
 
 const TransitionModal = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -39,7 +36,6 @@ const HireFormDetailModal = (props) => {
         'joinedDate',
         'status',
         'remark'
-        // 'processDetails',
     ];
 
     const mapKeyStringToView = {
@@ -58,17 +54,6 @@ const HireFormDetailModal = (props) => {
         remark: { rank: 13, label: 'Remark' }
     };
 
-    // const mapKeyArrayToView = {
-    //     processDetails: { rank: 2, label: 'Processed History' }
-    // };
-
-
-    // const getHireDetail = useCallback(async () => {
-    //     await sendRequest(API_URL.hire.detail + editHire?.id, HTTP_METHODS.post);
-    // }, [editHire?.id, sendRequest])
-
-
-
     useEffect(() => {
 
         if (openModal) {
@@ -82,25 +67,6 @@ const HireFormDetailModal = (props) => {
         }
     }, [openModal, editHire]);
 
-
-    //Listen after hook post data complete
-    // useEffect(() => {
-    //     if (!loading && !error && data) {
-
-    //         data.candidateName = data?.candidate?.fullName;
-    //         data.businessUnitName = data?.businessUnit?.nameEn;
-    //         data.positionName = data?.position?.nameEn;
-    //         data.positionLevel = data?.positionLevel?.nameEn;
-    //         data.departmentName = data?.department?.nameEn;
-    //         data.headDepartmentName = data?.headDepartment?.fullName;
-
-    //         setHireDetail(data);
-
-    //     } else {
-    //         setHireDetail({});
-    //     }
-    // }, [loading, data, message, error]);
-
     return (
         <div>
             <Dialog
@@ -108,181 +74,75 @@ const HireFormDetailModal = (props) => {
                 open={openModal}
                 PaperProps={{ sx: { minWidth: '50vw' } }}
             >
-                {/* {
-                    loading ?
-                        <PulseLoader />
-                        : */}
-                <>
-                    <DialogTitle>
-                        <TitleComponent title="Hire Details" />
-                        {
-                            onCloseModal ? (
-                                <IconButton
-                                    aria-label="close"
-                                    onClick={onCloseModal}
-                                    sx={{
-                                        position: 'absolute',
-                                        right: 8,
-                                        top: 8,
-                                        color: (theme) => theme.palette.grey[500],
-                                    }}
-                                >
-                                    <Close />
-                                </IconButton>
-                            ) :
-                                null
-                        }
-                    </DialogTitle>
-                    <DialogContent dividers>
-                        <Box sx={{ width: '100%' }}>
-                            <Grid
-                                container
-                                rowSpacing={2}
-                                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                                sx={{ marginBottom: '2rem' }}
+                <DialogTitle>
+                    <TitleComponent title="Hire Details" />
+                    {
+                        onCloseModal ? (
+                            <IconButton
+                                aria-label="close"
+                                onClick={onCloseModal}
+                                sx={{
+                                    position: 'absolute',
+                                    right: 8,
+                                    top: 8,
+                                    color: (theme) => theme.palette.grey[500],
+                                }}
                             >
-                                {
-                                    keyDisplays
-                                        .map((key, index) => {
-                                            if (mapKeyStringToView[key] && typeof hireDetail[key] !== 'object') {
-                                                return <Grid
-                                                    key={index}
-                                                    item
-                                                    xs={6}
-                                                    sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
+                                <Close />
+                            </IconButton>
+                        ) :
+                            null
+                    }
+                </DialogTitle>
+                <DialogContent dividers>
+                    <Box sx={{ width: '100%' }}>
+                        <Grid
+                            container
+                            rowSpacing={2}
+                            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                            sx={{ marginBottom: '2rem' }}
+                        >
+                            {
+                                keyDisplays
+                                    .map((key, index) => {
+                                        if (mapKeyStringToView[key] && typeof hireDetail[key] !== 'object') {
+                                            return <Grid
+                                                key={index}
+                                                item
+                                                xs={6}
+                                                sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
+                                            >
+                                                <label
+                                                    style={{ fontWeight: 'bold' }}
                                                 >
-                                                    <label
-                                                        style={{ fontWeight: 'bold' }}
-                                                    >
-                                                        {mapKeyStringToView[key]?.label}:
-                                                    </label>
-                                                    <label>
-                                                        {mapKeyStringToView[key]?.type === 'date' ?
-                                                            moment(hireDetail[key]).format(mapKeyStringToView[key]?.dateFormat ? mapKeyStringToView[key]?.dateFormat : 'MMM DD, YYYY hh:mm:ss A')
-                                                            :
-                                                            hireDetail[key]
-                                                        }
-                                                    </label>
-                                                </Grid>
+                                                    {mapKeyStringToView[key]?.label}:
+                                                </label>
+                                                <label>
+                                                    {mapKeyStringToView[key]?.type === 'date' ?
+                                                        moment(hireDetail[key]).format(mapKeyStringToView[key]?.dateFormat ? mapKeyStringToView[key]?.dateFormat : 'MMM DD, YYYY hh:mm:ss A')
+                                                        :
+                                                        hireDetail[key]
+                                                    }
+                                                </label>
+                                            </Grid>
 
-                                            }
-                                            // if (mapKeyArrayToView[key] && typeof hireDetail[key] == 'object') {
-                                            //     return <Grid
-                                            //         key={index}
-                                            //         item
-                                            //         xs={12}
-                                            //     >
-                                            //         <label
-                                            //             style={{
-                                            //                 fontWeight: 'bold',
-                                            //                 fontSize: '1.25rem'
-                                            //             }}
-                                            //         >
-                                            //             {mapKeyArrayToView[key]?.label}
-                                            //         </label>
-                                            //         <hr></hr>
-                                            //         {
-                                            //             key === 'processDetails' && hireDetail[key] && hireDetail[key].length ?
-                                            //                 hireDetail[key].map((jOB) => (
-                                            //                     <>
-                                            //                         <Grid
-                                            //                             item
-                                            //                             xs={6}
-                                            //                             spacing={2}
-                                            //                             paddingTop={1}
-                                            //                             paddingBottom={1}
-                                            //                             sx={{
-                                            //                                 fontSize: 14,
-                                            //                                 display: 'flex',
-                                            //                                 justifyContent: 'space-between'
-                                            //                             }}
-                                            //                         >
-                                            //                             <label
-                                            //                                 style={{ fontWeight: 'bold' }}
-                                            //                             >
-                                            //                                 Process Status:
-                                            //                             </label>
-                                            //                             <label
-                                            //                             >
-                                            //                                 {jOB?.processStatus}
-                                            //                             </label>
-                                            //                         </Grid>
-                                            //                         <Grid
-                                            //                             item
-                                            //                             paddingBottom={1}
-                                            //                             xs={6}
-                                            //                             sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
-                                            //                         >
-                                            //                             <label
-                                            //                                 style={{ fontWeight: 'bold' }}
-                                            //                             >
-                                            //                                 Offered At:
-                                            //                             </label>
-                                            //                             <label
-                                            //                             >
-                                            //                                 {moment(jOB?.offeredAt).format('MMM DD, YYYY hh:mm A')}
-                                            //                             </label>
-                                            //                         </Grid>
-                                            //                         <Grid
-                                            //                             item
-                                            //                             xs={6}
-                                            //                             paddingBottom={1}
-                                            //                             sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
-                                            //                         >
-                                            //                             <label
-                                            //                                 style={{ fontWeight: 'bold' }}
-                                            //                             >
-                                            //                                 Offered By:
-                                            //                             </label>
-                                            //                             <label
-                                            //                             >
-                                            //                                 {jOB?.username}, {jOB?.staffId}
-                                            //                             </label>
-                                            //                         </Grid>
-                                            //                         <Grid
-                                            //                             item
-                                            //                             xs={6}
-                                            //                             paddingBottom={1}
-                                            //                             sx={{ fontSize: 14, display: 'flex', justifyContent: 'space-between' }}
-                                            //                         >
-                                            //                             <label
-                                            //                                 style={{ fontWeight: 'bold' }}
-                                            //                             >
-                                            //                                 Remark:
-                                            //                             </label>
-                                            //                             <label
-                                            //                             >
-                                            //                                 {jOB?.remark}
-                                            //                             </label>
-                                            //                         </Grid>
-                                            //                     </>
-                                            //                 ))
-                                            //                 :
-                                            //                 <></>
-                                            //         }
+                                        }
+                                    })
+                            }
 
-                                            //     </Grid>
+                        </Grid>
+                    </Box>
 
-                                            // }
-                                        })
-                                }
-
-                            </Grid>
-                        </Box>
-
-                    </DialogContent>
-                    <DialogActions>
-                        <FooterComponent
-                            saveButtunType='submit'
-                            handleCancel={onCloseModal}
-                            saveButtonLabel={hireDetail?.id ? 'Update' : 'Save'}
-                            cancelButtonLabel="Close"
-                            actions={{ cancel: true, }}
-                        />
-                    </DialogActions>
-                </>
-                {/* } */}
-
+                </DialogContent>
+                <DialogActions>
+                    <FooterComponent
+                        saveButtunType='submit'
+                        handleCancel={onCloseModal}
+                        saveButtonLabel={hireDetail?.id ? 'Update' : 'Save'}
+                        cancelButtonLabel="Close"
+                        actions={{ cancel: true, }}
+                    />
+                </DialogActions>
             </Dialog>
         </div>
     );
