@@ -17,10 +17,6 @@ const editResultCandidate = (data, id, contentType) => {
     return httpService._put(API_URL.candidate.editResult + id, data, contentType);
 }
 
-const assessmentCandidate = (data, intId, canId, contentType) => {
-    return httpService._put(API_URL.candidate.assessment + intId + '/candidate/' + canId, data, contentType);
-}
-
 const editAssessmentCandidate = (data, id, contentType) => {
     return httpService._put(API_URL.candidate.editAssessment + id, data, contentType);
 }
@@ -39,7 +35,6 @@ export const candidateService = {
     editCandidate,
     inviteFirstInterview,
     editResultCandidate,
-    assessmentCandidate,
     editAssessmentCandidate,
     hireCandidate,
     downloadCVFile

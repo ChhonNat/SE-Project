@@ -17,7 +17,8 @@ import { HTTP_STATUS } from "../../../constants/http_status";
 import { API_URL } from "../../../constants/api_url";
 import { KEY_POST } from "../../../constants/key_post";
 import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
-import { Close } from "@mui/icons-material";
+import { Close, Label } from "@mui/icons-material";
+import LabelRequire from "../../../components/Label/require";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -159,7 +160,7 @@ const UpsertPositionForm = (props) => {
                                 <TextField
                                     type="text"
                                     id="name"
-                                    label={<span>Name <b style={{ color: 'red' }}>*</b></span>}
+                                    label={<LabelRequire label="Name" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -172,7 +173,7 @@ const UpsertPositionForm = (props) => {
                                 <TextField
                                     type="text"
                                     id="name"
-                                    label={<span>Name(KH) <b style={{ color: 'red' }}>*</b></span>}
+                                    label={<LabelRequire label="Name(KH)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"

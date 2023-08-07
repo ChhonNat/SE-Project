@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import UpsertBusinessUnitForm from "./form-upsert-business-unit";
 import BusinessUnitModel from "../../../models/business/business-unit.model";
-import { KEY_POST } from "../../../constants/key_post";
-
+import UpsertBusinessUnitFormModal from "./form-upsert-business-unit.modal";
 
 const HomeBusiness = () => {
 
@@ -51,7 +49,7 @@ const HomeBusiness = () => {
             />
 
             {/* Modal create and update */}
-            <UpsertBusinessUnitForm
+            <UpsertBusinessUnitFormModal
                 title={editBusinessUnit?.id ? "Edit Primary Business" : "Add Primary Business"}
                 openModal={openBusinessUnitModal}
                 editData={editBusinessUnit}

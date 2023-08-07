@@ -62,7 +62,7 @@ const InterViewEvaluateFormModal = (props) => {
 
         if (open) {
             setValue('interviewProcess', interview?.interviewProcess);
-            fetchData(API_URL.interview.lookup.get);
+            fetchData(API_URL.lookup.interview.get);
         }
     }, [open])
 

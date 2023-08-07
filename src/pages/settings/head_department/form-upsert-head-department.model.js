@@ -20,6 +20,7 @@ import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
 
 import { Close } from "@mui/icons-material";
+import LabelRequire from "../../../components/Label/require";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -174,7 +175,7 @@ const UpsertHeadDepartmentForm = (props) => {
                                 <TextField
                                     type="text"
                                     id="staff-id"
-                                    label={<span>Staff ID <b style={{ color: 'red' }}>*</b></span>}
+                                    label={<LabelRequire label="Staff ID" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -188,7 +189,7 @@ const UpsertHeadDepartmentForm = (props) => {
                                 <TextField
                                     type="text"
                                     id="first-name"
-                                    label={<span>First Name <b style={{ color: 'red' }}>*</b></span>}
+                                    label={<LabelRequire label="First Name" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -202,7 +203,7 @@ const UpsertHeadDepartmentForm = (props) => {
                                 <TextField
                                     type="text"
                                     id="last-name"
-                                    label={<span>Last Name <b style={{ color: 'red' }}>*</b></span>}
+                                    label={<LabelRequire label="Last Name" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -216,7 +217,7 @@ const UpsertHeadDepartmentForm = (props) => {
                                 <TextField
                                     type="text"
                                     id="phone"
-                                    label={<span>Phone Number <b style={{ color: 'red' }}>*</b></span>}
+                                    label={<LabelRequire label="Phone Number" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"

@@ -24,7 +24,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const UpsertDepartmentForm = (props) => {
+const UpsertDepartmentFormModal = (props) => {
 
     const { openModal, onCloseModal, handleEventSuccessed, title, editData } = props;
     const { register, handleSubmit, reset, setValue, watch, formState, clearErrors, setError } = useForm({ resolver: zodResolver(DepartmentModel) });
@@ -237,4 +237,4 @@ const UpsertDepartmentForm = (props) => {
     )
 };
 
-export default UpsertDepartmentForm;
+export default UpsertDepartmentFormModal;

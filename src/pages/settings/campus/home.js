@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import UpsertCommitteeFormModal from "./form-upsert-committee.modal";
+import UpsertCampusFormModal from "./form-upsert-campus.modal";
 
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 
-const HomeCommittee = () => {
-
+const HomeCampus = () => {
     const [isReload, setIsReload] = useState(false);
-    const [openCommitteeModal, setOpenCommitteeModal] = useState(false);
-    const [editCommittee, setEditCommittee] = useState({});
+    const [openUpsertCampusModal, setOpenUpsertCampusModal] = useState(false);
+    const [editCampus, setEditCampus] = useState({});
 
     return (
         <>
@@ -28,41 +27,35 @@ const HomeCommittee = () => {
             */}
 
             <AsyncDatatable
-                asyncURL={API_URL.committeee.get}
-                headers={TABLE_CONFIG.tblHeadDepartment}
-                bannerText="All Committees"
+                asyncURL={API_URL.campus.get}
+                headers={TABLE_CONFIG.tblCampus}
+                bannerText="All Campuses"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ 
-                    search: true, 
-                    refresh: true,
-                    create: true, 
-                    edit: true 
-                }}
-                onHandleAddNewEvent={() => setOpenCommitteeModal(true)}
+                useTableActions={{ search: true, create: true, edit: true }}
+                onHandleAddNewEvent={() => setOpenUpsertCampusModal(true)}
                 handleEditEvent={(data) => {
-                    setEditCommittee(data);
-                    setOpenCommitteeModal(true);
+                    setEditCampus(data);
+                    setOpenUpsertCampusModal(true);
                 }}
-                onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
 
-            {/* Form create and update head department */}
-            <UpsertCommitteeFormModal
-                title={editCommittee?.id ? "Edit committee" : "Add committee"}
-                openModal={openCommitteeModal}
+            {/* Modal create and update */}
+
+            <UpsertCampusFormModal
+                title={editCampus?.id ? "Edit Campus" : "Add Campus"}
+                openModal={openUpsertCampusModal}
+                editData={editCampus}
                 onCloseModal={() => {
-                    setEditCommittee({});
-                    setOpenCommitteeModal(false);
-                }
-                }
+                    setEditCampus({});
+                    setOpenUpsertCampusModal(false);
+                }}
                 handleEventSuccessed={() => setIsReload(!isReload)}
-                editData={editCommittee}
             />
         </>
     )
 };
 
-export default HomeCommittee;
+export default HomeCampus;

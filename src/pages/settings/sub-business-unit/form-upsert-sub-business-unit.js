@@ -169,7 +169,7 @@ const UpsertSubBusinessUnitForm = (props) => {
                                 <TextField
                                     type="text"
                                     id="name"
-                                    label={<span>Name (EN) <b style={{ color: 'red' }}>*</b></span>}
+                                    label={<LabelRequire label="Name (EN)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="meduim"
@@ -183,7 +183,7 @@ const UpsertSubBusinessUnitForm = (props) => {
                                 <TextField
                                     type="text"
                                     id="name"
-                                    label={<span>Name (KH) <b style={{ color: 'red' }}>*</b></span>}
+                                    label={<LabelRequire label="Name (KH)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="meduim"

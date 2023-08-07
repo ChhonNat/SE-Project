@@ -62,7 +62,7 @@ const CandidateFormModal = (props) => {
 
         if (openCandidateModal) {
             /**Fetch position data */
-            fetchData(API_URL.candidate.lookup.get, null, 'multi');
+            fetchData(API_URL.lookup.candidate.get, null, 'multi');
 
             /**Fetch location data */
             fetchData(API_URL.lookup.location.get, setListLocations);
@@ -99,6 +99,11 @@ const CandidateFormModal = (props) => {
                     }
                 }
 
+            } else {
+                const newDate = new Date();
+                const convertToMUI = newDate.getFullYear() + '-' + ('0' + (newDate.getMonth() + 1)).slice(-2) + '-' + ('0' + (newDate.getDate() + 0)).slice(-2);
+                
+                setValue('appliedDate',convertToMUI);
             }
         }
 
@@ -123,7 +128,6 @@ const CandidateFormModal = (props) => {
 
                     if (!candidate?.id)
                         setValue('applicantCode', ConverterService.convertApplicationCode(data?.IncreasedAppNumber));
-
 
                 } else {
                     setListGenders([]);

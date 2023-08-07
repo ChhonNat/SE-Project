@@ -62,7 +62,7 @@ const tblCandidate = [
     },
     {
         id: 'submitStatus',
-        label: "Shortlist Status",
+        label: "CV Submit Status",
         type: 'status',
         statusColor: {
             [STATUS.SUBMIT_STATUS.WAITING]: 'Orange',
@@ -684,8 +684,56 @@ const tblLocation = [
         label: 'No.'
     },
     {
-        id: 'name',
+        id: 'nameEn',
         label: 'Name'
+    },
+    {
+        id: 'nameKh',
+        label: 'Name(KH)'
+    },  
+    {
+        id: 'description',
+        label: 'Description'
+    },
+    {
+        id: 'status',
+        type: 'status',
+        statusColor: { Active: 'Green', Inactive: 'Red' },
+        label: 'Status'
+    },
+    {
+        id: 'action',
+        label: 'Actions'
+    }
+];
+
+/**Location Table */
+
+const tblCampus = [
+    {
+        id: 'index',
+        label: 'No.'
+    },
+    {
+        id: 'nameEn',
+        label: 'Name'
+    },
+    {
+        id: 'nameKh',
+        label: 'Name(KH)'
+    },
+    {
+        id: 'shortName',
+        label: 'Short Name'
+    },  
+    {
+        id: 'location',
+        label: 'Location',
+        obj: { name: 'name' }
+    },
+    {
+        id: 'address',
+        label: 'Address'
     },
     {
         id: 'description',
@@ -767,5 +815,6 @@ export const TABLE_CONFIG = {
     tblPositionLevel,
     tblRecruiter,
     tblLocation,
+    tblCampus,
     tblUser
 };

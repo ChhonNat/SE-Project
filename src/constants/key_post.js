@@ -135,9 +135,14 @@ const subBusinessUnit = [
 ];
 
 const campus = [
-    "name",
+    "address",
+    "campusCode",
     "description",
-    "status",
+    "locationId",
+    "nameEn",
+    "nameKh",
+    "shortName",
+    "status"
 ];
 
 const headDepartment = [

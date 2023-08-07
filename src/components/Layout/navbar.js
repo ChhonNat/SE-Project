@@ -50,8 +50,6 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-
-
 const NavbarComponent = () => {
 
     const { toggleNavbar, setToggleNavbar } = useContext(LayoutContext);

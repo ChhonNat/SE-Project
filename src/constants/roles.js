@@ -9,11 +9,11 @@ export const ROLE = {
 }
 
 export const MAP_ROLE_NAME = {
-    'ROLE_TA': 'TA Team',
-    'ROLE_TA_ADMIN': 'TA Admin',
-    'ROLE_OFCCEO_ADMIN': 'OFCCEO',
-    'ROLE_HIRING_MANAGER': 'Head of Department',
-    'ROLE_SUPER_ADMIN': 'Super Admin',
-    'ROLE_ADMIN': 'Admin',
-    'ROLE_HR_MANAGER': 'Director of HR'
+    ROLE_TA: 'TA Team',
+    ROLE_TA_ADMI: 'TA Admin',
+    ROLE_OFCCEO_ADMIN: 'OFCCEO',
+    ROLE_HIRING_MANAGER: 'Head of Department',
+    ROLE_SUPER_ADMIN: 'Super Admin',
+    ROLE_ADMIN: 'Admin',
+    ROLE_HR_MANAGER: 'Director of HR'
 };

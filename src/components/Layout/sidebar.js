@@ -95,10 +95,12 @@ const sidebar = {
     menu: {
         activeLink: {
             backgroundColor: '#f2eeee',
+            borderRight: '3px solid #283c55'
         },
         child: {
             activeLink: {
                 backgroundColor: '#f7f6f6',
+                borderRight: '3px solid #283c55'
             },
         }
     },

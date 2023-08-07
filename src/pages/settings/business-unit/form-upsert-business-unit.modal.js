@@ -1,65 +1,46 @@
-import React, { forwardRef, useCallback, useEffect, useState } from "react";
+import React, { forwardRef, useEffect } from "react";
 import Box from "@mui/material/Box";
+import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
-import _useHttp from "../../../hooks/_http";
-import Swal from "sweetalert2";
-import SelectComponent from "../../../components/Selector/select";
-import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
-import PositionLevelModel from "../../../models/position/position-level.model";
-
-import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
-import { globalService } from "../../../services/global.service";
-import { HTTP_STATUS } from "../../../constants/http_status";
-import { API_URL } from "../../../constants/api_url";
-import { KEY_POST } from "../../../constants/key_post";
-import { STATUS } from "../../../constants/status";
-import { ALERT_TIMER } from "../../../constants/app_config";
-import { HTTP_METHODS } from "../../../constants/http_method";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Close } from "@mui/icons-material";
+import _useHttp from "../../../hooks/_http";
+import { HTTP_METHODS } from "../../../constants/http_method";
+import Swal from "sweetalert2";
+import { ALERT_TIMER } from "../../../constants/app_config";
+import SelectComponent from "../../../components/Selector/select";
+import { STATUS } from "../../../constants/status";
 import LabelRequire from "../../../components/Label/require";
+import BusinessUnitModel from "../../../models/business/business-unit.model";
+import { KEY_POST } from "../../../constants/key_post";
+import { API_URL } from "../../../constants/api_url";
+import { Close } from "@mui/icons-material";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const UpsertPositionLavelForm = (props) => {
-
+const UpsertBusinessUnitFormModal = (props) => {
 
     const { openModal, onCloseModal, handleEventSuccessed, title, editData } = props;
-    const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({ resolver: zodResolver(PositionLevelModel) });
+    const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({ resolver: zodResolver(BusinessUnitModel) });
     const { data, loading, error, message, sendRequest } = _useHttp();
-    const { errors } = formState;
     const watchData = watch();
-
-    const [listBusinessDivisions, setListBusinessDivisions] = useState([]);
-    const [listDepartments, setListDepartments] = useState([]);
-    const [isSubmitForm, setIsSubmitForm] = useState(false);
+    const { errors } = formState;
 
     useEffect(() => {
 
-        if (openModal) {
+        if (editData?.id) {
 
-            if (editData?.id) {
-
-                for (let key in editData) {
-                    setValue(key, editData[key])
-                }
+            for (let key in editData) {
+                setValue(key, editData[key])
             }
-
-            /**Fetch lookup data businesss and department  */
-            fetchData(API_URL.lookup.businessUnit.get, setListBusinessDivisions);
-
         }
 
     }, [openModal])
 
-    const onError = (data) => {
-        setIsSubmitForm(true);
-    }
-
+    const onError = (data) => console.log(data);
 
     const submit = async (data) => {
 
@@ -67,18 +48,12 @@ const UpsertPositionLavelForm = (props) => {
 
         Object.keys(data).forEach((key) => {
 
-            if (KEY_POST.positionLevel.includes(key) && !editData?.id) {
-
-                postData[key] = data[key];
-
-            } else {
-
+            if (KEY_POST.businessUnit.includes(key)) {
                 postData[key] = data[key];
             }
         });
 
-
-        await sendRequest(!editData?.id ? API_URL.positionLevel.create : API_URL?.positionLevel?.edit + editData?.id, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
+        await sendRequest(!editData?.id ? API_URL.businessUnit.create : API_URL.businessUnit.edit + editData?.id, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
     }
 
     useEffect(() => {
@@ -93,29 +68,15 @@ const UpsertPositionLavelForm = (props) => {
                 timer: ALERT_TIMER
             });
 
+
             if (!error)
                 handleEventSuccessed();
 
             handleCloseModal();
+
         }
 
     }, [data, error, loading, message])
-
-    const fetchData = useCallback(async (asyncUrl, setData) => {
-        try {
-
-            const reqData = await globalService.getData(asyncUrl);
-            const { status, data } = reqData;
-            const { success } = data;
-
-            if (status === HTTP_STATUS.success) {
-                success ? setData(data?.data) : setData([]);
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
-    }, []);
 
     const handleCloseModal = () => {
         reset();
@@ -159,68 +120,131 @@ const UpsertPositionLavelForm = (props) => {
 
                         {/* Input Fields */}
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+
+                            {/* Select main business*/}
+                            <Grid item xs={12}>
+                                <SelectComponent
+                                    id="main-business"
+                                    label="Main Business"
+                                    callToApi={API_URL.lookup.mainBusiness.get}
+                                    bindField="nameEn"
+                                    value={watchData?.mainBusinessUnitId}
+                                    handleOnChange={(e) => setValue('mainBusinessUnitId', e?.target?.value)}
+                                    err={errors?.mainBusinessUnitId?.message}
+                                    isRequire={true}
+                                    size="small"
+                                />
+                            </Grid>
+
+                            {/* Code  */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    type="text"
+                                    id="code"
+                                    label={<LabelRequire label="Code" />}
+                                    variant="outlined"
+                                    fullWidth
+                                    size="small"
+                                    {...register('code')}
+                                    error={errors?.code ? true : false}
+                                    helperText={errors?.code?.message}
+                                />
+                            </Grid>
+
+                            {/* English name */}
                             <Grid item xs={12}>
                                 <TextField
                                     type="text"
                                     id="name"
-                                    label={<LabelRequire label="Name" />}
+                                    label={<LabelRequire label="Name (EN)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
+
                                     {...register('nameEn')}
                                     error={errors?.nameEn ? true : false}
                                     helperText={errors?.nameEn?.message}
                                 />
                             </Grid>
+                            {/* Khmer name */}
                             <Grid item xs={12}>
                                 <TextField
                                     type="text"
                                     id="name"
-                                    label={<LabelRequire label="Name(KH)" />}
+                                    label={<LabelRequire label="Name (KH)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
+
                                     {...register('nameKh')}
                                     error={errors?.nameKh ? true : false}
                                     helperText={errors?.nameKh?.message}
                                 />
                             </Grid>
+                            {/* Phone number */}
                             <Grid item xs={12}>
-                                <SelectComponent
-                                    id="primary-business-id"
-                                    label="Primary Business"
-                                    isRequire={true}
+                                <TextField
+                                    type="phone"
+                                    id="phone"
+                                    label={<LabelRequire label="Phone" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
-                                    customDatas={listBusinessDivisions}
-                                    value={watchData?.businessUnitId || ""}
-                                    bindField="nameEn"
-                                    handleOnChange={(e) => setValue('businessUnitId', e?.target?.value)}
-                                    err={errors?.businessUnitId?.message}
+
+                                    {...register('phone')}
+                                    error={errors?.phone ? true : false}
+                                    helperText={errors?.phone?.message}
                                 />
                             </Grid>
+
+                            {/* Email */}
                             <Grid item xs={12}>
-
-                                <AsyncAutoComplete
-                                    id="department-id"
-                                    label="Department"
+                                <TextField
+                                    type="email"
+                                    id="email"
+                                    label="Email"
+                                    variant="outlined"
+                                    fullWidth
                                     size="small"
-                                    callToApi={API_URL.lookup.department.get}
-                                    bindField={'nameEn'}
-                                    handleOnChange={(e, value) => {
-                                        setValue('departmentId', value?.id ? value?.id : value);
-                                    }}
-                                    value={watchData?.departmentId || null}
-                                    isRequire={true}
-                                    err={errors?.departmentId?.message}
+                                    {...register('email')}
                                 />
-
                             </Grid>
+
+                            {/* Address line EN */}
                             <Grid item xs={12}>
                                 <TextField
                                     sx={{ width: '100%' }}
-                                    id="outlined-multiline-static"
+                                    id="address-en"
+                                    label="Address"
+                                    multiline
+                                    minRows={2}
+                                    maxRows={10}
+                                    variant="outlined"
+                                    {...register('addressEn')}
+                                    size="small"
+                                />
+                            </Grid>
+
+                            {/* Address line KH */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    sx={{ width: '100%' }}
+                                    id="address-kh"
+                                    label="Address(KH)"
+                                    multiline
+                                    minRows={2}
+                                    maxRows={10}
+                                    variant="outlined"
+                                    {...register('addressKh')}
+                                    size="small"
+                                />
+                            </Grid>
+
+                            {/* Description */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    sx={{ width: '100%' }}
+                                    id="description"
                                     label="Description"
                                     multiline
                                     minRows={2}
@@ -230,6 +254,8 @@ const UpsertPositionLavelForm = (props) => {
                                     size="small"
                                 />
                             </Grid>
+
+                            {/* Status */}
                             {editData?.id &&
                                 <Grid item xs={12}>
                                     <SelectComponent
@@ -242,6 +268,7 @@ const UpsertPositionLavelForm = (props) => {
                                     />
                                 </Grid>
                             }
+
                         </Grid>
                     </Box>
                 </DialogContent>
@@ -260,4 +287,4 @@ const UpsertPositionLavelForm = (props) => {
     )
 };
 
-export default UpsertPositionLavelForm;
+export default UpsertBusinessUnitFormModal;

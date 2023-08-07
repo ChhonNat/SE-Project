@@ -197,7 +197,7 @@ const AsyncDatatable = (props) => {
         {loading ?
           <Box sx={{ width: '100%' }}><LinearProgress /></Box>
           :
-          <Divider />
+          <Divider/>
         }
         <TableContainer>
           <Table

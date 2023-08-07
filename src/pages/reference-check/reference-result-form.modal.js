@@ -3,6 +3,7 @@ import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
 import SelectComponent from "../../components/Selector/select";
 import VerifyReferenceModel from "../../models/verify-reference.model";
+import LabelRequire from "../../components/Label/require";
 import _useHttp from "../../hooks/_http";
 import Swal from "sweetalert2";
 
@@ -16,7 +17,6 @@ import { DATA_STATUS } from "../../constants/data_status";
 import { API_URL } from "../../constants/api_url";
 import { HTTP_METHODS } from "../../constants/http_method";
 import { STATUS } from "../../constants/status";
-import LabelRequire from "../../components/Label/require";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -45,7 +45,7 @@ const ReferenceResultFormModal = (props) => {
         if (open) {
 
             const fetchData = async () => {
-                await sendRequest(API_URL.referenceCheck.lookup.get, HTTP_METHODS.get);
+                await sendRequest(API_URL.lookup.referenceCheck.get, HTTP_METHODS.get);
             }
 
             fetchData();

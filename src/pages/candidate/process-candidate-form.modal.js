@@ -114,7 +114,7 @@ const CandidateProcessForm = (props) => {
 
                 try {
 
-                    const reqLookup = await globalService.getData(API_URL.candidate.lookup.get);
+                    const reqLookup = await globalService.getData(API_URL.lookup.candidate.get);
                     const { success, data } = reqLookup?.data;
 
                     if (success) {

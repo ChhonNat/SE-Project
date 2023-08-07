@@ -13,8 +13,9 @@ import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatRecline
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ElevatorIcon from '@mui/icons-material/Elevator';
-import { HowToReg } from "@mui/icons-material";
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import { CorporateFareTwoTone, HowToReg, LocationOn } from "@mui/icons-material";
+
 
 /**
  * Import all page components
@@ -42,26 +43,6 @@ const Hire = {
 
 const Settings = {
 
-    positionLevel: {
-        home: lazy(() => import('../pages/settings/position-level/home'))
-    },
-
-    position: {
-        home: lazy(() => import('../pages/settings/position/home')),
-    },
-
-    department: {
-        home: lazy(() => import('../pages/settings/department/home')),
-    },
-
-    headDepartment: {
-        home: lazy(() => import('../pages/settings/head_department/home'))
-    },
-
-    committee: {
-        home: lazy(() => import('../pages/settings/committee/home'))
-    },
-
     mainBusiness: {
         home: lazy(() => import('../pages/settings/main-business/home'))
     },
@@ -72,7 +53,35 @@ const Settings = {
 
     subBusinessUnit: {
         home: lazy(() => import('../pages/settings/sub-business-unit/home'))
-    }
+    },
+
+    department: {
+        home: lazy(() => import('../pages/settings/department/home')),
+    },
+
+    positionLevel: {
+        home: lazy(() => import('../pages/settings/position-level/home'))
+    },
+
+    position: {
+        home: lazy(() => import('../pages/settings/position/home')),
+    },
+
+    headDepartment: {
+        home: lazy(() => import('../pages/settings/head_department/home'))
+    },
+
+    campus: {
+        home: lazy(() => import('../pages/settings/campus/home'))
+    },
+
+    location: {
+        home: lazy(() => import('../pages/settings/location/home'))
+    },
+
+    // committee: {
+    //     home: lazy(() => import('../pages/settings/committee/home'))
+    // }
 
 };
 
@@ -142,7 +151,7 @@ export const PRIVATE_ROUTES = [
                 name: "Primary Businesses",
                 path: "business",
                 component: <Settings.businessUnit.home />,
-                icon: <MeetingRoomIcon />,
+                icon: <ApartmentIcon />
             },
 
             /**Department */
@@ -150,7 +159,23 @@ export const PRIVATE_ROUTES = [
                 name: "Departments",
                 path: "department",
                 component: <Settings.department.home />,
-                icon: <ApartmentIcon />,
+                icon: <CorporateFareTwoTone />
+            },
+
+
+            /**Campus */
+            {
+                name: 'Campuses',
+                path: 'campus',
+                component: <Settings.campus.home />,
+                icon: <MeetingRoomIcon />
+            },
+
+            {
+                name: 'Locations',
+                path: 'location',
+                component: <Settings.location.home />,
+                icon: <LocationOn />
             },
 
             /**Position level*/
@@ -177,13 +202,13 @@ export const PRIVATE_ROUTES = [
                 icon: <PeopleAltIcon />,
             },
 
-            /**Committee */
-            {
-                name: "Committees",
-                path: "committee",
-                component: <Settings.committee.home />,
-                icon: <PeopleAltIcon />,
-            },
+            // /**Committee */
+            // {
+            //     name: "Committees",
+            //     path: "committee",
+            //     component: <Settings.committee.home />,
+            //     icon: <PeopleAltIcon />,
+            // },
 
         ]
     },

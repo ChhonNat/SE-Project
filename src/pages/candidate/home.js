@@ -19,6 +19,7 @@ import { ROLE } from "../../constants/roles";
 import { STATUS } from "../../constants/status";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
+// import { ContentCopy, Difference } from "@mui/icons-material";
 
 const HomeCandidate = () => {
 
@@ -34,7 +35,6 @@ const HomeCandidate = () => {
     const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
     const [openScheduleModal, setOpenScheduleModal] = useState(false);
     const [openProcessModal, setOpenProcessModal] = useState(false);
-
 
     const [verifyTypeModal, setVerifyTypeModal] = useState('');
 
@@ -87,6 +87,13 @@ const HomeCandidate = () => {
                         delete: false,
                         moreOption: {
                             buttons: [
+                                // {
+                                //     name: 'Clone Info',
+                                //     eventName: 'cloneInfo',
+                                //     icon: <Difference />,
+                                //     hidden: !user?.roles ? true : user?.roles.includes(ROLE.ROLE_TA_ADMIN) ? false : true,
+                                //     enable: true
+                                // },
                                 {
                                     name: 'Submit to DHR',
                                     eventName: 'submitToDHR',
@@ -237,7 +244,8 @@ const HomeCandidate = () => {
 
                     eName === 'setScheduleTest' ||
                         eName === 'setScheduleInterview' ||
-                        eName === 'setFinalScheduleInterview' ? setOpenScheduleModal(true) : setOpenProcessModal(true);
+                        eName === 'setFinalScheduleInterview'
+                        ? setOpenScheduleModal(true) : setOpenProcessModal(true);
                 }}
             />
 

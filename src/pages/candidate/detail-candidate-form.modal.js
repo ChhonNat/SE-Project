@@ -25,6 +25,10 @@ const TransitionModal = React.forwardRef(function Transition(props, ref) {
 
 const CandidateFormDetailModal = (props) => {
 
+    const { openCandidateModal, onCloseCandidateModal, candidate } = props;
+    const { data, loading, message, error, sendRequest } = _useHttp();
+    const [candidateDetail, setCandidateDetail] = useState({});
+
     const mapKeyToView = {
         applicantCode: { rank: 1, label: 'Application Code' },
         firstName: { rank: 3, label: 'First Name' },
@@ -56,9 +60,7 @@ const CandidateFormDetailModal = (props) => {
         'Second_Interview': { label: 'Second Interview' },
     };
 
-    const { openCandidateModal, onCloseCandidateModal, candidate } = props;
-    const { data, loading, message, error, sendRequest } = _useHttp();
-    const [candidateDetail, setCandidateDetail] = useState({});
+
 
     const getCandidateDetail = useCallback(async () => {
         await sendRequest(API_URL.candidate.detail + candidate?.id, HTTP_METHODS.post);
@@ -98,9 +100,6 @@ const CandidateFormDetailModal = (props) => {
         }, {})
     };
 
-    const gridDisplay = (data) => {
-        return
-    };
 
     return (
         <div>
@@ -134,6 +133,7 @@ const CandidateFormDetailModal = (props) => {
                                     ) :
                                         null
                                 }
+                                
                             </DialogTitle>
                             <DialogContent dividers>
 

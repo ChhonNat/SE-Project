@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import UpsertDepartmentFormModal from "./form-upsert-department.modal";
-
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import DepartmentModel from "../../../models/department/department.model";
+import UpsertFormModal from "../global-upsert-form/upsert.modal";
+
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
+import { KEY_POST } from "../../../constants/key_post";
+import { LocationModel } from "../../../models/location.model";
 
-const HomeDepartment = () => {
-
-    const [openDepartmentModal, setOpenDepartmentModal] = useState(false);
-    const [editDepartment, setEditDepartment] = useState({});
-
+const HomeLocation = () => {
     const [isReload, setIsReload] = useState(false);
+    const [openLocationModal, setOpenLocationModal] = useState(false);
+    const [editLocation, setEditLocation] = useState({});
 
     return (
         <>
@@ -30,42 +29,41 @@ const HomeDepartment = () => {
             */}
 
             <AsyncDatatable
-                asyncURL={API_URL.department.get}
-                headers={TABLE_CONFIG.tblDepartment}
-                bannerText="All Departments"
+                asyncURL={API_URL.location.get}
+                headers={TABLE_CONFIG.tblLocation}
+                bannerText="All Location"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ 
-                    search: true, 
-                    refresh: true,
-                    create: true, 
-                    edit: true 
-                }}
-                onHandleAddNewEvent={() => setOpenDepartmentModal(true)}
+                useTableActions={{ search: true, create: true, edit: true }}
+                onHandleAddNewEvent={() => 
+                    setOpenLocationModal(true)
+                }
                 handleEditEvent={(data) => {
-                    setEditDepartment(data);
-                    setOpenDepartmentModal(true);
+                    setEditLocation(data);
+                    setOpenLocationModal(true);
                 }}
-                onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
 
-            
             {/* Modal create and update */}
-            <UpsertDepartmentFormModal
-                title={editDepartment?.id ? "Edit Department" : "Add New Department"}
-                openModal={openDepartmentModal}
-                editData={editDepartment}
+            <UpsertFormModal
+                title={editLocation?.id ? "Edit campus" : "Add new campus"}
+                openModal={openLocationModal}
+                editData={editLocation}
                 onCloseModal={() => {
-                    setEditDepartment(DepartmentModel);
-                    setOpenDepartmentModal(false);
+                    setEditLocation({});
+                    setOpenLocationModal(false);
                 }}
+                model={editLocation?.id ? LocationModel.Edit : LocationModel.Create }
+                keyPosts={KEY_POST.campus}
+                postUrl={API_URL.location.create}
+                putUrl={API_URL.location.edit}
+                dataType={'/location'}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
-
         </>
     )
-}
+};
 
-export default HomeDepartment;
+export default HomeLocation;

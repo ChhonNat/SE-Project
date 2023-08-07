@@ -256,7 +256,7 @@ const TableRows = ({
                                                 !isArray ?
                                                     !isObject ? row[head?.id] : row[head?.id] && row[head?.id][head?.obj?.name]
                                                     :
-                                                    arrayValue?.length ? arrayValue.toString() : ''
+                                                    arrayValue?.length ? arrayValue.join(',\r\n').toString() : ''
                                             )
                                         }
 
