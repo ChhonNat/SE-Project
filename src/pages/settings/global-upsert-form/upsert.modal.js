@@ -53,7 +53,7 @@ const UpsertFormModal = (props) => {
             }
         });
 
-        await sendRequest(!editData?.id ? postUrl : `${putUrl}${editData?.id}${dataType}`, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
+        await sendRequest(!editData?.id ? postUrl : `${putUrl}${editData?.id}${dataType ? dataType : ''}`, !editData?.id ? HTTP_METHODS.post : HTTP_METHODS.put, postData);
     }
 
     useEffect(() => {

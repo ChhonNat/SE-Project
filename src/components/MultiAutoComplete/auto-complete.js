@@ -47,7 +47,7 @@ const AsyncMultiAutoComplete = (props) => {
     useEffect(() => {
         if (!loading) {
 
-            if (data.hasOwnProperty('records')) {
+            if (data?.hasOwnProperty('records')) {
                 const { records } = data;
                 records?.length ? setOptions(records) : setOptions([]);
             } else {

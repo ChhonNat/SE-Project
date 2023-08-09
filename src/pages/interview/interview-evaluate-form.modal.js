@@ -76,7 +76,7 @@ const InterViewEvaluateFormModal = (props) => {
             const req = await globalService.getData(url);
             const { success, data } = req?.data;
 
-            if (success && data.hasOwnProperty('interviewResults')) {
+            if (success && data?.hasOwnProperty('interviewResults')) {
 
                 data?.interviewResults?.length ?
                     setListInterviewResults(data?.interviewResults?.filter((result) => {

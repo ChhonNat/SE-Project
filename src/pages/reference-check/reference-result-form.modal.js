@@ -57,7 +57,7 @@ const ReferenceResultFormModal = (props) => {
 
     useEffect(() => {
         if (!loading) {
-            if (data.hasOwnProperty('checkResults')) {
+            if (data?.hasOwnProperty('checkResults')) {
                 const filterResults = !data?.checkResults?.length ?
                     [] :
                     data?.checkResults?.filter((result) => result !== STATUS.REFERENCE_RESULT.WAITING);

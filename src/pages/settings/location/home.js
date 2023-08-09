@@ -59,7 +59,6 @@ const HomeLocation = () => {
                 keyPosts={KEY_POST.campus}
                 postUrl={API_URL.location.create}
                 putUrl={API_URL.location.edit}
-                dataType={'/location'}
                 handleEventSuccessed={() => setIsReload(!isReload)}
             />
         </>

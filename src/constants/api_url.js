@@ -81,8 +81,8 @@ export const API_URL = {
 
     location: {
         get: `${API_VERSION}/locations/search`,
-        create: `${API_VERSION}/settings/location`,
-        edit: `${API_VERSION}/settings/`
+        create: `${API_VERSION}/locations`,
+        edit: `${API_VERSION}/locations/`
     },
 
     positionLevel: {
