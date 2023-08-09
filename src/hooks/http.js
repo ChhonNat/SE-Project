@@ -69,7 +69,7 @@ const useHttp = () => {
       //           date: Date().toString(),
       //         };
 
-      //         localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(token));
+      //         localStorage.setItem(LOCAL_STORAGE_KEYS.auth.user, JSON.stringify(token));
 
       //         dispatch(isLogin());
 
@@ -102,11 +102,11 @@ const useHttp = () => {
       //     return config;
       //   }
 
-      //   if (localStorage.getItem("recruitmentUser")) {
+      //   if (localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user)) {
 
       //     config.headers = {
       //       'Content-Type': 'application/json',
-      //       Authorization: `Bearer ${JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser)).accessToken}`,
+      //       Authorization: `Bearer ${JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user)).accessToken}`,
       //       'Access-Control-Allow-Origin': '*',
       //     };
 

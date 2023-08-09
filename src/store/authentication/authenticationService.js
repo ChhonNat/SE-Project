@@ -70,7 +70,7 @@ export const userAuthentication = ({ username, password }) => {
 
       const authUser = await authenticates();
 
-      localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(authUser));
+      localStorage.setItem(LOCAL_STORAGE_KEYS.auth.user, JSON.stringify(authUser));
       dispatch(authActions.setAuthenticate(authUser));
 
     } catch (error) {
@@ -94,10 +94,10 @@ export const isLogin = () => {
   return (dispatch) => {
     let storeUser = null;
 
-    if (!localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser)) {
+    if (!localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user)) {
       storeUser = initialUser;
     } else {
-      storeUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+      storeUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user));
     }
 
     dispatch(authActions.setAuthenticate(storeUser));
