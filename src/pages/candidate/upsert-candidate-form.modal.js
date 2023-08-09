@@ -51,9 +51,7 @@ const CandidateFormModal = (props) => {
     clearErrors,
     setError,
   } = useForm({
-    resolver: zodResolver(
-      candidate?.id ? CandidateModel.Create : CandidateModel?.Update
-    ),
+    resolver: zodResolver(candidate?.id ? CandidateModel.Update : CandidateModel?.Create)
   });
   const watchCandidate = watch();
   const { errors } = formState;
