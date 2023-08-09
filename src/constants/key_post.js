@@ -7,6 +7,7 @@ const update_candidate = [
     'departmentId',
     'headDepartmentId',
     'businessUnitId',
+    'campusId',
     'appliedPositionId',
     'appliedPositionLevelId',
     'appliedDate',

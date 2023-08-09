@@ -125,6 +125,9 @@ export const API_URL = {
         businessUnit: {
             get: `${API_VERSION}/business-units`
         },
+        campus: {
+            get: `${API_VERSION}/campuses`
+        },
         department: {
             get: `${API_VERSION}/departments`
         },

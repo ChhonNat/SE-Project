@@ -42,6 +42,7 @@ const CandidateFormDetailModal = (props) => {
         departmentName: { rank: 11, label: 'Department' },
         headDepartmentName: { rank: 12, label: 'Head Department' },
         businessUnitName: { rank: 10, label: 'Business Unit' },
+        campusName: { rank: 10, label: 'Campus' },
         receivedChannel: { rank: 12, label: 'Received Channel' },
         shortlistResult: { rank: 13, label: 'Shortlist Result' },
         createdAt: { rank: 14, label: 'Created At', type: 'date' },
@@ -77,6 +78,7 @@ const CandidateFormDetailModal = (props) => {
     //Listen after hook post data complete
     useEffect(() => {
         if (!loading && !error && data) {
+            data.campusName = data?.campus?.shortName;
             setCandidateDetail(data);
         } else {
             setCandidateDetail({});

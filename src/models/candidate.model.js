@@ -20,6 +20,7 @@ const Model = object({
     headDepartmentId: number().min(1, {message: 'Head department ID is required!'}).default(101),
     headDepartmentName: string().min(1,{message: 'Head department is required!'}).default('TEST'),
     businessUnitId: number().min(1,{message: 'Primary business is required!'}),
+    campusId: number().min(1, { message: 'Campus is required!' }),
     businessUnitName: string().optional().nullable(),
     appliedDate: string().min(1, { message: "Applied date is required!" }),
     receivedChannel: string().optional().nullable(),
