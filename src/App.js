@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect } from "react";
 import './App.css';
 import Navbar from "./components/Layout/navbar";
 import Sidebar from "./components/Layout/sidebar";
@@ -16,11 +16,10 @@ const detectedRoute = [
 
 const App = () => {
 
+  const user = useSelector((state) => state.userAuthendicated);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const user = useSelector((state) => state.userAuthendicated);
   const { pathname } = location;
 
   useEffect(() => {
@@ -29,12 +28,15 @@ const App = () => {
 
   useEffect(() => {
 
+    const defaultPath = PRIVATE_ROUTES[0]?.path;
+    const loginPath = detectedRoute[0];
+
     if (detectedRoute.includes(pathname)) {
 
-      user?.isAuthenticated ? navigate('/candidate') : navigate('/login');
+      user?.isAuthenticated ? navigate(defaultPath) : navigate(loginPath);
     } else {
 
-      user?.isAuthenticated ? navigate(pathname && pathname !== '/' ? pathname : '/candidate') : navigate('/login');
+      user?.isAuthenticated ? navigate(pathname && pathname !== '/' ? pathname : defaultPath) : navigate(loginPath);
     };
 
   }, [user])
