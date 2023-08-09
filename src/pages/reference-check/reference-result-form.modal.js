@@ -2,10 +2,10 @@ import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
 import SelectComponent from "../../components/Selector/select";
-import VerifyReferenceModel from "../../models/verify-reference.model";
 import LabelRequire from "../../components/Label/require";
 import _useHttp from "../../hooks/_http";
 import Swal from "sweetalert2";
+import { ReferenceModel } from "../../models/reference.model";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,7 +32,7 @@ const ReferenceResultFormModal = (props) => {
         selectLabel,
     } = props;
 
-    const { register, handleSubmit, setValue, formState, reset, watch, setError, clearErrors } = useForm({ resolver: zodResolver(VerifyReferenceModel) });
+    const { register, handleSubmit, setValue, formState, reset, watch, setError, clearErrors } = useForm({ resolver: zodResolver(ReferenceModel.Verify) });
     const { errors } = formState;
     const watchReference = watch();
     const { data, loading, error, message, sendRequest } = _useHttp();

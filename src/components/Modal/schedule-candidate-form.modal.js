@@ -3,7 +3,7 @@ import TitleComponent from "../Page/title";
 import FooterComponent from "../Page/footer";
 import AsyncAutoComplete from "../AutoComplete/auto-complete";
 import AsyncMultiAutoComplete from "../MultiAutoComplete/auto-complete";
-import InviteInterviewModel from "../../models/interview/invite-interview.model";
+import LabelRequire from "../Label/require";
 import _useHttp from "../../hooks/_http";
 import Swal from "sweetalert2";
 
@@ -16,8 +16,7 @@ import { candidateService } from "../../services/candidate.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
 import { Close } from "@mui/icons-material";
-import LabelRequire from "../Label/require";
-import { ConverterService } from "../../utils/converter";
+import { InterviewModel } from "../../models/interview.model";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -29,7 +28,7 @@ const CandidateScheduleFormModal = (props) => {
 
 
     const { open, onCloseModal, eventType, editData, handleEventSuccessed, apiService } = props;
-    const { register, handleSubmit, formState, setValue, watch, reset, setError, clearErrors } = useForm({ resolver: zodResolver(InviteInterviewModel) });
+    const { register, handleSubmit, formState, setValue, watch, reset, setError, clearErrors } = useForm({ resolver: zodResolver(InterviewModel.Invite) });
 
     const watchInterview = watch();
     const { errors } = formState;

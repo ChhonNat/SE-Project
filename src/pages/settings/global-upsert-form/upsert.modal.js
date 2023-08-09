@@ -29,6 +29,7 @@ const UpsertFormModal = (props) => {
 
     useEffect(() => {
 
+        reset();
         clearErrors();
 
         if (editData?.id && openModal) {

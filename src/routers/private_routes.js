@@ -51,10 +51,6 @@ const Settings = {
         home: lazy(() => import('../pages/settings/business-unit/home')),
     },
 
-    subBusinessUnit: {
-        home: lazy(() => import('../pages/settings/sub-business-unit/home'))
-    },
-
     department: {
         home: lazy(() => import('../pages/settings/department/home')),
     },
@@ -77,11 +73,7 @@ const Settings = {
 
     location: {
         home: lazy(() => import('../pages/settings/location/home'))
-    },
-
-    // committee: {
-    //     home: lazy(() => import('../pages/settings/committee/home'))
-    // }
+    }
 
 };
 

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import UpsertDepartmentFormModal from "./form-upsert-department.modal";
 
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import DepartmentModel from "../../../models/department/department.model";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 
@@ -58,7 +57,7 @@ const HomeDepartment = () => {
                 openModal={openDepartmentModal}
                 editData={editDepartment}
                 onCloseModal={() => {
-                    setEditDepartment(DepartmentModel);
+                    setEditDepartment({});
                     setOpenDepartmentModal(false);
                 }}
                 handleEventSuccessed={() => setIsReload(!isReload)}

@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { API_URL } from "../../../constants/api_url";
-import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import BusinessUnitModel from "../../../models/business/business-unit.model";
 import UpsertBusinessUnitFormModal from "./form-upsert-business-unit.modal";
 
+import { API_URL } from "../../../constants/api_url";
+import { TABLE_CONFIG } from "../../../utils/table-config";
+
 const HomeBusiness = () => {
+  const [isReload, setIsReload] = useState(false);
+  const [openBusinessUnitModal, setOpenBusinessUnitModal] = useState(false);
+  const [editBusinessUnit, setEditBusinessUnit] = useState({});
 
-    const [isReload, setIsReload] = useState(false);
-    const [openBusinessUnitModal, setOpenBusinessUnitModal] = useState(false);
-    const [editBusinessUnit, setEditBusinessUnit] = useState({});
-
-    return (
-        <>
-            {/* 
+  return (
+    <>
+      {/* 
                 properties::
                 asyncUrl: 'request data url' 
                 headers: 'Table header display in table'
@@ -26,43 +25,47 @@ const HomeBusiness = () => {
                 onHandleAddNewEvent: 'Listen button add new event'
                 customActions: 'Custom button event in table'
             */}
-            <AsyncDatatable
-                asyncURL={API_URL.businessUnit.get}
-                headers={TABLE_CONFIG.tblBusinessUnit}
-                bannerText="All Primary Businesses"
-                searchPlaceHolder="Search"
-                ordinal="asc"
-                setOrdinalBy="id"
-                isReloadData={isReload ? true : false}
-                useTableActions={{ 
-                    search: true, 
-                    refresh: true,
-                    create: true, 
-                    edit: true 
-                }}
-                onHandleAddNewEvent={() => setOpenBusinessUnitModal(true)}
-                handleEditEvent={(data) => {
-                    setEditBusinessUnit(data);
-                    setOpenBusinessUnitModal(true);
-                }}
-                onHandleRefreshEvent={() => setIsReload(!isReload)}
-            />
+      <AsyncDatatable
+        asyncURL={API_URL.businessUnit.get}
+        headers={TABLE_CONFIG.tblBusinessUnit}
+        bannerText="All Primary Businesses"
+        searchPlaceHolder="Search"
+        ordinal="asc"
+        setOrdinalBy="id"
+        isReloadData={isReload ? true : false}
+        useTableActions={{
+          search: true,
+          refresh: true,
+          create: true,
+          edit: true,
+        }}
+        onHandleAddNewEvent={() => setOpenBusinessUnitModal(true)}
+        handleEditEvent={(data) => {
+          setEditBusinessUnit(data);
+          setOpenBusinessUnitModal(true);
+        }}
+        onHandleRefreshEvent={() => setIsReload(!isReload)}
+      />
 
-            {/* Modal create and update */}
-            <UpsertBusinessUnitFormModal
-                title={editBusinessUnit?.id ? "Edit Primary Business" : "Add Primary Business"}
-                openModal={openBusinessUnitModal}
-                editData={editBusinessUnit}
-                onCloseModal={() => {
-                    setEditBusinessUnit({});
-                    setOpenBusinessUnitModal(false);
-                }}
-                model={BusinessUnitModel}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            />
-
-        </>
-    )
-}
+      {/* Modal create and update */}
+      {openBusinessUnitModal && (
+        <UpsertBusinessUnitFormModal
+          title={
+            editBusinessUnit?.id
+              ? "Edit Primary Business"
+              : "Add Primary Business"
+          }
+          openModal={openBusinessUnitModal}
+          editData={editBusinessUnit}
+          onCloseModal={() => {
+            setEditBusinessUnit({});
+            setOpenBusinessUnitModal(false);
+          }}
+          handleEventSuccessed={() => setIsReload(!isReload)}
+        />
+      )}
+    </>
+  );
+};
 
 export default HomeBusiness;

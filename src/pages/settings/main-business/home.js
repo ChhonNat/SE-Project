@@ -3,7 +3,7 @@ import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import UpsertFormModal from "../global-upsert-form/upsert.modal";
-import MainBusinessModel from "../../../models/business/main-business.model";
+import MainBusinessModel from "../../../models/main-business.model";
 import { KEY_POST } from "../../../constants/key_post";
 
 

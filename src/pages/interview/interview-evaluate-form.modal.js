@@ -3,7 +3,6 @@ import TitleComponent from "../../components/Page/title";
 import FooterComponent from "../../components/Page/footer";
 import SelectComponent from "../../components/Selector/select";
 import LabelRequire from "../../components/Label/require";
-import EvaluateInterviewModel from "../../models/interview/evaluate-interview.model";
 import Swal from "sweetalert2";
 
 import { useForm } from "react-hook-form";
@@ -16,6 +15,7 @@ import { interviewService } from "../../services/interview.service";
 import { HTTP_STATUS } from "../../constants/http_status";
 import { DATA_STATUS } from "../../constants/data_status";
 import { Close } from "@mui/icons-material";
+import { InterviewModel } from "../../models/interview.model";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -31,7 +31,7 @@ const InterViewEvaluateFormModal = (props) => {
         selectLabel,
         eventType
     } = props;
-    const { register, handleSubmit, setValue, formState, reset, watch, setError, clearErrors } = useForm({ resolver: zodResolver(EvaluateInterviewModel) });
+    const { register, handleSubmit, setValue, formState, reset, watch, setError, clearErrors } = useForm({ resolver: zodResolver(InterviewModel.Evaluate) });
     const { errors } = formState;
     const watchInterview = watch();
 

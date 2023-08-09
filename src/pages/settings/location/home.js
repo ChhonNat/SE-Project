@@ -55,7 +55,7 @@ const HomeLocation = () => {
                     setEditLocation({});
                     setOpenLocationModal(false);
                 }}
-                model={editLocation?.id ? LocationModel.Edit : LocationModel.Create }
+                model={editLocation?.id ? LocationModel.Update : LocationModel.Create }
                 keyPosts={KEY_POST.campus}
                 postUrl={API_URL.location.create}
                 putUrl={API_URL.location.edit}

@@ -1,6 +1,6 @@
 import { number, object, string, any } from "zod";
 
-const CreateModel = object({
+const Create = object({
     staffId: string().min(1, { message: 'Staff ID is required!' }),
     firstName: string().min(1, { message: 'First name is required!' }),
     secondName: string().min(1, { message: 'Last name is required!' }),
@@ -17,7 +17,7 @@ const CreateModel = object({
     path: ["confirmPassword"]
 });
 
-const UpdateModel = object({
+const Update = object({
     staffId: string().min(1, { message: 'Staff ID is required!' }),
     firstName: string().min(1, { message: 'First name is required!' }),
     secondName: string().min(1, { message: 'Last name is required!' }),
@@ -33,6 +33,6 @@ const UpdateModel = object({
 });
 
 export const UserModel = {
-    CreateModel,
-    UpdateModel
+    Create,
+    Update
 }

@@ -27,7 +27,7 @@ const UpsertCampusFormModal = (props) => {
 
     const { openModal, onCloseModal, handleEventSuccessed, title, editData } = props;
     const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({
-        resolver: zodResolver(editData?.id ? CampusModel.edit : CampusModel.Create)
+        resolver: zodResolver(editData?.id ? CampusModel.Update : CampusModel.Create)
     });
     const { data, loading, error, message, sendRequest } = _useHttp();
     const watchData = watch();
@@ -35,6 +35,7 @@ const UpsertCampusFormModal = (props) => {
 
     useEffect(() => {
 
+        reset();
         clearErrors();
 
         if (editData?.id && openModal) {
@@ -191,7 +192,7 @@ const UpsertCampusFormModal = (props) => {
                                     label="Location"
                                     size="small"
                                     callToApi={API_URL.lookup.location.get}
-                                    bindField={'name'}
+                                    bindField={'nameEn'}
                                     handleOnChange={(e, value) => {
                                         setValue('locationId', value?.id ? value?.id : value);
                                     }}

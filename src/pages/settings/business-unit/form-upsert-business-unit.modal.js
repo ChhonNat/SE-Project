@@ -1,18 +1,19 @@
 import React, { forwardRef, useEffect } from "react";
 import Box from "@mui/material/Box";
-import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
+import LabelRequire from "../../../components/Label/require";
+import SelectComponent from "../../../components/Selector/select";
+import Swal from "sweetalert2";
+import _useHttp from "../../../hooks/_http";
+
+import { BusinessUnitModel } from "../../../models/business-unit.model";
+import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import _useHttp from "../../../hooks/_http";
 import { HTTP_METHODS } from "../../../constants/http_method";
-import Swal from "sweetalert2";
 import { ALERT_TIMER } from "../../../constants/app_config";
-import SelectComponent from "../../../components/Selector/select";
 import { STATUS } from "../../../constants/status";
-import LabelRequire from "../../../components/Label/require";
-import BusinessUnitModel from "../../../models/business/business-unit.model";
 import { KEY_POST } from "../../../constants/key_post";
 import { API_URL } from "../../../constants/api_url";
 import { Close } from "@mui/icons-material";
@@ -24,12 +25,14 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 const UpsertBusinessUnitFormModal = (props) => {
 
     const { openModal, onCloseModal, handleEventSuccessed, title, editData } = props;
-    const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({ resolver: zodResolver(BusinessUnitModel) });
+    const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({ resolver: zodResolver(editData?.id ? BusinessUnitModel?.Update : BusinessUnitModel?.Create) });
     const { data, loading, error, message, sendRequest } = _useHttp();
     const watchData = watch();
     const { errors } = formState;
 
     useEffect(() => {
+
+        reset();
 
         if (editData?.id) {
 

@@ -7,7 +7,7 @@ const Create = object({
     description: string().optional().nullable(),
 });
 
-const Edit = object({
+const Update = object({
     nameEn: string().min(1, { message: 'Location english name is required!' }),
     nameKh: string().min(1, { message: 'Location khmer name is required!' }),
     description: string().optional().nullable(),
@@ -16,5 +16,5 @@ const Edit = object({
 
 export const LocationModel ={
     Create,
-    Edit
+    Update
 };
