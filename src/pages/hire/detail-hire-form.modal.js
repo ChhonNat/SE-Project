@@ -73,6 +73,7 @@ const HireFormDetailModal = (props) => {
                 TransitionComponent={TransitionModal}
                 open={openModal}
                 PaperProps={{ sx: { minWidth: '50vw' } }}
+                onClose={onCloseModal}
             >
                 <DialogTitle>
                     <TitleComponent title="Hire Details" />

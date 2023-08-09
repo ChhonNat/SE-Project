@@ -70,6 +70,7 @@ const OfferJobFormModalFormModal = (props) => {
                 open={openOfferJobModal}
                 component="form"
                 fullWidth={true}
+                onClose={onCloseOfferJobModal}
             >
                 <DialogTitle>
                     <TitleComponent

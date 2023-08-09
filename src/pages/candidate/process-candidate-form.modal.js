@@ -201,6 +201,7 @@ const CandidateProcessForm = (props) => {
                 TransitionComponent={TransitionModal}
                 open={open}
                 fullWidth={true}
+                onClose={onCloseModal}
             >
                 <DialogTitle>
                     <TitleComponent

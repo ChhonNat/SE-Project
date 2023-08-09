@@ -102,6 +102,7 @@ const JobOfferFormDetailModal = (props) => {
                 TransitionComponent={TransitionModal}
                 open={openModal}
                 PaperProps={!loading ? { sx: { minWidth: '50vw' } } : {}}
+                onClose={onCloseModal}
             >
                 {
                     loading ?

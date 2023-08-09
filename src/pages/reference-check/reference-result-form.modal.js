@@ -120,6 +120,7 @@ const ReferenceResultFormModal = (props) => {
                 component="form"
                 fullWidth={true}
                 onSubmit={handleSubmit(onSubmit, onError)}
+                onClose={onCloseModal}
             >
                 <DialogTitle>
                     <TitleComponent

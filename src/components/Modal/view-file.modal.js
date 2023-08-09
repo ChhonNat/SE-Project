@@ -24,6 +24,7 @@ const ViewFileModal = (props) => {
                 TransitionComponent={TransitionModal}
                 open={openModal}
                 sx={{ margin: 1 }}
+                onClose={onCloseModal}
             >
                 <DialogTitle>
                     <TitleComponent title={modalTitle} />

@@ -80,6 +80,7 @@ const ReferenceFormDetailModal = (props) => {
                 TransitionComponent={TransitionModal}
                 open={openReferenceDetailModal}
                 PaperProps={!loading ? { sx: { minWidth: '50vw' } } : {}}
+                onClose={onCloseReferenceDetailModal}
             >
                 {
                     loading ?

@@ -168,6 +168,7 @@ const CandidateScheduleFormModal = (props) => {
                 open={open}
                 component="form"
                 onSubmit={handleSubmit(onSubmit, onError)}
+                onClose={onCloseModal}
             >
                 <DialogTitle>
                     <TitleComponent

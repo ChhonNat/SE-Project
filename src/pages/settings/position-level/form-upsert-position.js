@@ -140,6 +140,7 @@ const UpsertPositionLavelForm = (props) => {
         open={openModal}
         component="form"
         onSubmit={handleSubmit(submit, onError)}
+        onClose={onCloseModal}
       >
         <DialogTitle>
           <TitleComponent title={title} />

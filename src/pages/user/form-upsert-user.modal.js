@@ -217,6 +217,7 @@ const UpsertUserForm = (props) => {
       open={open}
       component="form"
       onSubmit={handleSubmit(submit, onError)}
+      onClose={onCloseModal}
     >
       <DialogTitle>
         <TitleComponent title={user?.id ? "Edit user" : "Add new user"} />

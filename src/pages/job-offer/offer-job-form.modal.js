@@ -181,6 +181,7 @@ const OfferJobFormModal = (props) => {
                 component="form"
                 fullWidth={true}
                 onSubmit={handleSubmit(handleOnSubmit, onError)}
+                onClose={onCloseModal}
             >
                 <DialogTitle>
                     <TitleComponent

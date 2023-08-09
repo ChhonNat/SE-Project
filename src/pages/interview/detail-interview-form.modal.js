@@ -102,6 +102,7 @@ const InterviewFormDetailModal = (props) => {
                 TransitionComponent={TransitionModal}
                 open={openCandidateModal}
                 PaperProps={!loading ? { sx: { minWidth: '50vw' } } : {}}
+                onClose={onCloseCandidateModal}
             >
                 {
                     loading ?
