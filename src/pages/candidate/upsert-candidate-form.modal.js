@@ -472,7 +472,7 @@ const CandidateFormModal = (props) => {
                   id="campus-id"
                   label="Campus"
                   size="small"
-                  bindField={"nameEn"}
+                  bindField={"shortName"}
                   handleOnChange={(e, value) => {
                     setValue("campusId", value?.id);
                   }}
