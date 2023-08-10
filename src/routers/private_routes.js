@@ -188,20 +188,11 @@ export const PRIVATE_ROUTES = [
 
             /**Department */
             {
-                name: "HODs",
+                name: "Head Departments",
                 path: "head-department",
                 component: <Settings.headDepartment.home />,
                 icon: <PeopleAltIcon />,
-            },
-
-            // /**Committee */
-            // {
-            //     name: "Committees",
-            //     path: "committee",
-            //     component: <Settings.committee.home />,
-            //     icon: <PeopleAltIcon />,
-            // },
-
+            }
         ]
     },
     /**User setup */

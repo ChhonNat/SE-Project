@@ -6,14 +6,13 @@ import AsyncTableAction from "../../../components/AsyncDataTable/async-table-act
 import UpsertHeadDepartmentForm from "./form-upsert-head-department.model";
 
 const HomeHeadDepartment = () => {
+  const [isReload, setIsReload] = useState(false);
+  const [openHeadDepartmentModal, setOpenHeadDepartmentModal] = useState(false);
+  const [editHeadDepartment, setEditHeadDepartment] = useState({});
 
-    const [isReload, setIsReload] = useState(false);
-    const [openHeadDepartmentModal, setOpenHeadDepartmentModal] = useState(false);
-    const [editHeadDepartment, setEditHeadDepartment] = useState({});
-
-    return (
-        <>
-            {/* 
+  return (
+    <>
+      {/* 
                 properties::
                 asyncUrl: 'request data url' 
                 headers: 'Table header display in table'
@@ -27,42 +26,43 @@ const HomeHeadDepartment = () => {
                 customActions: 'Custom button event in table'
             */}
 
-            <AsyncDatatable
-                asyncURL={API_URL.headDepartment.get}
-                headers={TABLE_CONFIG.tblHeadDepartment}
-                bannerText="All HODs"
-                searchPlaceHolder="Search"
-                ordinal="asc"
-                setOrdinalBy="id"
-                isReloadData={isReload ? true : false}
-                useTableActions={{ 
-                    search: true, 
-                    refresh: true,
-                    create: true, 
-                    edit: true 
-                }}
-                onHandleAddNewEvent={() => setOpenHeadDepartmentModal(true)}
-                handleEditEvent={(data) => {
-                    setEditHeadDepartment(data);
-                    setOpenHeadDepartmentModal(true);
-                }}
-                onHandleRefreshEvent={() => setIsReload(!isReload)}
-            />
+      <AsyncDatatable
+        asyncURL={API_URL.headDepartment.get}
+        headers={TABLE_CONFIG.tblHeadDepartment}
+        bannerText="All HODs"
+        searchPlaceHolder="Search"
+        ordinal="asc"
+        setOrdinalBy="id"
+        isReloadData={isReload ? true : false}
+        useTableActions={{
+          search: true,
+          refresh: true,
+          create: true,
+          edit: true,
+        }}
+        onHandleAddNewEvent={() => setOpenHeadDepartmentModal(true)}
+        handleEditEvent={(data) => {
+          setEditHeadDepartment(data);
+          setOpenHeadDepartmentModal(true);
+        }}
+        onHandleRefreshEvent={() => setIsReload(!isReload)}
+      />
 
-            {/* Form create and update head department */}
-            <UpsertHeadDepartmentForm
-                title={editHeadDepartment?.id ? "Edit HOD" : "Add HOD"}
-                openModal={openHeadDepartmentModal}
-                onCloseModal={() => {
-                    setEditHeadDepartment({});
-                    setOpenHeadDepartmentModal(false);
-                }
-                }
-                handleEventSuccessed={() => setIsReload(!isReload)}
-                editData={editHeadDepartment}
-            />
-        </>
-    )
+      {/* Form create and update head department */}
+      {openHeadDepartmentModal && (
+        <UpsertHeadDepartmentForm
+          title={editHeadDepartment?.id ? "Edit Head Department" : "Add Head Department"}
+          openModal={openHeadDepartmentModal}
+          onCloseModal={() => {
+            setEditHeadDepartment({});
+            setOpenHeadDepartmentModal(false);
+          }}
+          handleEventSuccessed={() => setIsReload(!isReload)}
+          editData={editHeadDepartment}
+        />
+      )}
+    </>
+  );
 };
 
 export default HomeHeadDepartment;

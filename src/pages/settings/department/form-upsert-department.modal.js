@@ -192,7 +192,7 @@ const UpsertDepartmentFormModal = (props) => {
               <Grid item xs={12}>
                 <AsyncAutoComplete
                   id="primary-business-id"
-                  label="Primary Business"
+                  label="Business Unit"
                   size="small"
                   callToApi={API_URL.lookup.businessUnit.get}
                   bindField={"nameEn"}

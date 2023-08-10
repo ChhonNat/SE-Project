@@ -283,12 +283,12 @@ const tblHire = [
     },
     {
         id: 'headDepartment',
-        label: 'HOD',
+        label: 'Head Department',
         obj: { name: 'fullName' },
     },
     {
         id: 'businessUnit',
-        label: 'Primary Business',
+        label: 'Business Unit',
         obj: { name: 'nameEn' }
     },
     {
@@ -335,7 +335,7 @@ const tblPosition = [
     },
     {
         id: 'businessUnitName',
-        label: 'Primary Business',
+        label: 'Business Unit',
         arrayId: 'name',
     },
     {
@@ -375,7 +375,7 @@ const tblPositionLevel = [
     },
     {
         id: 'businessUnitName',
-        label: 'Primary Business'
+        label: 'Business Unit'
     },
     {
         id: 'departmentName',
@@ -462,7 +462,7 @@ const tblDepartment = [
     },
     {
         id: 'businessUnitName',
-        label: 'Primary Business',
+        label: 'Business Unit',
         arrayId: 'name',
     },
     {
@@ -500,7 +500,7 @@ const tblHeadDepartment = [
     },
     {
         id: 'businessUnitName',
-        label: 'Primary Business'
+        label: 'Business Unit'
     },
     {
         id: 'departmentName',
@@ -551,7 +551,7 @@ const tblCommittee = [
     },
     {
         id: 'businessUnitName',
-        label: 'Primary Business'
+        label: 'Business Unit'
     },
     {
         id: 'departmentName',
@@ -621,7 +621,7 @@ const tblBusinessUnit = [
     },
     {
         id: 'mainBusinessUnitName',
-        label: 'Main Primary Business'
+        label: 'Main Business Unit'
     },
     {
         id: 'description',
@@ -636,43 +636,6 @@ const tblBusinessUnit = [
     {
         id: 'action',
         label: 'Actions'
-    }
-];
-
-// Sub Primary Business
-const tblSubBusinessUnit = [
-    {
-        id: 'index',
-        label: 'No.',
-    },
-    {
-        id: 'nameEn',
-        label: 'Name',
-    },
-    {
-        id: 'nameKh',
-        label: 'Name(KH)'
-    },
-    {
-        id: 'mainBusinessUnitName',
-        label: 'Main Primary Business'
-    },
-    {
-        id: 'businessUnitName',
-        label: 'Primary Business'
-    },
-    {
-        id: 'description',
-        label: 'Description',
-    },
-    {
-        id: 'status',
-        type: 'status',
-        statusColor: { Active: 'Green', Inactive: 'Red' },
-        label: 'Status'
-    },
-    {
-        id: 'action', label: 'Actions'
     }
 ];
 
@@ -807,7 +770,6 @@ export const TABLE_CONFIG = {
     tblHire,
     tblMainBusiness,
     tblBusinessUnit,
-    tblSubBusinessUnit,
     tblDepartment,
     tblHeadDepartment,
     tblCommittee,

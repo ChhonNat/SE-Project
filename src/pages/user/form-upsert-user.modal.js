@@ -71,9 +71,7 @@ const UpsertUserForm = (props) => {
     if (user?.id && open) {
       Object.keys(user).forEach((key) => {
         if (KEY_POST.user.includes(key)) {
-          console.log(key);
           if (formatKeys.includes(key)) {
-            console.log(key);
             key === 'department' ? setValue('departmentId',user[key]?.id) : setValue(key, ConverterService.convertUnixDateToMUI(user[key]));
           } else {
             setValue(key, user[key]);

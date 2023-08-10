@@ -248,7 +248,7 @@ const UpsertHeadDepartmentForm = (props) => {
               <Grid item xs={12}>
                 <SelectComponent
                   id="business-id"
-                  label="Primary Business"
+                  label="Business Unit"
                   isRequire={true}
                   variant="outlined"
                   fullWidth

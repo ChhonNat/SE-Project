@@ -196,7 +196,7 @@ const UpsertPositionLavelForm = (props) => {
               <Grid item xs={12}>
                 <SelectComponent
                   id="primary-business-id"
-                  label="Primary Business"
+                  label="Business Unit"
                   isRequire={true}
                   variant="outlined"
                   fullWidth
