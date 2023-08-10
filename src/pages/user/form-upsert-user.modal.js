@@ -32,6 +32,7 @@ import { DATA_STATUS } from "../../constants/data_status";
 import { UserModel } from "../../models/user.model";
 import { ConverterService } from "../../utils/converter";
 import { API_URL } from "../../constants/api_url";
+import AsyncAutoComplete from "../../components/AutoComplete/auto-complete";
 
 const shrinkOpt = { shrink: true };
 
@@ -52,9 +53,7 @@ const UpsertUserForm = (props) => {
     watch,
     setError,
   } = useForm({
-    resolver: zodResolver(
-      user?.id ? UserModel.UpdateModel : UserModel.CreateModel
-    ),
+    resolver: zodResolver(user?.id ? UserModel.Update : UserModel.Create),
   });
 
   const watchUser = watch();
@@ -62,17 +61,20 @@ const UpsertUserForm = (props) => {
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
   const [isSubmitForm, setIsSubmitForm] = useState(false);
 
-  const formatKeys = ["birthDate", "roles"];
+  const formatKeys = ["birthDate", "roles", "department"];
 
   useEffect(() => {
+
     reset();
     clearErrors();
 
-    if (user?.id) {
+    if (user?.id && open) {
       Object.keys(user).forEach((key) => {
         if (KEY_POST.user.includes(key)) {
+          console.log(key);
           if (formatKeys.includes(key)) {
-            setValue(key, ConverterService.convertUnixDateToMUI(user[key]));
+            console.log(key);
+            key === 'department' ? setValue('departmentId',user[key]?.id) : setValue(key, ConverterService.convertUnixDateToMUI(user[key]));
           } else {
             setValue(key, user[key]);
           }
@@ -271,6 +273,21 @@ const UpsertUserForm = (props) => {
                 size="small"
                 error={errors?.secondName ? true : false}
                 helperText={errors?.secondName?.message}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <AsyncAutoComplete
+                id="department-id"
+                label="Department"
+                size="small"
+                callToApi={API_URL.lookup.department.get}
+                bindField={"nameEn"}
+                handleOnChange={(e, value) => {
+                  setValue("departmentId", value?.id);
+                }}
+                value={watchUser?.departmentId || null}
+                isRequire={true}
+                err={errors?.departmentId?.message}
               />
             </Grid>
             <Grid item xs={12}>

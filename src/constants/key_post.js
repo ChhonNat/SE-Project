@@ -184,7 +184,8 @@ const user = [
     "password",
     "confirmPassword",
     "status",
-    "roles"
+    "roles",
+    "department"
 ]
 
 export const KEY_POST = {
