@@ -10,7 +10,7 @@ const editCandidate = (data, id, contentType) => {
 }
 
 const inviteFirstInterview = (id, data, contentType) => {
-    return httpService._put(API_URL.candidate.inviteFirstInterView + id + '/invite', data, contentType);
+    return httpService._put(API_URL.candidate.inviteFirstInterView + id + '/schedule', data, contentType);
 }
 
 const editResultCandidate = (data, id, contentType) => {

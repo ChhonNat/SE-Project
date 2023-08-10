@@ -12,12 +12,13 @@ const Evaluate = object({
 const Invite = object({
     interviewDate: string().min(1, { message: 'Date is required!' }),
     headDepartmentId: number().min(1, { message : 'Head of department is required!' }),
-    committees: number().array().min(0).default([]),
+    departments: any().array().min(1, { message: 'Department is required!' }).default([]),
+    committees: any().array().min(1, { message: 'Committee is required!' }).default([]),
     remark: string().optional().nullable(),
 
-    hour:string().min(1,{message: 'Hour is required!'}),
-    min:string().min(1, {message: 'Minute is required!'}),
-    meridiem:string().optional().nullable()
+    hour:string().min(1,{message: 'Hour is required!'}).default("01"),
+    min:string().min(1, {message: 'Minute is required!'}).default("00"),
+    meridiem:string().optional().nullable().default("AM")
 });
 
 export const InterviewModel = {

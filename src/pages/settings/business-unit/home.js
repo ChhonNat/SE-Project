@@ -52,8 +52,8 @@ const HomeBusiness = () => {
         <UpsertBusinessUnitFormModal
           title={
             editBusinessUnit?.id
-              ? "Edit Primary Business"
-              : "Add Primary Business"
+              ? "Edit Business Unit"
+              : "Add Business Unit"
           }
           openModal={openBusinessUnitModal}
           editData={editBusinessUnit}

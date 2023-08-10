@@ -6,15 +6,14 @@ import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 
 const HomeDepartment = () => {
+  const [openDepartmentModal, setOpenDepartmentModal] = useState(false);
+  const [editDepartment, setEditDepartment] = useState({});
 
-    const [openDepartmentModal, setOpenDepartmentModal] = useState(false);
-    const [editDepartment, setEditDepartment] = useState({});
+  const [isReload, setIsReload] = useState(false);
 
-    const [isReload, setIsReload] = useState(false);
-
-    return (
-        <>
-            {/* 
+  return (
+    <>
+      {/* 
                 properties::
                 asyncUrl: 'request data url' 
                 headers: 'Table header display in table'
@@ -28,43 +27,43 @@ const HomeDepartment = () => {
                 customActions: 'Custom button event in table'
             */}
 
-            <AsyncDatatable
-                asyncURL={API_URL.department.get}
-                headers={TABLE_CONFIG.tblDepartment}
-                bannerText="All Departments"
-                searchPlaceHolder="Search"
-                ordinal="asc"
-                setOrdinalBy="id"
-                isReloadData={isReload ? true : false}
-                useTableActions={{ 
-                    search: true, 
-                    refresh: true,
-                    create: true, 
-                    edit: true 
-                }}
-                onHandleAddNewEvent={() => setOpenDepartmentModal(true)}
-                handleEditEvent={(data) => {
-                    setEditDepartment(data);
-                    setOpenDepartmentModal(true);
-                }}
-                onHandleRefreshEvent={() => setIsReload(!isReload)}
-            />
+      <AsyncDatatable
+        asyncURL={API_URL.department.get}
+        headers={TABLE_CONFIG.tblDepartment}
+        bannerText="All Departments"
+        searchPlaceHolder="Search"
+        ordinal="asc"
+        setOrdinalBy="id"
+        isReloadData={isReload ? true : false}
+        useTableActions={{
+          search: true,
+          refresh: true,
+          create: true,
+          edit: true,
+        }}
+        onHandleAddNewEvent={() => setOpenDepartmentModal(true)}
+        handleEditEvent={(data) => {
+          setEditDepartment(data);
+          setOpenDepartmentModal(true);
+        }}
+        onHandleRefreshEvent={() => setIsReload(!isReload)}
+      />
 
-            
-            {/* Modal create and update */}
-            <UpsertDepartmentFormModal
-                title={editDepartment?.id ? "Edit Department" : "Add New Department"}
-                openModal={openDepartmentModal}
-                editData={editDepartment}
-                onCloseModal={() => {
-                    setEditDepartment({});
-                    setOpenDepartmentModal(false);
-                }}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            />
-
-        </>
-    )
-}
+      {/* Modal create and update */}
+      {openDepartmentModal && (
+        <UpsertDepartmentFormModal
+          title={editDepartment?.id ? "Edit Department" : "Add New Department"}
+          openModal={openDepartmentModal}
+          editData={editDepartment}
+          onCloseModal={() => {
+            setEditDepartment({});
+            setOpenDepartmentModal(false);
+          }}
+          handleEventSuccessed={() => setIsReload(!isReload)}
+        />
+      )}
+    </>
+  );
+};
 
 export default HomeDepartment;

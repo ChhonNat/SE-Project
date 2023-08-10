@@ -47,7 +47,6 @@ const _useHttp = () => {
             async (url, method, sendData) => {
 
                 const postData = { ...sendData };
-
                 dispatchHttp({ type: 'SEND' });
 
                 /**

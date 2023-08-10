@@ -116,6 +116,9 @@ export const API_URL = {
         interview: {
             get: `${API_VERSION}/interviews/lookup-data`
         },
+        committee: {
+            get: `${API_VERSION}/interviews/committees`
+        },
         referenceCheck: {
             get: `${API_VERSION}/reference-checks/lookup-data`
         },

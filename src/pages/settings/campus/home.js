@@ -6,13 +6,13 @@ import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 
 const HomeCampus = () => {
-    const [isReload, setIsReload] = useState(false);
-    const [openUpsertCampusModal, setOpenUpsertCampusModal] = useState(false);
-    const [editCampus, setEditCampus] = useState({});
+  const [isReload, setIsReload] = useState(false);
+  const [openUpsertCampusModal, setOpenUpsertCampusModal] = useState(false);
+  const [editCampus, setEditCampus] = useState({});
 
-    return (
-        <>
-            {/* 
+  return (
+    <>
+      {/* 
                 properties::
                 asyncUrl: 'request data url' 
                 headers: 'Table header display in table'
@@ -26,36 +26,37 @@ const HomeCampus = () => {
                 customActions: 'Custom button event in table'
             */}
 
-            <AsyncDatatable
-                asyncURL={API_URL.campus.get}
-                headers={TABLE_CONFIG.tblCampus}
-                bannerText="All Campuses"
-                searchPlaceHolder="Search"
-                ordinal="asc"
-                setOrdinalBy="id"
-                isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true, edit: true }}
-                onHandleAddNewEvent={() => setOpenUpsertCampusModal(true)}
-                handleEditEvent={(data) => {
-                    setEditCampus(data);
-                    setOpenUpsertCampusModal(true);
-                }}
-            />
+      <AsyncDatatable
+        asyncURL={API_URL.campus.get}
+        headers={TABLE_CONFIG.tblCampus}
+        bannerText="All Campuses"
+        searchPlaceHolder="Search"
+        ordinal="asc"
+        setOrdinalBy="id"
+        isReloadData={isReload ? true : false}
+        useTableActions={{ search: true, create: true, edit: true }}
+        onHandleAddNewEvent={() => setOpenUpsertCampusModal(true)}
+        handleEditEvent={(data) => {
+          setEditCampus(data);
+          setOpenUpsertCampusModal(true);
+        }}
+      />
 
-            {/* Modal create and update */}
-
-            <UpsertCampusFormModal
-                title={editCampus?.id ? "Edit Campus" : "Add Campus"}
-                openModal={openUpsertCampusModal}
-                editData={editCampus}
-                onCloseModal={() => {
-                    setEditCampus({});
-                    setOpenUpsertCampusModal(false);
-                }}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            />
-        </>
-    )
+      {/* Modal create and update */}
+      {openUpsertCampusModal && (
+        <UpsertCampusFormModal
+          title={editCampus?.id ? "Edit Campus" : "Add Campus"}
+          openModal={openUpsertCampusModal}
+          editData={editCampus}
+          onCloseModal={() => {
+            setEditCampus({});
+            setOpenUpsertCampusModal(false);
+          }}
+          handleEventSuccessed={() => setIsReload(!isReload)}
+        />
+      )}
+    </>
+  );
 };
 
 export default HomeCampus;
