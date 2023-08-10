@@ -102,7 +102,7 @@ const HomeCandidate = () => {
                                     enable: [
                                         {
                                             field: 'submitStatus',
-                                            values: [STATUS.SUBMIT_STATUS.WAITING]
+                                            values: [STATUS.SUBMIT_STATUS.WAITING,STATUS.SUBMIT_STATUS.DHR_REJECTED]
                                         },
                                     ]
                                 },
