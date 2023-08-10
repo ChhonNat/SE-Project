@@ -729,7 +729,7 @@ const tblCampus = [
     {
         id: 'location',
         label: 'Location',
-        obj: { name: 'name' }
+        obj: { name: 'nameEn' }
     },
     {
         id: 'address',
