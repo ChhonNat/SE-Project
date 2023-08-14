@@ -49,12 +49,6 @@ const HomeInterview = () => {
     finalInterviewSchedule: {
       handleAction: () => setOpenScheduleModal(true),
     },
-    // "printInterviewForm": {
-    //     handleAction: () => window.print()
-    // },
-    // "finalSecondRoundSchedule": {
-    //     handleAction: () => setOpenScheduleModal(true)
-    // }
   };
 
   return (
