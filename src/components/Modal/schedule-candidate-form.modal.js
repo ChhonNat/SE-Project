@@ -57,7 +57,7 @@ const CandidateScheduleFormModal = (props) => {
         submitLabel: "Confirm",
         submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
         select: false,
-        getInterviewDetail: false,
+        getInterviewDetail: true,
       },
     },
     finalInterviewSchedule: {
@@ -70,15 +70,6 @@ const CandidateScheduleFormModal = (props) => {
         getInterviewDetail: true,
       },
     },
-    // setScheduleTest: {
-    //   title: "Are you sure?",
-    //   subTitle: "You want to set schedule for test.",
-    //   actions: {
-    //     submitLabel: "Confirm",
-    //     submitStatus: STATUS.SUBMIT_STATUS.SUBMITTED_DHR,
-    //     select: false,
-    //   },
-    // },
   };
 
   //get props data
@@ -90,6 +81,8 @@ const CandidateScheduleFormModal = (props) => {
     handleEventSuccessed,
     apiService,
   } = props;
+
+  console.log('edit data',editData);
 
   //use http hook
   const { data, loading, error, message, sendRequest } = _useHttp();
