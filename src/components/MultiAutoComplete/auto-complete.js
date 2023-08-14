@@ -25,8 +25,8 @@ const AsyncMultiAutoComplete = (props) => {
     value,
     err,
     isRequire,
-    control,
     customDatas,
+    isSubmit
   } = props;
 
   const { data, loading, error, message, sendRequest } = _useHttp();
@@ -77,12 +77,8 @@ const AsyncMultiAutoComplete = (props) => {
     },
   });
 
-  useEffect(() => {
-    console.log("value", value);
-  }, [value]);
-
   return (
-    <ThemeProvider theme={err && !value ? customTheme : {}}>
+    <ThemeProvider theme={isSubmit && err && !value?.length ? customTheme : {}}>
       <Autocomplete
         id={id + `multi-auto-complete`}
         multiple
@@ -90,15 +86,19 @@ const AsyncMultiAutoComplete = (props) => {
         size={size ? size : "medium"}
         limitTags={limitTags ? limitTags : 2}
         loading={callToApi ? loading : false}
-        getOptionDisabled={(option) => {
-          if (
-            value?.length &&
-            value.some((val) => val === option?.id || val?.id === option?.id)
-          ) {
-            return true;
-          }
-          return false;
-        }}
+        options={
+          callToApi && !loading
+            ? options?.length
+              ? options
+              : []
+            : customDatas?.length
+            ? customDatas
+            : []
+        }
+        defaultValue={value ? value : []}
+        onChange={handleOnChange}
+        getOptionLabel={(option) => (bindField ? option[bindField] : option)}
+        isOptionEqualToValue={(option, value) => option?.id === value?.id}
         renderOption={(props, option) => (
           <Box component="li" {...props} key={option?.id}>
             {option[bindField] || ""}
@@ -143,10 +143,6 @@ const AsyncMultiAutoComplete = (props) => {
             placeholder="Add"
           />
         )}
-        defaultValue={value ? value : []}
-        options={options ? options : []}
-        getOptionLabel={(option) => (bindField ? option[bindField] : option)}
-        onChange={handleOnChange}
       />
     </ThemeProvider>
   );

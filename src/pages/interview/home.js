@@ -46,6 +46,9 @@ const HomeInterview = () => {
     referenceCheck: {
       handleAction: () => setOpenReferenceCheckModal(true),
     },
+    finalInterviewSchedule: {
+      handleAction: () => setOpenScheduleModal(true),
+    },
     // "printInterviewForm": {
     //     handleAction: () => window.print()
     // },
@@ -93,6 +96,17 @@ const HomeInterview = () => {
           ],
           moreOption: {
             buttons: [
+              {
+                name: "Confirm Interview Schedule",
+                eventName: "finalInterviewSchedule",
+                icon: <CalendarMonth />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles?.includes(ROLE.ROLE_TA_TEAM)
+                  ? false
+                  : true,
+                enable: true,
+              },
               {
                 name: "Evaluate 1st Interview",
                 eventName: "firstRoundEvaluate",
@@ -173,20 +187,6 @@ const HomeInterview = () => {
                   },
                 ],
               },
-              // {
-              //     name: 'Print Form',
-              //     eventName: 'printInterviewForm',
-              //     icon: <Print />,
-              //     hidden: false,
-              //     enable: true
-              // },
-              // {
-              //     name: 'Final Second Round Schedule',
-              //     eventName: 'finalSecondRoundSchedule',
-              //     icon: <CalendarMonth />,
-              //     hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ? false : true,
-              //     enable: true
-              // }
             ],
           },
         }}
@@ -218,7 +218,7 @@ const HomeInterview = () => {
       {openScheduleModal && (
         <CandidateScheduleFormModal
           eventType={verifyTypeModal}
-          apiService={interviewService.inviteSecondInterview}
+          apiService={interviewService.confirmScheduleInterview}
           editData={editInterview}
           open={openScheduleModal}
           onCloseModal={() => setOpenScheduleModal(false)}

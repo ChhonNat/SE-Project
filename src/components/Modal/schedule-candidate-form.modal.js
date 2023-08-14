@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import TitleComponent from "../Page/title";
 import FooterComponent from "../Page/footer";
 import AsyncAutoComplete from "../AutoComplete/auto-complete";
@@ -29,14 +29,59 @@ import { DATA_STATUS } from "../../constants/data_status";
 import { Close } from "@mui/icons-material";
 import { InterviewModel } from "../../models/interview.model";
 import { ConverterService } from "../../utils/converter";
+import { HTTP_METHODS } from "../../constants/http_method";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const shrinkOpt = { shrink: true };
-
 const CandidateScheduleFormModal = (props) => {
+  const shrinkOpt = { shrink: true };
+
+  //map event when get event from home candidate
+  const mapEventType = {
+    setSuggestInterview: {
+      title: "Are you sure?",
+      subTitle: "You want to suggest schedule for interview.",
+      actions: {
+        submitLabel: "Confirm",
+        submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
+        select: false,
+        getInterviewDetail: false,
+      },
+    },
+    setSecondRoundInterview: {
+      title: "Are you sure?",
+      subTitle: "You want to set second schedule for interview.",
+      actions: {
+        submitLabel: "Confirm",
+        submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
+        select: false,
+        getInterviewDetail: false,
+      },
+    },
+    finalInterviewSchedule: {
+      title: "Are you sure?",
+      subTitle: "You want to set final schedule for interview.",
+      actions: {
+        submitLabel: "Confirm",
+        submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
+        select: false,
+        getInterviewDetail: true,
+      },
+    },
+    // setScheduleTest: {
+    //   title: "Are you sure?",
+    //   subTitle: "You want to set schedule for test.",
+    //   actions: {
+    //     submitLabel: "Confirm",
+    //     submitStatus: STATUS.SUBMIT_STATUS.SUBMITTED_DHR,
+    //     select: false,
+    //   },
+    // },
+  };
+
+  //get props data
   const {
     open,
     onCloseModal,
@@ -45,6 +90,11 @@ const CandidateScheduleFormModal = (props) => {
     handleEventSuccessed,
     apiService,
   } = props;
+
+  //use http hook
+  const { data, loading, error, message, sendRequest } = _useHttp();
+
+  //user react hook form
   const {
     register,
     handleSubmit,
@@ -60,25 +110,18 @@ const CandidateScheduleFormModal = (props) => {
   const { errors } = formState;
   const [hours, setHours] = useState([]);
   const [minutes, setMinutes] = useState([]);
+  const [isSubmitForm, setIsSubmitForm] = useState(false);
 
   useEffect(() => {
-    setValue(
-      "interviewDate",
-      ConverterService.convertUnixDateToMUI(new Date())
-    );
-    // setValue("hour", "01");
-    // setValue("min", "00");
-    // setValue("meridiem", "AM");
-    setValue("headDepartmentId", editData?.headDepartmentId);
+    clearErrors();
 
     if (open) {
-      clearErrors();
-
       const stringH = [];
       const stringMin = [];
       const H = [...Array(23).keys()];
       const Min = [...Array(60).keys()];
 
+      //Set hours
       H.forEach((value) => {
         value++;
         value < 10
@@ -87,6 +130,7 @@ const CandidateScheduleFormModal = (props) => {
       });
       setHours([...stringH]);
 
+      //Set minute
       Min.forEach((value) => {
         value < 10
           ? stringMin.push({ min: "0" + value })
@@ -94,52 +138,61 @@ const CandidateScheduleFormModal = (props) => {
       });
       setMinutes([...stringMin]);
     }
+
+    if (mapEventType[eventType]?.actions?.getInterviewDetail) {
+      getInterviewDetail();
+    } else {
+      setValue(
+        "interviewDate",
+        ConverterService.convertUnixDateToMUI(new Date())
+      );
+      setValue("headDepartmentId", editData?.headDepartmentId);
+    }
   }, [open]);
 
-  //map event when get event from home candidate
-  const mapEventType = {
-    setScheduleTest: {
-      title: "Are you sure?",
-      subTitle: "You want to set schedule for test.",
-      actions: {
-        submitLabel: "Confirm",
-        submitStatus: STATUS.SUBMIT_STATUS.SUBMITTED_DHR,
-        select: false,
-      },
-    },
-    setSuggestInterview: {
-      title: "Are you sure?",
-      subTitle: "You want to suggest schedule for interview.",
-      actions: {
-        submitLabel: "Confirm",
-        submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
-        select: false,
-      },
-    },
-    setSecondRoundInterview: {
-      title: "Are you sure?",
-      subTitle: "You want to set second schedule for interview.",
-      actions: {
-        submitLabel: "Confirm",
-        submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
-        select: false,
-      },
-    },
-    setFinalScheduleInterview: {
-      title: "Are you sure?",
-      subTitle: "You want to set final schedule for interview.",
-      actions: {
-        submitLabel: "Confirm",
-        submitStatus: STATUS.SUBMIT_STATUS.DHR_VERIFIED,
-        select: false,
-      },
-    },
-  };
+  const getInterviewDetail = useCallback(async () => {
+    await sendRequest(
+      `${API_URL.interview.detail}${editData?.id}`,
+      HTTP_METHODS.post
+    );
+  }, [editData?.id]);
+
+  useEffect(() => {
+    if (data?.id) {
+      //to format data to display the same suggest interview date by HOD
+      data.headDepartmentId = data?.headDepartment?.id;
+      data.headDepartmentName = data?.headDepartment?.fullName;
+
+      setValue(
+        "interviewDate",
+        ConverterService.convertUnixDateToMUI(data?.interviewDate)
+      );
+      setValue("headDepartmentId", data?.headDepartment?.id);
+      setValue("departments", data?.departments);
+      setValue("committees", data?.committees);
+      setValue(
+        "hour",
+        ConverterService.padToNDigits(
+          2,
+          new Date(data?.interviewDate).getHours()
+        )
+      );
+      setValue(
+        "min",
+        ConverterService.padToNDigits(
+          2,
+          new Date(data?.interviewDate).getMinutes()
+        )
+      );
+      
+        console.log('data',data);
+    }
+  }, [data]);
 
   const onError = (error) => {
     console.log("Input error", error);
+    setIsSubmitForm(true);
     if (error?.hour) setError("hour", { message: "Hour is required!" });
-
     if (error?.min) setError("min", { message: "Minute is required!" });
   };
 
@@ -152,6 +205,7 @@ const CandidateScheduleFormModal = (props) => {
         committees: dataInput?.committees,
         remark: dataInput?.remark,
       };
+
       if (apiService)
         submitCandidate = await apiService(
           editData?.id,
@@ -159,7 +213,7 @@ const CandidateScheduleFormModal = (props) => {
           dataSubmit
         );
       else
-        submitCandidate = await candidateService.inviteFirstInterview(
+        submitCandidate = await candidateService.suggestScheduleInterview(
           editData?.id,
           dataSubmit
         );
@@ -240,6 +294,7 @@ const CandidateScheduleFormModal = (props) => {
                   {...register("interviewDate")}
                 />
               </Grid>
+
               <Grid item xs={3}>
                 <Autocomplete
                   id="hour"
@@ -301,13 +356,18 @@ const CandidateScheduleFormModal = (props) => {
                   disabled
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <AsyncAutoComplete
-                  id="hod-committee"
+                  id="hod"
                   size="small"
                   label="Head Department"
                   limitTags={10}
-                  customDatas={[editData]}
+                  customDatas={
+                    mapEventType[eventType]?.actions?.getInterviewDetail
+                      ? [data]
+                      : [editData]
+                  }
                   bindField={"headDepartmentName"}
                   value={editData?.id}
                   disabled={true}
@@ -315,48 +375,114 @@ const CandidateScheduleFormModal = (props) => {
               </Grid>
 
               <Grid item xs={12}>
-                <AsyncMultiAutoComplete
-                  id="department"
-                  label="Department"
-                  isRequire={true}
-                  size="small"
-                  limitTags={10}
-                  callToApi={API_URL.lookup.department.get}
-                  bindField={"nameEn"}
-                  value={watchInterview?.departments}
-                  handleOnChange={(e, val) =>
-                    setValue("departments", val?.length ? val : [])
-                  }
-                  err={errors?.departments?.message}
-                />
+                {mapEventType[eventType]?.actions?.getInterviewDetail ? (
+                  <>
+                    {data?.departments && (
+                      <AsyncMultiAutoComplete
+                        id="department"
+                        label="Department"
+                        isRequire={true}
+                        size="small"
+                        limitTags={10}
+                        callToApi={API_URL.lookup.department.get}
+                        bindField={"nameEn"}
+                        value={
+                          !watchInterview?.departments?.length
+                            ? data?.departments
+                            : watchInterview?.departments
+                        }
+                        handleOnChange={(e, val) => {
+                          setValue("departments", val?.length ? val : []);
+                        }}
+                        err={errors?.departments?.message}
+                        isSubmit={isSubmitForm}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <AsyncMultiAutoComplete
+                    id="department"
+                    label="Department"
+                    isRequire={true}
+                    size="small"
+                    limitTags={10}
+                    callToApi={API_URL.lookup.department.get}
+                    bindField={"nameEn"}
+                    value={watchInterview?.departments}
+                    handleOnChange={(e, val) => {
+                      setValue("departments", val?.length ? val : []);
+                    }}
+                    err={errors?.departments?.message}
+                    isSubmit={isSubmitForm}
+                  />
+                )}
               </Grid>
 
               <Grid item xs={12}>
-                <AsyncMultiAutoComplete
-                  id="key-person-committee"
-                  label="Interviewer Committee"
-                  isRequire={true}
-                  size="small"
-                  limitTags={10}
-                  callToApi={
-                    watchInterview?.departments?.length
-                      ? API_URL.lookup.committee.get
-                      : ""
-                  }
-                  reqBody={{
-                    departments: watchInterview?.departments?.length
-                      ? watchInterview?.departments?.map((ele) => ele.id)
-                      : [],
-                  }}
-                  httpMethod={"post"}
-                  bindField={"fullName"}
-                  value={watchInterview?.committees}
-                  handleOnChange={(e, val) =>
-                    setValue("committees", val?.length ? val : [])
-                  }
-                  err={errors?.committees?.message}
-                />
+                {mapEventType[eventType]?.actions?.getInterviewDetail ? (
+                  <>
+                    {data?.committees && (
+                      <AsyncMultiAutoComplete
+                        id="key-person-committee"
+                        label="Interviewer Committee"
+                        isRequire={true}
+                        size="small"
+                        limitTags={10}
+                        callToApi={
+                          watchInterview?.departments?.length
+                            ? API_URL.lookup.committee.get
+                            : ""
+                        }
+                        reqBody={{
+                          departments: watchInterview?.departments?.length
+                            ? watchInterview?.departments?.map((ele) => ele.id)
+                            : [],
+                        }}
+                        httpMethod={"post"}
+                        bindField={"fullName"}
+                        value={
+                          !watchInterview?.committees?.length
+                            ? data?.committees
+                            : watchInterview?.committees
+                        }
+                        handleOnChange={(e, val) =>
+                          setValue("committees", val?.length ? val : [])
+                        }
+                        err={errors?.committees?.message}
+                        isSubmit={isSubmitForm}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <AsyncMultiAutoComplete
+                    id="key-person-committee"
+                    label="Interviewer Committee"
+                    isRequire={true}
+                    size="small"
+                    limitTags={10}
+                    callToApi={
+                      watchInterview?.departments?.length
+                        ? API_URL.lookup.committee.get
+                        : ""
+                    }
+                    reqBody={{
+                      departments: watchInterview?.departments?.length
+                        ? watchInterview?.departments?.map((ele) => ele.id)
+                        : [],
+                    }}
+                    httpMethod={"post"}
+                    bindField={"fullName"}
+                    value={watchInterview?.committees}
+                    handleOnChange={(e, val) => {
+                      console.log(val);
+                      setValue("committees", val?.length ? val : []);
+                    }}
+                    err={errors?.committees?.message}
+                    isSubmit={isSubmitForm}
+                  />
+                )}
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   sx={{ width: "100%" }}

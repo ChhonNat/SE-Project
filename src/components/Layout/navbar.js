@@ -409,11 +409,10 @@ const NavbarComponent = () => {
                                                     <ListItemAvatar>
                                                         <OutputIcon />
                                                     </ListItemAvatar>
-                                                    <ListItemText sx={{ opacity: toggleNavbar ? 1 : 0 }}>
+                                                    <ListItemText>
                                                         Logout
                                                     </ListItemText>
                                                 </ListItem>
-
 
                                             </List>
                                         </Popover>

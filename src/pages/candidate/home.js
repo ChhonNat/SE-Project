@@ -228,24 +228,19 @@ const HomeCandidate = () => {
                     ],
               },
               {
-                name: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER)
-                  ? "Suggest Interview Schedule"
-                  : "Final Interview Schedule",
-                eventName: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER)
-                  ? "setSuggestInterview"
-                  : "setFinalScheduleInterview",
+                name: "Suggest Interview Schedule",
+                eventName: "setSuggestInterview",
                 icon: <CalendarMonthIcon />,
                 hidden: !user?.roles
                   ? true
-                  : [ROLE.ROLE_HIRING_MANAGER, ROLE.ROLE_TA_TEAM].some((role) =>
+                  : [ROLE.ROLE_HIRING_MANAGER].some((role) =>
                       user?.roles.includes(role)
                     )
                   ? false
                   : true,
                 enable: !user?.roles
                   ? false
-                  : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER)
-                  ? [
+                  : [
                       {
                         field: "status",
                         values: [STATUS.CANDIDATE.SHORTLISTED],
@@ -253,12 +248,6 @@ const HomeCandidate = () => {
                       {
                         field: "shortlistResult",
                         values: [STATUS.SHORTLIST_RESULT.PASSED],
-                      },
-                    ]
-                  : [
-                      {
-                        field: "status",
-                        values: [STATUS.CANDIDATE.IN_INTERVIEW],
                       },
                     ],
               },
