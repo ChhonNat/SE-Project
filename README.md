@@ -252,11 +252,12 @@ Meeting on 04-08-2023
 1. Add applied location and campus to Candidate creation/edition page 
 3. Reject by DHR and resubmit again by TA ADMIN
 5. No need committees setup but List/ Retrieve committees from users under each department related to the interview
-4. Update suggested interview schedule by HOD and 
+4. Update suggested interview schedule by HOD(first interview)
+4. confirm schedule by TA Team (first interview)
 ------
 
-4. confirm schedule by TA Team (first interview)
-4. Suggest(by HOD) and confirm schedule (by TA Team) (first interview)
+
+4. Suggest(by HOD) and confirm schedule (by TA Team) (second interview)
 
 6. On the first process offer the status is pending then process next offer by TATeam and select fields: ex: offer salary, position, campus
 2. Filter and select all applicants and submit to DHR or to OFC CEO
