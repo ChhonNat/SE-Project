@@ -82,8 +82,6 @@ const CandidateScheduleFormModal = (props) => {
     apiService,
   } = props;
 
-  console.log('edit data',editData);
-
   //use http hook
   const { data, loading, error, message, sendRequest } = _useHttp();
 
