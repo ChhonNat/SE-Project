@@ -40,14 +40,20 @@ const HomeInterview = () => {
     secondRoundEvaluate: {
       handleAction: () => setOpenInterviewEvaluateModal(true),
     },
-    setSecondRoundInterview: {
+    setSuggestSecondInterview: {
       handleAction: () => setOpenScheduleModal(true),
+      postService: interviewService.suggestSecScheduleInterview,
+    },
+    confirmInterviewSchedule: {
+      handleAction: () => setOpenScheduleModal(true),
+      postService:
+        editInterview?.interviewProcess ===
+        STATUS.INTERVIEW_PROCESS.FIRST_INTERVIEW
+          ? interviewService.confirmScheduleInterview
+          : interviewService.confirmSecScheduleInterview,
     },
     referenceCheck: {
       handleAction: () => setOpenReferenceCheckModal(true),
-    },
-    finalInterviewSchedule: {
-      handleAction: () => setOpenScheduleModal(true),
     },
   };
 
@@ -91,17 +97,6 @@ const HomeInterview = () => {
           moreOption: {
             buttons: [
               {
-                name: "Confirm Interview Schedule",
-                eventName: "finalInterviewSchedule",
-                icon: <CalendarMonth />,
-                hidden: !user?.roles
-                  ? true
-                  : user?.roles?.includes(ROLE.ROLE_TA_TEAM)
-                  ? false
-                  : true,
-                enable: true,
-              },
-              {
                 name: "Evaluate 1st Interview",
                 eventName: "firstRoundEvaluate",
                 icon: <UploadFileIcon />,
@@ -120,8 +115,8 @@ const HomeInterview = () => {
                 ],
               },
               {
-                name: "Invite 2nd Interview",
-                eventName: "setSecondRoundInterview",
+                name: "Suggest 2nd Interview Schedule",
+                eventName: "setSuggestSecondInterview",
                 icon: <CalendarMonth />,
                 hidden: !user?.roles
                   ? true
@@ -142,6 +137,22 @@ const HomeInterview = () => {
                   {
                     field: "interviewResult",
                     values: [STATUS.INTERVIEW_RESULT.PASSED],
+                  },
+                ],
+              },
+              {
+                name: "Confirm Interview Schedule",
+                eventName: "confirmInterviewSchedule",
+                icon: <CalendarMonth />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles?.includes(ROLE.ROLE_TA_TEAM)
+                  ? false
+                  : true,
+                enable: [
+                  {
+                    field: "interviewResult",
+                    values: [STATUS.INTERVIEW_RESULT.WAITING],
                   },
                 ],
               },
@@ -212,7 +223,7 @@ const HomeInterview = () => {
       {openScheduleModal && (
         <CandidateScheduleFormModal
           eventType={verifyTypeModal}
-          apiService={interviewService.confirmScheduleInterview}
+          apiService={mapMoreButtonEventName[verifyTypeModal].postService}
           editData={editInterview}
           open={openScheduleModal}
           onCloseModal={() => setOpenScheduleModal(false)}

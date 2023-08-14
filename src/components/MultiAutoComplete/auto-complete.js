@@ -25,12 +25,12 @@ const AsyncMultiAutoComplete = (props) => {
     value,
     err,
     isRequire,
-    customDatas,
-    isSubmit
+    customDatas
   } = props;
 
   const { data, loading, error, message, sendRequest } = _useHttp();
   const [options, setOptions] = useState([]);
+  const [selectOptions, setSelectOptions] = useState(value ? value : []);
 
   /**
    * When callToApi has value request data to display in auto complete
@@ -44,10 +44,9 @@ const AsyncMultiAutoComplete = (props) => {
           reqBody
         );
       };
-
       fetchData();
     }
-  }, [callToApi, reqBody]);
+  }, [callToApi, reqBody, value]);
 
   useEffect(() => {
     if (!loading) {
@@ -57,6 +56,8 @@ const AsyncMultiAutoComplete = (props) => {
       } else {
         data?.length ? setOptions(data) : setOptions([]);
       }
+
+      console.log('data',data);
     }
   }, [loading, data, error, message]);
 
@@ -78,7 +79,7 @@ const AsyncMultiAutoComplete = (props) => {
   });
 
   return (
-    <ThemeProvider theme={isSubmit && err && !value?.length ? customTheme : {}}>
+    <ThemeProvider theme={err && !selectOptions?.length ? customTheme : {}}>
       <Autocomplete
         id={id + `multi-auto-complete`}
         multiple
@@ -95,7 +96,7 @@ const AsyncMultiAutoComplete = (props) => {
             ? customDatas
             : []
         }
-        defaultValue={value ? value : []}
+        defaultValue={selectOptions?.length ? selectOptions : []}
         onChange={handleOnChange}
         getOptionLabel={(option) => (bindField ? option[bindField] : option)}
         isOptionEqualToValue={(option, value) => option?.id === value?.id}
@@ -111,7 +112,7 @@ const AsyncMultiAutoComplete = (props) => {
               isRequire ? (
                 <LabelRequire
                   label={label}
-                  color={err && !value ? "red" : ""}
+                  color={err && !selectOptions?.length ? "red" : ""}
                 />
               ) : (
                 label
@@ -134,8 +135,12 @@ const AsyncMultiAutoComplete = (props) => {
             }}
             helperText={
               err &&
-              !value && (
-                <span style={{ color: err && !value ? "#d32f2f" : "" }}>
+              !selectOptions?.length && (
+                <span
+                  style={{
+                    color: err && !selectOptions?.length ? "#d32f2f" : "",
+                  }}
+                >
                   {err}
                 </span>
               )

@@ -50,7 +50,7 @@ const CandidateScheduleFormModal = (props) => {
         getInterviewDetail: false,
       },
     },
-    setSecondRoundInterview: {
+    setSuggestSecondInterview: {
       title: "Are you sure?",
       subTitle: "You want to set second schedule for interview.",
       actions: {
@@ -60,7 +60,7 @@ const CandidateScheduleFormModal = (props) => {
         getInterviewDetail: true,
       },
     },
-    finalInterviewSchedule: {
+    confirmInterviewSchedule: {
       title: "Are you sure?",
       subTitle: "You want to set final schedule for interview.",
       actions: {
@@ -101,7 +101,6 @@ const CandidateScheduleFormModal = (props) => {
   const { errors } = formState;
   const [hours, setHours] = useState([]);
   const [minutes, setMinutes] = useState([]);
-  const [isSubmitForm, setIsSubmitForm] = useState(false);
 
   useEffect(() => {
     clearErrors();
@@ -138,6 +137,9 @@ const CandidateScheduleFormModal = (props) => {
         ConverterService.convertUnixDateToMUI(new Date())
       );
       setValue("headDepartmentId", editData?.headDepartmentId);
+      setValue("departments", [
+        { id: editData?.departmentId, nameEn: editData?.departmentName },
+      ]);
     }
   }, [open]);
 
@@ -175,14 +177,11 @@ const CandidateScheduleFormModal = (props) => {
           new Date(data?.interviewDate).getMinutes()
         )
       );
-      
-        console.log('data',data);
     }
   }, [data]);
 
   const onError = (error) => {
     console.log("Input error", error);
-    setIsSubmitForm(true);
     if (error?.hour) setError("hour", { message: "Hour is required!" });
     if (error?.min) setError("min", { message: "Minute is required!" });
   };
@@ -383,10 +382,9 @@ const CandidateScheduleFormModal = (props) => {
                             : watchInterview?.departments
                         }
                         handleOnChange={(e, val) => {
-                          setValue("departments", val?.length ? val : []);
+                          val?.length ? setValue("departments", val?.length ? val : []) : setValue("departments",[])
                         }}
                         err={errors?.departments?.message}
-                        isSubmit={isSubmitForm}
                       />
                     )}
                   </>
@@ -399,12 +397,20 @@ const CandidateScheduleFormModal = (props) => {
                     limitTags={10}
                     callToApi={API_URL.lookup.department.get}
                     bindField={"nameEn"}
-                    value={watchInterview?.departments}
+                    value={
+                      !watchInterview?.departments?.length
+                        ? [
+                            {
+                              id: editData?.departmentId,
+                              nameEn: editData?.departmentName,
+                            },
+                          ]
+                        : watchInterview?.departments
+                    }
                     handleOnChange={(e, val) => {
                       setValue("departments", val?.length ? val : []);
                     }}
                     err={errors?.departments?.message}
-                    isSubmit={isSubmitForm}
                   />
                 )}
               </Grid>
@@ -440,7 +446,6 @@ const CandidateScheduleFormModal = (props) => {
                           setValue("committees", val?.length ? val : [])
                         }
                         err={errors?.committees?.message}
-                        isSubmit={isSubmitForm}
                       />
                     )}
                   </>
@@ -458,18 +463,16 @@ const CandidateScheduleFormModal = (props) => {
                     }
                     reqBody={{
                       departments: watchInterview?.departments?.length
-                        ? watchInterview?.departments?.map((ele) => ele.id)
+                        ? watchInterview?.departments?.map((ele) => ele?.id)
                         : [],
                     }}
                     httpMethod={"post"}
                     bindField={"fullName"}
                     value={watchInterview?.committees}
                     handleOnChange={(e, val) => {
-                      console.log(val);
                       setValue("committees", val?.length ? val : []);
                     }}
                     err={errors?.committees?.message}
-                    isSubmit={isSubmitForm}
                   />
                 )}
               </Grid>

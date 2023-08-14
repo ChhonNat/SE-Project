@@ -22,6 +22,8 @@ export const API_URL = {
     interview: {
         get: `${API_VERSION}/interviews/search`,
         detail: `${API_VERSION}/interviews/`,
+        suggestSecScheduleInterview: `${API_VERSION}/interviews/`,
+        confirmSecScheduleInterview: `${API_VERSION}/interviews/`,
         evaluate: `${API_VERSION}/interviews/`,
         referenceCheck: `${API_VERSION}/interviews/`,
         downloadEvaluateForm: `${API_VERSION}/interviews/download?id=`,
