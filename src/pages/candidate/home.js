@@ -1,47 +1,59 @@
 import React, { useState } from "react";
+
+import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
+import ViewFileModal from "../../components/Modal/view-file.modal";
+
+import CandidateFormModal from "./upsert-candidate-form.modal";
+import CandidateFormDetailModal from "./detail-candidate-form.modal";
+import CandidateProcessForm from "./process-candidate-form.modal";
+import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
+
+import NextPlanIcon from "@mui/icons-material/NextPlan";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import ClearIcon from "@mui/icons-material/Clear";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+
+import { useSelector } from "react-redux";
+import { ROLE } from "../../constants/roles";
+import { STATUS } from "../../constants/status";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
-import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import CandidateFormModal from "./form-candidate.modal";
-import CandidateInviteFormModal from "./form-invite-candidate.modal";
-import CandidateReviewFormModal from "./form-review-candidate.modal";
-import { STATUS } from "../../constants/status";
-
+// import { ContentCopy, Difference } from "@mui/icons-material";
 
 const HomeCandidate = () => {
+  const user = useSelector((state) => state?.userAuthendicated);
+  const [selectedData, setSelectedData] = useState({ open: false, row: {} });
+  const [isReload, setIsReload] = useState(false);
 
-    const [selectedData, setSelectedData] = useState({ open: false, row: {} });
-    const [isReload, setIsReload] = useState(false);
-    const [openAddCandidateModal, setOpenAddCandidateModal] = useState(false);
-    const [openEditCandidateModal, setOpenEditCandidateModal] = useState(false);
-    const [openApproveCandidateModal, setOpenApproveCandidateModal] = useState(false);
-    const [openReviewCandidateModal, setOpenReviewCandidateModal] = useState(false);
-    const [editCandidate, setEditCandidate] = useState({});
+  const [editCandidate, setEditCandidate] = useState({});
+  const [detailCandidate, setDetailCandidate] = useState({});
 
-    // Handle click each candidate to update the info
-    const handleEditCandidate = (candidate) => {
-        setEditCandidate(candidate);
-        setOpenEditCandidateModal(true);
-    };
+  const [openUpsertCandidateModal, setOpenUpsertCandidateModal] =
+    useState(false);
+  const [openCandidateDetailModal, setOpenCandidateDetailModal] =
+    useState(false);
+  const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
+  const [openScheduleModal, setOpenScheduleModal] = useState(false);
+  const [openProcessModal, setOpenProcessModal] = useState(false);
 
-    // handle click each candidate to update shortlist
-    const handleShortlistCandidate = (candidate) => {
+  const [verifyTypeModal, setVerifyTypeModal] = useState("");
 
-        setEditCandidate(candidate);
-        setOpenApproveCandidateModal(true);
-    };
+  // Handle click each candidate to update the info
+  const handleEditCandidate = (candidate) => {
+    setEditCandidate(candidate);
+    setOpenUpsertCandidateModal(true);
+  };
 
-    //handle review candidate before shortlist
-    const handleReviewCandidate = (candidate) => {
-        setEditCandidate(candidate);
-        setOpenReviewCandidateModal(true);
-    };
+  //handle review candidate before shortlist
+  const handleReviewCandidate = (candidate) => {
+    setEditCandidate(candidate);
+    setOpenReviewCVModal(true);
+  };
 
-
-    return (
-        <>
-
-            {/* 
+  return (
+    <>
+      {/* 
                 properties::
                 asyncUrl: 'request data url' 
                 headers: 'Table header display in table'
@@ -54,80 +66,308 @@ const HomeCandidate = () => {
                 onHandleAddNewEvent: 'Listen button add new event'
                 customActions: 'Custom button event in table'
             */}
-            <AsyncDatatable
-                setSelectedData={setSelectedData}
-                asyncURL={API_URL.candidate.get}
-                headers={TABLE_CONFIG.tblCandidate}
-                bannerText="All Candidates"
-                searchPlaceHolder="Search"
-                ordinal="asc"
-                setOrdinalBy="id"
-                isReloadData={isReload ? true : false}
-                useTableActions={
-                    {
-                        search: true,
-                        create: true,
-                        delete: true,
-                        edit: true,
-                        approveCandidate: [
-                            {
-                                field: 'shortlistResult',
-                                values: [STATUS.SHORTLIST_RESULT.PASSED]
-                            },
-                            {
-                                field: 'status',
-                                values: [STATUS.CANDIDATE.CV_REVIEWED]
-                            }
+      <AsyncDatatable
+        setSelectedData={setSelectedData}
+        asyncURL={API_URL.candidate.get}
+        headers={TABLE_CONFIG.tblCandidate}
+        bannerText="All Candidates"
+        searchPlaceHolder="Search"
+        ordinal="asc"
+        setOrdinalBy="id"
+        isReloadData={isReload ? true : false}
+        useTableActions={{
+          //Actions Tool bar table
+          search: true,
+          create: !user?.roles
+            ? false
+            : user?.roles?.includes(ROLE.ROLE_TA_ADMIN)
+            ? true
+            : false,
+          refresh: true,
+          //action each table rows
+          view: true,
+          edit: !user?.roles
+            ? false
+            : user?.roles?.includes(ROLE.ROLE_TA_ADMIN)
+            ? true
+            : false,
+          delete: false,
+          moreOption: {
+            buttons: [
+              // {
+              //     name: 'Clone Info',
+              //     eventName: 'cloneInfo',
+              //     icon: <Difference />,
+              //     hidden: !user?.roles ? true : user?.roles.includes(ROLE.ROLE_TA_ADMIN) ? false : true,
+              //     enable: true
+              // },
+              {
+                name: "Submit to DHR",
+                eventName: "submitToDHR",
+                icon: <NextPlanIcon color="info" />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles?.includes(ROLE.ROLE_TA_ADMIN)
+                  ? false
+                  : true,
+                enable: [
+                  {
+                    field: "submitStatus",
+                    values: [
+                      STATUS.SUBMIT_STATUS.WAITING,
+                      STATUS.SUBMIT_STATUS.DHR_REJECTED,
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Verify",
+                eventName: "verifyByDHR",
+                icon: <DoneAllIcon color="info" />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles?.includes(ROLE.ROLE_HR_MANAGER)
+                  ? false
+                  : true,
+                enable: [
+                  {
+                    field: "submitStatus",
+                    values: [
+                      STATUS.SUBMIT_STATUS.SUBMITTED_DHR,
+                      STATUS.SUBMIT_STATUS.DHR_REJECTED,
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Reject",
+                eventName: "rejectByDHR",
+                icon: <ClearIcon color="info" />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles?.includes(ROLE.ROLE_HR_MANAGER)
+                  ? false
+                  : true,
+                enable: [
+                  {
+                    field: "submitStatus",
+                    values: [
+                      STATUS.SUBMIT_STATUS.SUBMITTED_DHR,
+                      STATUS.SUBMIT_STATUS.DHR_VERIFIED,
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Approve",
+                eventName: "approveByOFFCEO",
+                icon: <DoneAllIcon color="info" />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN)
+                  ? false
+                  : true,
+                enable: [
+                  {
+                    field: "submitStatus",
+                    values: [
+                      STATUS.SUBMIT_STATUS.DHR_VERIFIED,
+                      STATUS.SUBMIT_STATUS.OFCCEO_REJECTED,
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Reject",
+                eventName: "rejectByOFFCEO",
+                icon: <ClearIcon color="info" />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN)
+                  ? false
+                  : true,
+                enable: [
+                  {
+                    field: "submitStatus",
+                    values: [
+                      STATUS.SUBMIT_STATUS.DHR_VERIFIED,
+                      STATUS.SUBMIT_STATUS.OFCCEO_APPROVED,
+                    ],
+                  },
+                ],
+              },
+              {
+                name: "Shortlist",
+                eventName: "shortlistCandidate",
+                icon: <CheckCircleOutlineIcon color="info" />,
+                hidden: !user?.roles
+                  ? true
+                  : [ROLE.ROLE_TA_TEAM, ROLE.ROLE_HIRING_MANAGER].some((role) =>
+                      user?.roles.includes(role)
+                    )
+                  ? false
+                  : true,
+                enable: !user?.roles
+                  ? false
+                  : user?.roles?.includes(ROLE.ROLE_TA_TEAM)
+                  ? [
+                      {
+                        field: "submitStatus",
+                        values: [STATUS.SUBMIT_STATUS.OFCCEO_APPROVED],
+                      },
+                    ]
+                  : [
+                      {
+                        field: "submitStatus",
+                        values: [STATUS.SUBMIT_STATUS.SUBMITTED_HOD],
+                      },
+                      {
+                        field: "status",
+                        values: [STATUS.CANDIDATE.SHORTLISTED],
+                      },
+                    ],
+              },
+              {
+                name: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER)
+                  ? "Suggest Interview Schedule"
+                  : "Final Interview Schedule",
+                eventName: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER)
+                  ? "setSuggestInterview"
+                  : "setFinalScheduleInterview",
+                icon: <CalendarMonthIcon />,
+                hidden: !user?.roles
+                  ? true
+                  : [ROLE.ROLE_HIRING_MANAGER, ROLE.ROLE_TA_TEAM].some((role) =>
+                      user?.roles.includes(role)
+                    )
+                  ? false
+                  : true,
+                enable: !user?.roles
+                  ? false
+                  : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER)
+                  ? [
+                      {
+                        field: "status",
+                        values: [STATUS.CANDIDATE.SHORTLISTED],
+                      },
+                      {
+                        field: "shortlistResult",
+                        values: [STATUS.SHORTLIST_RESULT.PASSED],
+                      },
+                    ]
+                  : [
+                      {
+                        field: "status",
+                        values: [STATUS.CANDIDATE.IN_INTERVIEW],
+                      },
+                    ],
+              },
+              {
+                name: "Submit To HOD",
+                eventName: "submitToHOD",
+                icon: <NextPlanIcon color="info" />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles?.includes(ROLE.ROLE_TA_TEAM)
+                  ? false
+                  : true,
+                enable: [
+                  {
+                    field: "submitStatus",
+                    values: [STATUS.SUBMIT_STATUS.OFCCEO_APPROVED],
+                  },
+                  {
+                    field: "shortlistResult",
+                    values: !user?.roles
+                      ? []
+                      : [
+                          STATUS.SHORTLIST_RESULT.PASSED,
+                          STATUS.SHORTLIST_RESULT.FAILED,
+                          STATUS.SHORTLIST_RESULT.BLACKLIST,
+                          STATUS.SHORTLIST_RESULT.KEEP_IN_POOL,
                         ],
-                        reviewCandidate: [
-                            {
-                                field: 'status',
-                                values: [STATUS.CANDIDATE.PENDING]
-                            }
-                        ]
-                    }
-                }
-                onHandleAddNewEvent={() => setOpenAddCandidateModal(true)}
-                handleApproveEvent={(data) => handleShortlistCandidate(data)}
-                handleEditEvent={(data) => handleEditCandidate(data)}
-                handleReviewEvent={(data) => handleEditCandidate(data)}
-                handleLinkEvent={(data) => handleReviewCandidate(data)}
-            />
+                  },
+                ],
+              },
+            ],
+          },
+        }}
+        onHandleAddNewEvent={() => setOpenUpsertCandidateModal(true)}
+        onHandleRefreshEvent={() => setIsReload(!isReload)}
+        handleViewEvent={(data) => {
+          setDetailCandidate(data);
+          setOpenCandidateDetailModal(true);
+        }}
+        handleEditEvent={(data) => handleEditCandidate(data)}
+        handleLinkEvent={(data) => handleReviewCandidate(data)}
+        handleMoreEvent={(eName, data) => {
+          if (!eName) return false;
 
-            {/* Create new candidate form */}
-            <CandidateFormModal
-                modalTitle="New Candidate"
-                openCandidateModal={openAddCandidateModal}
-                onCloseCandidateModal={() => setOpenAddCandidateModal(false)}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            />
+          setEditCandidate(data);
+          setVerifyTypeModal(eName);
 
-            {/* Edit candidate form */}
-            <CandidateFormModal
-                modalTitle="Edit Candidate"
-                candidate={editCandidate}
-                openCandidateModal={openEditCandidateModal}
-                onCloseCandidateModal={() => setOpenEditCandidateModal(false)}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            />
+          eName === "setScheduleTest" ||
+          eName === "setSuggestInterview" ||
+          eName === "setFinalScheduleInterview"
+            ? setOpenScheduleModal(true)
+            : setOpenProcessModal(true);
+        }}
+      />
 
-            {/* Review candidate form */}
-            <CandidateReviewFormModal
-                modalTitle="Review Candidate"
-                candidate={editCandidate}
-                openReviewCandidateModal={openReviewCandidateModal}
-                onCloseReviewCandidateModal={() => setOpenReviewCandidateModal(false)}
-            />
+      {/* Upsert candidate form */}
+      {openUpsertCandidateModal && (
+        <CandidateFormModal
+          candidate={editCandidate}
+          openCandidateModal={openUpsertCandidateModal}
+          onCloseCandidateModal={() => {
+            setEditCandidate({});
+            setOpenUpsertCandidateModal(false);
+          }}
+          handleEventSuccessed={() => setIsReload(!isReload)}
+        />
+      )}
 
-            {/* Approve candidate form */}
-            <CandidateInviteFormModal
-                candidate={editCandidate}
-                openApproveCandidateModal={openApproveCandidateModal}
-                onCloseApproveCandidateModal={() => setOpenApproveCandidateModal(false)}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            />
-        </>
-    )
+      {/* View candiate detail */}
+      {openCandidateDetailModal && (
+        <CandidateFormDetailModal
+          candidate={detailCandidate}
+          openCandidateModal={openCandidateDetailModal}
+          onCloseCandidateModal={() => setOpenCandidateDetailModal(false)}
+        />
+      )}
+
+      {/* Review candidate form */}
+      {openReviewCVModal && (
+        <ViewFileModal
+          modalTitle="Review CV"
+          id={editCandidate?.id}
+          openModal={openReviewCVModal}
+          onCloseModal={() => setOpenReviewCVModal(false)}
+        />
+      )}
+
+      {/* Update candidate process status */}
+      {openProcessModal && (
+        <CandidateProcessForm
+          eventType={verifyTypeModal}
+          candidate={editCandidate}
+          open={openProcessModal}
+          onCloseModal={() => setOpenProcessModal(false)}
+          handleEventSuccessed={() => setIsReload(!isReload)}
+        />
+      )}
+      {/* Schedule candidate  */}
+      {openScheduleModal && (
+        <CandidateScheduleFormModal
+          eventType={verifyTypeModal}
+          editData={editCandidate}
+          open={openScheduleModal}
+          onCloseModal={() => setOpenScheduleModal(false)}
+          handleEventSuccessed={() => setIsReload(!isReload)}
+        />
+      )}
+    </>
+  );
 };
 
 export default HomeCandidate;

@@ -1,57 +1,25 @@
-import React, { useState } from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import React, { useContext, useState } from "react";
 
-import MuiDrawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-
 import logo from "../../logo/logo.png";
 import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
+import MuiDrawer from "@mui/material/Drawer";
+
 import { PRIVATE_ROUTES } from "../../routers/private_routes";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS } from "../../constants/local_storage";
+import { LayoutContext } from "../../context/layout-context";
+import { styled, useTheme } from "@mui/material/styles";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-      width: drawerWidth,
-      flexShrink: 0,
-      whiteSpace: 'nowrap',
-      boxSizing: 'border-box',
-      ...(open && {
-        ...openedMixin(theme),
-        '& .MuiDrawer-paper': openedMixin(theme),
-      }),
-      ...(!open && {
-        ...closedMixin(theme),
-        '& .MuiDrawer-paper': closedMixin(theme),
-      }),
-    }),
-  );
-
-  
 const openedMixin = (theme) => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -67,11 +35,36 @@ const closedMixin = (theme) => ({
         duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 25px)`,
+    width: `calc(${theme.spacing(12)} + 1px)`,
     [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(8)} + 25px)`,
+        width: `calc(${theme.spacing(11)} + 1px)`,
     },
 });
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open }) => ({
+        width: drawerWidth,
+        flexShrink: 0,
+        whiteSpace: 'nowrap',
+        boxSizing: 'border-box',
+        ...(open && {
+            ...openedMixin(theme),
+            '& .MuiDrawer-paper': openedMixin(theme),
+        }),
+        ...(!open && {
+            ...closedMixin(theme),
+            '& .MuiDrawer-paper': closedMixin(theme),
+        }),
+    }),
+);
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+}));
 
 
 /**
@@ -79,14 +72,14 @@ const closedMixin = (theme) => ({
  */
 const drawerHeader = {
     styles: {
-        background: "#1976d2",
+        background: "#283C55",
         boxShadow:
             "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
         borderColor: "#e5e7eb",
         justifyContent: "center"
     },
     img: {
-        styles: { width: "75%" }
+        styles: { width: "50%" }
     }
 };
 
@@ -102,10 +95,12 @@ const sidebar = {
     menu: {
         activeLink: {
             backgroundColor: '#f2eeee',
+            borderRight: '3px solid #283c55'
         },
         child: {
             activeLink: {
                 backgroundColor: '#f7f6f6',
+                borderRight: '3px solid #283c55'
             },
         }
     },
@@ -130,9 +125,9 @@ const sidebar = {
     }
 };
 
-const SidebarComponent = (props) => {
+const SidebarComponent = () => {
 
-    const { open } = props;
+    const { toggleNavbar, setToggleNavbar } = useContext(LayoutContext);
 
     /**
      * To remember active menu or collape we get record from storage
@@ -140,7 +135,6 @@ const SidebarComponent = (props) => {
     const menuStorage = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.sidebar.getActiveSidebar));
 
     const theme = useTheme();
-    // const [open, setOpen] = React.useState(true);
     const [menuIndex, setMenuIndex] = useState(menuStorage?.activeIndex || 0);
     const [openMenuCollape, setOpenMenuCollape] = useState(menuStorage?.isOpenCollape || false);
 
@@ -148,13 +142,6 @@ const SidebarComponent = (props) => {
     const { pathname } = location;
     const parentRoute = '/' + location?.pathname?.split('/')[1] || '/';
 
-    /**
-     * Handle minimize sidebar
-     */
-    const handleMinSidebar = () => {
-        // setOpen(!open);
-        props.handleMinSidebar(!open)
-    }
 
     /**
      * Method click on sidebar 
@@ -185,21 +172,10 @@ const SidebarComponent = (props) => {
 
     return (
 
-        <Drawer
-            variant="permanent"
-            open={open}
-        >
-
+        <Drawer variant="permanent" open={toggleNavbar}>
             {/* Sidebar Header */}
             <DrawerHeader style={drawerHeader.styles}>
                 <img src={logo} alt="logo" style={drawerHeader.img.styles} />
-                {/* <IconButton>
-                    {theme.direction === "rtl" ? (
-                        <ChevronRightIcon onClick={handleMinSidebar} />
-                    ) : (
-                        <ChevronLeftIcon onClick={handleMinSidebar} />
-                    )}
-                </IconButton> */}
             </DrawerHeader>
 
             {
@@ -216,17 +192,17 @@ const SidebarComponent = (props) => {
                                         onClick={() => handleClickMenu(parentKey)}
                                     >
                                         <ListItemButton
-                                            sx={open ? sidebar.listItemButton.initialSx : sidebar.listItemButton.centerSx}
+                                            sx={toggleNavbar ? sidebar.listItemButton.initialSx : sidebar.listItemButton.centerSx}
                                             style={pathname === menu?.path ? sidebar.menu.activeLink : {}}
                                         >
 
                                             {/*Left parent menu icon */}
-                                            <ListItemIcon sx={open ? sidebar.listItemIcon.fixSx : sidebar.listItemIcon.autoSx} >
+                                            <ListItemIcon sx={toggleNavbar ? sidebar.listItemIcon.fixSx : sidebar.listItemIcon.autoSx} >
                                                 {menu?.icon}
                                             </ListItemIcon>
 
                                             {/* parent menu name */}
-                                            <ListItemText primary={menu?.name} sx={{ opacity: open ? 1 : 0 }} />
+                                            <ListItemText primary={menu?.name} sx={{ opacity: toggleNavbar ? 1 : 0 }} />
 
                                             {/* right parent menu icon */}
                                             {menu?.children?.length ? (parentRoute === menu?.path && menuIndex === parentKey && openMenuCollape ? <ExpandLess /> : <ExpandMore />) : <></>}
