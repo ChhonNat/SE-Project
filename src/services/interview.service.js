@@ -1,8 +1,8 @@
 import { API_URL } from "../constants/api_url";
 import { httpService } from "./http.service";
 
-const inviteSecondInterview = (intId, canId, data, contentType) => {
-    return httpService._put(API_URL.candidate.inviteSecondInterView+`${intId}/candidate/${canId}/invite`, data, contentType);
+const confirmScheduleInterview = (intId, canId, data, contentType) => {
+    return httpService._put(API_URL.candidate.confirmScheduleInterview+`${intId}/candidate/${canId}/confirm-schedule`, data, contentType);
 }
 
 const evaluateInterview = (intId, canId, data, contentType) => {
@@ -16,7 +16,7 @@ const referenceCheck = (intId, canId, data, contentType) => {
 
 
 export const interviewService = {
-    inviteSecondInterview,
+    confirmScheduleInterview,
     evaluateInterview,
     referenceCheck
 };

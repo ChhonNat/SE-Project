@@ -33,8 +33,14 @@ const convertApplicationCode = (lastCode) => {
 
 };
 
+//pad number
+const padToNDigits = (n, value) => {
+    return String(value).padStart(n, '0');
+}
+
 export const ConverterService = {
     convertUnixDateToMUI,
     convertDateToAPI,
-    convertApplicationCode
+    convertApplicationCode,
+    padToNDigits
 };
