@@ -215,7 +215,8 @@ const tblJobOffer = [
         obj: { name: 'fullName' }
     },
     {
-        id: 'position',
+        id: 'offerPostion',
+        orId: 'position',
         label: 'Position',
         obj: { name: 'nameEn' }
     },
