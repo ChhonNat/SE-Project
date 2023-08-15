@@ -105,7 +105,7 @@ export const API_URL = {
         edit: `${API_VERSION}/head-departments/`
     },
 
-    committeee: {
+    committee: {
         get: `${API_VERSION}/committees/search`,
         create: `${API_VERSION}/committees`,
         edit: `${API_VERSION}/committees/`,

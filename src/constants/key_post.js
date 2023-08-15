@@ -159,7 +159,7 @@ const headDepartment = [
     "status",
 ];
 
-const committeee = [
+const committee = [
     "staffId",
     "firstName",
     "lastName",
@@ -204,6 +204,6 @@ export const KEY_POST = {
     subBusinessUnit,
     campus,
     headDepartment,
-    committeee,
+    committee,
     user
 };

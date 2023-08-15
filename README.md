@@ -156,47 +156,47 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
                     2: Interview
 --------------------------------------------------
 
-2.1 HOD
+1 HOD
     CV:
-        Upload first result form
-    
-2.2 HOD: 
-    CV: 
-        Update first evaluate result
+        Suggest Interview Schedule
+2 TA
+    CV:
+        Confirm Interview Schedule
+3 HOD
+    CV: Evaluate result and upload evaluate form
 
-
-If has second interview 
-------------    
-2.3 HOD:
-    CV:
-        Set second interview schedule
-2.4 HOD:
-    CV: 
-        Upload second result form
-2.5 HOD:
-    CV:
-        Update second evaluate result
-------------
-
-2.6 HOD:
-    CV:
-        Push to TA for reference check
-        
 --------------------------------------------------
                     3: Reference Check
 --------------------------------------------------
-3.1
+1
     TA:
         Do the background check and update the result
-3.2
+
+--------------------------------------------------
+                    4: Job Offer 
+--------------------------------------------------
+1
     TA:
-        Submit to HOD to offer the salary,...
-3.3
+        Job Offer
+
+2
+    TA:
+        Submit to HOD to verify
+3
     HOD:
-        submit to HOD to verify
-3.4
-    HOD: 
-        submit to OFFCEO to approve
+        Verify
+        Submit to DHR 
+4
+    DHR:
+        Verify
+        Submit to OFCCEO
+5
+    OFCCEO: 
+        approve
+        Submit to TA Admin
+6
+    TAAdmin:
+        Hire        
         
         
 
@@ -237,15 +237,6 @@ UI
 
 
 
-
--------------
-API
-
-        Candidate
-            Hiring Manager:
-                Set Validate in invite interview before shortlist by hiring manager
-
-
 -------------
 Meeting on 04-08-2023
 ------
@@ -254,10 +245,8 @@ Meeting on 04-08-2023
 5. No need committees setup but List/ Retrieve committees from users under each department related to the interview
 4. Update suggested interview schedule by HOD(first interview)
 4. confirm schedule by TA Team (first interview)
-------
-
-
 4. Suggest(by HOD) and confirm schedule (by TA Team) (second interview)
+------
 
 6. On the first process offer the status is pending then process next offer by TATeam and select fields: ex: offer salary, position, campus
 2. Filter and select all applicants and submit to DHR or to OFC CEO

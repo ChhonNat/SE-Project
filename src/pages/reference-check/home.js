@@ -18,7 +18,7 @@ import OfferJobFormModalFormModal from "./offer-job-form.modal";
 const HomeAssessment = () => {
   const user = useSelector((state) => state?.userAuthendicated);
 
-  const [editReference, setEditReferencce] = useState({});
+  const [editReference, setEditReference] = useState({});
   const [openFileFormModal, setOpenFileFormModal] = useState(false);
   const [openReferenceResultModal, setOpenReferenceResultModal] =
     useState(false);
@@ -141,22 +141,22 @@ const HomeAssessment = () => {
         handleMoreEvent={(eName, data) => {
           if (!eName) return false;
 
-          setEditReferencce(data);
+          setEditReference(data);
           mapMoreButtonEventName[eName].handleAction();
         }}
         handleLinkEvent={(data) => {
           setTypeModal("viewCVFile");
-          setEditReferencce(data);
+          setEditReference(data);
           setOpenFileFormModal(true);
         }}
         onHandleRefreshEvent={() => setIsReload(!isReload)}
         handleViewEvent={(data) => {
-          setEditReferencce(data);
+          setEditReference(data);
           setOpenReferenceDetailModal(true);
         }}
         handleViewSecFileEvent={(data) => {
           setTypeModal("viewRefForm");
-          setEditReferencce(data);
+          setEditReference(data);
           setOpenFileFormModal(true);
         }}
       />
