@@ -44,7 +44,6 @@ const TableRows = ({
   actions,
 }) => {
   return displayRecords.map((row, index) => {
-
     const isItemSelected = isSelected(row[checkColumn]);
 
     const labelId = `enhanced-table-checkbox-${index}`;
@@ -287,7 +286,8 @@ const TableRows = ({
                         (!isArray
                           ? !isObject
                             ? row[head?.id]
-                            : row[head?.id] && row[head?.id][head?.obj?.name]
+                            : row[head?.id] && row[head?.id][head?.obj?.name] 
+                            || row[head?.orId] && row[head?.orId][head?.obj?.name]
                           : arrayValue?.length
                           ? arrayValue.join(",\r\n").toString()
                           : "")}

@@ -107,9 +107,9 @@ const OfferJobFormModal = (props) => {
       parseInt(jobOffer?.offerSalary) > 0
     ) {
       setValue("offerSalary", String(jobOffer?.offerSalary));
-      setValue("campusId", jobOffer?.campus?.id);
-      setValue("positionId", jobOffer?.position?.id);
-      setValue("positionLevelId", jobOffer?.positionLevel?.id);
+      setValue("campusId", jobOffer?.offerCampus?.id ? jobOffer?.offerCampus?.id : jobOffer?.campus?.id);
+      setValue("positionId", jobOffer?.offerPostion?.id ? jobOffer?.offerPostion?.id : jobOffer?.position?.id );
+      setValue("positionLevelId", jobOffer?.offerPositionLevel?.id ? jobOffer?.offerPositionLevel?.id : jobOffer?.positionLevel?.id );
       setValue("remark", jobOffer?.remark);
     }
   }, [open]);

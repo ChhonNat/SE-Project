@@ -89,7 +89,7 @@ const HomeAssessment = () => {
                 enable: true,
               },
               {
-                name: "Offer Job",
+                name: "Process Offer Job",
                 eventName: "offerCandidateJob",
                 icon: <NextPlan />,
                 hidden: !user?.roles
