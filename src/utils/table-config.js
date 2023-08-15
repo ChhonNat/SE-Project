@@ -229,10 +229,10 @@ const tblJobOffer = [
         label: 'Department',
         obj: { name: 'nameEn' }
     },
-    {
-        id: 'offerSalary',
-        label: 'Salary($)',
-    },
+    // {
+    //     id: 'offerSalary',
+    //     label: 'Salary($)',
+    // },
     {
         id: 'processStatus',
         label: 'Process Status',

@@ -56,8 +56,6 @@ const AsyncMultiAutoComplete = (props) => {
       } else {
         data?.length ? setOptions(data) : setOptions([]);
       }
-
-      console.log('data',data);
     }
   }, [loading, data, error, message]);
 

@@ -73,10 +73,10 @@ const HomeJobOffer = () => {
                     moreOption: {
                         buttons: [
                             {
-                                name: 'Job Offer',
+                                name: 'Process Job Offer',
                                 eventName: 'offer',
                                 icon: <AttachMoney color="info" />,
-                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER) ? false : true,
+                                hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_TA_TEAM) ? false : true,
                                 enable: [{
                                     field: 'processStatus',
                                     values: [STATUS.OFFER_PROCESS.PENDING, STATUS.OFFER_PROCESS.HOD_APPROVED]
