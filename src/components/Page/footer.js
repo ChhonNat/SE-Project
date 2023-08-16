@@ -40,7 +40,7 @@ const FooterComponent = (props) => {
             handleSave, 
             handleReject,
             handleCancel, 
-            saveButtunType, 
+            saveButtonType, 
             saveButtonLabel,
             cancelButtonLabel,
             rejectButtonLabel, 
@@ -72,7 +72,7 @@ const FooterComponent = (props) => {
                     actions?.reject &&
                     <WarningButton
                         variant="outlined"
-                        type={saveButtunType || 'button'}
+                        type={saveButtonType || 'button'}
                         onClick={handleReject}
                     >
                         {rejectButtonLabel ? rejectButtonLabel : 'Reject'}
@@ -83,7 +83,7 @@ const FooterComponent = (props) => {
                     actions?.submit &&
                     <PrimaryButton
                         variant="outlined"
-                        type={saveButtunType || 'button'}
+                        type={saveButtonType || 'button'}
                         onClick={handleSave}
                     >
                         {saveButtonLabel ? saveButtonLabel : 'Save'}

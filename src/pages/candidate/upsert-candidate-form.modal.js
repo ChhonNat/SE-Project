@@ -617,7 +617,7 @@ const CandidateFormModal = (props) => {
         </DialogContent>
         <DialogActions>
           <FooterComponent
-            saveButtunType="submit"
+            saveButtonType="submit"
             handleCancel={handleCloseModal}
             saveButtonLabel={
               candidate?.id && modalType !== isCloneUserInfo ? "Update" : "Save"

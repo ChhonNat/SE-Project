@@ -494,7 +494,7 @@ const CandidateScheduleFormModal = (props) => {
         </DialogContent>
         <DialogActions>
           <FooterComponent
-            saveButtunType="submit"
+            saveButtonType="submit"
             saveButtonLabel={mapEventType[eventType]?.actions?.submitLabel}
             handleCancel={onCloseModal}
             actions={{ cancel: true, submit: true }}

@@ -269,7 +269,7 @@ const JobOfferFormDetailModal = (props) => {
                             </DialogContent>
                             <DialogActions>
                                 <FooterComponent
-                                    saveButtunType='submit'
+                                    saveButtonType='submit'
                                     handleCancel={onCloseModal}
                                     saveButtonLabel={jobOfferDetail?.id ? 'Update' : 'Save'}
                                     cancelButtonLabel="Close"

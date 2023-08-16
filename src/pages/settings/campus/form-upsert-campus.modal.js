@@ -250,7 +250,7 @@ const UpsertCampusFormModal = (props) => {
                 <DialogActions>
                     {/* Footer Page */}
                     <FooterComponent
-                        saveButtunType="submit"
+                        saveButtonType="submit"
                         saveButtonLabel={editData?.id ? "Update" : "Save"}
                         actions={{ cancel: true, submit: true }}
                         handleCancel={handleCloseModal}

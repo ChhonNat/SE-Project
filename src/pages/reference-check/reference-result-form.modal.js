@@ -194,7 +194,7 @@ const ReferenceResultFormModal = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <FooterComponent
-                        saveButtunType='submit'
+                        saveButtonType='submit'
                         saveButtonLabel='Confirm'
                         handleCancel={onCloseModal}
                         actions={{ cancel: true, submit: true }}

@@ -466,7 +466,7 @@ const UpsertUserForm = (props) => {
       </DialogContent>
       <DialogActions>
         <FooterComponent
-          saveButtunType="submit"
+          saveButtonType="submit"
           saveButtonLabel={user?.id ? "Update" : "Save"}
           actions={{ cancel: true, submit: true }}
           handleCancel={handleCloseModal}
