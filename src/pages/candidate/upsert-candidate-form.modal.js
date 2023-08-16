@@ -40,7 +40,11 @@ const CandidateFormModal = (props) => {
     onCloseCandidateModal,
     candidate,
     handleEventSucceed,
+    modalType,
   } = props;
+
+  const isCloneUserInfo = "cloneCandidateInfo";
+
   const {
     register,
     handleSubmit,
@@ -51,7 +55,11 @@ const CandidateFormModal = (props) => {
     clearErrors,
     setError,
   } = useForm({
-    resolver: zodResolver(candidate?.id ? CandidateModel.Update : CandidateModel?.Create)
+    resolver: zodResolver(
+      candidate?.id && modalType !== isCloneUserInfo
+        ? CandidateModel.Update
+        : CandidateModel?.Create
+    ),
   });
   const watchCandidate = watch();
   const { errors } = formState;
@@ -103,7 +111,7 @@ const CandidateFormModal = (props) => {
         );
 
       //Case edit candidate map candidate info to register form
-      if (candidate?.id) {
+      if (candidate?.id || modalType === isCloneUserInfo) {
         for (let key in candidate) {
           if (KEY_POST.view_candidate.includes(key)) {
             if (key === "appliedDate") {
@@ -139,20 +147,24 @@ const CandidateFormModal = (props) => {
       const { success, data } = req?.data;
 
       if (dataType === "multi") {
+        ////////////
         if (success) {
           setListGenders(data?.genders);
           setListReceivedFromChannels(data?.receivedChannels);
 
+          ///////////////
           if (!candidate?.id)
             setValue(
               "applicantCode",
               ConverterService.convertApplicationCode(data?.IncreasedAppNumber)
             );
         } else {
+          ////////////////
           setListGenders([]);
           setListReceivedFromChannels([]);
         }
       } else if (dataType === "headDepartment") {
+        /////////////
         if (success) {
           setValue("headDepartmentId", data?.id ? data?.id : null);
           setValue(
@@ -160,6 +172,7 @@ const CandidateFormModal = (props) => {
             data?.fullName ? data?.fullName : null
           );
         } else {
+          /////////
           setValue("headDepartmentName", null);
           setValue("headDepartmentId", null);
         }
@@ -173,11 +186,12 @@ const CandidateFormModal = (props) => {
 
   /**Check form error */
   const onError = (error, e) => {
-    console.log("error", error);
-
+    /////////
     if (!watchCandidate?.file) {
+      /////////////
       if (!candidate?.id) setError("file", { message: "File is required!" });
     } else {
+      ////////////
       const { file } = watchCandidate;
       const oneByte = 1048576;
       const limitTenMB = 10 * oneByte;
@@ -194,11 +208,34 @@ const CandidateFormModal = (props) => {
    */
 
   const onSubmit = async (data) => {
+    /**
+     * CASE: clone all info from existed candidate
+     */
+    if (modalType === isCloneUserInfo) {
+      ////////
+      if (!data?.file) {
+        //////
+        return setError("file", { message: "File is required!" });
+      } else {
+        ///////
+        const { file } = data;
+        const oneByte = 1048576;
+        const limitTenMB = 10 * oneByte;
+
+        if (file?.size > limitTenMB)
+          return setError("file", {
+            message: "File is required maximum 10MB!",
+          });
+      }
+    }
+
     const submitFormData = new FormData();
 
     /**Transfer all candidate data to form data */
     Object.keys(data).forEach((key) => {
-      if (KEY_POST.update_candidate.includes(key)) {
+      /////
+      if (KEY_POST.upsert_candidate.includes(key)) {
+        /////
         if (key === "appliedDate") {
           /**format appliedDate */
           const appliedDate = ConverterService.convertDateToAPI(data[key]);
@@ -212,13 +249,15 @@ const CandidateFormModal = (props) => {
     try {
       let submitCandidateForm;
 
-      if (candidate?.id) {
+      //CASE: edit candidate info call to UPDATE ENDPOINT
+      if (candidate?.id && modalType !== isCloneUserInfo) {
         submitCandidateForm = await candidateService.editCandidate(
           submitFormData,
           candidate?.id,
           "multipart/form-data"
         );
       } else {
+        //CASE: create new candidate call to CREATE ENDPOINT
         submitCandidateForm = await candidateService.createCandidate(
           submitFormData,
           "multipart/form-data"
@@ -228,6 +267,7 @@ const CandidateFormModal = (props) => {
       const { status, data } = submitCandidateForm;
       const { message } = data;
 
+      //Wait return result after call to UPDATE/CREATE candidate
       if (status === HTTP_STATUS.success) {
         if (data?.status === DATA_STATUS.success) handleEventSucceed();
 
@@ -270,7 +310,11 @@ const CandidateFormModal = (props) => {
       >
         <DialogTitle>
           <TitleComponent
-            title={candidate?.id ? "Edit Candidate" : "Add Candidate"}
+            title={
+              candidate?.id && modalType !== isCloneUserInfo
+                ? "Edit Candidate"
+                : "Add Candidate"
+            }
           />
           {onCloseCandidateModal ? (
             <IconButton
@@ -374,7 +418,11 @@ const CandidateFormModal = (props) => {
                   size="small"
                   label={
                     <LabelRequire
-                      label={candidate?.id ? "Update CV" : "Upload CV"}
+                      label={
+                        candidate?.id && modalType !== isCloneUserInfo
+                          ? "Update CV"
+                          : "Upload CV"
+                      }
                     />
                   }
                   inputProps={{ accept: "application/pdf" }}
@@ -387,7 +435,7 @@ const CandidateFormModal = (props) => {
                 </TextField>
               </Grid>
 
-              {candidate?.id && (
+              {candidate?.id && candidate?.applicantCode && (
                 <>
                   <Grid item xs={6}>
                     <div
@@ -568,7 +616,9 @@ const CandidateFormModal = (props) => {
           <FooterComponent
             saveButtunType="submit"
             handleCancel={handleCloseModal}
-            saveButtonLabel={candidate?.id ? "Update" : "Save"}
+            saveButtonLabel={
+              candidate?.id && modalType !== isCloneUserInfo ? "Update" : "Save"
+            }
             actions={{ cancel: true, submit: true }}
           />
         </DialogActions>
