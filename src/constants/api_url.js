@@ -15,7 +15,7 @@ export const API_URL = {
         editAssessment: `${API_VERSION}/assessments/`,
         hire: `${API_VERSION}/assessments/`,
         downloadCVFile: `${API_VERSION}/candidates/download?id=`,
-        sumitToOFFCEO: `${API_VERSION}/candidates/`,
+        submitToOFFCEO: `${API_VERSION}/candidates/`,
         shortlist: `${API_VERSION}/candidates/`,
     },
 
@@ -51,7 +51,7 @@ export const API_URL = {
     },
 
     // Setting api url
-    mainBuiness: {
+    mainBusiness: {
         get: `${API_VERSION}/main-business-units/search`,
         create: `${API_VERSION}`,
         edit: `${API_VERSION}`

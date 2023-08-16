@@ -59,7 +59,7 @@ const HomePositionLevel = () => {
             setEditPositionLevel({});
             setOpenPositionLevelModal(false);
           }}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
     </>

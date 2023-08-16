@@ -61,7 +61,7 @@ const HomeBusiness = () => {
             setEditBusinessUnit({});
             setOpenBusinessUnitModal(false);
           }}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
     </>

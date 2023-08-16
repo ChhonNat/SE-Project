@@ -27,7 +27,7 @@ const InterViewEvaluateFormModal = (props) => {
         open,
         onCloseModal,
         interview,
-        handleEventSuccessed,
+        handleEventSucceed,
         selectLabel,
         eventType
     } = props;
@@ -109,7 +109,7 @@ const InterViewEvaluateFormModal = (props) => {
         if (status === HTTP_STATUS.success) {
 
             if (data?.status === DATA_STATUS.success)
-                handleEventSuccessed();
+                handleEventSucceed();
 
             /**
              * Alert after request responses

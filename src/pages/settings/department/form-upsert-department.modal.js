@@ -34,7 +34,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 });
 
 const UpsertDepartmentFormModal = (props) => {
-  const { openModal, onCloseModal, handleEventSuccessed, title, editData } =
+  const { openModal, onCloseModal, handleEventSucceed, title, editData } =
     props;
   const {
     register,
@@ -76,7 +76,7 @@ const UpsertDepartmentFormModal = (props) => {
         timer: ALERT_TIMER,
       });
 
-      if (!error) handleEventSuccessed();
+      if (!error) handleEventSucceed();
 
       handleCloseModal();
     }

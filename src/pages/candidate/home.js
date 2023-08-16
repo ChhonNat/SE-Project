@@ -312,7 +312,7 @@ const HomeCandidate = () => {
             setEditCandidate({});
             setOpenUpsertCandidateModal(false);
           }}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
 
@@ -342,7 +342,7 @@ const HomeCandidate = () => {
           candidate={editCandidate}
           open={openProcessModal}
           onCloseModal={() => setOpenProcessModal(false)}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
       {/* Schedule candidate  */}
@@ -352,7 +352,7 @@ const HomeCandidate = () => {
           editData={editCandidate}
           open={openScheduleModal}
           onCloseModal={() => setOpenScheduleModal(false)}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
     </>

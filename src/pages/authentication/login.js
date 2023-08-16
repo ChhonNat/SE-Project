@@ -1,31 +1,33 @@
-import React from 'react';
-import '../../App.css';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Unstable_Grid2';
-import logo from '../../logo/login.png';
+import React from "react";
+import "../../App.css";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Unstable_Grid2";
+import logo from "../../logo/login.png";
 
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
-import { userAuthentication } from '../../store/authentication/authenticationService';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from "@mui/material";
+import { userAuthentication } from "../../store/authentication/authenticationService";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-
-  /**
-   * username: developer
-   * pwd: dev123
-   */
-
+/**
+ * username: developer
+ * pwd: dev123
+ */
 
 export default function Login() {
-
   const dispatch = useDispatch();
-  const [username, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
-
 
   const login = async (event) => {
     event.preventDefault();
@@ -33,16 +35,23 @@ export default function Login() {
   };
 
   return (
-
     <Grid container spacing={2}>
-
-      <Grid item xs={8} sx={{ height: '100vh', backgroundColor: '#283C55', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Grid
+        item
+        xs={8}
+        sx={{
+          height: "100vh",
+          backgroundColor: "#283C55",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <img src={logo} width={400} height={120} />
       </Grid>
 
       <Grid item xs={4} padding={10}>
-
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <h1>Recruitment Management System</h1>
         </div>
 
@@ -50,21 +59,28 @@ export default function Login() {
         <br></br>
 
         <Box
-          style={{ border: '1px solid #9a9a9a', padding: '20px', borderRadius: '20px 0 20px 0' }}
+          style={{
+            border: "1px solid #9a9a9a",
+            padding: "20px",
+            borderRadius: "20px 0 20px 0",
+          }}
           component="form"
           // sx={{ '& > :not(style)': { m: 1, width: '25ch' }, }}
           noValidate
           autoComplete="off"
         >
-          <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-
+          <Grid
+            container
+            rowSpacing={2}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
             <Grid item xs={12}>
               <h3>Login</h3>
             </Grid>
 
             <Grid item xs={12}>
               <TextField
-                sx={{ width: '100%', paddingBottom: 3 }}
+                sx={{ width: "100%", paddingBottom: 3 }}
                 onChange={(event) => setUserName(event.target.value)}
                 value={username}
                 label="Username"
@@ -73,9 +89,7 @@ export default function Login() {
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl
-                sx={{ width: '100%', paddingBottom: 3 }}
-              >
+              <FormControl sx={{ width: "100%", paddingBottom: 3 }}>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <OutlinedInput
                   id="password"
@@ -99,7 +113,6 @@ export default function Login() {
                 />
               </FormControl>
             </Grid>
-
           </Grid>
 
           <hr />
@@ -117,8 +130,6 @@ export default function Login() {
           </Grid>
         </Box>
       </Grid>
-
-    </Grid >
-
+    </Grid>
   );
 }

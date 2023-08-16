@@ -250,3 +250,4 @@ Meeting on 04-08-2023
 
 6. On the first process offer the status is pending then process next offer by TATeam and select fields: ex: offer salary, position, campus
 2. Filter and select all applicants and submit to DHR or to OFC CEO
+

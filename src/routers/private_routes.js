@@ -21,64 +21,63 @@ import { CorporateFareTwoTone, HowToReg, LocationOn } from "@mui/icons-material"
  * Import all page components
  */
 const Candidate = {
-    home: lazy(() => import('../pages/candidate/home')),
-    // create: lazy(() => import('../pages/candidate/create'))
+    HomeComponent: lazy(() => import('../pages/candidate/home')),
 };
 
 const Interview = {
-    home: lazy(() => import('../pages/interview/home')),
+    HomeComponent: lazy(() => import('../pages/interview/home')),
 };
 
 const ReferenceCheck = {
-    home: lazy(() => import('../pages/reference-check/home'))
+    HomeComponent: lazy(() => import('../pages/reference-check/home'))
 };
 
 const JobOffer = {
-    home: lazy(() => import('../pages/job-offer/home'))
+    HomeComponent: lazy(() => import('../pages/job-offer/home'))
 };
 
 const Hire = {
-    home: lazy(() => import('../pages/hire/home'))
+    HomeComponent: lazy(() => import('../pages/hire/home'))
 };
 
 const Settings = {
 
-    mainBusiness: {
-        home: lazy(() => import('../pages/settings/main-business/home'))
+    MainBusiness: {
+        HomeComponent: lazy(() => import('../pages/settings/main-business/home'))
     },
 
-    businessUnit: {
-        home: lazy(() => import('../pages/settings/business-unit/home')),
+    BusinessUnit: {
+        HomeComponent: lazy(() => import('../pages/settings/business-unit/home')),
     },
 
-    department: {
-        home: lazy(() => import('../pages/settings/department/home')),
+    Department: {
+        HomeComponent: lazy(() => import('../pages/settings/department/home')),
     },
 
-    positionLevel: {
-        home: lazy(() => import('../pages/settings/position-level/home'))
+    PositionLevel: {
+        HomeComponent: lazy(() => import('../pages/settings/position-level/home'))
     },
 
-    position: {
-        home: lazy(() => import('../pages/settings/position/home')),
+    Position: {
+        HomeComponent: lazy(() => import('../pages/settings/position/home')),
     },
 
-    headDepartment: {
-        home: lazy(() => import('../pages/settings/head_department/home'))
+    HeadDepartment: {
+        HomeComponent: lazy(() => import('../pages/settings/head_department/home'))
     },
 
-    campus: {
-        home: lazy(() => import('../pages/settings/campus/home'))
+    Campus: {
+        HomeComponent: lazy(() => import('../pages/settings/campus/home'))
     },
 
-    location: {
-        home: lazy(() => import('../pages/settings/location/home'))
+    Location: {
+        HomeComponent: lazy(() => import('../pages/settings/location/home'))
     }
 
 };
 
 const User = {
-    home: lazy(() => import('../pages/user/home'))
+    HomeComponent: lazy(() => import('../pages/user/home'))
 };
 
 
@@ -88,7 +87,7 @@ export const PRIVATE_ROUTES = [
     {
         name: "Candidates",
         path: "/candidate",
-        component: <Candidate.home />,
+        component: <Candidate.HomeComponent />,
         icon: <PeopleAltIcon />,
         isDivider: false,
     },
@@ -96,7 +95,7 @@ export const PRIVATE_ROUTES = [
     {
         name: "Interviews",
         path: "/interview",
-        component: <Interview.home />,
+        component: <Interview.HomeComponent />,
         icon: <RecordVoiceOverIcon />,
         isDivider: false,
     },
@@ -104,21 +103,21 @@ export const PRIVATE_ROUTES = [
     {
         name: "Reference Checks",
         path: "/reference-check",
-        component: <ReferenceCheck.home />,
+        component: <ReferenceCheck.HomeComponent />,
         icon: <PersonSearchIcon />,
     },
     /**Job Offer */
     {
         name: "Job Offers",
         path: "/job-offer",
-        component: <JobOffer.home />,
+        component: <JobOffer.HomeComponent />,
         icon: <HowToReg />
     },
     /**Hire*/
     {
         name: "Hire Applicants",
         path: "/hire",
-        component: <Hire.home />,
+        component: <Hire.HomeComponent />,
         icon: <AssignmentIndIcon />
     },
     /**Settings */
@@ -134,7 +133,7 @@ export const PRIVATE_ROUTES = [
             {
                 name: "Main Businesses",
                 path: "main-business",
-                component: <Settings.mainBusiness.home />,
+                component: <Settings.MainBusiness.HomeComponent />,
                 icon: <BusinessIcon />
             },
 
@@ -142,7 +141,7 @@ export const PRIVATE_ROUTES = [
             {
                 name: "Primary Businesses",
                 path: "business",
-                component: <Settings.businessUnit.home />,
+                component: <Settings.BusinessUnit.HomeComponent />,
                 icon: <ApartmentIcon />
             },
 
@@ -150,7 +149,7 @@ export const PRIVATE_ROUTES = [
             {
                 name: "Departments",
                 path: "department",
-                component: <Settings.department.home />,
+                component: <Settings.Department.HomeComponent />,
                 icon: <CorporateFareTwoTone />
             },
 
@@ -159,14 +158,14 @@ export const PRIVATE_ROUTES = [
             {
                 name: 'Campuses',
                 path: 'campus',
-                component: <Settings.campus.home />,
+                component: <Settings.Campus.HomeComponent />,
                 icon: <MeetingRoomIcon />
             },
 
             {
                 name: 'Locations',
                 path: 'location',
-                component: <Settings.location.home />,
+                component: <Settings.Location.HomeComponent />,
                 icon: <LocationOn />
             },
 
@@ -174,7 +173,7 @@ export const PRIVATE_ROUTES = [
             {
                 name: "Position Levels",
                 path: "position-level",
-                component: <Settings.positionLevel.home />,
+                component: <Settings.PositionLevel.HomeComponent />,
                 icon: <ElevatorIcon />,
             },
 
@@ -182,7 +181,7 @@ export const PRIVATE_ROUTES = [
             {
                 name: "Positions",
                 path: "position",
-                component: <Settings.position.home />,
+                component: <Settings.Position.HomeComponent />,
                 icon: <AirlineSeatReclineNormalIcon />,
             },
 
@@ -190,7 +189,7 @@ export const PRIVATE_ROUTES = [
             {
                 name: "Head Departments",
                 path: "head-department",
-                component: <Settings.headDepartment.home />,
+                component: <Settings.HeadDepartment.HomeComponent />,
                 icon: <PeopleAltIcon />,
             }
         ]
@@ -199,7 +198,7 @@ export const PRIVATE_ROUTES = [
     {
         name: "Users",
         path: "/user",
-        component: <User.home />,
+        component: <User.HomeComponent />,
         icon: <AccountCircleIcon />,
         isDivider: false,
     }

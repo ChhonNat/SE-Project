@@ -35,7 +35,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 });
 
 const UpsertPositionLavelForm = (props) => {
-  const { openModal, onCloseModal, handleEventSuccessed, title, editData } =
+  const { openModal, onCloseModal, handleEventSucceed, title, editData } =
     props;
   const {
     register,
@@ -106,7 +106,7 @@ const UpsertPositionLavelForm = (props) => {
         timer: ALERT_TIMER,
       });
 
-      if (!error) handleEventSuccessed();
+      if (!error) handleEventSucceed();
 
       handleCloseModal();
     }

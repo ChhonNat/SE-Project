@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import OfferJobFormModal from "./offer-job-form.modal";
+import OfferJobFormModal from "./offer-job-setting-form.modal";
 
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import { useSelector } from "react-redux";
-import { AttachMoney, DoneAll } from "@mui/icons-material";
+import { AttachMoney, Clear, DoneAll, NextPlan } from "@mui/icons-material";
 import { ROLE } from "../../constants/roles";
 import { STATUS } from "../../constants/status";
 import ViewFileModal from "../../components/Modal/view-file.modal";
@@ -91,6 +91,26 @@ const HomeJobOffer = () => {
                 ],
               },
               {
+                name: "Submit to HOD",
+                eventName: "submitToHOD",
+                icon: <NextPlan />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles?.includes(ROLE.ROLE_TA_TEAM)
+                  ? false
+                  : true,
+                enable: [
+                  {
+                    field: "processStatus",
+                    values: [STATUS.OFFER_PROCESS.PENDING],
+                  },
+                  {
+                    field: "status",
+                    values: [STATUS.OFFER_STATUS.OFFERED],
+                  },
+                ],
+              },
+              {
                 name: "Verify",
                 eventName: "verify",
                 icon: <DoneAll color="info" />,
@@ -102,25 +122,85 @@ const HomeJobOffer = () => {
                 enable: [
                   {
                     field: "processStatus",
-                    values: [STATUS.OFFER_PROCESS.HOD_APPROVED],
+                    values: [
+                      STATUS.OFFER_PROCESS.HOD_APPROVED,
+                      STATUS.OFFER_PROCESS.DHR_REJECTED
+                    ],
                   },
                 ],
               },
               {
                 name: "Approve",
-                eventName: "approve",
+                eventName: user?.roles?.includes(ROLE?.ROLE_HIRING_MANAGER)
+                  ? "approveByHOD"
+                  : "approveByOFCCEO",
                 icon: <DoneAll color="info" />,
                 hidden: !user?.roles
                   ? true
-                  : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN)
+                  : [ROLE.ROLE_HIRING_MANAGER, ROLE.ROLE_OFCCEO_ADMIN].some(
+                      (role) => user?.roles?.includes(role)
+                    )
                   ? false
                   : true,
                 enable: [
                   {
                     field: "processStatus",
-                    values: [STATUS.OFFER_PROCESS.DHR_VERIFIED],
+                    values: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER)
+                      ? [
+                          STATUS.OFFER_PROCESS.SUBMITTED_HOD,
+                          STATUS.OFFER_PROCESS.HOD_REJECTED,
+                        ]
+                      : [STATUS.OFFER_PROCESS.DHR_VERIFIED, STATUS.OFFER_PROCESS.OFCCEO_REJECTED],
                   },
                 ],
+              },
+              {
+                name: "Reject",
+                eventName: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER)
+                  ? "rejectByHOD"
+                  : "rejectByHR",
+                icon: <Clear />,
+                hidden: !user?.roles
+                  ? true
+                  : [ROLE.ROLE_HIRING_MANAGER, ROLE.ROLE_HR_MANAGER].some(
+                      (role) => user?.roles?.includes(role)
+                    )
+                  ? false
+                  : true,
+                enable: user?.roles?.includes(ROLE.ROLE_HIRING_MANAGER)
+                  ? [
+                      {
+                        field: "processStatus",
+                        values: [
+                          STATUS.OFFER_PROCESS.SUBMITTED_HOD,
+                          STATUS.OFFER_PROCESS.HOD_APPROVED,
+                        ],
+                      },
+                    ]
+                  : [
+                      {
+                        field: "processStatus",
+                        values: [
+                          STATUS.OFFER_PROCESS.HOD_APPROVED,
+                          STATUS.OFFER_PROCESS.DHR_VERIFIED,
+                        ],
+                      },
+                    ],
+              },
+              {
+                  name: "Reject",
+                  eventName: "rejectByOFCCEO",
+                  icon: <Clear />,
+                  hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
+                  enable: [
+                    {
+                      field:  "processStatus",
+                      values: [
+                        STATUS.OFFER_PROCESS.DHR_VERIFIED,
+                        STATUS.OFFER_PROCESS.OFFCEO_APPROVED
+                      ]
+                    }
+                  ]
               },
               {
                 name: "Hire",
@@ -177,7 +257,7 @@ const HomeJobOffer = () => {
           open={openOfferModal}
           jobOffer={editJobOffer}
           onCloseModal={() => setOpenOfferModal(false)}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
 

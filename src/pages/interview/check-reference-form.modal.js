@@ -13,7 +13,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const ReferenceCheckModal = (props) => {
 
-    const { openReferenceCheckModal, onCloseReferenceCheckModal,handleEventSuccessed, interview } = props;
+    const { openReferenceCheckModal, onCloseReferenceCheckModal,handleEventSucceed, interview } = props;
     const [remark, setRemark] = useState('');
 
     const handleSubmit = async () => {
@@ -26,7 +26,7 @@ const ReferenceCheckModal = (props) => {
             if (status === HTTP_STATUS.success) {
 
                 if (data?.status === DATA_STATUS.success)
-                    handleEventSuccessed();
+                    handleEventSucceed();
 
                 /**
                  * Alert after request responses

@@ -21,7 +21,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const UpsertFormModal = (props) => {
 
-    const { openModal, onCloseModal, handleEventSuccessed, title, model, editData, keyPosts, postUrl, putUrl, dataType } = props;
+    const { openModal, onCloseModal, handleEventSucceed, title, model, editData, keyPosts, postUrl, putUrl, dataType } = props;
     const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({ resolver: zodResolver(model) });
     const { data, loading, error, message, sendRequest } = _useHttp();
     const watchData = watch();
@@ -71,7 +71,7 @@ const UpsertFormModal = (props) => {
 
 
             if (!error)
-                handleEventSuccessed();
+                handleEventSucceed();
 
             handleCloseModal();
 

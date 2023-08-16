@@ -25,7 +25,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const UpsertCampusFormModal = (props) => {
 
-    const { openModal, onCloseModal, handleEventSuccessed, title, editData } = props;
+    const { openModal, onCloseModal, handleEventSucceed, title, editData } = props;
     const { register, handleSubmit, reset, setValue, watch, formState, clearErrors } = useForm({
         resolver: zodResolver(editData?.id ? CampusModel.Update : CampusModel.Create)
     });
@@ -76,7 +76,7 @@ const UpsertCampusFormModal = (props) => {
 
 
             if (!error)
-                handleEventSuccessed();
+                handleEventSucceed();
 
             handleCloseModal();
 

@@ -11,11 +11,19 @@ const OfferModel = object({
   remark: string().optional().nullable(),
 });
 
+const SubmitToHOD = object({
+  remark: string().optional().nullable()
+});
+
 const VerifyModel = object({
   remark: string().optional().nullable(),
 });
 
 const ApproveModel = object({
+  remark: string().optional().nullable(),
+});
+
+const RejectModel = object({
   remark: string().optional().nullable(),
 });
 
@@ -33,7 +41,9 @@ const HireModel = object({
 
 export const JobOfferModel = {
   OfferModel,
+  SubmitToHOD,
   VerifyModel,
   ApproveModel,
+  RejectModel,
   HireModel,
 };
