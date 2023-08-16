@@ -41,7 +41,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 });
 
 const UpsertUserForm = (props) => {
-  const { open, onCloseModal, handleEventSuccessed, user } = props;
+  const { open, onCloseModal, handleEventSucceed, user } = props;
 
   const {
     register,
@@ -181,7 +181,7 @@ const UpsertUserForm = (props) => {
       const { message } = data;
 
       if (status === HTTP_STATUS.success) {
-        if (data?.status === DATA_STATUS.success) handleEventSuccessed();
+        if (data?.status === DATA_STATUS.success) handleEventSucceed();
 
         /**
          * Alert after request responses

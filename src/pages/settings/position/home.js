@@ -56,7 +56,7 @@ const HomePosition = () => {
             setEditPosition({});
             setOpenPositionModal(false);
           }}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
     </>

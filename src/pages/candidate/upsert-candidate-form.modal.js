@@ -39,7 +39,7 @@ const CandidateFormModal = (props) => {
     openCandidateModal,
     onCloseCandidateModal,
     candidate,
-    handleEventSuccessed,
+    handleEventSucceed,
   } = props;
   const {
     register,
@@ -229,7 +229,7 @@ const CandidateFormModal = (props) => {
       const { message } = data;
 
       if (status === HTTP_STATUS.success) {
-        if (data?.status === DATA_STATUS.success) handleEventSuccessed();
+        if (data?.status === DATA_STATUS.success) handleEventSucceed();
 
         /**
          * Alert after request responses

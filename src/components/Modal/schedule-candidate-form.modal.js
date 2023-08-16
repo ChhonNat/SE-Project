@@ -78,7 +78,7 @@ const CandidateScheduleFormModal = (props) => {
     onCloseModal,
     eventType,
     editData,
-    handleEventSuccessed,
+    handleEventSucceed,
     apiService,
   } = props;
 
@@ -212,7 +212,7 @@ const CandidateScheduleFormModal = (props) => {
       const { message } = data;
 
       if (status === HTTP_STATUS.success) {
-        if (data?.status === DATA_STATUS.success) handleEventSuccessed();
+        if (data?.status === DATA_STATUS.success) handleEventSucceed();
 
         Swal.fire({
           title: data?.status === DATA_STATUS.success ? "Success" : "Warning",

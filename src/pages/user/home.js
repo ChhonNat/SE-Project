@@ -45,7 +45,7 @@ const HomeUser = () => {
                         setOpenModal(false)
                     }
                     }
-                    handleEventSuccessed={() => setIsReload(!isReload)}
+                    handleEventSucceed={() => setIsReload(!isReload)}
                     user={editUser}
                 />
             }

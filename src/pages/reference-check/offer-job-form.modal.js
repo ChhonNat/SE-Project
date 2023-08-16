@@ -20,7 +20,7 @@ const OfferJobFormModalFormModal = (props) => {
         openOfferJobModal,
         onCloseOfferJobModal,
         reference,
-        handleEventSuccessed
+        handleEventSucceed
     } = props;
 
     const [remark, setRemark] = useState('');
@@ -42,7 +42,7 @@ const OfferJobFormModalFormModal = (props) => {
             if (status === HTTP_STATUS.success) {
 
                 if (data?.status === DATA_STATUS.success)
-                    handleEventSuccessed();
+                    handleEventSucceed();
 
                 /**
                  * Alert after request responses

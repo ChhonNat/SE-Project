@@ -31,7 +31,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 const CandidateProcessForm = (props) => {
   const user = useSelector((state) => state?.userAuthendicated);
 
-  const { open, onCloseModal, eventType, candidate, handleEventSuccessed } =
+  const { open, onCloseModal, eventType, candidate, handleEventSucceed } =
     props;
   const { data, loading, message, error, sendRequest } = _useHttp();
   const [shortlistResult, setShortlistResult] = useState("");
@@ -197,7 +197,7 @@ const CandidateProcessForm = (props) => {
         remark: remark,
       };
       await sendRequest(
-        API_URL.candidate.sumitToOFFCEO + candidate?.id + "/submit",
+        API_URL.candidate.submitToOFFCEO + candidate?.id + "/submit",
         HTTP_METHODS.put,
         postData
       );
@@ -207,7 +207,7 @@ const CandidateProcessForm = (props) => {
   useEffect(() => {
     if (!loading) {
       onCloseModal();
-      handleEventSuccessed();
+      handleEventSucceed();
       setErrors({});
       Swal.fire({
         title: error ? "Warning" : "Success",

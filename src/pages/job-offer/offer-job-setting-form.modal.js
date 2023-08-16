@@ -36,8 +36,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 });
 
 const OfferJobFormModal = (props) => {
-  const { modalType, open, onCloseModal, jobOffer, handleEventSuccessed } =
-    props;
+  const { modalType, open, onCloseModal, jobOffer, handleEventSucceed } = props;
 
   const mapModalType = {
     offer: {
@@ -48,6 +47,47 @@ const OfferJobFormModal = (props) => {
       hideUploadFile: false,
       isOffer: true,
     },
+    submitToHOD: {
+      modalTitle: "Submit Head Department",
+      saveActionLabel: "Submit",
+      formModel: JobOfferModel.SubmitToHOD,
+      hideInputSalary: true,
+      hideUploadFile: true,
+      isSubmitToHOD: true,
+      proStatus: "Submitted_HOD",
+    },
+    approveByHOD: {
+      modalTitle: "Approve Job Offer",
+      saveActionLabel: "Approve",
+      formModel: JobOfferModel.ApproveModel,
+      hideInputSalary: true,
+      hideUploadFile: true,
+      proStatus: "HOD_Approved",
+    },
+    rejectByHOD: {
+      modalTitle: "Reject Job Offer",
+      saveActionLabel: "Reject",
+      formModel: JobOfferModel.RejectModel,
+      hideInputSalary: true,
+      hideUploadFile: true,
+      proStatus: "HOD_Rejected",
+    },
+    rejectByHR: {
+      modalTitle: "Reject Job Offer",
+      saveActionLabel: "Reject",
+      formModel: JobOfferModel.RejectModel,
+      hideInputSalary: true,
+      hideUploadFile: true,
+      proStatus: "DHR_Rejected",
+    },
+    rejectByOFCCEO: {
+      modalTitle: "Reject Job Offer",
+      saveActionLabel: "Reject",
+      formModel: JobOfferModel.RejectModel,
+      hideInputSalary: true,
+      hideUploadFile: true,
+      proStatus: "OFCCEO_Rejected",
+    },
     verify: {
       modalTitle: "Verify Job Offer",
       saveActionLabel: "Verify",
@@ -57,7 +97,7 @@ const OfferJobFormModal = (props) => {
       isOffer: false,
       proStatus: "DHR_Verified",
     },
-    approve: {
+    approveByOFCCEO: {
       modalTitle: "Approve Job Offer",
       saveActionLabel: "Approve",
       formModel: JobOfferModel.ApproveModel,
@@ -107,9 +147,24 @@ const OfferJobFormModal = (props) => {
       parseInt(jobOffer?.offerSalary) > 0
     ) {
       setValue("offerSalary", String(jobOffer?.offerSalary));
-      setValue("campusId", jobOffer?.offerCampus?.id ? jobOffer?.offerCampus?.id : jobOffer?.campus?.id);
-      setValue("positionId", jobOffer?.offerPostion?.id ? jobOffer?.offerPostion?.id : jobOffer?.position?.id );
-      setValue("positionLevelId", jobOffer?.offerPositionLevel?.id ? jobOffer?.offerPositionLevel?.id : jobOffer?.positionLevel?.id );
+      setValue(
+        "campusId",
+        jobOffer?.offerCampus?.id
+          ? jobOffer?.offerCampus?.id
+          : jobOffer?.campus?.id
+      );
+      setValue(
+        "positionId",
+        jobOffer?.offerPostion?.id
+          ? jobOffer?.offerPostion?.id
+          : jobOffer?.position?.id
+      );
+      setValue(
+        "positionLevelId",
+        jobOffer?.offerPositionLevel?.id
+          ? jobOffer?.offerPositionLevel?.id
+          : jobOffer?.positionLevel?.id
+      );
       setValue("remark", jobOffer?.remark);
     }
   }, [open]);
@@ -181,7 +236,7 @@ const OfferJobFormModal = (props) => {
     const { message } = data;
 
     if (status === HTTP_STATUS.success) {
-      if (data?.status === DATA_STATUS.success) handleEventSuccessed();
+      if (data?.status === DATA_STATUS.success) handleEventSucceed();
 
       /**
        * Alert after request responses

@@ -57,7 +57,7 @@ const HomeHeadDepartment = () => {
             setEditHeadDepartment({});
             setOpenHeadDepartmentModal(false);
           }}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
           editData={editHeadDepartment}
         />
       )}

@@ -28,7 +28,7 @@ const ReferenceResultFormModal = (props) => {
         open,
         onCloseModal,
         reference,
-        handleEventSuccessed,
+        handleEventSucceed,
         selectLabel,
     } = props;
 
@@ -91,7 +91,7 @@ const ReferenceResultFormModal = (props) => {
             if (status === HTTP_STATUS.success) {
 
                 if (data?.status === DATA_STATUS.success)
-                    handleEventSuccessed();
+                    handleEventSucceed();
 
                 /**
                  * Alert after request responses

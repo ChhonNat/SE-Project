@@ -38,7 +38,7 @@ const UpsertPositionForm = (props) => {
   const {
     openModal,
     onCloseModal,
-    handleEventSuccessed,
+    handleEventSucceed,
     title,
     editData,
   } = props;
@@ -111,7 +111,7 @@ const UpsertPositionForm = (props) => {
         timer: ALERT_TIMER,
       });
 
-      if (!error) handleEventSuccessed();
+      if (!error) handleEventSucceed();
 
       handleCloseModal();
     }

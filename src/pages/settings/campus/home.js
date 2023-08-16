@@ -52,7 +52,7 @@ const HomeCampus = () => {
             setEditCampus({});
             setOpenUpsertCampusModal(false);
           }}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
     </>

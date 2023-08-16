@@ -167,7 +167,7 @@ const HomeAssessment = () => {
           reference={editReference}
           open={openReferenceResultModal}
           onCloseModal={() => setOpenReferenceResultModal(false)}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
 
@@ -205,7 +205,7 @@ const HomeAssessment = () => {
           reference={editReference}
           openOfferJobModal={openOfferJobModal}
           onCloseOfferJobModal={() => setOpenOfferJobModal(false)}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
     </>

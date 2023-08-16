@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
+import { KEY_POST } from "../../../constants/key_post";
+
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import UpsertFormModal from "../global-upsert-form/upsert.modal";
 import MainBusinessModel from "../../../models/main-business.model";
-import { KEY_POST } from "../../../constants/key_post";
 
 const HomeMainBusiness = () => {
   const [isReload, setIsReload] = useState(false);
@@ -27,7 +28,7 @@ const HomeMainBusiness = () => {
                 customActions: 'Custom button event in table'
             */}
       <AsyncDatatable
-        asyncURL={API_URL.mainBuiness.get}
+        asyncURL={API_URL.mainBusiness.get}
         headers={TABLE_CONFIG.tblMainBusiness}
         bannerText="All Main Businesses"
         searchPlaceHolder="Search"
@@ -60,10 +61,10 @@ const HomeMainBusiness = () => {
           }}
           model={MainBusinessModel}
           keyPosts={KEY_POST.mainBusiness}
-          postUrl={API_URL.mainBuiness.create}
-          putUrl={API_URL.mainBuiness.edit}
+          postUrl={API_URL.mainBusiness.create}
+          putUrl={API_URL.mainBusiness.edit}
           dataType={"/business_division"}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
     </>

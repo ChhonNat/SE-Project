@@ -227,7 +227,7 @@ const HomeInterview = () => {
           editData={editInterview}
           open={openScheduleModal}
           onCloseModal={() => setOpenScheduleModal(false)}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
       {/* Inter view result modal */}
@@ -237,7 +237,7 @@ const HomeInterview = () => {
           interview={editInterview}
           open={openInterviewEvaluateModal}
           onCloseModal={() => setOpenInterviewEvaluateModal(false)}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
 
@@ -277,7 +277,7 @@ const HomeInterview = () => {
           interview={editInterview}
           openReferenceCheckModal={openReferenceCheckModal}
           onCloseReferenceCheckModal={() => setOpenReferenceCheckModal(false)}
-          handleEventSuccessed={() => setIsReload(!isReload)}
+          handleEventSucceed={() => setIsReload(!isReload)}
         />
       )}
     </>
