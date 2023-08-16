@@ -292,7 +292,7 @@ const InterviewFormDetailModal = (props) => {
                             </DialogContent>
                             <DialogActions>
                                 <FooterComponent
-                                    saveButtunType='submit'
+                                    saveButtonType='submit'
                                     handleCancel={onCloseCandidateModal}
                                     saveButtonLabel={interviewDetail?.id ? 'Update' : 'Save'}
                                     cancelButtonLabel="Close"

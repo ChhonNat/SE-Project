@@ -221,7 +221,7 @@ const InterViewEvaluateFormModal = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <FooterComponent
-                        saveButtunType='submit'
+                        saveButtonType='submit'
                         saveButtonLabel='Evaluate'
                         handleCancel={onCloseModal}
                         actions={{ cancel: true, submit: true }}

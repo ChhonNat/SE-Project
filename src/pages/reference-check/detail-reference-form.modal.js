@@ -250,7 +250,7 @@ const ReferenceFormDetailModal = (props) => {
                             </DialogContent>
                             <DialogActions>
                                 <FooterComponent
-                                    saveButtunType='submit'
+                                    saveButtonType='submit'
                                     handleCancel={onCloseReferenceDetailModal}
                                     saveButtonLabel={referenceDetail?.id ? 'Update' : 'Save'}
                                     cancelButtonLabel="Close"

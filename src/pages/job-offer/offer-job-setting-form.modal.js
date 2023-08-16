@@ -468,7 +468,7 @@ const OfferJobFormModal = (props) => {
         </DialogContent>
         <DialogActions>
           <FooterComponent
-            saveButtunType="submit"
+            saveButtonType="submit"
             saveButtonLabel={mapModalType[modalType]?.saveActionLabel}
             handleCancel={onCloseModal}
             actions={{ cancel: true, submit: true }}

@@ -1085,7 +1085,7 @@ const CandidateFormDetailModal = (props) => {
             </DialogContent>
             <DialogActions>
               <FooterComponent
-                saveButtunType="submit"
+                saveButtonType="submit"
                 handleCancel={onCloseCandidateModal}
                 saveButtonLabel={candidateDetail?.id ? "Update" : "Save"}
                 cancelButtonLabel="Close"
