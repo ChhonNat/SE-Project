@@ -350,7 +350,7 @@ const NavbarComponent = () => {
             {/* User Profile */}
 
             <div style={{ display: "flex", alignItems: "center" }}>
-              <div>
+              <div style={{display: 'grid'}}>
                 <label>{userProfile?.username}</label>
                 <label style={{fontSize: 13, marginTop: 2}}>ID: {userProfile?.staffId}</label>
               </div>
