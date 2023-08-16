@@ -36,12 +36,18 @@ const HomeLocation = () => {
         ordinal="asc"
         setOrdinalBy="id"
         isReloadData={isReload ? true : false}
-        useTableActions={{ search: true, create: true, edit: true }}
+        useTableActions={{
+          search: true,
+          create: true,
+          edit: true,
+          refresh: true,
+        }}
         onHandleAddNewEvent={() => setOpenLocationModal(true)}
         handleEditEvent={(data) => {
           setEditLocation(data);
           setOpenLocationModal(true);
         }}
+        onHandleRefreshEvent={() => setIsReload(!isReload)}
       />
 
       {/* Modal create and update */}
