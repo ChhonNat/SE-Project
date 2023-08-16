@@ -48,7 +48,7 @@ const OfferJobFormModal = (props) => {
       isOffer: true,
     },
     submitToHOD: {
-      modalTitle: "Submit Head Department",
+      modalTitle: "Submit To Head Department",
       saveActionLabel: "Submit",
       formModel: JobOfferModel.SubmitToHOD,
       hideInputSalary: true,

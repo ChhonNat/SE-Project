@@ -112,6 +112,10 @@ const HomeInterview = () => {
                     field: "interviewProcess",
                     values: [STATUS.INTERVIEW_PROCESS.FIRST_INTERVIEW],
                   },
+                  {
+                    field: "status",
+                    values: [STATUS.INTERVIEW_STATUS.INVITED]
+                  }
                 ],
               },
               {
