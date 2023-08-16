@@ -110,7 +110,6 @@ const HomeCandidate = () => {
                     values: [
                       STATUS.SUBMIT_STATUS.WAITING,
                       STATUS.SUBMIT_STATUS.DHR_REJECTED,
-                      STATUS.SUBMIT_STATUS.OFCCEO_REJECTED,
                     ],
                   },
                 ],
@@ -149,6 +148,7 @@ const HomeCandidate = () => {
                     values: [
                       STATUS.SUBMIT_STATUS.SUBMITTED_DHR,
                       STATUS.SUBMIT_STATUS.DHR_VERIFIED,
+                      STATUS.SUBMIT_STATUS.OFCCEO_REJECTED
                     ],
                   },
                 ],
@@ -301,13 +301,12 @@ const HomeCandidate = () => {
           setVerifyTypeModal(eName);
 
           if (eName === "cloneCandidateInfo") {
-
-            const cloneInfo = {...data}
+            const cloneInfo = { ...data };
             delete cloneInfo.applicantCode;
             delete cloneInfo.cvFile;
 
             console.log(cloneInfo);
-      
+
             setEditCandidate(cloneInfo);
             setOpenUpsertCandidateModal(true);
           } else {

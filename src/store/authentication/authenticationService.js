@@ -12,7 +12,8 @@ const initialUser = {
   isError: false,
   errorMessage: '',
   isAuthenticated: false,
-  roles: []
+  roles: [],
+  staffId: ''
 };
 
 export const userAuthentication = ({ username, password }) => {
@@ -52,7 +53,7 @@ export const userAuthentication = ({ username, password }) => {
         });
 
       const responseData = response?.data?.data;
-      
+
       const responseUser = {
         username: responseData?.user?.username,
         token: responseData.accessToken,
@@ -60,7 +61,8 @@ export const userAuthentication = ({ username, password }) => {
         isError: false,
         errorMessage: '',
         isAuthenticated: true,
-        roles: responseData?.user?.grantedAuthorities
+        roles: responseData?.user?.grantedAuthorities,
+        staffId: responseData?.user?.staffId,
       };
 
       return responseUser;

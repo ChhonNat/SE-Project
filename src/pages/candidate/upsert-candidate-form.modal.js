@@ -627,11 +627,13 @@ const CandidateFormModal = (props) => {
         </DialogActions>
       </Dialog>
 
-      <ViewFileModal
-        id={candidate?.id}
-        openModal={openCVModal}
-        onCloseModal={() => setOpenCVModal(false)}
-      />
+      {openCVModal && (
+        <ViewFileModal
+          id={candidate?.id}
+          openModal={openCVModal}
+          onCloseModal={() => setOpenCVModal(false)}
+        />
+      )}
     </div>
   );
 };
