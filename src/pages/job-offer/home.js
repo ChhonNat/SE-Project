@@ -85,7 +85,7 @@ const HomeJobOffer = () => {
                     field: "processStatus",
                     values: [
                       STATUS.OFFER_PROCESS.PENDING,
-                      STATUS.OFFER_PROCESS.HOD_APPROVED,
+                      STATUS.OFFER_PROCESS.HOD_REJECTED,
                     ],
                   },
                 ],
@@ -102,7 +102,12 @@ const HomeJobOffer = () => {
                 enable: [
                   {
                     field: "processStatus",
-                    values: [STATUS.OFFER_PROCESS.PENDING],
+                    values: [
+                      STATUS.OFFER_PROCESS.PENDING,
+                      STATUS.OFFER_PROCESS.HOD_REJECTED,
+                      STATUS.OFFER_PROCESS.DHR_REJECTED,
+                      STATUS.OFFER_PROCESS.OFCCEO_REJECTED
+                    ],
                   },
                   {
                     field: "status",
@@ -124,7 +129,7 @@ const HomeJobOffer = () => {
                     field: "processStatus",
                     values: [
                       STATUS.OFFER_PROCESS.HOD_APPROVED,
-                      STATUS.OFFER_PROCESS.DHR_REJECTED
+                      STATUS.OFFER_PROCESS.DHR_REJECTED,
                     ],
                   },
                 ],
@@ -150,7 +155,10 @@ const HomeJobOffer = () => {
                           STATUS.OFFER_PROCESS.SUBMITTED_HOD,
                           STATUS.OFFER_PROCESS.HOD_REJECTED,
                         ]
-                      : [STATUS.OFFER_PROCESS.DHR_VERIFIED, STATUS.OFFER_PROCESS.OFCCEO_REJECTED],
+                      : [
+                          STATUS.OFFER_PROCESS.DHR_VERIFIED,
+                          STATUS.OFFER_PROCESS.OFCCEO_REJECTED,
+                        ],
                   },
                 ],
               },
@@ -188,19 +196,23 @@ const HomeJobOffer = () => {
                     ],
               },
               {
-                  name: "Reject",
-                  eventName: "rejectByOFCCEO",
-                  icon: <Clear />,
-                  hidden: !user?.roles ? true : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN) ? false : true,
-                  enable: [
-                    {
-                      field:  "processStatus",
-                      values: [
-                        STATUS.OFFER_PROCESS.DHR_VERIFIED,
-                        STATUS.OFFER_PROCESS.OFFCEO_APPROVED
-                      ]
-                    }
-                  ]
+                name: "Reject",
+                eventName: "rejectByOFCCEO",
+                icon: <Clear />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles?.includes(ROLE.ROLE_OFCCEO_ADMIN)
+                  ? false
+                  : true,
+                enable: [
+                  {
+                    field: "processStatus",
+                    values: [
+                      STATUS.OFFER_PROCESS.DHR_VERIFIED,
+                      STATUS.OFFER_PROCESS.OFFCEO_APPROVED,
+                    ],
+                  },
+                ],
               },
               {
                 name: "Hire",

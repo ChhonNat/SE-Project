@@ -17,7 +17,7 @@ const axiosAPI = axios.create({
     headers: reqHeaders
 });
 
-//Intercepter request
+//Interceptor request
 await axiosAPI.interceptors.request.use((config) => {
 
     const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user));
@@ -31,7 +31,7 @@ await axiosAPI.interceptors.request.use((config) => {
     Promise.reject(err);
 });
 
-//Intercepter response
+//Interceptor response
 await axiosAPI.interceptors.response.use((res) => {
 
     return res;

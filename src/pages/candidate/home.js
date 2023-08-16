@@ -94,13 +94,6 @@ const HomeCandidate = () => {
           delete: false,
           moreOption: {
             buttons: [
-              // {
-              //     name: 'Clone Info',
-              //     eventName: 'cloneInfo',
-              //     icon: <Difference />,
-              //     hidden: !user?.roles ? true : user?.roles.includes(ROLE.ROLE_TA_ADMIN) ? false : true,
-              //     enable: true
-              // },
               {
                 name: "Submit to DHR",
                 eventName: "submitToDHR",
@@ -116,6 +109,7 @@ const HomeCandidate = () => {
                     values: [
                       STATUS.SUBMIT_STATUS.WAITING,
                       STATUS.SUBMIT_STATUS.DHR_REJECTED,
+                      STATUS.SUBMIT_STATUS.OFCCEO_REJECTED
                     ],
                   },
                 ],
@@ -278,6 +272,13 @@ const HomeCandidate = () => {
                   },
                 ],
               },
+              // {
+              //     name: 'Clone Info',
+              //     eventName: 'cloneInfo',
+              //     icon: <Difference />,
+              //     hidden: !user?.roles ? true : user?.roles.includes(ROLE.ROLE_TA_ADMIN) ? false : true,
+              //     enable: true
+              // },
             ],
           },
         }}
