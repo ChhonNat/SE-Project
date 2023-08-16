@@ -34,12 +34,13 @@ const HomeCampus = () => {
         ordinal="asc"
         setOrdinalBy="id"
         isReloadData={isReload ? true : false}
-        useTableActions={{ search: true, create: true, edit: true }}
+        useTableActions={{ search: true, create: true, edit: true, refresh: true }}
         onHandleAddNewEvent={() => setOpenUpsertCampusModal(true)}
         handleEditEvent={(data) => {
           setEditCampus(data);
           setOpenUpsertCampusModal(true);
         }}
+        onHandleRefreshEvent={() => setIsReload(!isReload)}
       />
 
       {/* Modal create and update */}
