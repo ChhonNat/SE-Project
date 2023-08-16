@@ -17,6 +17,7 @@ import { userAuthentication } from "../../store/authentication/authenticationSer
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Colors } from "../../constants/color";
 
 /**
  * username: developer
@@ -41,7 +42,7 @@ export default function Login() {
         xs={8}
         sx={{
           height: "100vh",
-          backgroundColor: "#283C55",
+          backgroundColor: Colors.SystemColor,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
