@@ -19,6 +19,7 @@ import { ROLE } from "../../constants/roles";
 import { STATUS } from "../../constants/status";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
+import { Difference } from "@mui/icons-material";
 // import { ContentCopy, Difference } from "@mui/icons-material";
 
 const HomeCandidate = () => {
@@ -109,7 +110,7 @@ const HomeCandidate = () => {
                     values: [
                       STATUS.SUBMIT_STATUS.WAITING,
                       STATUS.SUBMIT_STATUS.DHR_REJECTED,
-                      STATUS.SUBMIT_STATUS.OFCCEO_REJECTED
+                      STATUS.SUBMIT_STATUS.OFCCEO_REJECTED,
                     ],
                   },
                 ],
@@ -272,13 +273,17 @@ const HomeCandidate = () => {
                   },
                 ],
               },
-              // {
-              //     name: 'Clone Info',
-              //     eventName: 'cloneInfo',
-              //     icon: <Difference />,
-              //     hidden: !user?.roles ? true : user?.roles.includes(ROLE.ROLE_TA_ADMIN) ? false : true,
-              //     enable: true
-              // },
+              {
+                name: "Clone Info",
+                eventName: "cloneCandidateInfo",
+                icon: <Difference />,
+                hidden: !user?.roles
+                  ? true
+                  : user?.roles.includes(ROLE.ROLE_TA_ADMIN)
+                  ? false
+                  : true,
+                enable: true,
+              },
             ],
           },
         }}
@@ -293,14 +298,26 @@ const HomeCandidate = () => {
         handleMoreEvent={(eName, data) => {
           if (!eName) return false;
 
-          setEditCandidate(data);
           setVerifyTypeModal(eName);
 
-          eName === "setScheduleTest" ||
-          eName === "setSuggestInterview" ||
-          eName === "setFinalScheduleInterview"
-            ? setOpenScheduleModal(true)
-            : setOpenProcessModal(true);
+          if (eName === "cloneCandidateInfo") {
+
+            const cloneInfo = {...data}
+            delete cloneInfo.applicantCode;
+            delete cloneInfo.cvFile;
+
+            console.log(cloneInfo);
+      
+            setEditCandidate(cloneInfo);
+            setOpenUpsertCandidateModal(true);
+          } else {
+            setEditCandidate(data);
+            eName === "setScheduleTest" ||
+            eName === "setSuggestInterview" ||
+            eName === "setFinalScheduleInterview"
+              ? setOpenScheduleModal(true)
+              : setOpenProcessModal(true);
+          }
         }}
       />
 
@@ -314,6 +331,7 @@ const HomeCandidate = () => {
             setOpenUpsertCandidateModal(false);
           }}
           handleEventSucceed={() => setIsReload(!isReload)}
+          modalType={verifyTypeModal}
         />
       )}
 

@@ -1,4 +1,4 @@
-const update_candidate = [
+const upsert_candidate = [
     "firstName",
     "lastName",
     "gender",
@@ -20,7 +20,7 @@ const update_candidate = [
 ];
 
 const view_candidate = [
-    ...update_candidate,
+    ...upsert_candidate,
     "headDepartmentName",
 ]
 
@@ -190,7 +190,7 @@ const user = [
 
 export const KEY_POST = {
     view_candidate,
-    update_candidate,
+    upsert_candidate,
     invite_candidate,
     feedback_candidate,
     make_assessment_candidate,
