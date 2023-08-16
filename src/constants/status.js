@@ -74,10 +74,14 @@ const OFFER_PROCESS = {
 };
 
 const OFFER_STATUS = {
-  PENDING: "pending",
+  PENDING: "Pending",
   OFFERED: "Offered",
   HIRED: "Hired",
   REJECTED: "Rejected",
+};
+
+const HIRE_STATUS = {
+  HIRE: "Hire"
 };
 
 export const STATUS = {
@@ -92,4 +96,5 @@ export const STATUS = {
   REFERENCE_STATUS,
   OFFER_PROCESS,
   OFFER_STATUS,
+  HIRE_STATUS
 };

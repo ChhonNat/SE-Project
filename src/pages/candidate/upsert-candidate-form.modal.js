@@ -112,8 +112,11 @@ const CandidateFormModal = (props) => {
 
       //Case edit candidate map candidate info to register form
       if (candidate?.id || modalType === isCloneUserInfo) {
+        ////
         for (let key in candidate) {
+          ////
           if (KEY_POST.view_candidate.includes(key)) {
+            ///
             if (key === "appliedDate") {
               const appliedDate = ConverterService.convertUnixDateToMUI(
                 candidate[key]

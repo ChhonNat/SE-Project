@@ -62,7 +62,7 @@ const tblCandidate = [
   },
   {
     id: "submitStatus",
-    label: "CV Submit Status",
+    label: "CV Process Status",
     type: "status",
     statusColor: {
       [STATUS.SUBMIT_STATUS.WAITING]: "Orange",
@@ -250,7 +250,7 @@ const tblJobOffer = [
     id: "status",
     label: "Status",
     type: "status",
-    statusColor: { pending: "orange" },
+    statusColor: { [STATUS.OFFER_STATUS.PENDING]: "orange" },
   },
   {
     id: "action",
@@ -311,7 +311,7 @@ const tblHire = [
     id: "status",
     label: "Status",
     type: "status",
-    statusColor: { Hired: "Green" },
+    statusColor: { [STATUS.HIRE_STATUS.HIRE]: "Green" },
   },
   {
     id: "action",
@@ -356,7 +356,10 @@ const tblPosition = [
     id: "status",
     label: "Status",
     type: "status",
-    statusColor: { Active: "Green", Inactive: "Red" },
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "Green",
+      [STATUS.RECORD.INACTIVE]: "Red",
+    },
   },
   {
     id: "action",
@@ -397,7 +400,10 @@ const tblPositionLevel = [
     id: "status",
     label: "Status",
     type: "status",
-    statusColor: { Active: "Green", Inactive: "Red" },
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "Green",
+      [STATUS.RECORD.INACTIVE]: "Red",
+    },
   },
   {
     id: "action",
@@ -476,7 +482,10 @@ const tblDepartment = [
     id: "status",
     label: "Status",
     type: "status",
-    statusColor: { Active: "Green", Inactive: "Red" },
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "Green",
+      [STATUS.RECORD.INACTIVE]: "Red",
+    },
   },
   {
     id: "action",
@@ -529,7 +538,10 @@ const tblHeadDepartment = [
     id: "status",
     label: "Status",
     type: "status",
-    statusColor: { Active: "Green", Inactive: "Red" },
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "Green",
+      [STATUS.RECORD.INACTIVE]: "Red",
+    },
   },
   {
     id: "action",
@@ -581,7 +593,10 @@ const tblCommittee = [
     id: "status",
     label: "Status",
     type: "status",
-    statusColor: { Active: "Green", Inactive: "Red" },
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "Green",
+      [STATUS.RECORD.INACTIVE]: "Red",
+    },
   },
   {
     id: "action",
@@ -639,7 +654,10 @@ const tblBusinessUnit = [
     id: "status",
     label: "Status",
     type: "status",
-    statusColor: { Active: "Green", Inactive: "Red" },
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "Green",
+      [STATUS.RECORD.INACTIVE]: "Red",
+    },
   },
   {
     id: "action",
@@ -669,7 +687,10 @@ const tblLocation = [
   {
     id: "status",
     type: "status",
-    statusColor: { Active: "Green", Inactive: "Red" },
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "Green",
+      [STATUS.RECORD.INACTIVE]: "Red",
+    },
     label: "Status",
   },
   {
@@ -713,7 +734,10 @@ const tblCampus = [
   {
     id: "status",
     type: "status",
-    statusColor: { Active: "Green", Inactive: "Red" },
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "Green",
+      [STATUS.RECORD.INACTIVE]: "Red",
+    },
     label: "Status",
   },
   {
@@ -750,7 +774,10 @@ const tblUser = [
     id: "status",
     label: "Status",
     type: "status",
-    statusColor: { Active: "green", Inactive: "red" },
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "green",
+      [STATUS.RECORD.INACTIVE]: "red",
+    },
   },
   {
     id: "createdAt",
