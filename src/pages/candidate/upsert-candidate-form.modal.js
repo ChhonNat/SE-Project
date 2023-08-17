@@ -189,6 +189,7 @@ const CandidateFormModal = (props) => {
 
   /**Check form error */
   const onError = (error, e) => {
+    console.log(error);
     /////////
     if (!watchCandidate?.file) {
       /////////////
@@ -574,8 +575,8 @@ const CandidateFormModal = (props) => {
                   size="small"
                   InputLabelProps={shrinkOpt}
                   {...register("headDepartmentName")}
-                  error={errors?.headDepartmentName ? true : false}
-                  helperText={errors?.headDepartmentName?.message}
+                  error={errors?.headDepartmentId ? true : false}
+                  helperText={errors?.headDepartmentId?.message ? 'Head department is required!' : ''}
                 />
               </Grid>
 
