@@ -184,7 +184,7 @@ const HomeInterview = () => {
                 icon: <HowToRegIcon />,
                 hidden: !user?.roles
                   ? true
-                  : [ROLE.ROLE_HIRING_MANAGER].some((role) =>
+                  : [ROLE.ROLE_TA_TEAM].some((role) =>
                       user?.roles?.includes(role)
                     )
                   ? false
