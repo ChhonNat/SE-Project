@@ -366,6 +366,7 @@ const AsyncDatatable = (props) => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          
         />
       </Paper>
     </Box>

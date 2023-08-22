@@ -90,13 +90,13 @@ const AsynTableToolbar = (props) => {
                   placeholder={searchPlaceHolder}
                   inputProps={{ 'aria-label': 'search google maps' }}
                   value={searchText}
-                  sx={{ ml: 1, flex: 1 }}
+                  sx={{ ml: 1, flex: 1,minWidth:'250px' ,borderBottom: '1px solid rgb(224, 224, 224)' }}
                   onChange={(event) => setSearchText(event.target.value)}
                   size='medium'
                 />
 
                 {searchVal &&
-                  <IconButton sx={{ p: '0px' }} onClick={() => clearVal()} aria-label="search" color='error'>
+                  <IconButton sx={{ p: '0px', marginLeft:'-1rem' }} onClick={() => clearVal()} aria-label="search" color='error'>
                     <CloseIcon sx={{ fontSize: '1.3rem' }} />
                   </IconButton>
                 }
