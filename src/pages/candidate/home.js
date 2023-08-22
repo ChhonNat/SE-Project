@@ -305,8 +305,6 @@ const HomeCandidate = () => {
             delete cloneInfo.applicantCode;
             delete cloneInfo.cvFile;
 
-            console.log(cloneInfo);
-
             setEditCandidate(cloneInfo);
             setOpenUpsertCandidateModal(true);
           } else {
