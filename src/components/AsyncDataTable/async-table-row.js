@@ -40,6 +40,7 @@ const TableRows = ({
   handleLinkEvent,
   headers,
   checkColumn,
+  page,
   pageSize,
   actions,
 }) => {
@@ -217,7 +218,7 @@ const TableRows = ({
                       }}
                     >
                       {/* Use table index */}
-                      {showIndex && index + 1}
+                      {showIndex && page * pageSize  + index + 1}
 
                       {/* Use table date */}
                       {typeDate ? (

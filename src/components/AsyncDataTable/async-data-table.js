@@ -221,6 +221,7 @@ const AsyncDatatable = (props) => {
                 handleClick={handleClick}
                 headers={headers}
                 checkColumn={checkColumn}
+                page={page}
                 pageSize={rowsPerPage}
                 actions={useTableActions}
                 handleViewEvent={(record) => handleViewEvent(record)}
@@ -350,10 +351,16 @@ const AsyncDatatable = (props) => {
             </TableBody>
           </Table>
         </TableContainer>
-
+        {loading ?
+          <Box sx={{ width: '100%' }}><LinearProgress /></Box>
+          :
+          <Divider/>
+        }
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 50, 100, 500]}
+          rowsPerPageOptions={[10, 25, 50, 100]}
           component="div"
+          showFirstButton="true"
+          showLastButton="true"
           count={rowCount}
           rowsPerPage={rowsPerPage}
           page={page}
