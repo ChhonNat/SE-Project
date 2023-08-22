@@ -351,11 +351,11 @@ const AsyncDatatable = (props) => {
             </TableBody>
           </Table>
         </TableContainer>
-        {loading ?
+        {/* {loading ?
           <Box sx={{ width: '100%' }}><LinearProgress /></Box>
           :
           <Divider/>
-        }
+        } */}
         <TablePagination
           rowsPerPageOptions={[10, 25, 50, 100]}
           component="div"
