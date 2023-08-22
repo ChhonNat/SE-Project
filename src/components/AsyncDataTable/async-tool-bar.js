@@ -111,13 +111,13 @@ const AsynTableToolbar = (props) => {
           {
             useActions?.refresh && (
               <Tooltip title="Refresh Data">
-                <Button
-                  sx={{ marginRight: 2, paddingX: 1 }}
-                  variant="outlined"
+                <IconButton
+                  color="primary"
+                  sx={{ marginRight: 2, paddingX: 1  }}
                   onClick={handleRefreshEvent}
                 >
-                  <AutorenewIcon />
-                </Button>
+                  <AutorenewIcon sx={{fontSize: '2rem'}} />
+                </IconButton>
               </Tooltip>
             )
           }
