@@ -14,10 +14,10 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import Add from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 const AsynTableToolbar = (props) => {
 
@@ -27,6 +27,7 @@ const AsynTableToolbar = (props) => {
     dense,
     handleChangeDense,
     handleAddNewEvent,
+    handleRefreshEvent,
     title = 'Datatable',
     searchPlaceHolder = 'Search',
     searchText,
@@ -69,13 +70,8 @@ const AsynTableToolbar = (props) => {
               </Typography>
             ) : (
               <Typography variant="h6" id="tableTitle" component="div"
-                sx={{ 
-                  // background: '#f2eeee', 
-                  // paddingLeft: 2, 
-                  // paddingRight: 2, 
-                  // borderRadius: 2, 
-                  // color: '#1976d2', 
-                  fontWeight: 'bold' 
+                sx={{
+                  fontWeight: 'bold'
                 }}
               >
                 {title}
@@ -94,13 +90,13 @@ const AsynTableToolbar = (props) => {
                   placeholder={searchPlaceHolder}
                   inputProps={{ 'aria-label': 'search google maps' }}
                   value={searchText}
-                  sx={{ ml: 1, flex: 1 }}
+                  sx={{ ml: 1, flex: 1,minWidth:'250px' ,borderBottom: '1px solid rgb(224, 224, 224)' }}
                   onChange={(event) => setSearchText(event.target.value)}
                   size='medium'
                 />
 
                 {searchVal &&
-                  <IconButton sx={{ p: '0px' }} onClick={() => clearVal()} aria-label="search" color='error'>
+                  <IconButton sx={{ p: '0px', marginLeft:'-1rem' }} onClick={() => clearVal()} aria-label="search" color='error'>
                     <CloseIcon sx={{ fontSize: '1.3rem' }} />
                   </IconButton>
                 }
@@ -112,6 +108,19 @@ const AsynTableToolbar = (props) => {
         </Grid>
 
         <Grid item xs={6} sx={{ textAlign: 'right' }}>
+          {
+            useActions?.refresh && (
+              <Tooltip title="Refresh Data">
+                <IconButton
+                  color="primary"
+                  sx={{ marginRight: 2, paddingX: 1  }}
+                  onClick={handleRefreshEvent}
+                >
+                  <AutorenewIcon sx={{fontSize: '2rem'}} />
+                </IconButton>
+              </Tooltip>
+            )
+          }
           {useActions?.create && (
             <Tooltip title="Add New">
               <Button

@@ -2,7 +2,6 @@
  * Service to convert from unix date to display in mui text field
  */
 const convertUnixDateToMUI = (date) => {
-
     const newDate = new Date(date);
     return newDate.getFullYear() + '-' + ('0' + (newDate.getMonth() + 1)).slice(-2) + '-' + ('0' + (newDate.getDate() + 0)).slice(-2);
 };
@@ -34,8 +33,14 @@ const convertApplicationCode = (lastCode) => {
 
 };
 
+//pad number
+const padToNDigits = (n, value) => {
+    return String(value).padStart(n, '0');
+}
+
 export const ConverterService = {
     convertUnixDateToMUI,
     convertDateToAPI,
-    convertApplicationCode
+    convertApplicationCode,
+    padToNDigits
 };

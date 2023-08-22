@@ -9,6 +9,8 @@ const initialUser = {
   isError: false,
   errorMessage: '',
   isAuthenticated: false,
+  roles: [],
+  staffId: ''
 };
 
 //Reducer function

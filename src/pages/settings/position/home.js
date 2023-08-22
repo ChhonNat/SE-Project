@@ -1,21 +1,17 @@
 import React, { useState } from "react";
+import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
+import UpsertPositionForm from "./form-upsert-position";
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
-import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import PositionModel from "../../../models/position.model";
-import { KEY_POST } from "../../../constants/key_post";
-import UpsertPositionForm from "./form-upsert-position";
 
 const HomePosition = () => {
+  const [isReload, setIsReload] = useState(false);
+  const [editPosition, setEditPosition] = useState({});
+  const [openPositionModal, setOpenPositionModal] = useState(false);
 
-    const [isReload, setIsReload] = useState(false);
-    const [editPosition, setEditPosition] = useState({});
-    const [openPositionModal, setOpenPositionModal] = useState(false);
-
-    return (
-        <>
-
-            {/* 
+  return (
+    <>
+      {/* 
                 properties::
                 asyncUrl: 'request data url' 
                 headers: 'Table header display in table'
@@ -28,40 +24,43 @@ const HomePosition = () => {
                 onHandleAddNewEvent: 'Listen button add new event'
                 customActions: 'Custom button event in table'
             */}
-            <AsyncDatatable
-                asyncURL={API_URL.position.get}
-                headers={TABLE_CONFIG.tblPosition}
-                bannerText="All Positions"
-                searchPlaceHolder="Search"
-                ordinal="asc"
-                setOrdinalBy="id"
-                isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true, edit: true }}
-                onHandleAddNewEvent={() => setOpenPositionModal(true)}
-                handleEditEvent={(data) => {
-                    setEditPosition(data);
-                    setOpenPositionModal(true);
-                }}
-            />
+      <AsyncDatatable
+        asyncURL={API_URL.position.get}
+        headers={TABLE_CONFIG.tblPosition}
+        bannerText="All Positions"
+        searchPlaceHolder="Search"
+        ordinal="asc"
+        setOrdinalBy="id"
+        isReloadData={isReload ? true : false}
+        useTableActions={{
+          search: true,
+          refresh: true,
+          create: true,
+          edit: true,
+        }}
+        onHandleAddNewEvent={() => setOpenPositionModal(true)}
+        handleEditEvent={(data) => {
+          setEditPosition(data);
+          setOpenPositionModal(true);
+        }}
+        onHandleRefreshEvent={() => setIsReload(!isReload)}
+      />
 
-            {/* Modal create and update */}
-            <UpsertPositionForm
-                title={editPosition?.id ? "Edit position" : "Add new position"}
-                openModal={openPositionModal}
-                editData={editPosition}
-                onCloseModal={() => {
-                    setEditPosition(PositionModel);
-                    setOpenPositionModal(false);
-                }}
-                model={PositionModel}
-                keyPosts={KEY_POST.position}
-                postUrl={API_URL.position.create}
-                putUrl={API_URL.position.edit}
-                dataType={'/position'}
-                handleEventSuccessed={() => setIsReload(!isReload)}
-            />
-        </>
-    )
-}
+      {/* Modal create and update */}
+      {openPositionModal && (
+        <UpsertPositionForm
+          title={editPosition?.id ? "Edit Position" : "Add New Position"}
+          openModal={openPositionModal}
+          editData={editPosition}
+          onCloseModal={() => {
+            setEditPosition({});
+            setOpenPositionModal(false);
+          }}
+          handleEventSucceed={() => setIsReload(!isReload)}
+        />
+      )}
+    </>
+  );
+};
 
 export default HomePosition;

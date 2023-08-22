@@ -1,50 +1,100 @@
 const RECORD = {
-    ACTIVE: 'Active',
-    INACTIVE: 'Inactive'
+  ACTIVE: "Active",
+  INACTIVE: "Inactive",
+};
+
+const SUBMIT_STATUS = {
+  WAITING: "Pending",
+  SUBMITTED_DHR: "Submitted_DHR",
+  DHR_VERIFIED: "DHR_Verified",
+  DHR_REJECTED: "DHR_Rejected",
+  OFCCEO_APPROVED: "OFCCEO_Approved",
+  OFCCEO_REJECTED: "OFCCEO_Rejected",
+  SUBMITTED_HOD: "Submitted_HOD",
+};
+
+const CANDIDATE = {
+  PENDING: "Pending",
+  SHORTLISTED: "Shortlisted",
+  IN_INTERVIEW: "In_Interview",
+  IN_EVALUATION: "In_Evaluation",
+  IN_REFERENCE_CHECK: "In_Reference_Check",
+  IN_JOB_OFFER: "In_Job_Offer",
+  HIRED: "Hired",
 };
 
 const SHORTLIST_RESULT = {
-    WAITING: 'Waiting',
-    KEEP_IN_POOL: "Keep_In_Pool",
-    FAILED: 'Failed',
-    PASSED: 'Passed',
+  WAITING: "Waiting",
+  KEEP_IN_POOL: "Keep_In_Pool",
+  FAILED: "Failed",
+  PASSED: "Passed",
+  BLACKLIST: "Blacklist",
 };
 
-const INTERVIEW_RESULT = {
-    WAITING: 'Waiting',
-    FAILED: 'Failed',
-    KEEP_IN_REVIEW: 'Keep_In_Review',
-    PASSED: 'Passed',
-    CANCELLED: 'Cancel'
+const INTERVIEW_PROCESS = {
+  FIRST_INTERVIEW: "First_Interview",
+  SECOND_INTERVIEW: "Second_Interview",
 };
 
 const INTERVIEW_STATUS = {
-    INVITED: 'Invited',
-    INTERVIEWED: 'Interviewed',
-    EVALUATED: 'Evaluated',
-    CANCELLED: 'Cancel'
+  INVITED: "Invited",
+  INTERVIEWED: "Interviewed",
+  EVALUATED: "Evaluated",
+  CANCELLED: "Cancel",
 };
 
-const ASSESSMENT_RESULT = {
-    SUSPENDED: 'Suspended',
-    CANCELLED: 'Cancel',
-    OFFERED: 'Offered'
+const INTERVIEW_RESULT = {
+  WAITING: "Waiting",
+  FAILED: "Failed",
+  KEEP_IN_REVIEW: "Keep_In_Review",
+  PASSED: "Passed",
+  CANCELLED: "Cancel",
 };
 
+const REFERENCE_RESULT = {
+  WAITING: "Waiting",
+  NEGATIVE: "Negative",
+  POSITIVE: "Positive",
+};
 
-const CANDIDATE = {
-    PENDING: 'Pending',
-    CV_REVIEWED: 'CV_Reviewed',
-    IN_INTERVIEW: 'IN_Interview',
-    IN_ASSESSMENT: 'In_Assessment',
-    HIRED: 'Hired'
+const REFERENCE_STATUS = {
+  GIVEN_RESULT: "Given_Result",
+  PENDING: "Pending",
+};
+
+const OFFER_PROCESS = {
+  PENDING: "Pending",
+  SUBMITTED_HOD: "Submitted_HOD",
+  HOD_APPROVED: "HOD_Approved",
+  HOD_REJECTED: "HOD_Rejected",
+  DHR_VERIFIED: "DHR_Verified",
+  DHR_REJECTED: "DHR_Rejected",
+  OFFCEO_APPROVED: "OFCCEO_Approved",
+  OFCCEO_REJECTED: "OFCCEO_Rejected"
+};
+
+const OFFER_STATUS = {
+  PENDING: "Pending",
+  OFFERED: "Offered",
+  HIRED: "Hired",
+  REJECTED: "Rejected",
+};
+
+const HIRE_STATUS = {
+  HIRE: "Hire"
 };
 
 export const STATUS = {
-    RECORD,
-    SHORTLIST_RESULT,
-    INTERVIEW_RESULT,
-    INTERVIEW_STATUS,
-    ASSESSMENT_RESULT,
-    CANDIDATE
+  RECORD,
+  CANDIDATE,
+  SUBMIT_STATUS,
+  SHORTLIST_RESULT,
+  INTERVIEW_RESULT,
+  INTERVIEW_STATUS,
+  INTERVIEW_PROCESS,
+  REFERENCE_RESULT,
+  REFERENCE_STATUS,
+  OFFER_PROCESS,
+  OFFER_STATUS,
+  HIRE_STATUS
 };

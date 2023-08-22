@@ -1,16 +1,27 @@
 import { object, any, string, number, array } from "zod"
 
-const PositionModel = object({
-    id: any().optional().nullable(),
-    name: string().min(1, { message: 'Position name is required!' }),
+const Create = object({
+    nameEn: string().min(1, { message: 'Position english name is required!' }),
+    nameKh: string().min(1, { message: 'Position khmer name is required!' }),
+    businessUnitId: number().min(1, {message: "Primary business is required!"}),
+    departmentId: number().min(1, { message: 'Department is required!' }),
+    positionLevelId: number().min(1, { message: "Position level is required!" }),
     description: string().optional().nullable(),
-    departmentId: number().min(1, { message: 'Department is required!'}),
-    businessDivisions: number().array().min(1, { message: 'Business devision is required!' }),
-    createdAt: any().optional().nullable(),
-    createdBy: any().optional().nullable(),
-    updatedAt: any().optional().nullable(),
-    updatedBy: any().optional().nullable(),
-    status: string().optional().nullable()
+    status: string().optional().nullable().default('Active')
 });
 
-export default PositionModel;
+const Update = object({
+    id: any().optional().nullable(),
+    nameEn: string().min(1, { message: 'Position english name is required!' }),
+    nameKh: string().min(1, { message: 'Position khmer name is required!' }),
+    businessUnitId: number().min(1, {message: "Primary business is required!"}),
+    departmentId: number().min(1, { message: 'Department is required!' }),
+    positionLevelId: number().min(1, { message: "Position level is required!" }),
+    description: string().optional().nullable(),
+    status: string().optional().nullable().default('Active')
+});
+
+export const PositionModel = {
+    Create,
+    Update
+};

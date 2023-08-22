@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { useReducer, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import apiLink from '../constants/app_cont';
-import { LOCAL_STORAGE_KEYS } from '../constants/local_storage';
 
 const httpReducer = (httpState, action) => {
   switch (action.type) {
@@ -48,106 +46,106 @@ const useHttp = () => {
       };
 
       // When token expire
-      const refreshAccessToken = async () => {
+      // const refreshAccessToken = async () => {
 
-        await axios
-          .post(`${apiLink}/api/v1/login/renew-token`, { refreshToken: user.refreshToken }, options)
-          .then(function (result) {
+      //   await axios
+      //     .post(`${apiLink}/api/v1/login/renew-token`, { refreshToken: user.refreshToken }, options)
+      //     .then(function (result) {
 
-            if (result.data.result === 'error') {
+      //       if (result.data.result === 'error') {
 
-              dispatchHttp({ type: 'ERROR', data: result.data.msg });
-            } else {
+      //         dispatchHttp({ type: 'ERROR', data: result.data.msg });
+      //       } else {
 
-              const response = result.data.data;
+      //         const response = result.data.data;
 
-              const token = {
-                userName: response.userName,
-                accessToken: response.accessToken,
-                refreshToken: response.refreshToken,
-                isError: false,
-                errorMessage: '',
-                isAuthenticated: true,
-                date: Date().toString(),
-              };
+      //         const token = {
+      //           userName: response.userName,
+      //           accessToken: response.accessToken,
+      //           refreshToken: response.refreshToken,
+      //           isError: false,
+      //           errorMessage: '',
+      //           isAuthenticated: true,
+      //           date: Date().toString(),
+      //         };
 
-              localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(token));
+      //         localStorage.setItem(LOCAL_STORAGE_KEYS.auth.user, JSON.stringify(token));
 
-              dispatch(isLogin());
+      //         dispatch(isLogin());
 
-              return token;
-            }
-          })
-          .catch((error) => {
-            dispatchHttp({
-              type: 'ERROR',
-              error: `${error.response.statusText} : Status Code = ${error.response.status}`,
-            });
+      //         return token;
+      //       }
+      //     })
+      //     .catch((error) => {
+      //       dispatchHttp({
+      //         type: 'ERROR',
+      //         error: `${error.response.statusText} : Status Code = ${error.response.status}`,
+      //       });
 
-            return false;
-          });
-      };
+      //       return false;
+      //     });
+      // };
 
-      // interceptor
-      const customAxios = axios.create();
+      // // interceptor
+      // const customAxios = axios.create();
 
-      customAxios.interceptors.request.use(async (config) => {
+      // customAxios.interceptors.request.use(async (config) => {
 
-        if (user.accessToken) {
+      //   if (user.accessToken) {
 
-          config.headers = {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.accessToken}`,
-            'Access-Control-Allow-Origin': '*',
-          };
+      //     config.headers = {
+      //       'Content-Type': 'application/json',
+      //       Authorization: `Bearer ${user.accessToken}`,
+      //       'Access-Control-Allow-Origin': '*',
+      //     };
 
-          return config;
-        }
+      //     return config;
+      //   }
 
-        if (localStorage.getItem("recruitmentUser")) {
+      //   if (localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user)) {
 
-          config.headers = {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser)).accessToken}`,
-            'Access-Control-Allow-Origin': '*',
-          };
+      //     config.headers = {
+      //       'Content-Type': 'application/json',
+      //       Authorization: `Bearer ${JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user)).accessToken}`,
+      //       'Access-Control-Allow-Origin': '*',
+      //     };
 
-          return config;
+      //     return config;
 
-        }
+      //   }
 
-        config.headers = {
-          'Content-Type': 'application/json',
-          // Authorization: `Bearer ${user.accessToken}`,
-          'Access-Control-Allow-Origin': '*',
-        };
+      //   config.headers = {
+      //     'Content-Type': 'application/json',
+      //     // Authorization: `Bearer ${user.accessToken}`,
+      //     'Access-Control-Allow-Origin': '*',
+      //   };
 
-        return config;
-      }, (error) => {
-        Promise.reject(error);
-      }
-      );
+      //   return config;
+      // }, (error) => {
+      //   Promise.reject(error);
+      // }
+      // );
 
-      customAxios.interceptors.response.use((response) => 
-      {
-        return response;
-      },
-        async (error) => {
-          const originalRequest = error.config;
-          if (error.response.status === 403 && !originalRequest._retry) {
+      // customAxios.interceptors.response.use((response) => 
+      // {
+      //   return response;
+      // },
+      //   async (error) => {
+      //     const originalRequest = error.config;
+      //     if (error.response.status === 403 && !originalRequest._retry) {
 
-            originalRequest._retry = true;
-            await refreshAccessToken();
+      //       originalRequest._retry = true;
+      //       await refreshAccessToken();
 
-            axios.defaults.headers.common[
-              'Authorization'
-            ] = `Bearer ${user.accessToken}`;
+      //       axios.defaults.headers.common[
+      //         'Authorization'
+      //       ] = `Bearer ${user.accessToken}`;
 
-            return customAxios(originalRequest);
-          }
-          return Promise.reject(error);
-        }
-      );
+      //       return customAxios(originalRequest);
+      //     }
+      //     return Promise.reject(error);
+      //   }
+      // );
 
       dispatchHttp({ type: 'SEND' });
 

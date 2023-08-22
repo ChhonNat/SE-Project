@@ -74,64 +74,180 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 #node v 18.x.x
 
 
-----
-departmentName
-businessDivisionName
-shortListDate
-shortListResult : passed
------
-recruiterName
-headDepartmentName
-interviewDate
++ Process each roles
+
+----------------------------------------------------
+                    1: Verify
+----------------------------------------------------
+
+1.1 TA admin:
+    Create CV:
+        shortlist result : waiting
+        submit status: waiting
+        status (candidate): pending
+
+    Action:
+        submit to hr:
+            submit status: Submitted_DHR
+            status (candidate): Reviewed
+1.2 DHR:
+    CV:
+        shorlist result: waiting
+        submit status: Submitted_DHR
+        status (candidate): Reviewed
+
+    Action:
+        verify && submit to offceo:
+            submit status: DHR_Verified
+            status (candidate): Reviewed
+
+1.3 OFFCEO:
+    CV:
+        shorlist result: waiting
+        submit status: Submited_OFFCEO
+        status (candidate): reviewed
+
+    Action:
+        approve && submit to TA:
+            submit status: Submitted_TA_Team || Sent_TA_Team
+            status (candidate): reviewed
+1.4 TA_Team:
+    CV:
+        shortlist result:  waiting
+        submit status: Submitted_TA_Team | Sent_TA_Team
+        status (candidate): reviewed
+
+    Action: 
+        shortlist
+            shortlist result: Passed | Failed | Blacklist | Keep_In_Pool
+        submit to HOD:
+            shortlist result: Passed
+            submit status: Submitted_HOD
+            status (candidate): Shortlisted
+            remark: 'yes .....'
+
+1.5 HOD: 
+    CV: 
+        shortlist result: Passed
+        submit status: Submitted_HOD
+        status (candidate): Shortlisted
+
+    Action:
+        shortlist result: Passed | Failed | Keep_In_Pool
+        set schedule: ''
+        set key person | committee: ['', '', '']
+
+        submit to TA:
+            submit status: Submitted_TA | Sent_TA_Team
+            shortlist result: Passed
+            schedule | interviewDate: '10-10-2023' 
+            committee : ['a','b']
+            status (candidate): Shortlisted
+
+1.6 HOD:
+    CV: 
+        shortlist result: Passed
+
+    Action: 
+        Invite/Set Schedule Interview: date
+        status: In Interview
+
+--------------------------------------------------
+                    2: Interview
+--------------------------------------------------
+
+1 HOD
+    CV:
+        Suggest Interview Schedule
+2 TA
+    CV:
+        Confirm Interview Schedule
+3 HOD
+    CV: Evaluate result and upload evaluate form
+
+--------------------------------------------------
+                    3: Reference Check
+--------------------------------------------------
+1
+    TA:
+        Do the background check and update the result
+
+--------------------------------------------------
+                    4: Job Offer 
+--------------------------------------------------
+1
+    TA:
+        Job Offer
+
+2
+    TA:
+        Submit to HOD to verify
+3
+    HOD:
+        Verify
+        Submit to DHR 
+4
+    DHR:
+        Verify
+        Submit to OFCCEO
+5
+    OFCCEO: 
+        approve
+        Submit to TA Admin
+6
+    TAAdmin:
+        Hire        
+        
+        
+
+
+<!-- TA:
+    CV: 
+        shortlist result: Passed
+        submit status: Submitted_TA | Sent_TA_Team 
+        status (candidate): Shortlisted
+        interviewDate: '10-10-2023'
+        committee: ['a','b']
+
+    Action: 
+        final interviewDate: '11-11-2023'
+        final committee: ['c','d']  
+
+        print form interview -->
+
+
+-------------------------------------
+UI
+            Candidate
+                TA: 
+                    Shortlists: OFFCEO_APPROVED
+                    Status: Pending
+                    Shortlist Result: Waiting
+                        Action: 
+                            Shortlist
+                    Shortlists : OFFCEO_APPROVED
+                    Status: Shortlisted
+                    Shortlist Result: Passed
+                        Action:
+                            Submit to HOD
+                    Shortlists: Submitted_HOD
+                    Status: Shortlisted
+                    Shortlist Result: Passed
+                Hiring Manager:
 
 
 
-CandidateStatus(Status):  
--    Pending,
--    Reviewed,
--    In_Interview,
--    In_Assessment,
--    Hired
+-------------
+Meeting on 04-08-2023
+------
+1. Add applied location and campus to Candidate creation/edition page 
+3. Reject by DHR and resubmit again by TA ADMIN
+5. No need committees setup but List/ Retrieve committees from users under each department related to the interview
+4. Update suggested interview schedule by HOD(first interview)
+4. confirm schedule by TA Team (first interview)
+4. Suggest(by HOD) and confirm schedule (by TA Team) (second interview)
+------
 
-ShortlistResult: 
--    Passed,
--    Failed
+6. On the first process offer the status is pending then process next offer by TATeam and select fields: ex: offer salary, position, campus
+2. Filter and select all applicants and submit to DHR or to OFC CEO
 
-interviewResult:
--    Passed, 
--    Failed
-
-Interview status:
--    Pending, 
--    Interviewed, 
--    Suspended, 
--    Cancel
-
-feedBackChannel: 
--    Telegram, 
--    Mail, 
--    Phone Call, 
--    SMS, 
--    Other
-
-2023-06-14
-
---------------
-Create
-- Candidate -> Pending
-
---------------
-Review
-- Candidate -> Pending -> Reviewed
-
---------------
-Shortlist
-- Candidate -> Pending -> Reviewed -> (Passed|Failed) -> In_Interview(Passed)
-
---------------
-Interview
-- Candidate -> Pending -> Reviewed -> In_Interview -> (Passed|Failed) -> In_Accessment(Passed)
-
---------------
---------------
-Candidate => ShortlistResult = 'Passed' && status = 'CV_Reviewed'

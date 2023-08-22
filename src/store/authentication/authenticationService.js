@@ -1,7 +1,8 @@
 import { authActions } from './authenticationSlice';
+import { LOCAL_STORAGE_KEYS } from '../../constants/local_storage';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import apiLink from '../../constants/app_cont';
-import { LOCAL_STORAGE_KEYS } from '../../constants/local_storage';
 
 const initialUser = {
   userName: '',
@@ -11,13 +12,14 @@ const initialUser = {
   isError: false,
   errorMessage: '',
   isAuthenticated: false,
+  roles: [],
+  staffId: ''
 };
 
 export const userAuthentication = ({ username, password }) => {
 
 
   return async (dispatch) => {
-
 
     const options = {
       headers: {
@@ -32,32 +34,52 @@ export const userAuthentication = ({ username, password }) => {
 
       const response = await axios.post(`${apiLink}/api/v1/login`, postData, options)
         .then(function (result) {
+
           return result;
         })
         .catch((error) => {
-          console.log(error.message);
+
+          const { data } = error?.response || {};
+          const { message } = data;
+
+          Swal.fire({
+            title: 'Login',
+            text: message,
+            icon: 'warning',
+            confirmButtonText: 'OK',
+          });
+
+          return error;
         });
 
-      const responseData = response.data.data;
+      const responseData = response?.data?.data;
 
       const responseUser = {
+        username: responseData?.user?.username,
         token: responseData.accessToken,
         refreshToken: responseData.refreshToken,
         isError: false,
         errorMessage: '',
         isAuthenticated: true,
+        roles: responseData?.user?.grantedAuthorities,
+        staffId: responseData?.user?.staffId,
       };
 
       return responseUser;
     };
 
     try {
+
       const authUser = await authenticates();
-      localStorage.setItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser, JSON.stringify(authUser));
+
+      localStorage.setItem(LOCAL_STORAGE_KEYS.auth.user, JSON.stringify(authUser));
       dispatch(authActions.setAuthenticate(authUser));
 
     } catch (error) {
 
+      dispatch(authActions.setAuthenticate({ ...initialUser }));
+
+      return;
       dispatch(
         authActions.setAuthenticate({
           ...initialUser,
@@ -74,10 +96,10 @@ export const isLogin = () => {
   return (dispatch) => {
     let storeUser = null;
 
-    if (!localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser)) {
+    if (!localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user)) {
       storeUser = initialUser;
     } else {
-      storeUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.recruitmentUser));
+      storeUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user));
     }
 
     dispatch(authActions.setAuthenticate(storeUser));

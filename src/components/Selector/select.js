@@ -26,14 +26,17 @@ const SelectComponent = (props) => {
         callToApi,
         dataStorage,
         customDatas,
+        bindField,
         err,
-        returnValueAs
+        returnValueAs,
+        placeHolder
     } = props;
 
     /**
      * use custom redux http
      */
-    const { data, loading, error, sendRequest } = _useHttp();
+    const { data, loading, error, message, sendRequest } = _useHttp();
+    const [datas, setDatas] = useState([]);
 
     useEffect(() => {
 
@@ -53,8 +56,19 @@ const SelectComponent = (props) => {
 
     }, [callToApi]);
 
+    useEffect(() => {
+
+        if (!loading) {
+            error ? setDatas([]) : setDatas(data ? data : [])
+        }
+    }, [loading, data, error, message])
+
     return (
-        <FormControl fullWidth size={size} error={value ? false : err}>
+        <FormControl
+            fullWidth
+            size={size ? size : 'medium'}
+            error={ err ? (value ? false : true) : false }
+        >
             <InputLabel id={id}>{!isRequire ? label : <LabelRequire label={label} />}</InputLabel>
             <Select
                 id={id}
@@ -66,7 +80,7 @@ const SelectComponent = (props) => {
             >
 
                 <MenuItem disabled value="select">
-                    Select
+                    {placeHolder ? placeHolder : 'Select'}
                 </MenuItem>
 
                 {/* data return as:
@@ -76,15 +90,23 @@ const SelectComponent = (props) => {
                 */}
                 {
                     callToApi ? (
-                        data?.length ? data.map((ele, index) => {
+                        datas?.length ? datas.map((ele, index) => {
                             return <MenuItem value={returnValueAs ? returnValueAs : ele?.id || ele} key={index} >
-                                {ele || ele?.name || ele?.fullName ? ele?.name || ele?.fullName || ele : ele?.last_name + " " + ele?.first_name}
+                                {
+                                    bindField ?
+                                        ele[bindField] :
+                                        ele || ele?.name || ele?.fullName ? ele?.name || ele?.fullName || ele : ele?.last_name + " " + ele?.first_name
+                                }
                             </MenuItem>;
                         }) : <div></div>
                     ) : (
                         customDatas?.length ? customDatas.map((ele, index) => {
                             return <MenuItem value={returnValueAs ? returnValueAs : ele?.id || ele} key={index} >
-                                {ele || ele?.name || ele?.fullName ? ele?.name || ele?.fullName || ele : ele?.last_name + " " + ele?.first_name}
+                                {
+                                    bindField ?
+                                        ele[bindField] :
+                                        ele || ele?.name || ele?.fullName ? ele?.name || ele?.fullName || ele : ele?.last_name + " " + ele?.first_name
+                                }
                             </MenuItem>;
                         }) : <div></div>
                     )

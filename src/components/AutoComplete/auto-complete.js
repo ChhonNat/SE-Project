@@ -1,126 +1,195 @@
-import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import CircularProgress from '@mui/material/CircularProgress';
+import React, { useEffect, useState } from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import CircularProgress from "@mui/material/CircularProgress";
+import _useHttp from "../../hooks/_http";
+import { HTTP_METHODS } from "../../constants/http_method";
+import LabelRequire from "../Label/require";
+import { Box, ThemeProvider, createTheme } from "@mui/material";
 
-function sleep(delay = 0) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
+const AsyncAutoComplete = (props) => {
+  const {
+    id,
+    label,
+    isRequire,
+    value,
+    handleOnChange,
+    size,
+    callToApi,
+    httpMethod,
+    reqBody,
+    bindField,
+    customDatas,
+    err,
+    returnValueAs,
+    disabled,
+  } = props;
 
-export default function Asynchronous() {
-  const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState([]);
-  const loading = open && options.length === 0;
+  const { data, loading, error, message, sendRequest } = _useHttp();
+  const [options, setOptions] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [selectValue, setSelectValue] = useState({});
 
-  React.useEffect(() => {
-    let active = true;
+  /**
+   * When callToApi has value request data to display in auto complete
+   */
+  useEffect(() => {
+    if (callToApi) {
+      const fetchData = async () => {
+        await sendRequest(
+          callToApi,
+          httpMethod ? HTTP_METHODS[httpMethod] : HTTP_METHODS.get,
+          reqBody
+        );
+      };
 
+      fetchData();
+    }
+  }, [callToApi, reqBody]);
+
+  useEffect(() => {
     if (!loading) {
-      return undefined;
-    }
-
-    (async () => {
-      await sleep(1e3); // For demo purposes.
-
-      if (active) {
-        setOptions([...topFilms]);
+      if (data?.hasOwnProperty("records")) {
+        const { records } = data;
+        records?.length ? setOptions(records) : setOptions([]);
+      } else {
+        data?.length ? setOptions(data) : setOptions([]);
       }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
-
-  React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
     }
-  }, [open]);
+  }, [loading, data, error, message]);
+
+  /**
+   * Listen if data or customDatas or callToApi change? change select value
+   */
+  useEffect(() => {
+    if (callToApi) {
+      if (data?.hasOwnProperty("records")) {
+        const { records } = data;
+        setSelectValue(
+          !records?.length ? {} : records.find((ele) => ele?.id === value)
+        );
+      } else {
+        setSelectValue(
+          !data?.length ? {} : data.find((ele) => ele?.id === value)
+        );
+      }
+    } else {
+      setSelectValue(
+        !customDatas?.length ? {} : customDatas.find((ele) => ele?.id === value)
+      );
+    }
+  }, [data, customDatas, callToApi, value]);
+
+  /**
+   * Check option value select value is the same return select value equal to option
+   */
+  const checkOptionEqToVal = (option, value) => {
+    let searchResult = "";
+
+    if (option && value)
+      searchResult = bindField
+        ? option[bindField] === value[bindField]
+        : option === option;
+
+    return searchResult;
+  };
+
+  /**
+   * Custom them
+   */
+  const customTheme = createTheme({
+    components: {
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            // "&:hover .MuiOutlinedInput-notchedOutline": {
+            //   borderColor: "red"
+            // },
+            // '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            //   borderColor: "red"
+            // },
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "red",
+            },
+          },
+        },
+      },
+    },
+  });
 
   return (
-    <Autocomplete
-      id="asynchronous-demo"
-      sx={{ width: 300 }}
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      isOptionEqualToValue={(option, value) => option.title === value.title}
-      getOptionLabel={(option) => option.title}
-      options={options}
-      loading={loading}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Asynchronous"
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            ),
-          }}
-        />
-      )}
-    />
+    <ThemeProvider theme={err && !value ? customTheme : {}}>
+      <Autocomplete
+        id={id ? id : "async-auto-complete"}
+        size={size ? size : "medium"}
+        open={open}
+        onOpen={() => {
+          setOpen(true);
+        }}
+        onClose={() => {
+          setOpen(false);
+        }}
+        loading={callToApi ? loading : false}
+        options={
+          callToApi
+            ? options?.length
+              ? options
+              : []
+            : customDatas?.length
+            ? customDatas
+            : []
+        }
+        isOptionEqualToValue={(option, value) =>
+          checkOptionEqToVal(option, value)
+        }
+        getOptionLabel={(option) => option[bindField] || ""}
+        onChange={handleOnChange}
+        value={selectValue}
+        disabled={disabled}
+        renderOption={(props, option) => (
+          <Box component="li" {...props} key={option?.id}>
+            {option[bindField] || ""}
+          </Box>
+        )}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={
+              isRequire ? (
+                <LabelRequire
+                  label={label}
+                  color={err && !value ? "red" : ""}
+                />
+              ) : (
+                label
+              )
+            }
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <>
+                  {callToApi ? (
+                    loading
+                  ) : false ? (
+                    <CircularProgress color="inherit" size={20} />
+                  ) : null}
+                  {params.InputProps.endAdornment}
+                </>
+              ),
+            }}
+            helperText={
+              err &&
+              !value && (
+                <span style={{ color: err && !value ? "#d32f2f" : "" }}>
+                  {err}
+                </span>
+              )
+            }
+          />
+        )}
+      />
+    </ThemeProvider>
   );
-}
+};
 
-// Top films as rated by IMDb users. http://www.imdb.com/chart/top
-const topFilms = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  {
-    title: 'The Lord of the Rings: The Return of the King',
-    year: 2003,
-  },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
-  {
-    title: 'The Lord of the Rings: The Fellowship of the Ring',
-    year: 2001,
-  },
-  {
-    title: 'Star Wars: Episode V - The Empire Strikes Back',
-    year: 1980,
-  },
-  { title: 'Forrest Gump', year: 1994 },
-  { title: 'Inception', year: 2010 },
-  {
-    title: 'The Lord of the Rings: The Two Towers',
-    year: 2002,
-  },
-  { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-  { title: 'Goodfellas', year: 1990 },
-  { title: 'The Matrix', year: 1999 },
-  { title: 'Seven Samurai', year: 1954 },
-  {
-    title: 'Star Wars: Episode IV - A New Hope',
-    year: 1977,
-  },
-  { title: 'City of God', year: 2002 },
-  { title: 'Se7en', year: 1995 },
-  { title: 'The Silence of the Lambs', year: 1991 },
-  { title: "It's a Wonderful Life", year: 1946 },
-  { title: 'Life Is Beautiful', year: 1997 },
-  { title: 'The Usual Suspects', year: 1995 },
-  { title: 'Léon: The Professional', year: 1994 },
-  { title: 'Spirited Away', year: 2001 },
-  { title: 'Saving Private Ryan', year: 1998 },
-  { title: 'Once Upon a Time in the West', year: 1968 },
-  { title: 'American History X', year: 1998 },
-  { title: 'Interstellar', year: 2014 },
-];
+export default AsyncAutoComplete;

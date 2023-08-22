@@ -1,220 +1,206 @@
-import { lazy } from "react";
-import React from "react";
+import React, { lazy } from "react";
 
 /**
  * MUI icon
  */
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import ChecklistIcon from '@mui/icons-material/Checklist';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import BusinessIcon from '@mui/icons-material/Business';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
-import DomainIcon from '@mui/icons-material/Domain';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
-import PinDropIcon from '@mui/icons-material/PinDrop';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ElevatorIcon from '@mui/icons-material/Elevator';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import { CorporateFareTwoTone, HowToReg, LocationOn } from "@mui/icons-material";
+import { Colors } from "../constants/color";
+
 
 /**
  * Import all page components
  */
-const Dashboard = lazy(() => import('../pages/dashboard/dashboard'));
-
 const Candidate = {
-    home: lazy(() => import('../pages/candidate/home')),
-    // create: lazy(() => import('../pages/candidate/create'))
+    HomeComponent: lazy(() => import('../pages/candidate/home')),
 };
 
 const Interview = {
-    home: lazy(() => import('../pages/interview/home')),
-    // create: lazy(() => import('../pages/interview/create'))
+    HomeComponent: lazy(() => import('../pages/interview/home')),
 };
 
-const Assessment = {
-    home: lazy(() => import('../pages/assessment/home'))
+const ReferenceCheck = {
+    HomeComponent: lazy(() => import('../pages/reference-check/home'))
+};
+
+const JobOffer = {
+    HomeComponent: lazy(() => import('../pages/job-offer/home'))
 };
 
 const Hire = {
-    home: lazy(() => import('../pages/hire/home'))
+    HomeComponent: lazy(() => import('../pages/hire/home'))
 };
 
 const Settings = {
 
-    position: {
-        home: lazy(() => import('../pages/settings/position/home')),
-        // create: lazy(() => import('../pages/settings/position/create'))
+    MainBusiness: {
+        HomeComponent: lazy(() => import('../pages/settings/main-business/home'))
     },
 
-    recruiter: {
-        home: lazy(() => import('../pages/settings/recruiter/home')),
-        // create: lazy(() => import('../pages/settings/recruiter/create'))
+    BusinessUnit: {
+        HomeComponent: lazy(() => import('../pages/settings/business-unit/home')),
     },
 
-    department: {
-        home: lazy(() => import('../pages/settings/department/home')),
-        // create: lazy(() => import('../pages/settings/department/create'))
+    Department: {
+        HomeComponent: lazy(() => import('../pages/settings/department/home')),
     },
 
-    headDepartment: {
-        home: lazy(() => import('../pages/settings/head_department/home'))
+    PositionLevel: {
+        HomeComponent: lazy(() => import('../pages/settings/position-level/home'))
     },
 
-    businessUnit: {
-        home: lazy(() => import('../pages/settings/business/home')),
-        // create: lazy(() => import('../pages/settings/business/home'))
+    Position: {
+        HomeComponent: lazy(() => import('../pages/settings/position/home')),
     },
 
-    location: {
-        home: lazy(() => import('../pages/settings/location/home'))
+    HeadDepartment: {
+        HomeComponent: lazy(() => import('../pages/settings/head_department/home'))
     },
 
-    // receivingCategory: {
-    //     home: lazy(() => import('../pages/settings/receiving_category/home')),
-    //     create: lazy(() => import('../pages/settings/receiving_category/create'))
-    // },
+    Campus: {
+        HomeComponent: lazy(() => import('../pages/settings/campus/home'))
+    },
+
+    Location: {
+        HomeComponent: lazy(() => import('../pages/settings/location/home'))
+    }
+
 };
 
 const User = {
-    home: lazy(() => import('../pages/user/home'))
+    HomeComponent: lazy(() => import('../pages/user/home'))
 };
 
 
 export const PRIVATE_ROUTES = [
 
-    /** Dashboard */
-    // {
-    //     name: "Dashboard",
-    //     path: "/",
-    //     component: <Dashboard />,
-    //     icon: <DashboardIcon />,
-    //     isDivider: false,
-    //     children: [
-
-    //     ]
-    // },
-
-    /**Reports */
-    // {
-    //     name: "Reports",
-    //     path: "/report",
-    //     icon: <AssessmentIcon />,
-    //     isDivider: true,
-    //     children: [
-
-    //     ]
-    // },
-
     /**Candidate */
     {
         name: "Candidates",
         path: "/candidate",
-        component: <Candidate.home />,
-        icon: <PeopleAltIcon />,
+        component: <Candidate.HomeComponent />,
+        icon: <PeopleAltIcon style={{color: Colors.SystemColor }} />,
         isDivider: false,
     },
     /**Interview */
-    // {
-    //     name: "Interviews",
-    //     path: "/interview",
-    //     component: <Interview.home />,
-    //     icon: <RecordVoiceOverIcon />,
-    //     isDivider: false,
-    // },
-    /**Assessment */
-    // {
-    //     name: "Assessments",
-    //     path: "/assessment",
-    //     component: <Assessment.home />,
-    //     icon: <PersonSearchIcon />,
-    // },
-    /**Replies */
-    // {
-    //     name: "Hires",
-    //     path: "/hire",
-    //     component: <Hire.home />,
-    //     icon: <HowToRegIcon />,
-    //     isDivider: false,
-    // },
+    {
+        name: "Interviews",
+        path: "/interview",
+        component: <Interview.HomeComponent />,
+        icon: <RecordVoiceOverIcon style={{color: Colors.SystemColor }} />,
+        isDivider: false,
+    },
+    /**Reference  Check*/
+    {
+        name: "Reference Checks",
+        path: "/reference-check",
+        component: <ReferenceCheck.HomeComponent />,
+        icon: <PersonSearchIcon style={{color: Colors.SystemColor }} />,
+    },
+    /**Job Offer */
+    {
+        name: "Job Offers",
+        path: "/job-offer",
+        component: <JobOffer.HomeComponent />,
+        icon: <HowToReg style={{color: Colors.SystemColor }} />
+    },
+    /**Hire*/
+    {
+        name: "Hire Applicants",
+        path: "/hire",
+        component: <Hire.HomeComponent />,
+        icon: <AssignmentIndIcon style={{color: Colors.SystemColor }} />
+    },
     /**Settings */
     {
         name: "Settings",
         path: "/settings",
-        icon: <SettingsIcon />,
+        icon: <SettingsIcon style={{color: Colors.SystemColor }} />,
         isDivider: false,
         /**Children settings */
         children: [
 
+            // Main business
+            {
+                name: "Main Businesses",
+                path: "main-business",
+                component: <Settings.MainBusiness.HomeComponent />,
+                icon: <BusinessIcon style={{color: Colors.SystemColor }} />
+            },
+
             /**Business */
             {
-                name: "Business Divisions",
+                name: "Primary Businesses",
                 path: "business",
-                component: <Settings.businessUnit.home />,
-                icon: <MeetingRoomIcon />,
+                component: <Settings.BusinessUnit.HomeComponent />,
+                icon: <ApartmentIcon style={{color: Colors.SystemColor }} />
             },
 
             /**Department */
             {
                 name: "Departments",
                 path: "department",
-                component: <Settings.department.home />,
-                icon: <ApartmentIcon />,
+                component: <Settings.Department.HomeComponent />,
+                icon: <CorporateFareTwoTone style={{color: Colors.SystemColor }} />
+            },
+
+
+            /**Campus */
+            {
+                name: 'Campuses',
+                path: 'campus',
+                component: <Settings.Campus.HomeComponent />,
+                icon: <MeetingRoomIcon style={{color: Colors.SystemColor }} />
+            },
+
+            {
+                name: 'Locations',
+                path: 'location',
+                component: <Settings.Location.HomeComponent />,
+                icon: <LocationOn style={{color: Colors.SystemColor }} />
+            },
+
+            /**Position level*/
+            {
+                name: "Position Levels",
+                path: "position-level",
+                component: <Settings.PositionLevel.HomeComponent />,
+                icon: <ElevatorIcon style={{color: Colors.SystemColor }} />,
             },
 
             /**Position */
             {
                 name: "Positions",
                 path: "position",
-                component: <Settings.position.home />,
-                icon: <AirlineSeatReclineNormalIcon />,
+                component: <Settings.Position.HomeComponent />,
+                icon: <AirlineSeatReclineNormalIcon style={{color: Colors.SystemColor }} />,
             },
 
             /**Department */
             {
                 name: "Head Departments",
                 path: "head-department",
-                component: <Settings.headDepartment.home />,
-                icon: <PeopleAltIcon />,
-            },
-
-            /**Location */
-            {
-                name: 'Locations',
-                path: 'location',
-                component: <Settings.location.home />,
-                icon: <PinDropIcon />
-            },
-
-            /**Recruiter */
-            // {
-            //     name: "Recruiters",
-            //     path: "recruiter",
-            //     component: <Settings.recruiter.home />,
-            //     icon: <SwitchAccountIcon />,
-            //     /**Children recruiter */
-            //     // children: [
-            //     //     {
-            //     //         name: "Create New Recruiter",
-            //     //         path: "create",
-            //     //         component: <Recruiter.create />
-            //     //     }
-            //     // ]
-            // },
-
-
+                component: <Settings.HeadDepartment.HomeComponent />,
+                icon: <PeopleAltIcon style={{color: Colors.SystemColor }} />,
+            }
         ]
     },
-    /**Replies */
-    //    {
-    //     name: "Users",
-    //     path: "/user",
-    //     component: <User.home />,
-    //     icon:  <AccountCircleIcon />,
-    //     isDivider: false,
-    // }
+    /**User setup */
+    {
+        name: "Users",
+        path: "/user",
+        component: <User.HomeComponent />,
+        icon: <AccountCircleIcon style={{color: Colors.SystemColor }} />,
+        isDivider: false,
+    }
 ];

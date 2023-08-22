@@ -1,25 +1,26 @@
-const update_candidate = [
-    'firstName',
-    'lastName',
-    'gender',
-    'phoneNumber',
-    'email',
-    'departmentId',
-    'headDepartmentId',
-    'businessDivisionId',
-    'appliedPositionId',
-    'appliedLocationId',
-    'appliedDate',
-    'shortlistResult',
-    'shortListedDate',
-    'receivedChannel',
-    'status',
-    'file',
-    'cvFile',
+const upsert_candidate = [
+    "firstName",
+    "lastName",
+    "gender",
+    "phoneNumber",
+    "email",
+    "departmentId",
+    "headDepartmentId",
+    "businessUnitId",
+    "campusId",
+    "appliedPositionId",
+    "appliedPositionLevelId",
+    "appliedDate",
+    "shortlistResult",
+    "shortListedDate",
+    "receivedChannel",
+    "status",
+    "file",
+    "cvFile",
 ];
 
 const view_candidate = [
-    ...update_candidate,
+    ...upsert_candidate,
     "headDepartmentName",
 ]
 
@@ -74,30 +75,75 @@ const hire_candidate = [
 ];
 
 const position = [
-    "name",
+    "nameEn",
+    "nameKh",
     "description",
     "status",
+    "businessUnitId",
+    "departmentId",
+    "positionLevelId"
+];
+
+const positionLevel = [
+    "nameEn",
+    "nameKh",
     "businessDivisions",
-    "departmentId"
+    "departmentId",
+    "description",
+    "status"
 ];
 
 const department = [
-    "name",
+    "nameEn",
+    "nameKh",
+    "code",
     "description",
     "businessDivisions",
     "status",
 ];
 
-const business = [
-    "name",
+const mainBusiness = [
+    "nameEn",
+    "nameKh",
+    "description"
+]
+
+const businessUnit = [
+    "mainBusinessUnitId",
+    "code",
+    "nameEn",
+    "nameKh",
+    "phone",
+    "email",
     "description",
+    "addressEn",
+    "addressKh",
     "status",
 ];
 
-const location = [
-    "name",
+const subBusinessUnit = [
+    "mainBusinessUnitId",
+    "businessUnitId",
+    "code",
+    "nameEn",
+    "nameKh",
+    "phone",
+    "email",
     "description",
+    "addressEn",
+    "addressKh",
     "status",
+];
+
+const campus = [
+    "address",
+    "campusCode",
+    "description",
+    "locationId",
+    "nameEn",
+    "nameKh",
+    "shortName",
+    "status"
 ];
 
 const headDepartment = [
@@ -105,24 +151,59 @@ const headDepartment = [
     "firstName",
     "lastName",
     "phoneNumber",
-    "businessDivisionId",
+    "businessUnitId",
     "positionId",
+    "positionLevelId",
     "departmentId",
     "description",
     "status",
 ];
 
+const committee = [
+    "staffId",
+    "firstName",
+    "lastName",
+    "phoneNumber",
+    "businessUnitId",
+    "positionId",
+    "positionLevelId",
+    "departmentId",
+    "description",
+    "status",
+];
+
+const user = [
+    "staffId",
+    "firstName",
+    "secondName",
+    "gender",
+    "birthDate",
+    "email",
+    "phoneNumber",
+    "username",
+    "password",
+    "confirmPassword",
+    "status",
+    "roles",
+    "department"
+]
+
 export const KEY_POST = {
     view_candidate,
-    update_candidate,
+    upsert_candidate,
     invite_candidate,
     feedback_candidate,
     make_assessment_candidate,
     offer_assessment_candidate,
     hire_candidate,
     position,
+    positionLevel,
     department,
-    business,
-    location,
-    headDepartment
+    mainBusiness,
+    businessUnit,
+    subBusinessUnit,
+    campus,
+    headDepartment,
+    committee,
+    user
 };
