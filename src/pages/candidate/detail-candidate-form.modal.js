@@ -267,13 +267,10 @@ const CandidateFormDetailModal = (props) => {
                                   primary={
                                     <Grid item xs={12}>
                                       <br></br>
-                                      {
-                                        candidateDetail[key] &&
-                                        <GridDisplayLabelValue
-                                          label={mapKeyToView[key]?.subLabel}
-                                          fontSize={15}
-                                        />
-                                      }
+                                      <GridDisplayLabelValue
+                                        label={mapKeyToView[key]?.subLabel}
+                                        fontSize={15}
+                                      />
                                       <br></br>
                                       {candidateDetail[key]?.length ? (
                                         Object.keys(
