@@ -89,8 +89,9 @@ export const PRIVATE_ROUTES = [
         name: "Candidates",
         path: "/candidate",
         component: <Candidate.HomeComponent />,
-        icon: <PeopleAltIcon style={{color: appConfig.systemColor }} />,
+        icon: <PeopleAltIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
+        // isHide: true
     },
     // /**Interview */
     // {
@@ -125,7 +126,7 @@ export const PRIVATE_ROUTES = [
     {
         name: "Settings",
         path: "/settings",
-        icon: <SettingsIcon style={{color: appConfig.systemColor }} />,
+        icon: <SettingsIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
         /**Children settings */
         children: [
@@ -135,7 +136,7 @@ export const PRIVATE_ROUTES = [
                 name: "Main Businesses",
                 path: "main-business",
                 component: <Settings.MainBusiness.HomeComponent />,
-                icon: <BusinessIcon style={{color: appConfig.systemColor }} />
+                icon: <BusinessIcon style={{ color: appConfig.systemColor }} />
             },
 
             /**Business */
@@ -143,7 +144,7 @@ export const PRIVATE_ROUTES = [
                 name: "Primary Businesses",
                 path: "business",
                 component: <Settings.BusinessUnit.HomeComponent />,
-                icon: <ApartmentIcon style={{color: appConfig.systemColor }} />
+                icon: <ApartmentIcon style={{ color: appConfig.systemColor }} />
             },
 
             // /**Department */
@@ -200,7 +201,7 @@ export const PRIVATE_ROUTES = [
         name: "Users",
         path: "/user",
         component: <User.HomeComponent />,
-        icon: <AccountCircleIcon style={{color: appConfig.systemColor }} />,
+        icon: <AccountCircleIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
     }
 ];

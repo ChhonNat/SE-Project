@@ -60,7 +60,7 @@ const App = () => {
             <Routes>
               {PRIVATE_ROUTES &&
                 PRIVATE_ROUTES.length &&
-                PRIVATE_ROUTES.map((route, index) => (
+                PRIVATE_ROUTES.filter((route) => !route?.isHide).map((route, index) => (
                   <React.Fragment key={index}>
                     {/* Parent routes */}
                     <Route
@@ -116,7 +116,7 @@ const App = () => {
           <Routes>
             {PUBLIC_ROUTES &&
               PUBLIC_ROUTES?.length &&
-              PUBLIC_ROUTES.map((route, index) => (
+              PUBLIC_ROUTES.filter((route) => !route?.isHide) .map((route, index) => (
                 <React.Fragment key={index}>
                   <Route path={route?.path} element={route?.component} />
                 </React.Fragment>

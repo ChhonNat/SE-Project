@@ -183,7 +183,7 @@ const SidebarComponent = () => {
                 PRIVATE_ROUTES && PRIVATE_ROUTES.length ?
                     <List>
                         {
-                            PRIVATE_ROUTES.map((menu, parentKey) => (
+                            PRIVATE_ROUTES.filter((route) => !route?.isHide).map((menu, parentKey) => (
                                 <React.Fragment key={parentKey}>
 
                                     {/* parent menu */}
