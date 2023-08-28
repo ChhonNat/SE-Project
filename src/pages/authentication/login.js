@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Colors } from "../../constants/color";
+import { appConfig } from "../../constants/app_cont";
 
 /**
  * username: developer
@@ -53,7 +54,7 @@ export default function Login() {
 
       <Grid item xs={4} padding={10}>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <h1>Recruitment Management System</h1>
+          <h1>{appConfig.appName}</h1>
         </div>
 
         <br></br>

@@ -28,6 +28,7 @@ import { isLogout } from "../../store/authentication/authenticationService";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Colors } from "../../constants/color";
+import { appConfig } from "../../constants/app_cont";
 
 const drawerWidth = 280;
 
@@ -82,7 +83,7 @@ const NavbarComponent = () => {
           </IconButton>
 
           <Typography variant="h6" noWrap component="div">
-            Recruitment Management System
+            {appConfig.appName}
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />
