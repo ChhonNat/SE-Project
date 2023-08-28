@@ -5,15 +5,15 @@ import TitleComponent from "../../../components/Page/title";
 import SelectComponent from "../../../components/Selector/select";
 import _useHttp from "../../../hooks/_http";
 import Swal from "sweetalert2";
+import LabelRequire from "../../../components/Label/require";
 
 import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HTTP_METHODS } from "../../../constants/http_method";
-import { ALERT_TIMER } from "../../../constants/app_config";
 import { STATUS } from "../../../constants/status";
 import { Close } from "@mui/icons-material";
-import LabelRequire from "../../../components/Label/require";
+import { appConfig } from "../../../constants/app_cont";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -66,7 +66,7 @@ const UpsertFormModal = (props) => {
                 text: message,
                 icon: !error ? 'success' : 'error',
                 confirmButtonText: 'OK',
-                timer: ALERT_TIMER
+                timer: appConfig.swalTimer
             });
 
 

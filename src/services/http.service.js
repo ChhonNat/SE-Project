@@ -1,6 +1,6 @@
 import axios from "axios";
-import apiLink from "../constants/app_cont";
 import Swal from "sweetalert2";
+import { appConfig } from "../constants/app_cont";
 import { LOCAL_STORAGE_KEYS } from "../constants/local_storage";
 import { HTTP_STATUS } from "../constants/http_status";
 import { API_URL } from "../constants/api_url";
@@ -13,7 +13,7 @@ const reqHeaders = {
 
 //Create axios header config
 const axiosAPI = axios.create({
-    baseURL: apiLink,
+    baseURL: appConfig.apiLink,
     headers: reqHeaders
 });
 
@@ -104,7 +104,7 @@ const refreshAccessToken = async () => {
 
     const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user));
 
-    return await axios.post(apiLink + API_URL.auth.refreshAccessToken, { refreshToken: user?.refreshToken }, { headers: reqHeaders });
+    return await axios.post(appConfig.apiLink + API_URL.auth.refreshAccessToken, { refreshToken: user?.refreshToken }, { headers: reqHeaders });
 };
 
 

@@ -21,7 +21,6 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HTTP_METHODS } from "../../../constants/http_method";
-import { ALERT_TIMER } from "../../../constants/app_config";
 import { STATUS } from "../../../constants/status";
 import { globalService } from "../../../services/global.service";
 import { HTTP_STATUS } from "../../../constants/http_status";
@@ -29,6 +28,7 @@ import { API_URL } from "../../../constants/api_url";
 import { KEY_POST } from "../../../constants/key_post";
 import { Close, Label } from "@mui/icons-material";
 import { PositionModel } from "../../../models/position.model";
+import { appConfig } from "../../../constants/app_cont";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -108,7 +108,7 @@ const UpsertPositionForm = (props) => {
         text: message,
         icon: !error ? "success" : "error",
         confirmButtonText: "OK",
-        timer: ALERT_TIMER,
+        timer: appConfig.swalTimer,
       });
 
       if (!error) handleEventSucceed();

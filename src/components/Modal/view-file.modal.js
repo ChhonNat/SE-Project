@@ -1,7 +1,6 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import TitleComponent from "../Page/title";
 import FooterComponent from "../Page/footer";
-import apiLink from "../../constants/app_cont";
 import {
   Dialog,
   DialogActions,
@@ -22,7 +21,6 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 const ViewFileModal = (props) => {
   const { openModal, onCloseModal, id, modalTitle, downloadFileUrl } = props;
 
-  // const url = downloadFileUrl ? `${apiLink}${downloadFileUrl}${id}` : `${apiLink}${API_URL.candidate.downloadCVFile}${id}`;
   const url = downloadFileUrl
     ? `${downloadFileUrl}${id}`
     : `${API_URL.candidate.downloadCVFile}${id}`;

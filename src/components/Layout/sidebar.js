@@ -17,7 +17,7 @@ import { useLocation } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS } from "../../constants/local_storage";
 import { LayoutContext } from "../../context/layout-context";
 import { styled, useTheme } from "@mui/material/styles";
-import { Colors } from "../../constants/color";
+import { appConfig } from "../../constants/app_cont";
 
 const drawerWidth = 280;
 
@@ -73,7 +73,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
  */
 const drawerHeader = {
     styles: {
-        background: Colors.SystemColor,
+        background: appConfig.systemColor,
         boxShadow:
             "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
         borderColor: "#e5e7eb",
@@ -96,12 +96,12 @@ const sidebar = {
     menu: {
         activeLink: {
             backgroundColor: '#f2eeee',
-            borderRight: `3px solid ${Colors.SystemColor}`
+            borderRight: `3px solid ${appConfig.systemColor}`
         },
         child: {
             activeLink: {
                 backgroundColor: '#f7f6f6',
-                borderRight:`3px solid ${Colors.SystemColor}`
+                borderRight:`3px solid ${appConfig.systemColor}`
             },
         }
     },

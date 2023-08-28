@@ -15,7 +15,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ElevatorIcon from '@mui/icons-material/Elevator';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { CorporateFareTwoTone, HowToReg, LocationOn } from "@mui/icons-material";
-import { Colors } from "../constants/color";
+import { appConfig } from "../constants/app_cont";
 
 
 /**
@@ -89,7 +89,7 @@ export const PRIVATE_ROUTES = [
         name: "Candidates",
         path: "/candidate",
         component: <Candidate.HomeComponent />,
-        icon: <PeopleAltIcon style={{color: Colors.SystemColor }} />,
+        icon: <PeopleAltIcon style={{color: appConfig.systemColor }} />,
         isDivider: false,
     },
     // /**Interview */
@@ -97,7 +97,7 @@ export const PRIVATE_ROUTES = [
     //     name: "Interviews",
     //     path: "/interview",
     //     component: <Interview.HomeComponent />,
-    //     icon: <RecordVoiceOverIcon style={{color: Colors.SystemColor }} />,
+    //     icon: <RecordVoiceOverIcon style={{color: appConfig.systemColor }} />,
     //     isDivider: false,
     // },
     // /**Reference  Check*/
@@ -105,27 +105,27 @@ export const PRIVATE_ROUTES = [
     //     name: "Reference Checks",
     //     path: "/reference-check",
     //     component: <ReferenceCheck.HomeComponent />,
-    //     icon: <PersonSearchIcon style={{color: Colors.SystemColor }} />,
+    //     icon: <PersonSearchIcon style={{color: appConfig.systemColor }} />,
     // },
     // /**Job Offer */
     // {
     //     name: "Job Offers",
     //     path: "/job-offer",
     //     component: <JobOffer.HomeComponent />,
-    //     icon: <HowToReg style={{color: Colors.SystemColor }} />
+    //     icon: <HowToReg style={{color: appConfig.systemColor }} />
     // },
     // /**Hire*/
     // {
     //     name: "Hire Applicants",
     //     path: "/hire",
     //     component: <Hire.HomeComponent />,
-    //     icon: <AssignmentIndIcon style={{color: Colors.SystemColor }} />
+    //     icon: <AssignmentIndIcon style={{color: appConfig.systemColor }} />
     // },
     /**Settings */
     {
         name: "Settings",
         path: "/settings",
-        icon: <SettingsIcon style={{color: Colors.SystemColor }} />,
+        icon: <SettingsIcon style={{color: appConfig.systemColor }} />,
         isDivider: false,
         /**Children settings */
         children: [
@@ -135,7 +135,7 @@ export const PRIVATE_ROUTES = [
                 name: "Main Businesses",
                 path: "main-business",
                 component: <Settings.MainBusiness.HomeComponent />,
-                icon: <BusinessIcon style={{color: Colors.SystemColor }} />
+                icon: <BusinessIcon style={{color: appConfig.systemColor }} />
             },
 
             /**Business */
@@ -143,7 +143,7 @@ export const PRIVATE_ROUTES = [
                 name: "Primary Businesses",
                 path: "business",
                 component: <Settings.BusinessUnit.HomeComponent />,
-                icon: <ApartmentIcon style={{color: Colors.SystemColor }} />
+                icon: <ApartmentIcon style={{color: appConfig.systemColor }} />
             },
 
             // /**Department */
@@ -151,7 +151,7 @@ export const PRIVATE_ROUTES = [
             //     name: "Departments",
             //     path: "department",
             //     component: <Settings.Department.HomeComponent />,
-            //     icon: <CorporateFareTwoTone style={{color: Colors.SystemColor }} />
+            //     icon: <CorporateFareTwoTone style={{color: appConfig.systemColor }} />
             // },
 
 
@@ -160,14 +160,14 @@ export const PRIVATE_ROUTES = [
             //     name: 'Campuses',
             //     path: 'campus',
             //     component: <Settings.Campus.HomeComponent />,
-            //     icon: <MeetingRoomIcon style={{color: Colors.SystemColor }} />
+            //     icon: <MeetingRoomIcon style={{color: appConfig.systemColor }} />
             // },
 
             // {
             //     name: 'Locations',
             //     path: 'location',
             //     component: <Settings.Location.HomeComponent />,
-            //     icon: <LocationOn style={{color: Colors.SystemColor }} />
+            //     icon: <LocationOn style={{color: appConfig.systemColor }} />
             // },
 
             // /**Position level*/
@@ -175,7 +175,7 @@ export const PRIVATE_ROUTES = [
             //     name: "Position Levels",
             //     path: "position-level",
             //     component: <Settings.PositionLevel.HomeComponent />,
-            //     icon: <ElevatorIcon style={{color: Colors.SystemColor }} />,
+            //     icon: <ElevatorIcon style={{color: appConfig.systemColor }} />,
             // },
 
             // /**Position */
@@ -183,7 +183,7 @@ export const PRIVATE_ROUTES = [
             //     name: "Positions",
             //     path: "position",
             //     component: <Settings.Position.HomeComponent />,
-            //     icon: <AirlineSeatReclineNormalIcon style={{color: Colors.SystemColor }} />,
+            //     icon: <AirlineSeatReclineNormalIcon style={{color: appConfig.systemColor }} />,
             // },
 
             // /**Department */
@@ -191,7 +191,7 @@ export const PRIVATE_ROUTES = [
             //     name: "Head Departments",
             //     path: "head-department",
             //     component: <Settings.HeadDepartment.HomeComponent />,
-            //     icon: <PeopleAltIcon style={{color: Colors.SystemColor }} />,
+            //     icon: <PeopleAltIcon style={{color: appConfig.systemColor }} />,
             // }
         ]
     },
@@ -200,7 +200,7 @@ export const PRIVATE_ROUTES = [
         name: "Users",
         path: "/user",
         component: <User.HomeComponent />,
-        icon: <AccountCircleIcon style={{color: Colors.SystemColor }} />,
+        icon: <AccountCircleIcon style={{color: appConfig.systemColor }} />,
         isDivider: false,
     }
 ];

@@ -6,18 +6,18 @@ import SelectComponent from "../../../components/Selector/select";
 import LabelRequire from "../../../components/Label/require";
 import Swal from "sweetalert2";
 import _useHttp from "../../../hooks/_http";
+import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
 
 import { CampusModel } from "../../../models/campus.model";
 import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HTTP_METHODS } from "../../../constants/http_method";
-import { ALERT_TIMER } from "../../../constants/app_config";
 import { STATUS } from "../../../constants/status";
 import { Close } from "@mui/icons-material";
-import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
 import { API_URL } from "../../../constants/api_url";
 import { KEY_POST } from "../../../constants/key_post";
+import { appConfig } from "../../../constants/app_cont";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -71,7 +71,7 @@ const UpsertCampusFormModal = (props) => {
                 text: message,
                 icon: !error ? 'success' : 'error',
                 confirmButtonText: 'OK',
-                timer: ALERT_TIMER
+                timer: appConfig.swalTimer
             });
 
 

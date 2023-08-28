@@ -283,7 +283,6 @@ const CandidateFormModal = (props) => {
           text: message,
           icon: data?.status === DATA_STATUS.success ? "success" : "error",
           confirmButtonText: "OK",
-          // timer: ALERT_TIMER,
           size: 200,
         });
 

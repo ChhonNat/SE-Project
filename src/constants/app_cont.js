@@ -6,8 +6,12 @@ const apiLink = "http://172.168.0.38:8585";
 // const apiLink = "http://localhost:8080";
 
 const appName = "Archive Management System";
-export const appConfig = {
-    appName
-};
+const systemColor = "#283c55";
+const swalTimer = 5000;
 
-export default apiLink;
+export const appConfig = {
+    apiLink,
+    appName,
+    systemColor,
+    swalTimer
+};

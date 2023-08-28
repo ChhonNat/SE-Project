@@ -27,7 +27,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { isLogout } from "../../store/authentication/authenticationService";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import { Colors } from "../../constants/color";
 import { appConfig } from "../../constants/app_cont";
 
 const drawerWidth = 280;
@@ -70,7 +69,7 @@ const NavbarComponent = () => {
       <AppBar
         position="fixed"
         open={toggleNavbar}
-        sx={{ backgroundColor: Colors.SystemColor }}
+        sx={{ backgroundColor: appConfig.systemColor }}
       >
         <Toolbar>
           <IconButton

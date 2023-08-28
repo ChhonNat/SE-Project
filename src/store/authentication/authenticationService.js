@@ -2,7 +2,7 @@ import { authActions } from './authenticationSlice';
 import { LOCAL_STORAGE_KEYS } from '../../constants/local_storage';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import apiLink from '../../constants/app_cont';
+import { appConfig } from '../../constants/app_cont';
 
 const initialUser = {
   userName: '',
@@ -32,7 +32,7 @@ export const userAuthentication = ({ username, password }) => {
 
     const authenticates = async () => {
 
-      const response = await axios.post(`${apiLink}/api/v1/login`, postData, options)
+      const response = await axios.post(`${appConfig.apiLink}/api/v1/login`, postData, options)
         .then(function (result) {
 
           return result;
