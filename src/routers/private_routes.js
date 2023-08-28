@@ -92,35 +92,35 @@ export const PRIVATE_ROUTES = [
         icon: <PeopleAltIcon style={{color: Colors.SystemColor }} />,
         isDivider: false,
     },
-    /**Interview */
-    {
-        name: "Interviews",
-        path: "/interview",
-        component: <Interview.HomeComponent />,
-        icon: <RecordVoiceOverIcon style={{color: Colors.SystemColor }} />,
-        isDivider: false,
-    },
-    /**Reference  Check*/
-    {
-        name: "Reference Checks",
-        path: "/reference-check",
-        component: <ReferenceCheck.HomeComponent />,
-        icon: <PersonSearchIcon style={{color: Colors.SystemColor }} />,
-    },
-    /**Job Offer */
-    {
-        name: "Job Offers",
-        path: "/job-offer",
-        component: <JobOffer.HomeComponent />,
-        icon: <HowToReg style={{color: Colors.SystemColor }} />
-    },
-    /**Hire*/
-    {
-        name: "Hire Applicants",
-        path: "/hire",
-        component: <Hire.HomeComponent />,
-        icon: <AssignmentIndIcon style={{color: Colors.SystemColor }} />
-    },
+    // /**Interview */
+    // {
+    //     name: "Interviews",
+    //     path: "/interview",
+    //     component: <Interview.HomeComponent />,
+    //     icon: <RecordVoiceOverIcon style={{color: Colors.SystemColor }} />,
+    //     isDivider: false,
+    // },
+    // /**Reference  Check*/
+    // {
+    //     name: "Reference Checks",
+    //     path: "/reference-check",
+    //     component: <ReferenceCheck.HomeComponent />,
+    //     icon: <PersonSearchIcon style={{color: Colors.SystemColor }} />,
+    // },
+    // /**Job Offer */
+    // {
+    //     name: "Job Offers",
+    //     path: "/job-offer",
+    //     component: <JobOffer.HomeComponent />,
+    //     icon: <HowToReg style={{color: Colors.SystemColor }} />
+    // },
+    // /**Hire*/
+    // {
+    //     name: "Hire Applicants",
+    //     path: "/hire",
+    //     component: <Hire.HomeComponent />,
+    //     icon: <AssignmentIndIcon style={{color: Colors.SystemColor }} />
+    // },
     /**Settings */
     {
         name: "Settings",
@@ -146,53 +146,53 @@ export const PRIVATE_ROUTES = [
                 icon: <ApartmentIcon style={{color: Colors.SystemColor }} />
             },
 
-            /**Department */
-            {
-                name: "Departments",
-                path: "department",
-                component: <Settings.Department.HomeComponent />,
-                icon: <CorporateFareTwoTone style={{color: Colors.SystemColor }} />
-            },
+            // /**Department */
+            // {
+            //     name: "Departments",
+            //     path: "department",
+            //     component: <Settings.Department.HomeComponent />,
+            //     icon: <CorporateFareTwoTone style={{color: Colors.SystemColor }} />
+            // },
 
 
-            /**Campus */
-            {
-                name: 'Campuses',
-                path: 'campus',
-                component: <Settings.Campus.HomeComponent />,
-                icon: <MeetingRoomIcon style={{color: Colors.SystemColor }} />
-            },
+            // /**Campus */
+            // {
+            //     name: 'Campuses',
+            //     path: 'campus',
+            //     component: <Settings.Campus.HomeComponent />,
+            //     icon: <MeetingRoomIcon style={{color: Colors.SystemColor }} />
+            // },
 
-            {
-                name: 'Locations',
-                path: 'location',
-                component: <Settings.Location.HomeComponent />,
-                icon: <LocationOn style={{color: Colors.SystemColor }} />
-            },
+            // {
+            //     name: 'Locations',
+            //     path: 'location',
+            //     component: <Settings.Location.HomeComponent />,
+            //     icon: <LocationOn style={{color: Colors.SystemColor }} />
+            // },
 
-            /**Position level*/
-            {
-                name: "Position Levels",
-                path: "position-level",
-                component: <Settings.PositionLevel.HomeComponent />,
-                icon: <ElevatorIcon style={{color: Colors.SystemColor }} />,
-            },
+            // /**Position level*/
+            // {
+            //     name: "Position Levels",
+            //     path: "position-level",
+            //     component: <Settings.PositionLevel.HomeComponent />,
+            //     icon: <ElevatorIcon style={{color: Colors.SystemColor }} />,
+            // },
 
-            /**Position */
-            {
-                name: "Positions",
-                path: "position",
-                component: <Settings.Position.HomeComponent />,
-                icon: <AirlineSeatReclineNormalIcon style={{color: Colors.SystemColor }} />,
-            },
+            // /**Position */
+            // {
+            //     name: "Positions",
+            //     path: "position",
+            //     component: <Settings.Position.HomeComponent />,
+            //     icon: <AirlineSeatReclineNormalIcon style={{color: Colors.SystemColor }} />,
+            // },
 
-            /**Department */
-            {
-                name: "Head Departments",
-                path: "head-department",
-                component: <Settings.HeadDepartment.HomeComponent />,
-                icon: <PeopleAltIcon style={{color: Colors.SystemColor }} />,
-            }
+            // /**Department */
+            // {
+            //     name: "Head Departments",
+            //     path: "head-department",
+            //     component: <Settings.HeadDepartment.HomeComponent />,
+            //     icon: <PeopleAltIcon style={{color: Colors.SystemColor }} />,
+            // }
         ]
     },
     /**User setup */
