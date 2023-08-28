@@ -136,7 +136,8 @@ export const PRIVATE_ROUTES = [
                 name: "Main Businesses",
                 path: "main-business",
                 component: <Settings.MainBusiness.HomeComponent />,
-                icon: <BusinessIcon style={{ color: appConfig.systemColor }} />
+                icon: <BusinessIcon style={{ color: appConfig.systemColor }} />,
+                // isHide: true
             },
 
             /**Business */

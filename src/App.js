@@ -71,7 +71,7 @@ const App = () => {
 
                     {/* Child routes */}
                     {route?.children?.length &&
-                      route?.children.map((childRoute, childIndex) => (
+                      route?.children.filter((childRoute) => !childRoute?.isHide).map((childRoute, childIndex) => (
                         <Route path={route?.path} key={index}>
                           {/* Child route components */}
                           <Route
@@ -86,7 +86,7 @@ const App = () => {
 
                           {/* Child route child route components */}
                           {childRoute?.children?.length &&
-                            childRoute?.children?.map(
+                            childRoute?.children?.filter((childChiRoute) => !childChiRoute?.isHide).map(
                               (childChildRoute, childChildRouteIndex) => (
                                 <Route
                                   path={route?.path + childRoute?.path}

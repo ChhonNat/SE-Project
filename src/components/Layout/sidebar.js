@@ -221,7 +221,7 @@ const SidebarComponent = () => {
                                             >
                                                 <List component="div" disablePadding>
                                                     {
-                                                        menu.children.map((childMenu, childKey) => (
+                                                        menu.children.filter((chiMenu) => !chiMenu?.isHide).map((childMenu, childKey) => (
                                                             <Link to={menu?.path + '/' + childMenu?.path} style={sidebar.link} key={childKey}>
                                                                 <ListItemButton sx={{ pl: 5 }}
                                                                     style={checkIsActive(menu?.path + '/' + childMenu?.path) ? sidebar?.menu?.child?.activeLink : {}}
