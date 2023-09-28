@@ -55,15 +55,15 @@ const AsyncDatatable = (props) => {
   const [initialData, setInitialData] = useState([]);
 
   useEffect(() => {
-    
+
     if (!loading && !error) {
-      setInitialData([...data?.records]);
+      setInitialData([...data]);
     }
   }, [loading, error, message])
-  
 
-  let rows = useMemo(() => (data?.records ? data?.records : initialData), [data]);
-  let rowCount = useMemo(() => (data?.totalRecord ? data?.totalRecord : 0), [data]);
+
+  let rows = useMemo(() => (data ? data : initialData), [data]);
+  let rowCount = useMemo(() => (data?.totalRecords ? data?.totalRecords : 0), [data]);
 
 
   /**
@@ -72,11 +72,20 @@ const AsyncDatatable = (props) => {
   const getRows = useCallback(async (searchValue = '') => {
 
     const postData = {
-      start: page * rowsPerPage,
-      length: rowsPerPage,
-      searchValue: searchValue,
-      orderColumn: orderBy,
-      ordinal: order,
+      // start: page * rowsPerPage,
+      // length: rowsPerPage,
+      // searchValue: searchValue,
+      // orderColumn: orderBy,
+      // ordinal: order,
+      "searchParams": {
+        "nameEn": "",
+        "nameKh": "",
+        "createdBy": ""
+      },
+      "columnOrder": "ordering",
+      "orderBy": "DESC",
+      "limit": 10,
+      "offset": 0
     };
 
     await sendRequest(asyncURL, 'POST', postData);
@@ -89,7 +98,7 @@ const AsyncDatatable = (props) => {
     const identifier = setTimeout(async () => {
       getRows(searchText);
     }, 300);
-    
+
     return () => {
       clearTimeout(identifier);
     };
@@ -197,7 +206,7 @@ const AsyncDatatable = (props) => {
         {loading ?
           <Box sx={{ width: '100%' }}><LinearProgress /></Box>
           :
-          <Divider/>
+          <Divider />
         }
         <TableContainer>
           <Table
@@ -366,7 +375,7 @@ const AsyncDatatable = (props) => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          
+
         />
       </Paper>
     </Box>

@@ -51,6 +51,10 @@ const Settings = {
         HomeComponent: lazy(() => import('../pages/settings/business-unit/home')),
     },
 
+    GroupDocument: {
+        HomeComponent: lazy(() => import('../pages/settings/group-document/home')),
+    },
+
     Department: {
         HomeComponent: lazy(() => import('../pages/settings/department/home')),
     },
@@ -93,35 +97,7 @@ export const PRIVATE_ROUTES = [
         isDivider: false,
         // isHide: true
     },
-    // /**Interview */
-    // {
-    //     name: "Interviews",
-    //     path: "/interview",
-    //     component: <Interview.HomeComponent />,
-    //     icon: <RecordVoiceOverIcon style={{color: appConfig.systemColor }} />,
-    //     isDivider: false,
-    // },
-    // /**Reference  Check*/
-    // {
-    //     name: "Reference Checks",
-    //     path: "/reference-check",
-    //     component: <ReferenceCheck.HomeComponent />,
-    //     icon: <PersonSearchIcon style={{color: appConfig.systemColor }} />,
-    // },
-    // /**Job Offer */
-    // {
-    //     name: "Job Offers",
-    //     path: "/job-offer",
-    //     component: <JobOffer.HomeComponent />,
-    //     icon: <HowToReg style={{color: appConfig.systemColor }} />
-    // },
-    // /**Hire*/
-    // {
-    //     name: "Hire Applicants",
-    //     path: "/hire",
-    //     component: <Hire.HomeComponent />,
-    //     icon: <AssignmentIndIcon style={{color: appConfig.systemColor }} />
-    // },
+
     /**Settings */
     {
         name: "Settings",
@@ -133,68 +109,12 @@ export const PRIVATE_ROUTES = [
 
             // Main business
             {
-                name: "Main Businesses",
-                path: "main-business",
-                component: <Settings.MainBusiness.HomeComponent />,
+                name: "Group Documents",
+                path: "group-document",
+                component: <Settings.GroupDocument.HomeComponent />,
                 icon: <BusinessIcon style={{ color: appConfig.systemColor }} />,
                 // isHide: true
-            },
-
-            /**Business */
-            {
-                name: "Primary Businesses",
-                path: "business",
-                component: <Settings.BusinessUnit.HomeComponent />,
-                icon: <ApartmentIcon style={{ color: appConfig.systemColor }} />
-            },
-
-            // /**Department */
-            // {
-            //     name: "Departments",
-            //     path: "department",
-            //     component: <Settings.Department.HomeComponent />,
-            //     icon: <CorporateFareTwoTone style={{color: appConfig.systemColor }} />
-            // },
-
-
-            // /**Campus */
-            // {
-            //     name: 'Campuses',
-            //     path: 'campus',
-            //     component: <Settings.Campus.HomeComponent />,
-            //     icon: <MeetingRoomIcon style={{color: appConfig.systemColor }} />
-            // },
-
-            // {
-            //     name: 'Locations',
-            //     path: 'location',
-            //     component: <Settings.Location.HomeComponent />,
-            //     icon: <LocationOn style={{color: appConfig.systemColor }} />
-            // },
-
-            // /**Position level*/
-            // {
-            //     name: "Position Levels",
-            //     path: "position-level",
-            //     component: <Settings.PositionLevel.HomeComponent />,
-            //     icon: <ElevatorIcon style={{color: appConfig.systemColor }} />,
-            // },
-
-            // /**Position */
-            // {
-            //     name: "Positions",
-            //     path: "position",
-            //     component: <Settings.Position.HomeComponent />,
-            //     icon: <AirlineSeatReclineNormalIcon style={{color: appConfig.systemColor }} />,
-            // },
-
-            // /**Department */
-            // {
-            //     name: "Head Departments",
-            //     path: "head-department",
-            //     component: <Settings.HeadDepartment.HomeComponent />,
-            //     icon: <PeopleAltIcon style={{color: appConfig.systemColor }} />,
-            // }
+            }
         ]
     },
     /**User setup */

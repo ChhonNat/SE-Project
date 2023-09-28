@@ -3,6 +3,14 @@ const API_VERSION = '/api/v1';
 
 export const API_URL = {
 
+
+    groupDocument: {
+        get: `${API_VERSION}/group-document/list`,
+        create: `${API_VERSION}/group-document/create`,  
+        edit: `${API_VERSION}/group-document/update/`,
+    },
+    /////
+
     candidate: {
         get: `${API_VERSION}/candidates/search`,
         create: `${API_VERSION}/candidates`,

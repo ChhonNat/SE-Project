@@ -1,8 +1,30 @@
 import { STATUS } from "../constants/status";
 
-/** proof of user working on data
- */
-const proof = [
+const tblGroupDocument = [
+  {
+    id: "index",
+    label: "No.",
+  },
+  {
+    id: "nameEn",
+    label: "Name"
+  },
+  {
+    id: "nameKh",
+    label: "Name KH"
+  },
+  {
+    id: "acronym",
+    label: "Acronym"
+  },
+  {
+    id: "ordering",
+    label: "Ordering"
+  },
+  {
+    id: "inactive",
+    label: "Status"
+  },
   {
     id: "createdAt",
     label: "Created At",
@@ -14,21 +36,9 @@ const proof = [
     label: "Created By",
   },
   {
-    id: "updatedAt",
-    label: "Updated At",
-    type: "date",
-    dateFormat: "MMM DD, YYYY hh:mm:ss A",
-  },
-  {
-    id: "updatedBy",
-    label: "Updated By",
-  },
-  {
-    id: "status",
-    label: "Status",
-    type: "status",
-    statusColor: { ACTIVE: "green" },
-  },
+    id: "action",
+    label: "Actions"
+  }
 ];
 /***
  * Candidate Table
@@ -797,6 +807,9 @@ const tblUser = [
 ];
 
 export const TABLE_CONFIG = {
+  tblGroupDocument,
+
+
   tblCandidate,
   tblInterview,
   tblJobOffer,

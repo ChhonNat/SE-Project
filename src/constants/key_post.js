@@ -146,6 +146,14 @@ const campus = [
     "status"
 ];
 
+const groupDocument = [
+    "nameEn",
+    "nameKh",
+    "ordering",
+    "acronym",
+    "status"
+];
+
 const headDepartment = [
     "staffId",
     "firstName",
@@ -189,6 +197,8 @@ const user = [
 ]
 
 export const KEY_POST = {
+    groupDocument,
+
     view_candidate,
     upsert_candidate,
     invite_candidate,
