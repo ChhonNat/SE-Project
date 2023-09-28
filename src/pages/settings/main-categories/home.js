@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import UpsertGDocFormModal from "./form-upsert-g-doc.modal";
 
 import { API_URL } from "../../../constants/api_url";
 import { TABLE_CONFIG } from "../../../utils/table-config";
@@ -29,18 +28,19 @@ const HomeGroupDocument = () => {
       */}
 
       <AsyncDatatable
-        asyncURL={API_URL.groupDocument.get}
-        headers={TABLE_CONFIG.tblGroupDocument}
-        bannerText="All Campuses"
-        filter={
-          {
-            "searchParams":{
-              "nameEn":"",
-              "nameKh":"",
-              "createdBy":""
-          },
-          }
+        asyncURL={API_URL.mainCategory.get}
+        headers={TABLE_CONFIG.tblMainCategory}
+        filter = {
+            {
+                "searchParams": {
+                    "docId": "1",
+                    "nameEn": "",
+                    "nameKh": "",
+                    "createdBy": ""
+                },
+            }
         }
+        bannerText="All Campuses"
         searchPlaceHolder="Search"
         ordinal="asc"
         setOrdinalBy="id"
@@ -55,7 +55,7 @@ const HomeGroupDocument = () => {
       />
 
       {/* Modal create and update GROUP DOCUMENT */}
-      {openUpsertGDocModal && (
+      {/* {openUpsertGDocModal && (
         <UpsertGDocFormModal
           title={editGDoc?.id ? "Edit Group Document" : "Add Group Document"}
           openModal={openUpsertGDocModal}
@@ -66,7 +66,7 @@ const HomeGroupDocument = () => {
           }}
           handleEventSucceed={() => setIsReload(!isReload)}
         />
-      )}
+      )} */}
     </>
   );
 };
