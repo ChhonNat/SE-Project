@@ -88,16 +88,6 @@ const User = {
 
 export const PRIVATE_ROUTES = [
 
-    /**Candidate */
-    {
-        name: "Candidates",
-        path: "/candidate",
-        component: <Candidate.HomeComponent />,
-        icon: <PeopleAltIcon style={{ color: appConfig.systemColor }} />,
-        isDivider: false,
-        // isHide: true
-    },
-
     /**Settings */
     {
         name: "Settings",
