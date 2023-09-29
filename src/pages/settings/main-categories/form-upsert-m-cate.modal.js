@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from "react";
 import Swal from "sweetalert2";
 import LabelRequire from "../../../components/Label/require";
 import FooterComponent from "../../../components/Page/footer";
@@ -35,19 +35,19 @@ const UpsertMCateFormModel = (props) => {
   const watchData = watch();
     const { errors } = formState;
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     reset();
-    //     clearErrors();
+        reset();
+        clearErrors();
 
-    //     if (editData?.id && openModal) {
+        if (editData?.id && openModal) {
 
-    //         for (let key in editData) {
-    //             setValue(key, editData[key]);
-    //         }
-    //     }
+            for (let key in editData) {
+                setValue(key, editData[key]);
+            }
+        }
 
-    // }, [openModal])
+    }, [openModal])
 
     const onError = (data) => console.log(data);
 
@@ -163,7 +163,7 @@ const UpsertMCateFormModel = (props) => {
                                     callToApi={API_URL.lookup.listGDoc.get}
                                     bindField={"nameEn"}
                                     handleOnChange={(e, value) => {
-                                        setValue("groupDocId", value?.nameEn);
+                                        setValue("groupDocId", value?.id);
                                     }}
                                     value={watchData?.groupDocId || null}
                                     isRequire={true}
