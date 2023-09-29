@@ -31,7 +31,7 @@ const HomeGroupDocument = () => {
       <AsyncDatatable
         asyncURL={API_URL.groupDocument.get}
         headers={TABLE_CONFIG.tblGroupDocument}
-        bannerText="All Campuses"
+        bannerText="Group Documents"
         filter={
           {
             "searchParams":{

@@ -46,16 +46,16 @@ const tblMainCategory = [
     label: "No.",
   },
   {
+    id: "groupDocumentName",
+    label: "Group Document Name"
+  },
+  {
     id: "nameEn",
     label: "Name"
   },
   {
     id: "nameKh",
     label: "Name KH"
-  },
-  {
-    id: "groupDocId",
-    label: "Group Document ID"
   },
   {
     id: "ordering",

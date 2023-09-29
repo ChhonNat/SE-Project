@@ -1,8 +1,8 @@
+import { Button, Grid } from "@mui/material";
 import React from "react";
-import { Grid, Button } from "@mui/material";
 
+import { blue, orange, red } from "@mui/material/colors";
 import { styled } from '@mui/material/styles';
-import { purple, blue, red, orange } from "@mui/material/colors";
 
 const DangerButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(red[500]),
@@ -24,7 +24,7 @@ const PrimaryButton = styled(Button)(({ theme }) => ({
     },
 }));
 
-const WarningButton = styled(Button)(({theme}) => ({
+const WarningButton = styled(Button)(({ theme }) => ({
     color: 'white',
     border: 0,
     backgroundColor: orange[400],
@@ -36,15 +36,15 @@ const WarningButton = styled(Button)(({theme}) => ({
 
 const FooterComponent = (props) => {
 
-    const { 
-            handleSave, 
-            handleReject,
-            handleCancel, 
-            saveButtonType, 
-            saveButtonLabel,
-            cancelButtonLabel,
-            rejectButtonLabel, 
-            actions 
+    const {
+        handleSave,
+        handleReject,
+        handleCancel,
+        saveButtonType,
+        saveButtonLabel,
+        cancelButtonLabel,
+        rejectButtonLabel,
+        actions
     } = props;
 
     return (
