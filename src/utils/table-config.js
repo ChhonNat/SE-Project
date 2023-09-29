@@ -40,6 +40,46 @@ const tblGroupDocument = [
     label: "Actions"
   }
 ];
+const tblMainCategory = [
+  {
+    id: "index",
+    label: "No.",
+  },
+  {
+    id: "nameEn",
+    label: "Name"
+  },
+  {
+    id: "nameKh",
+    label: "Name KH"
+  },
+  {
+    id: "groupDocId",
+    label: "Group Document ID"
+  },
+  {
+    id: "ordering",
+    label: "Ordering"
+  },
+  {
+    id: "inactive",
+    label: "Status"
+  },
+  {
+    id: "createdAt",
+    label: "Created At",
+    type: "date",
+    dateFormat: "MMM DD, YYYY hh:mm:ss A",
+  },
+  {
+    id: "createdBy",
+    label: "Created By",
+  },
+  {
+    id: "action",
+    label: "Actions"
+  }
+];
 /***
  * Candidate Table
  */
@@ -808,7 +848,7 @@ const tblUser = [
 
 export const TABLE_CONFIG = {
   tblGroupDocument,
-
+  tblMainCategory,
 
   tblCandidate,
   tblInterview,

@@ -6,7 +6,12 @@ export const API_URL = {
 
     groupDocument: {
         get: `${API_VERSION}/group-document/list`,
-        create: `${API_VERSION}/group-document/create`,  
+        create: `${API_VERSION}/group-document/create`,
+        edit: `${API_VERSION}/group-document/update/`,
+    },
+    mainCategory: {
+        get: `${API_VERSION}/main-category/list/`,
+        create: `${API_VERSION}/group-document/create`,
         edit: `${API_VERSION}/group-document/update/`,
     },
     /////

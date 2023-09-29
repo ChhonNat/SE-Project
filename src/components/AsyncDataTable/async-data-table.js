@@ -1,18 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-import Paper from '@mui/material/Paper';
-import uuid from 'react-uuid';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import _useHttp from '../../hooks/_http';
-import ToolBar from './async-tool-bar';
 import EnhancedTableHead from './async-table-head';
 import TableRows from './async-table-row';
+import ToolBar from './async-tool-bar';
 
-import { TableBody, TableRow } from '@mui/material';
-import { Divider, Skeleton, Typography } from '@mui/material';
+import { Divider, TableBody, TableRow, Typography } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
 
 
@@ -40,7 +38,8 @@ const AsyncDatatable = (props) => {
     handleMoreEvent,
     onHandleAddNewEvent,
     onHandleRefreshEvent,
-    useTableActions
+    useTableActions,
+    filter
   } = props;
 
   const [order, setOrder] = useState(ordinal);
@@ -71,22 +70,30 @@ const AsyncDatatable = (props) => {
    */
   const getRows = useCallback(async (searchValue = '') => {
 
-    const postData = {
+    let postData = {
       // start: page * rowsPerPage,
       // length: rowsPerPage,
       // searchValue: searchValue,
       // orderColumn: orderBy,
       // ordinal: order,
-      "searchParams": {
-        "nameEn": "",
-        "nameKh": "",
-        "createdBy": ""
-      },
+      // "searchParams": {
+      //   "nameEn": "",
+      //   "nameKh": "",
+      //   "createdBy": ""
+      // },
       "columnOrder": "ordering",
       "orderBy": "DESC",
       "limit": 10,
       "offset": 0
     };
+
+          // add custom filter
+      if (filter && Object.keys(filter) && Object.keys(filter)?.length) {
+        postData = {
+          ...postData,
+          ...filter
+        }
+      };
 
     await sendRequest(asyncURL, 'POST', postData);
   },

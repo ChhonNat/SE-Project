@@ -3,18 +3,10 @@ import React, { lazy } from "react";
 /**
  * MUI icon
  */
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import SettingsIcon from '@mui/icons-material/Settings';
-import BusinessIcon from '@mui/icons-material/Business';
-import ApartmentIcon from '@mui/icons-material/Apartment';
-import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
-import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ElevatorIcon from '@mui/icons-material/Elevator';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import { CorporateFareTwoTone, HowToReg, LocationOn } from "@mui/icons-material";
+import BusinessIcon from '@mui/icons-material/Business';
+import CategoryIcon from '@mui/icons-material/Category';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { appConfig } from "../constants/app_cont";
 
 
@@ -53,6 +45,11 @@ const Settings = {
 
     GroupDocument: {
         HomeComponent: lazy(() => import('../pages/settings/group-document/home')),
+    },
+    
+    //do on
+    MainCategories: {
+        HomeComponent: lazy(() => import('../pages/settings/main-categories/home')),
     },
 
     Department: {
@@ -104,7 +101,16 @@ export const PRIVATE_ROUTES = [
                 component: <Settings.GroupDocument.HomeComponent />,
                 icon: <BusinessIcon style={{ color: appConfig.systemColor }} />,
                 // isHide: true
-            }
+            },
+            // Main categories
+            {
+                name: "Main Categories",
+                path: "main-categories",
+                component: <Settings.MainCategories.HomeComponent />,
+                icon: <CategoryIcon style={{ color: appConfig.systemColor }} />,
+                // isHide: true
+            },
+            ////'
         ]
     },
     /**User setup */
