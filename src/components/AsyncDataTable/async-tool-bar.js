@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
-import {
-  Toolbar,
-  alpha,
-  Grid,
-  FormControlLabel,
-  Switch,
-  IconButton,
-  Stack,
-  InputBase,
-  Button,
-  Paper,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-import SearchIcon from '@mui/icons-material/Search';
-import PropTypes from 'prop-types';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
+import CloseIcon from '@mui/icons-material/Close';
+import SearchIcon from '@mui/icons-material/Search';
+
+import {
+  Button,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  InputBase,
+  Paper,
+  Stack,
+  Switch,
+  Toolbar,
+  alpha
+} from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+
 
 const AsynTableToolbar = (props) => {
 
@@ -90,13 +92,13 @@ const AsynTableToolbar = (props) => {
                   placeholder={searchPlaceHolder}
                   inputProps={{ 'aria-label': 'search google maps' }}
                   value={searchText}
-                  sx={{ ml: 1, flex: 1,minWidth:'250px' ,borderBottom: '1px solid rgb(224, 224, 224)' }}
+                  sx={{ ml: 1, flex: 1, minWidth: '250px', borderBottom: '1px solid rgb(224, 224, 224)' }}
                   onChange={(event) => setSearchText(event.target.value)}
                   size='medium'
                 />
 
                 {searchVal &&
-                  <IconButton sx={{ p: '0px', marginLeft:'-1rem' }} onClick={() => clearVal()} aria-label="search" color='error'>
+                  <IconButton sx={{ p: '0px', marginLeft: '-1rem' }} onClick={() => clearVal()} aria-label="search" color='error'>
                     <CloseIcon sx={{ fontSize: '1.3rem' }} />
                   </IconButton>
                 }
@@ -113,10 +115,10 @@ const AsynTableToolbar = (props) => {
               <Tooltip title="Refresh Data">
                 <IconButton
                   color="primary"
-                  sx={{ marginRight: 2, paddingX: 1  }}
+                  sx={{ marginRight: 2, paddingX: 1 }}
                   onClick={handleRefreshEvent}
                 >
-                  <AutorenewIcon sx={{fontSize: '2rem'}} />
+                  <AutorenewIcon sx={{ fontSize: '2rem' }} />
                 </IconButton>
               </Tooltip>
             )
@@ -142,6 +144,8 @@ const AsynTableToolbar = (props) => {
           }
 
         </Grid>
+
+
       </Grid>
     </Toolbar>
   );

@@ -42,6 +42,7 @@ const AsyncDatatable = (props) => {
     filter
   } = props;
 
+
   const [order, setOrder] = useState(ordinal);
   const [orderBy, setOrderBy] = useState(setOrdinalBy);
   const [selected, setSelected] = useState([]);
@@ -50,8 +51,8 @@ const AsyncDatatable = (props) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchText, setSearchText] = useState('');
   const { data, loading, error, message, sendRequest } = _useHttp();
-
   const [initialData, setInitialData] = useState([]);
+
 
   useEffect(() => {
 
@@ -64,7 +65,6 @@ const AsyncDatatable = (props) => {
   let rows = useMemo(() => (data ? data : initialData), [data]);
   let rowCount = useMemo(() => (data?.totalRecords ? data?.totalRecords : 0), [data]);
 
-
   /**
    * Get row data
    */
@@ -76,24 +76,22 @@ const AsyncDatatable = (props) => {
       // searchValue: searchValue,
       // orderColumn: orderBy,
       // ordinal: order,
-      // "searchParams": {
-      //   "nameEn": "",
-      //   "nameKh": "",
-      //   "createdBy": ""
-      // },
+      "searchParams": {
+        "searchValue": searchValue
+      },
       "columnOrder": "ordering",
       "orderBy": "DESC",
       "limit": 10,
       "offset": 0
     };
 
-          // add custom filter
-      if (filter && Object.keys(filter) && Object.keys(filter)?.length) {
-        postData = {
-          ...postData,
-          ...filter
-        }
-      };
+    // add custom filter
+    if (filter && Object.keys(filter) && Object.keys(filter)?.length) {
+      postData = {
+        ...postData,
+        ...filter,
+      }
+    };
 
     await sendRequest(asyncURL, 'POST', postData);
   },
@@ -210,6 +208,8 @@ const AsyncDatatable = (props) => {
           searchText={searchText}
           useActions={useTableActions}
         />
+
+
         {loading ?
           <Box sx={{ width: '100%' }}><LinearProgress /></Box>
           :

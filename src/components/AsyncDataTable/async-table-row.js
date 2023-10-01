@@ -1,17 +1,15 @@
-import React from "react";
 import styled from "@emotion/styled";
 import {
   Link,
-  Tab,
   TableCell,
   TableRow,
   Tooltip,
-  Typography,
+  Typography
 } from "@mui/material";
+import React from "react";
 import Moment from "react-moment";
 import uuid from "react-uuid";
 import AsyncTableAction from "./async-table-action";
-import { CheckBox } from "@mui/icons-material";
 
 /**
  * Style Body Table

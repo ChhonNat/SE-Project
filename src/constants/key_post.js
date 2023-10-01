@@ -154,6 +154,14 @@ const groupDocument = [
     "status"
 ];
 
+const mainCategory = [
+    "nameEn",
+    "nameKh",
+    "ordering",
+    "groupDocId",
+    "status"
+];
+
 const headDepartment = [
     "staffId",
     "firstName",
@@ -198,6 +206,7 @@ const user = [
 
 export const KEY_POST = {
     groupDocument,
+    mainCategory,
 
     view_candidate,
     upsert_candidate,
