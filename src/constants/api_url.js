@@ -12,7 +12,12 @@ export const API_URL = {
     mainCategory: {
         get: `${API_VERSION}/main-category/list/`,
         create: `${API_VERSION}/main-category/create`,
-        // edit: `${API_VERSION}/group-document/update/`,
+        edit: `${API_VERSION}/main-category/update/`,
+    },
+    subCategory: {
+        get: `${API_VERSION}/sub-category/list/`,
+        // create: `${API_VERSION}/main-category/create`,
+        // edit: `${API_VERSION}/main-category/update/`,
     },
     /////
 

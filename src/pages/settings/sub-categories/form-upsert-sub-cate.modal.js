@@ -23,7 +23,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const UpsertMCateFormModel = (props) => {
+const UpsertSubCateFormModel = (props) => {
 
     const { openModal, onCloseModal, handleEventSucceed, title, editData } = props;
 
@@ -254,4 +254,4 @@ const UpsertMCateFormModel = (props) => {
     )
 };
 
-export default UpsertMCateFormModel;
+export default UpsertSubCateFormModel;

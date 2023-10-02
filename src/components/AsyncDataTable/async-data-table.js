@@ -89,7 +89,7 @@ const AsyncDatatable = (props) => {
     if (filter && Object.keys(filter) && Object.keys(filter)?.length) {
       postData = {
         ...postData,
-        ...filter,
+        // ...filter,
       }
     };
 

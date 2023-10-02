@@ -32,15 +32,15 @@ const HomeGroupDocument = () => {
         asyncURL={API_URL.groupDocument.get}
         headers={TABLE_CONFIG.tblGroupDocument}
         bannerText="Group Documents"
-        filter={
-          {
-            "searchParams":{
-              "nameEn":"",
-              "nameKh":"",
-              "createdBy":""
-          },
-          }
-        }
+        // filter={
+        //   {
+        //     "searchParams":{
+        //       "nameEn":"",
+        //       "nameKh":"",
+        //       "createdBy":""
+        //   },
+        //   }
+        // }
         searchPlaceHolder="Search"
         ordinal="asc"
         setOrdinalBy="id"
