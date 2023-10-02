@@ -16,8 +16,8 @@ import { DATA_STATUS } from "../../../constants/data_status";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
 import { STATUS } from "../../../constants/status";
-import { MainCategoryModel } from "../../../models/main-cate-model";
-import { mainCategoryService } from "../../../services/main-cate.service";
+import { SubCategoryModel } from "../../../models/sub-cate-model";
+import { subCategoryService } from "../../../services/sub-cate.service";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -29,7 +29,7 @@ const UpsertSubCateFormModel = (props) => {
 
     const { register, handleSubmit, reset, setValue, watch, formState, clearErrors }
         = useForm({
-            resolver: zodResolver(editData?.id ? MainCategoryModel.Update : MainCategoryModel.Create)
+            resolver: zodResolver(editData?.id ? SubCategoryModel.Update : SubCategoryModel.Create)
         });
 
     const watchData = watch();
@@ -64,7 +64,7 @@ const UpsertSubCateFormModel = (props) => {
         let postData = {};
 
         Object.keys(data).forEach((key) => {
-            if (KEY_POST.mainCategory.includes(key)) {
+            if (KEY_POST.subCategory.includes(key)) {
                 postData[key] = data[key];
             }
         });
@@ -74,9 +74,9 @@ const UpsertSubCateFormModel = (props) => {
             let submitMCate;
 
             if (editData?.id)
-                submitMCate = await mainCategoryService.update(editData?.id, postData);
+                submitMCate = await subCategoryService.update(editData?.id, postData);
             else
-                submitMCate = await mainCategoryService.create(postData);
+                submitMCate = await subCategoryService.create(postData);
 
             const { data, status } = submitMCate;
 
@@ -164,17 +164,17 @@ const UpsertSubCateFormModel = (props) => {
                             {/* select models */}
                             <Grid item xs={12}>
                                 <AsyncAutoComplete
-                                    id="groupDoc-id"
-                                    label="Group Document Name"
+                                    id="subCate-id"
+                                    label="Sub Category"
                                     size="small"
-                                    callToApi={API_URL.lookup.listGDoc.get}
+                                    callToApi={API_URL.lookup.listMCate.get}
                                     bindField={"nameEn"}
                                     handleOnChange={(e, value) => {
-                                        setValue("groupDocId", value?.id);
+                                        setValue("mainCateId", value?.id);
                                     }}
-                                    value={watchData?.groupDocId || null}
+                                    value={watchData?.mainCateId || null}
                                     isRequire={true}
-                                    err={errors?.groupDocId?.message}
+                                    err={errors?.mainCateId?.message}
                                 />
                             </Grid>
 
@@ -183,7 +183,7 @@ const UpsertSubCateFormModel = (props) => {
                                 <TextField
                                     type="text"
                                     id="en-name"
-                                    label={<LabelRequire label="Main Category Name (EN)" />}
+                                    label={<LabelRequire label="Sub Category Name (EN)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -198,7 +198,7 @@ const UpsertSubCateFormModel = (props) => {
                                 <TextField
                                     type="text"
                                     id="kh-name"
-                                    label={<LabelRequire label="Main Category Name (KH)" />}
+                                    label={<LabelRequire label="Sub Category Name (KH)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"

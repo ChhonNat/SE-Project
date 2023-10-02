@@ -16,8 +16,8 @@ export const API_URL = {
     },
     subCategory: {
         get: `${API_VERSION}/sub-category/list/`,
-        // create: `${API_VERSION}/main-category/create`,
-        // edit: `${API_VERSION}/main-category/update/`,
+        create: `${API_VERSION}/sub-category/create`,
+        edit: `${API_VERSION}/sub-category/update/`,
     },
     /////
 
@@ -132,6 +132,9 @@ export const API_URL = {
     lookup: {
         listGDoc: {
             get: `${API_VERSION}/main-category/list-group-documents`
+        },
+        listMCate: {
+            get: `${API_VERSION}/sub-category/list-main-categories`
         },
         candidate: {
             get: `${API_VERSION}/candidates/lookup-data`

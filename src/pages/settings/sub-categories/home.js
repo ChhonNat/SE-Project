@@ -8,7 +8,7 @@ import UpsertSubCateFormModel from "./form-upsert-sub-cate.modal";
 
 const HomeSubCategory = () => {
     const [isReload, setIsReload] = useState(false);
-    const [openUpsertSubCateModal, setOpenUpsertMSubCateModal] = useState(false);
+    const [openUpsertSubCateModal, setOpenUpsertSubCateModal] = useState(false);
     const [editSubCate, setEditSubCate] = useState({});
 
     return (
@@ -44,10 +44,10 @@ const HomeSubCategory = () => {
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
                 useTableActions={{ search: true, create: true, edit: true, refresh: true }}
-                onHandleAddNewEvent={() => setOpenUpsertMSubCateModal(true)}
+                onHandleAddNewEvent={() => setOpenUpsertSubCateModal(true)}
                 handleEditEvent={(data) => {
                     setEditSubCate(data);
-                    setOpenUpsertMSubCateModal(true);
+                    setOpenUpsertSubCateModal(true);
                 }}
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
@@ -61,7 +61,7 @@ const HomeSubCategory = () => {
                     editData={editSubCate}
                     onCloseModal={() => {
                         setEditSubCate({});
-                        setOpenUpsertMSubCateModal(false);
+                        setOpenUpsertSubCateModal(false);
                     }}
                     handleEventSucceed={() => setIsReload(!isReload)}
                 />
