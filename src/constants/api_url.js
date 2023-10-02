@@ -131,10 +131,10 @@ export const API_URL = {
 
     lookup: {
         listGDoc: {
-            get: `${API_VERSION}/main-category/list-group-documents`
+            get: `${API_VERSION}/group-document/list-group-documents`
         },
         listMCate: {
-            get: `${API_VERSION}/sub-category/list-main-categories`
+            get: `${API_VERSION}/main-category/list-main-categories`
         },
         candidate: {
             get: `${API_VERSION}/candidates/lookup-data`

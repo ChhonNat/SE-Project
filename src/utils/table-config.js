@@ -48,15 +48,15 @@ const tblMainCategory = [
   },
   {
     id: "groupDocumentName",
-    label: "Group Document Name"
+    label: "Group Document"
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "List Category"
   },
   {
     id: "nameKh",
-    label: "Name KH"
+    label: "List Category KH"
   },
   {
     id: "ordering",
@@ -89,15 +89,15 @@ const tbSubCategory = [
   },
   {
     id: "mainCateName",
-    label: "Main Category Name"
+    label: "Main Category"
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "Sub Category"
   },
   {
     id: "nameKh",
-    label: "Name KH"
+    label: "Sub Category KH"
   },
   {
     id: "ordering",

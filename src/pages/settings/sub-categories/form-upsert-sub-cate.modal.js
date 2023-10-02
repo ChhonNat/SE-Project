@@ -165,7 +165,7 @@ const UpsertSubCateFormModel = (props) => {
                             <Grid item xs={12}>
                                 <AsyncAutoComplete
                                     id="subCate-id"
-                                    label="Sub Category"
+                                    label="Main Category Name"
                                     size="small"
                                     callToApi={API_URL.lookup.listMCate.get}
                                     bindField={"nameEn"}
