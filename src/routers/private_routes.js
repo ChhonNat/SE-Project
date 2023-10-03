@@ -8,6 +8,9 @@ import BusinessIcon from '@mui/icons-material/Business';
 import MainCategoryIcon from '@mui/icons-material/Category';
 import SubCategoryIcon from '@mui/icons-material/Segment';
 import SettingsIcon from '@mui/icons-material/Settings';
+import SourceIcon from '@mui/icons-material/Source';
+import ClassIcon from '@mui/icons-material/Class';
+
 import { appConfig } from "../constants/app_cont";
 
 
@@ -103,7 +106,7 @@ export const PRIVATE_ROUTES = [
                 name: "Group Documents",
                 path: "group-document",
                 component: <Settings.GroupDocument.HomeComponent />,
-                icon: <BusinessIcon style={{ color: appConfig.systemColor }} />,
+                icon: <SourceIcon style={{ color: appConfig.systemColor }} />,
                 // isHide: true
             },
             // Main categories
@@ -119,7 +122,7 @@ export const PRIVATE_ROUTES = [
                 name: "Sub Categories",
                 path: "sub-categories",
                 component: <Settings.SubCategories.HomeComponent />,
-                icon: <SubCategoryIcon style={{ color: appConfig.systemColor }} />,
+                icon: <ClassIcon style={{ color: appConfig.systemColor }} />,
                 // isHide: true
             },
             ////'
