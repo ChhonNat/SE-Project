@@ -11,7 +11,7 @@ const tblGroupDocument = [
   },
   {
     id: "nameKh",
-    label: "Name KH"
+    label: "Name(Kh)"
   },
   {
     id: "acronym",
@@ -23,7 +23,9 @@ const tblGroupDocument = [
   },
   {
     id: "inactive",
-    label: "Status"
+    label: "Status",
+    type: "status",
+    statusColor: { [STATUS.RECORD.ACTIVE]: "Green", [STATUS.RECORD.INACTIVE]: "Red" }
   },
   {
     id: "createdAt",
@@ -47,16 +49,16 @@ const tblMainCategory = [
     label: "No.",
   },
   {
-    id: "groupDocumentName",
-    label: "Group Document"
-  },
-  {
     id: "nameEn",
-    label: "List Category"
+    label: "Name"
   },
   {
     id: "nameKh",
-    label: "List Category KH"
+    label: "Name(Kh)"
+  },
+  {
+    id: "groupDocumentName",
+    label: "Group Document"
   },
   {
     id: "ordering",
@@ -64,7 +66,9 @@ const tblMainCategory = [
   },
   {
     id: "inactive",
-    label: "Status"
+    label: "Status",
+    type: "status",
+    statusColor: { [STATUS.RECORD.ACTIVE]: "Green", [STATUS.RECORD.INACTIVE]: "Red" }
   },
   {
     id: "createdAt",
@@ -88,16 +92,16 @@ const tbSubCategory = [
     label: "No.",
   },
   {
-    id: "mainCateName",
-    label: "Main Category"
-  },
-  {
     id: "nameEn",
-    label: "Sub Category"
+    label: "Name"
   },
   {
     id: "nameKh",
-    label: "Sub Category KH"
+    label: "Name(Kh)"
+  },
+  {
+    id: "mainCateName",
+    label: "Main Category"
   },
   {
     id: "ordering",
@@ -105,7 +109,9 @@ const tbSubCategory = [
   },
   {
     id: "inactive",
-    label: "Status"
+    label: "Status",
+    type: "status",
+    statusColor: { [STATUS.RECORD.ACTIVE]: "Green", [STATUS.RECORD.INACTIVE]: "Red" }
   },
   {
     id: "createdAt",

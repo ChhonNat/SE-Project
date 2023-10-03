@@ -161,29 +161,12 @@ const UpsertMCateFormModel = (props) => {
                                 />
                             </Grid> */}
 
-                            {/* select models */}
-                            <Grid item xs={12}>
-                                <AsyncAutoComplete
-                                    id="groupDoc-id"
-                                    label="Group Document Name"
-                                    size="small"
-                                    callToApi={API_URL.lookup.listGDoc.get}
-                                    bindField={"nameEn"}
-                                    handleOnChange={(e, value) => {
-                                        setValue("groupDocId", value?.id);
-                                    }}
-                                    value={watchData?.groupDocId || null}
-                                    isRequire={true}
-                                    err={errors?.groupDocId?.message}
-                                />
-                            </Grid>
-
                             {/* English name */}
                             <Grid item xs={12}>
                                 <TextField
                                     type="text"
                                     id="en-name"
-                                    label={<LabelRequire label="Main Category Name (EN)" />}
+                                    label={<LabelRequire label="Name" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -198,7 +181,7 @@ const UpsertMCateFormModel = (props) => {
                                 <TextField
                                     type="text"
                                     id="kh-name"
-                                    label={<LabelRequire label="Main Category Name (KH)" />}
+                                    label={<LabelRequire label="Name(Kh)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -207,6 +190,24 @@ const UpsertMCateFormModel = (props) => {
                                     {...register('nameKh')}
                                 />
                             </Grid>
+
+                            {/* select models */}
+                            <Grid item xs={12}>
+                                <AsyncAutoComplete
+                                    id="groupDoc-id"
+                                    label="Group Document"
+                                    size="small"
+                                    callToApi={API_URL.lookup.listGDoc.get}
+                                    bindField={"nameEn"}
+                                    handleOnChange={(e, value) => {
+                                        setValue("groupDocId", value?.id);
+                                    }}
+                                    value={watchData?.groupDocId || null}
+                                    isRequire={true}
+                                    err={errors?.groupDocId?.message}
+                                />
+                            </Grid>
+
 
                             {/*Short name */}
                             <Grid item xs={12}>
