@@ -40,6 +40,7 @@ const tblGroupDocument = [
     label: "Actions"
   }
 ];
+
 const tblMainCategory = [
   {
     id: "index",
@@ -47,15 +48,56 @@ const tblMainCategory = [
   },
   {
     id: "groupDocumentName",
-    label: "Group Document Name"
+    label: "Group Document"
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "List Category"
   },
   {
     id: "nameKh",
-    label: "Name KH"
+    label: "List Category KH"
+  },
+  {
+    id: "ordering",
+    label: "Ordering"
+  },
+  {
+    id: "inactive",
+    label: "Status"
+  },
+  {
+    id: "createdAt",
+    label: "Created At",
+    type: "date",
+    dateFormat: "MMM DD, YYYY hh:mm:ss A",
+  },
+  {
+    id: "createdBy",
+    label: "Created By",
+  },
+  {
+    id: "action",
+    label: "Actions"
+  }
+];
+
+const tbSubCategory = [
+  {
+    id: "index",
+    label: "No.",
+  },
+  {
+    id: "mainCateName",
+    label: "Main Category"
+  },
+  {
+    id: "nameEn",
+    label: "Sub Category"
+  },
+  {
+    id: "nameKh",
+    label: "Sub Category KH"
   },
   {
     id: "ordering",
@@ -849,6 +891,7 @@ const tblUser = [
 export const TABLE_CONFIG = {
   tblGroupDocument,
   tblMainCategory,
+  tbSubCategory,
 
   tblCandidate,
   tblInterview,

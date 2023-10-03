@@ -10,7 +10,7 @@ import UpsertMCateFormModel from "./form-upsert-m-cate.modal";
 const HomeGroupDocument = () => {
   const [isReload, setIsReload] = useState(false);
   const [openUpsertMCateModal, setOpenUpsertMCateModal] = useState(false);
-  const [editGDoc, setEditGDoc] = useState({});
+  const [editMCate, setEditMCate] = useState({});
   
   return (
     <>
@@ -47,7 +47,7 @@ const HomeGroupDocument = () => {
         useTableActions={{ search: true, create: true, edit: true, refresh: true }}
         onHandleAddNewEvent={() => setOpenUpsertMCateModal(true)}
         handleEditEvent={(data) => {
-          setEditGDoc(data);
+          setEditMCate(data);
           setOpenUpsertMCateModal(true);
         }}
         onHandleRefreshEvent={() => setIsReload(!isReload)}
@@ -55,14 +55,13 @@ const HomeGroupDocument = () => {
 
 
 
-      {/* Modal create and update GROUP DOCUMENT */}
       {openUpsertMCateModal && (
         <UpsertMCateFormModel
-          title={editGDoc?.id ? "Edit Main Category" : "Add Main Category"}
+          title={editMCate?.id ? "Edit Main Category" : "Add Main Category"}
           openModal={openUpsertMCateModal}
-          editData={editGDoc}
+          editData={editMCate}
           onCloseModal={() => {
-            setEditGDoc({});
+            setEditMCate({});
             setOpenUpsertMCateModal(false);
           }}
           handleEventSucceed={() => setIsReload(!isReload)}

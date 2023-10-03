@@ -5,7 +5,8 @@ import React, { lazy } from "react";
  */
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BusinessIcon from '@mui/icons-material/Business';
-import CategoryIcon from '@mui/icons-material/Category';
+import MainCategoryIcon from '@mui/icons-material/Category';
+import SubCategoryIcon from '@mui/icons-material/Segment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { appConfig } from "../constants/app_cont";
 
@@ -47,9 +48,12 @@ const Settings = {
         HomeComponent: lazy(() => import('../pages/settings/group-document/home')),
     },
     
-    //do on
     MainCategories: {
         HomeComponent: lazy(() => import('../pages/settings/main-categories/home')),
+    },
+
+    SubCategories: {
+        HomeComponent: lazy(() => import('../pages/settings/sub-categories/home')),
     },
 
     Department: {
@@ -107,7 +111,15 @@ export const PRIVATE_ROUTES = [
                 name: "Main Categories",
                 path: "main-categories",
                 component: <Settings.MainCategories.HomeComponent />,
-                icon: <CategoryIcon style={{ color: appConfig.systemColor }} />,
+                icon: <MainCategoryIcon style={{ color: appConfig.systemColor }} />,
+                // isHide: true
+            },
+            // Sub categories
+            {
+                name: "Sub Categories",
+                path: "sub-categories",
+                component: <Settings.SubCategories.HomeComponent />,
+                icon: <SubCategoryIcon style={{ color: appConfig.systemColor }} />,
                 // isHide: true
             },
             ////'

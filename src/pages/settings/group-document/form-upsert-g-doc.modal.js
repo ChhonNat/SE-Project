@@ -1,25 +1,21 @@
-import React, { forwardRef, useEffect } from "react";
 import Box from "@mui/material/Box";
+import React, { forwardRef, useEffect } from "react";
+import Swal from "sweetalert2";
+import LabelRequire from "../../../components/Label/require";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
 import SelectComponent from "../../../components/Selector/select";
-import LabelRequire from "../../../components/Label/require";
-import Swal from "sweetalert2";
-import _useHttp from "../../../hooks/_http";
 
-import { TextField, Grid, Dialog, DialogTitle, DialogContent, Slide, DialogActions, IconButton } from "@mui/material";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { HTTP_METHODS } from "../../../constants/http_method";
-import { STATUS } from "../../../constants/status";
 import { Close } from "@mui/icons-material";
-import { API_URL } from "../../../constants/api_url";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Slide, TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { DATA_STATUS } from "../../../constants/data_status";
+import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
-import { appConfig } from "../../../constants/app_cont";
+import { STATUS } from "../../../constants/status";
 import { GroupDocumentModel } from "../../../models/group-doc-model";
 import { groupDocService } from "../../../services/group-doc.service";
-import { HTTP_STATUS } from "../../../constants/http_status";
-import { DATA_STATUS } from "../../../constants/data_status";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -35,17 +31,19 @@ const UpsertGDocFormModal = (props) => {
     const { errors } = formState;
 
     useEffect(() => {
-
         reset();
         clearErrors();
-
+    
         if (editData?.id && openModal) {
-
             for (let key in editData) {
-                setValue(key, editData[key]);
+                if (key === 'ordering') {
+                    const valueAsString = editData[key].toString();
+                    setValue(key, valueAsString);
+                } else {
+                    setValue(key, editData[key]);
+                }
             }
         }
-
     }, [openModal])
 
     const onError = (data) => console.log(data);
@@ -168,10 +166,11 @@ const UpsertGDocFormModal = (props) => {
                                     {...register('nameKh')}
                                 />
                             </Grid>
+
                             {/*Short name */}
                             <Grid item xs={12}>
                                 <TextField
-                                    type="text"
+                                    type="number"
                                     id="short-name"
                                     label={<LabelRequire label="Ordering" />}
                                     variant="outlined"
@@ -193,6 +192,8 @@ const UpsertGDocFormModal = (props) => {
                                     size="small"
                                     multiline
                                     variant="outlined"
+                                    error={errors?.acronym ? true : false}
+                                    helperText={errors?.acronym?.message}
                                     {...register('acronym')}
                                 />
                             </Grid>
