@@ -15,16 +15,22 @@ export const API_URL = {
         get: `${API_VERSION}/main-category/list/`,
         create: `${API_VERSION}/main-category/create`,
         edit: `${API_VERSION}/main-category/update/`,
+        softDelete: `${API_VERSION}/main-category/delete/`,
+        restore: `${API_VERSION}/main-category/restore/`,
     },
     subCategory: {
         get: `${API_VERSION}/sub-category/list/`,
         create: `${API_VERSION}/sub-category/create`,
         edit: `${API_VERSION}/sub-category/update/`,
+        softDelete: `${API_VERSION}/sub-category/delete/`,
+        restore: `${API_VERSION}/sub-category/restore/`,
     },
     childSubCategory: {
         get: `${API_VERSION}/sub-sub-category/list/`,
         create: `${API_VERSION}/sub-sub-category/create`,
         edit: `${API_VERSION}/sub-sub-category/update/`,
+        softDelete: `${API_VERSION}/sub-sub-category/delete/`,
+        restore: `${API_VERSION}/sub-sub-category/restore/`,
     },
     /////
 

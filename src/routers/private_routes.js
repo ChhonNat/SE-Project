@@ -138,7 +138,7 @@ export const PRIVATE_ROUTES = [
             // Sub-Sub categories
             {
                 name: "Child Sub-Categories",
-                path: "sub-sub-categories",
+                path: "child-sub-categories",
                 component: <Settings.SubSubCategories.HomeComponent />,
                 icon: <SubSubCategoryIcon style={{ color: appConfig.systemColor }} />,
                 // isHide: true

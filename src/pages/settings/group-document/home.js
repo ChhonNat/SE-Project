@@ -1,17 +1,15 @@
-import SyncIcon from '@mui/icons-material/Sync';
-import SyncDisabledIcon from '@mui/icons-material/SyncDisabled';
+import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import React, { useState } from "react";
-import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-import UpsertGDocFormModal from "./form-upsert-g-doc.modal";
-
 import { useSelector } from "react-redux";
 import Swal from 'sweetalert2';
+import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import { API_URL } from "../../../constants/api_url";
 import { DATA_STATUS } from '../../../constants/data_status';
 import { HTTP_STATUS } from '../../../constants/http_status';
 import { groupDocService } from '../../../services/group-doc.service';
 import { TABLE_CONFIG } from "../../../utils/table-config";
-
+import UpsertGDocFormModal from "./form-upsert-g-doc.modal";
 
 const HomeGroupDocument = () => {
 
@@ -71,14 +69,14 @@ const HomeGroupDocument = () => {
 
     try {
 
-      let submitGDoc;
+      let tempData;
       if (eName.toLowerCase() === 'active') {
-        submitGDoc = await groupDocService.restore(postStatus);
+        tempData = await groupDocService.restore(postStatus);
       } else {
-        submitGDoc = await groupDocService.softDelete(postStatus);
+        tempData = await groupDocService.softDelete(postStatus);
       }
 
-      const { data, status } = submitGDoc;
+      const { data, status } = tempData;
 
       if (status === HTTP_STATUS.success) {
 
@@ -147,24 +145,24 @@ const HomeGroupDocument = () => {
               {
                 name: "Active",
                 eventName: "active",
-                icon: <SyncIcon color="info" />,
+                icon: <ToggleOnIcon color="info" />,
                 hidden: false,
                 enable: [
                   {
                     field: 'inactive',
-                    values: ['Inactive']
+                    values: 'Inactive'
                   }
                 ],
               },
               {
                 name: "Inactive",
                 eventName: "inactive",
-                icon: <SyncDisabledIcon color="info" />,
+                icon: <ToggleOffIcon color="danger" />,
                 hidden: false,
                 enable: [
                   {
                     field: 'inactive',
-                    values: ['Active']
+                    values: 'Active'
                   }
                 ],
               }
