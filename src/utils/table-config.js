@@ -128,6 +128,46 @@ const tbSubCategory = [
     label: "Actions"
   }
 ];
+const tbSubSubCategory = [
+  {
+    id: "index",
+    label: "No.",
+  },
+  {
+    id: "nameEn",
+    label: "Name"
+  },
+  {
+    id: "nameKh",
+    label: "Name KH"
+  },
+  {
+    id: "subCateName",
+    label: "Sub Category"
+  },
+  {
+    id: "ordering",
+    label: "Ordering"
+  },
+  {
+    id: "inactive",
+    label: "Status"
+  },
+  {
+    id: "createdAt",
+    label: "Created At",
+    type: "date",
+    dateFormat: "MMM DD, YYYY hh:mm:ss A",
+  },
+  {
+    id: "createdBy",
+    label: "Created By",
+  },
+  {
+    id: "action",
+    label: "Actions"
+  }
+];
 /***
  * Candidate Table
  */
@@ -898,6 +938,7 @@ export const TABLE_CONFIG = {
   tblGroupDocument,
   tblMainCategory,
   tbSubCategory,
+  tbSubSubCategory,
 
   tblCandidate,
   tblInterview,

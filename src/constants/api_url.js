@@ -8,6 +8,8 @@ export const API_URL = {
         get: `${API_VERSION}/group-document/list`,
         create: `${API_VERSION}/group-document/create`,
         edit: `${API_VERSION}/group-document/update/`,
+        softDelete: `${API_VERSION}/group-document/delete/`,
+        restore: `${API_VERSION}/group-document/restore/`,
     },
     mainCategory: {
         get: `${API_VERSION}/main-category/list/`,
@@ -18,6 +20,11 @@ export const API_URL = {
         get: `${API_VERSION}/sub-category/list/`,
         create: `${API_VERSION}/sub-category/create`,
         edit: `${API_VERSION}/sub-category/update/`,
+    },
+    category: {
+        get: `${API_VERSION}/sub-sub-category/list/`,
+        create: `${API_VERSION}/sub-sub-category/create`,
+        edit: `${API_VERSION}/sub-sub-category/update/`,
     },
     /////
 
@@ -135,6 +142,9 @@ export const API_URL = {
         },
         listMCate: {
             get: `${API_VERSION}/main-category/list-main-categories`
+        },
+        subCate: {
+            get: `${API_VERSION}/sub-category/list-sub-categories`
         },
         candidate: {
             get: `${API_VERSION}/candidates/lookup-data`

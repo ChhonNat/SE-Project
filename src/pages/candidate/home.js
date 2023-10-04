@@ -3,23 +3,23 @@ import React, { useState } from "react";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import ViewFileModal from "../../components/Modal/view-file.modal";
 
-import CandidateFormModal from "./upsert-candidate-form.modal";
+import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
 import CandidateFormDetailModal from "./detail-candidate-form.modal";
 import CandidateProcessForm from "./process-candidate-form.modal";
-import CandidateScheduleFormModal from "../../components/Modal/schedule-candidate-form.modal";
+import CandidateFormModal from "./upsert-candidate-form.modal";
 
-import NextPlanIcon from "@mui/icons-material/NextPlan";
-import DoneAllIcon from "@mui/icons-material/DoneAll";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import ClearIcon from "@mui/icons-material/Clear";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import NextPlanIcon from "@mui/icons-material/NextPlan";
 
+import { Difference } from "@mui/icons-material";
 import { useSelector } from "react-redux";
+import { API_URL } from "../../constants/api_url";
 import { ROLE } from "../../constants/roles";
 import { STATUS } from "../../constants/status";
-import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
-import { Difference } from "@mui/icons-material";
 // import { ContentCopy, Difference } from "@mui/icons-material";
 
 const HomeCandidate = () => {
@@ -93,6 +93,7 @@ const HomeCandidate = () => {
             ? true
             : false,
           delete: false,
+          // do on>>>
           moreOption: {
             buttons: [
               {
