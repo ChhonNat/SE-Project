@@ -17,7 +17,7 @@ import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
 import { STATUS } from "../../../constants/status";
 import { categoryModel } from "../../../models/cate-model";
-import { categoryService } from "../../../services/category.service";
+import { childSuCategoryService } from "../../../services/category.service";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -74,9 +74,9 @@ const UpsertCateFormModel = (props) => {
             let submitMCate;
 
             if (editData?.id)
-                submitMCate = await categoryService.update(editData?.id, postData);
+                submitMCate = await childSuCategoryService.update(editData?.id, postData);
             else
-                submitMCate = await categoryService.create(postData);
+                submitMCate = await childSuCategoryService.create(postData);
 
             const { data, status } = submitMCate;
 
@@ -183,7 +183,7 @@ const UpsertCateFormModel = (props) => {
                                 <TextField
                                     type="text"
                                     id="en-name"
-                                    label={<LabelRequire label="Name (EN)" />}
+                                    label={<LabelRequire label="Name" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -198,7 +198,7 @@ const UpsertCateFormModel = (props) => {
                                 <TextField
                                     type="text"
                                     id="kh-name"
-                                    label={<LabelRequire label="Name (KH)" />}
+                                    label={<LabelRequire label="Name (Kh)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
