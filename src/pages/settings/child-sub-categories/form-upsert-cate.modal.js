@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import LabelRequire from "../../../components/Label/require";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
-import SelectComponent from "../../../components/Selector/select";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Close } from "@mui/icons-material";
@@ -15,9 +14,8 @@ import { API_URL } from "../../../constants/api_url";
 import { DATA_STATUS } from "../../../constants/data_status";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
-import { STATUS } from "../../../constants/status";
 import { categoryModel } from "../../../models/cate-model";
-import { childSuCategoryService } from "../../../services/category.service";
+import { childSuCategoryService } from "../../../services/child-sub-category.service";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -224,7 +222,7 @@ const UpsertCateFormModel = (props) => {
                             </Grid>
 
                             {/* Status */}
-                            {editData?.id &&
+                            {/* {editData?.id &&
                                 <Grid item xs={12}>
                                     <SelectComponent
                                         id="status-id"
@@ -235,7 +233,7 @@ const UpsertCateFormModel = (props) => {
                                         handleOnChange={(e) => setValue('status', e?.target?.value)}
                                     />
                                 </Grid>
-                            }
+                            } */}
                         </Grid>
                     </Box>
                 </DialogContent>

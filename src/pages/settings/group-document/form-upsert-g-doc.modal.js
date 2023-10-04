@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import LabelRequire from "../../../components/Label/require";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
-import SelectComponent from "../../../components/Selector/select";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Close } from "@mui/icons-material";
@@ -13,7 +12,6 @@ import { useForm } from "react-hook-form";
 import { DATA_STATUS } from "../../../constants/data_status";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
-import { STATUS } from "../../../constants/status";
 import { GroupDocumentModel } from "../../../models/group-doc-model";
 import { groupDocService } from "../../../services/group-doc.service";
 
@@ -200,7 +198,7 @@ const UpsertGDocFormModal = (props) => {
 
 
                             {/* Status */}
-                            {editData?.id &&
+                            {/* {editData?.id &&
                                 <Grid item xs={12}>
                                     <SelectComponent
                                         id="status-id"
@@ -211,7 +209,7 @@ const UpsertGDocFormModal = (props) => {
                                         handleOnChange={(e) => setValue('status', e?.target?.value)}
                                     />
                                 </Grid>
-                            }
+                            } */}
                         </Grid>
                     </Box>
                 </DialogContent>

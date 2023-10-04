@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import LabelRequire from "../../../components/Label/require";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
-import SelectComponent from "../../../components/Selector/select";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Close } from "@mui/icons-material";
@@ -15,7 +14,6 @@ import { API_URL } from "../../../constants/api_url";
 import { DATA_STATUS } from "../../../constants/data_status";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
-import { STATUS } from "../../../constants/status";
 import { MainCategoryModel } from "../../../models/main-cate-model";
 import { mainCategoryService } from "../../../services/main-cate.service";
 
@@ -225,7 +223,7 @@ const UpsertMCateFormModel = (props) => {
                             </Grid>
 
                             {/* Status */}
-                            {editData?.id &&
+                            {/* {editData?.id &&
                                 <Grid item xs={12}>
                                     <SelectComponent
                                         id="status-id"
@@ -236,7 +234,7 @@ const UpsertMCateFormModel = (props) => {
                                         handleOnChange={(e) => setValue('status', e?.target?.value)}
                                     />
                                 </Grid>
-                            }
+                            } */}
                         </Grid>
                     </Box>
                 </DialogContent>

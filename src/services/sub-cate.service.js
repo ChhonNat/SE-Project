@@ -9,8 +9,15 @@ const create = (param, contentType) => {
 const update = (id, param, contentType) => {
     return httpService._put(API_URL.subCategory.edit+id, param, contentType);
 };
-
+const softDelete = (id) => {
+    return httpService._put(API_URL.subCategory.softDelete+id);
+};
+const restore = (id) => {
+    return httpService._put(API_URL.subCategory.restore+id);
+};
 export const subCategoryService = {
     create,
-    update
+    update,
+    softDelete,
+    restore
 };

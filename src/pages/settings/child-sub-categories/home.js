@@ -1,16 +1,70 @@
+import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import React, { useState } from "react";
-
+import Swal from 'sweetalert2';
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
-
 import { API_URL } from "../../../constants/api_url";
+import { DATA_STATUS } from '../../../constants/data_status';
+import { HTTP_STATUS } from '../../../constants/http_status';
+import { childSuCategoryService } from "../../../services/child-sub-category.service";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import UpsertCateFormModel from "./form-upsert-cate.modal";
-// import UpsertSubCateFormModel from "./form-upsert-sub-cate.modal";
 
-const HomeCategory = () => {
+
+
+const HomeChildSubCategory = () => {
     const [isReload, setIsReload] = useState(false);
-    const [openUpsertCateModal, setOpenUpsertSubSubCateModal] = useState(false);
-    const [editCate, setEditCate] = useState({});
+    const [openUpsertChildSubCateModal, setOpenUpsertChildSubCateModal] = useState(false);
+    const [editChildSubCate, setEditChildSubCate] = useState({});
+
+const handleMoreEvent = async (eName, data) => {
+    let postStatus = null;
+
+    Object.keys(data).forEach((key) => {
+
+        if (key.toLocaleLowerCase() === 'id') {
+            if (eName.toLowerCase() === 'active') {
+                postStatus = data[key];
+
+            } else {
+                postStatus = data[key];
+            }
+        }
+    });
+
+    try {
+
+        let tempData;
+        if (eName.toLowerCase() === 'active') {
+            tempData = await childSuCategoryService.restore(postStatus);
+        } else {
+            tempData = await childSuCategoryService.softDelete(postStatus);
+        }
+
+        const { data, status } = tempData;
+
+        if (status === HTTP_STATUS.success) {
+
+            if (status === DATA_STATUS.success)
+                setIsReload(!isReload)
+
+            /**
+             * Alert after request responses
+             */
+            Swal.fire({
+                title: status === DATA_STATUS.success ? "Success" : "Error",
+                text: data?.message,
+                icon: status === DATA_STATUS.success ? "success" : "error",
+                confirmButtonText: "OK",
+                size: 200,
+            });
+        }
+
+    } catch (error) {
+        console.log('post error', error);
+    }
+}
+
 
     return (
         <>
@@ -44,25 +98,60 @@ const HomeCategory = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 isReloadData={isReload ? true : false}
-                useTableActions={{ search: true, create: true, edit: true, refresh: true }}
-                onHandleAddNewEvent={() => setOpenUpsertSubSubCateModal(true)}
+                useTableActions={{
+                    search: true,
+                    create: true, edit: true,
+                    refresh: true,
+
+                    // enable more options
+                    moreOption: {
+                        buttons: [
+                            {
+                                name: "Active",
+                                eventName: "active",
+                                icon: <ToggleOnIcon color="info" />,
+                                hidden: false,
+                                enable: [
+                                    {
+                                        field: 'inactive',
+                                        values: ['Inactive']
+                                    }
+                                ],
+                            },
+                            {
+                                name: "Inactive",
+                                eventName: "inactive",
+                                icon: <ToggleOffIcon color="danger" />,
+                                hidden: false,
+                                enable: [
+                                    {
+                                        field: 'inactive',
+                                        values: ['Active']
+                                    }
+                                ],
+                            }
+                        ]
+                    },
+                }}
+                onHandleAddNewEvent={() => setOpenUpsertChildSubCateModal(true)}
                 handleEditEvent={(data) => {
-                    setEditCate(data);
-                    setOpenUpsertSubSubCateModal(true);
+                    setEditChildSubCate(data);
+                    setOpenUpsertChildSubCateModal(true);
                 }}
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
+                handleMoreEvent={(eName, data) => handleMoreEvent(eName, data)}
             />
 
 
 
-            {openUpsertCateModal && (
+            {openUpsertChildSubCateModal && (
                 <UpsertCateFormModel
-                    title={editCate?.id ? "Edit Child Sub-Category" : "Add Child Sub-Category"}
-                    openModal={openUpsertCateModal}
-                    editData={editCate}
+                    title={editChildSubCate?.id ? "Edit Child Sub-Category" : "Add Child Sub-Category"}
+                    openModal={openUpsertChildSubCateModal}
+                    editData={editChildSubCate}
                     onCloseModal={() => {
-                        setEditCate({});
-                        setOpenUpsertSubSubCateModal(false);
+                        setEditChildSubCate({});
+                        setOpenUpsertChildSubCateModal(false);
                     }}
                     handleEventSucceed={() => setIsReload(!isReload)}
                 />
@@ -71,4 +160,4 @@ const HomeCategory = () => {
     );
 };
 
-export default HomeCategory;
+export default HomeChildSubCategory;
