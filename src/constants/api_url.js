@@ -21,7 +21,7 @@ export const API_URL = {
         create: `${API_VERSION}/sub-category/create`,
         edit: `${API_VERSION}/sub-category/update/`,
     },
-    category: {
+    childSubCategory: {
         get: `${API_VERSION}/sub-sub-category/list/`,
         create: `${API_VERSION}/sub-sub-category/create`,
         edit: `${API_VERSION}/sub-sub-category/update/`,

@@ -58,7 +58,7 @@ const Settings = {
     },
 
     SubSubCategories: {
-        HomeComponent: lazy(() => import('../pages/settings/categories/home')),
+        HomeComponent: lazy(() => import('../pages/settings/child-sub-categories/home')),
     },
 
     Department: {
@@ -103,6 +103,14 @@ export const PRIVATE_ROUTES = [
         /**Children settings */
         children: [
 
+            // //Department
+            // {
+            //     name: "Departments",
+            //     path: "department",
+            //     component: <Settings.Department.HomeComponent />,
+            //     icon: <CorporateFareTwoTone style={{ color: appConfig.systemColor }} />
+            // },
+
             // Main business
             {
                 name: "Group Documents",
@@ -121,7 +129,7 @@ export const PRIVATE_ROUTES = [
             },
             // Sub categories
             {
-                name: "Sub Categories",
+                name: "Sub-Categories",
                 path: "sub-categories",
                 component: <Settings.SubCategories.HomeComponent />,
                 icon: <SubCategoryIcon style={{ color: appConfig.systemColor }} />,
@@ -129,7 +137,7 @@ export const PRIVATE_ROUTES = [
             },
             // Sub-Sub categories
             {
-                name: "Categories",
+                name: "Child Sub-Categories",
                 path: "sub-sub-categories",
                 component: <Settings.SubSubCategories.HomeComponent />,
                 icon: <SubSubCategoryIcon style={{ color: appConfig.systemColor }} />,

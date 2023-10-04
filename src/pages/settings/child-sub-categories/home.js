@@ -30,7 +30,7 @@ const HomeCategory = () => {
 
             {/* old AsyncDataTable */}
             <AsyncDatatable
-                asyncURL={API_URL.category.get}
+                asyncURL={API_URL.childSubCategory.get}
                 headers={TABLE_CONFIG.tbSubSubCategory}
                 // filter = {
                 //     {
@@ -57,7 +57,7 @@ const HomeCategory = () => {
 
             {openUpsertCateModal && (
                 <UpsertCateFormModel
-                    title={editCate?.id ? "Edit Category" : "Add Category"}
+                    title={editCate?.id ? "Edit Child Sub-Category" : "Add Child Sub-Category"}
                     openModal={openUpsertCateModal}
                     editData={editCate}
                     onCloseModal={() => {

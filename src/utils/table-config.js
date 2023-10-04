@@ -151,7 +151,9 @@ const tbSubSubCategory = [
   },
   {
     id: "inactive",
-    label: "Status"
+    label: "Status",
+    type: "status",
+    statusColor: { [STATUS.RECORD.ACTIVE]: "Green", [STATUS.RECORD.INACTIVE] : "Red" }
   },
   {
     id: "createdAt",
