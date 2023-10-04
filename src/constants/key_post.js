@@ -169,6 +169,13 @@ const subCategory = [
     "mainCateId",
     "status"
 ];
+const category = [
+    "nameEn",
+    "nameKh",
+    "ordering",
+    "subCateId",
+    "status"
+];
 
 const headDepartment = [
     "staffId",
@@ -216,6 +223,7 @@ export const KEY_POST = {
     groupDocument,
     mainCategory,
     subCategory,
+    category,
 
     view_candidate,
     upsert_candidate,

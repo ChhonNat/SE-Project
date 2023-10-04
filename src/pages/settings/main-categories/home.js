@@ -11,7 +11,7 @@ const HomeGroupDocument = () => {
   const [isReload, setIsReload] = useState(false);
   const [openUpsertMCateModal, setOpenUpsertMCateModal] = useState(false);
   const [editMCate, setEditMCate] = useState({});
-  
+
   return (
     <>
       {/* 
@@ -27,8 +27,8 @@ const HomeGroupDocument = () => {
           onHandleAddNewEvent: 'Listen button add new event'
           customActions: 'Custom button event in table'
       */}
-      
-{/* old AsyncDataTable */}
+
+      {/* old AsyncDataTable */}
       <AsyncDatatable
         asyncURL={API_URL.mainCategory.get}
         headers={TABLE_CONFIG.tblMainCategory}
@@ -44,7 +44,13 @@ const HomeGroupDocument = () => {
         ordinal="asc"
         setOrdinalBy="id"
         isReloadData={isReload ? true : false}
-        useTableActions={{ search: true, create: true, edit: true, refresh: true }}
+        useTableActions={{
+          search: true,
+          create: true,
+          edit: true,
+          refresh: true,
+
+        }}
         onHandleAddNewEvent={() => setOpenUpsertMCateModal(true)}
         handleEditEvent={(data) => {
           setEditMCate(data);
