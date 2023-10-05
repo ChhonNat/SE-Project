@@ -139,7 +139,7 @@ const tbSubSubCategory = [
   },
   {
     id: "nameKh",
-    label: "Name KH"
+    label: "Name(Kh)"
   },
   {
     id: "subCateName",
