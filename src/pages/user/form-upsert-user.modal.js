@@ -219,7 +219,7 @@ const UpsertUserForm = (props) => {
       onClose={onCloseModal}
     >
       <DialogTitle>
-        <TitleComponent title={user?.id ? "Edit user" : "Add new user"} />
+        <TitleComponent title={user?.id ? "Edit Uer" : "Add New User"} />
         {onCloseModal ? (
           <IconButton
             aria-label="close"
