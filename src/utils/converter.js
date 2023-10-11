@@ -15,6 +15,12 @@ const convertDateToAPI = (date) => {
     return ('0' + (newDate.getMonth() + 1)).slice(-2) + '/' + ('0' + (newDate.getDate() + 0)).slice(-2) + '/' + newDate.getFullYear();
 };
 
+const convertDateToAPI2 = (date) => {
+
+    const newDate = new Date(date);
+    return  newDate.getFullYear() + '/' + ('0' + (newDate.getMonth() + 1)).slice(-2) + '/' + ('0' + (newDate.getDate() + 0)).slice(-2);;
+};
+
 /**
  * Service to convert application candidate code
  */
@@ -41,6 +47,7 @@ const padToNDigits = (n, value) => {
 export const ConverterService = {
     convertUnixDateToMUI,
     convertDateToAPI,
+    convertDateToAPI2,
     convertApplicationCode,
     padToNDigits
 };

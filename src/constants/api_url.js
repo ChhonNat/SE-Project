@@ -152,6 +152,9 @@ export const API_URL = {
         subCate: {
             get: `${API_VERSION}/sub-category/list-sub-categories`
         },
+        childSubCate: {
+            get: `${API_VERSION}/sub-sub-category/list-sub-sub-categories`
+        },
         candidate: {
             get: `${API_VERSION}/candidates/lookup-data`
         },
@@ -197,6 +200,12 @@ export const API_URL = {
         location: {
             get: `${API_VERSION}/locations`
         }
+    },
+
+    docEntry: {
+        // get: `${API_VERSION}/users/search`,
+        create: `${API_VERSION}/documents/create`,
+        // edit: `${API_VERSION}/users/`,
     },
 
     user: {
