@@ -180,15 +180,10 @@ const UpsertDocEntryForm = (props) => {
                 submitDocEntry = await docEntryService.updateDocEntry(docEntry?.id, submitData, "multipart/form-data");
             else submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
 
-            const { status, data } = submitDocEntry;
-            const { message } = data;
+            const {data } = submitDocEntry;
+            const { message, success } = data;
 
-            if (status === HTTP_STATUS.success) {
-                if (data?.status === DATA_STATUS.success) handleEventSucceed();
-
-                /**
-                 * Alert after request responses
-                 */
+            if (success) {
                 Swal.fire({
                     title: data?.success ? "Success" : "Error",
                     text: message,
@@ -196,7 +191,7 @@ const UpsertDocEntryForm = (props) => {
                     confirmButtonText: "OK",
                     size: 200,
                 });
-
+                handleEventSucceed();
                 handleCloseModal();
             }
         } catch (error) {
@@ -431,7 +426,6 @@ const UpsertDocEntryForm = (props) => {
                                 sx={{ width: "100%" }}
                                 size="small"
                                 {...register("issueNum")}
-                            // helperText="(Optional)"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -439,7 +433,6 @@ const UpsertDocEntryForm = (props) => {
                                 label={"Approved By"}
                                 sx={{ width: "100%" }}
                                 size="small"
-                                // helperText="(Optional)"
                                 {...register("approvedBy")}
                             />
                         </Grid>
@@ -450,7 +443,6 @@ const UpsertDocEntryForm = (props) => {
                                 sx={{ width: "100%" }}
                                 size="small"
                                 {...register("remark")}
-                            // helperText="(Optional)"
                             />
                         </Grid>
 
