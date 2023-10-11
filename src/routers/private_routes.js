@@ -34,7 +34,7 @@ const JobOffer = {
 const Hire = {
     HomeComponent: lazy(() => import('../pages/hire/home'))
 };
-const doc_entry = {
+const DocEntry = {
     HomeComponent: lazy(() => import('../pages/doc-entry/home'))
 };
 
@@ -100,8 +100,8 @@ export const PRIVATE_ROUTES = [
     /** document-entry */
     {
         name: "Document Entry",
-        path: "/doc_entry",
-        component: <doc_entry.HomeComponent />,
+        path: "/doc-entry",
+        component: <DocEntry.HomeComponent />,
         icon: <InsertDriveFileIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
     },
