@@ -203,7 +203,7 @@ export const API_URL = {
     },
 
     docEntry: {
-        // get: `${API_VERSION}/users/search`,
+        get: `${API_VERSION}/documents/list`,
         create: `${API_VERSION}/documents/create`,
         // edit: `${API_VERSION}/users/`,
     },

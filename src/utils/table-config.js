@@ -1,5 +1,99 @@
 import { STATUS } from "../constants/status";
 
+/**
+ * User management
+ */
+const tbDocEntry = [
+  {
+    id: "index",
+    label: "No.",
+  },
+  {
+    id: "documentCode",
+    label: "Code",
+  },
+  {
+    id: "documentNameEn",
+    label: "Name(En)",
+  },
+  {
+    id: "documentNameKh",
+    label: "Name(Kh)",
+  },
+  {
+    id: "deptName",
+    label: "Deportment",
+  },
+  {
+    id: "campusName",
+    label: "Campus",
+  },
+  {
+    id: "issueNum",
+    label: "Issue Number",
+  },
+  {
+    id: "numOfPage",
+    label: "Number of page",
+  },
+  {
+    id: "approvedBy",
+    label: "Approved By",
+  },
+  {
+    id: "typeOfDocName",
+    label: "Type of Document",
+  },
+  {
+    id: "mainCateName",
+    label: "Main Category",
+  },
+  {
+    id: "subCateName",
+    label: "Sub Category",
+  },
+  {
+    id: "subSubCateName",
+    label: "Child Sub-Category",
+  },
+  {
+    id: "chronoNum",
+    label: "Chrono Number",
+  },
+  {
+    id: "issuedDate",
+    label: "Issue Date",
+  },
+  {
+    id: "issuedDate",
+    label: "Issue Date",
+  },
+  {
+    id: "year",
+    label: "Year",
+  },
+  {
+    id: "inactive",
+    label: "Status",
+    type: "status",
+    statusColor: { [STATUS.RECORD.ACTIVE]: "Green", [STATUS.RECORD.INACTIVE]: "Red" }
+  },
+  {
+    id: "createdAt",
+    label: "Created At",
+    type: "date",
+    dateFormat: "MMM DD, YYYY hh:mm:ss A",
+  },
+  {
+    id: "remark",
+    label: "Remark",
+  },
+  {
+    id: "action",
+    label: "Actions",
+  },
+];
+
 const tblGroupDocument = [
   {
     id: "index",
@@ -937,6 +1031,7 @@ const tblUser = [
 ];
 
 export const TABLE_CONFIG = {
+  tbDocEntry,
   tblGroupDocument,
   tblMainCategory,
   tbSubCategory,
