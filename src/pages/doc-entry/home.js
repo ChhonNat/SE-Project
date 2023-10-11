@@ -20,11 +20,19 @@ const HomeDocEntry = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 useTableActions={{
-                        search: false,
-                        refresh: true,
-                        create: true,
-                        edit: true
+                    search: true,
+                    refresh: true,
+                    create: true,
+                    edit: true
                 }}
+                // filter={
+                //     {
+                //         "columnOrder": "document_code",
+                //         "orderBy": "DESC",
+                //         "limit": 10,
+                //         "offset": 0
+                //     }
+                // }
                 onHandleAddNewEvent={() => setOpenModal(true)}
                 handleEditEvent={(data) => {
                     setEditDocEntry(data);
