@@ -220,7 +220,7 @@ const UpsertDocEntryForm = (props) => {
             onClose={onCloseModal}
         >
             <DialogTitle>
-                <TitleComponent title={docEntry?.id ? "Edit document" : "Add new document"} />
+                <TitleComponent title={docEntry?.id ? "Edit Document" : "Add New Document"} />
                 {onCloseModal ? (
                     <IconButton
                         aria-label="close"
@@ -255,7 +255,7 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={<LabelRequire label="Document Name (EN)" />}
+                                label={<LabelRequire label="Name" />}
                                 sx={{ width: "100%" }}
                                 {...register("docNameEn")}
                                 size="small"
@@ -265,7 +265,7 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={"Document Name (KH)"}
+                                label={"Name(Kh)"}
                                 sx={{ width: "100%" }}
                                 size="small"
                                 helperText="(Optional)"
@@ -305,7 +305,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <SelectComponent
                                 id={"year-id"}
-                                label={"year"}
+                                label={"Year"}
                                 isRequire={true}
                                 size={"small"}
                                 customDatas={years}
@@ -401,7 +401,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="childSubMainCateId"
-                                label={"Child Sub category"}
+                                label={"Child Sub-Category"}
                                 size="small"
                                 callToApi={API_URL.lookup.childSubCate.get}
                                 bindField={"nameEn"}
@@ -442,7 +442,7 @@ const UpsertDocEntryForm = (props) => {
                             <FormGroup>
                                 <FormControlLabel
                                     control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isScret ? true : false} />}
-                                    label={"Is confidential"}
+                                    label={"Is Confidential"}
                                     sx={{ width: "100%" }}
                                     size="small"
                                 />

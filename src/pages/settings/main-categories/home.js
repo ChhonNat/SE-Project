@@ -83,14 +83,7 @@ const HomeGroupDocument = () => {
       <AsyncDatatable
         asyncURL={API_URL.mainCategory.get}
         headers={TABLE_CONFIG.tblMainCategory}
-        // filter = {
-        //     {
-        //       "searchParams":{
-        //         "searchValue":""
-        //     }
-        //     }
-        // }
-        bannerText="Main Categories"
+        bannerText="All Main Categories"
         searchPlaceHolder="Search"
         ordinal="asc"
         setOrdinalBy="id"
@@ -100,13 +93,12 @@ const HomeGroupDocument = () => {
           create: true,
           edit: true,
           refresh: true,
-          // enable more options
           moreOption: {
             buttons: [
               {
                 name: "Active",
                 eventName: "active",
-                icon: <ToggleOnIcon color="info" />,
+                icon: <ToggleOnIcon color="success" />,
                 hidden: false,
                 enable: [
                   {
@@ -118,7 +110,7 @@ const HomeGroupDocument = () => {
               {
                 name: "Inactive",
                 eventName: "inactive",
-                icon: <ToggleOffIcon color="danger" />,
+                icon: <ToggleOffIcon color="error" />,
                 hidden: false,
                 enable: [
                   {

@@ -86,14 +86,7 @@ const HomeSubCategory = () => {
             <AsyncDatatable
                 asyncURL={API_URL.subCategory.get}
                 headers={TABLE_CONFIG.tbSubCategory}
-                // filter = {
-                //     {
-                //       "searchParams":{
-                //         "searchValue":""
-                //     }
-                //     }
-                // }
-                bannerText="Sub Categories"
+                bannerText="All Sub Categories"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
@@ -108,7 +101,7 @@ const HomeSubCategory = () => {
                             {
                                 name: "Active",
                                 eventName: "active",
-                                icon: <ToggleOnIcon color="info" />,
+                                icon: <ToggleOnIcon color="success" />,
                                 hidden: false,
                                 enable: [
                                     {
@@ -120,7 +113,7 @@ const HomeSubCategory = () => {
                             {
                                 name: "Inactive",
                                 eventName: "inactive",
-                                icon: <ToggleOffIcon color="danger" />,
+                                icon: <ToggleOffIcon color="error" />,
                                 hidden: false,
                                 enable: [
                                     {

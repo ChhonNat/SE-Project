@@ -99,7 +99,7 @@ const User = {
 export const PRIVATE_ROUTES = [
     /** document-entry */
     {
-        name: "Document Entry",
+        name: "Document Entries",
         path: "/doc-entry",
         component: <DocEntry.HomeComponent />,
         icon: <InsertDriveFileIcon style={{ color: appConfig.systemColor }} />,
