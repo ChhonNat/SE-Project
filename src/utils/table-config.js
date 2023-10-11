@@ -1,7 +1,7 @@
 import { STATUS } from "../constants/status";
 
 /**
- * User management
+ * Document Entry
  */
 const tbDocEntry = [
   {
