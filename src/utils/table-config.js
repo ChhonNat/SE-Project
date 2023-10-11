@@ -3,7 +3,7 @@ import { STATUS } from "../constants/status";
 /**
  * User management
  */
-const tbDocEntry = [
+const tblDocEntry = [
   {
     id: "index",
     label: "No.",
@@ -1031,7 +1031,7 @@ const tblUser = [
 ];
 
 export const TABLE_CONFIG = {
-  tbDocEntry,
+  tblDocEntry,
   tblGroupDocument,
   tblMainCategory,
   tbSubCategory,
