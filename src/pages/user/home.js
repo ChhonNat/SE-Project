@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
+import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import UpsertUserForm from "./form-upsert-user.modal";
-import { API_URL } from "../../constants/api_url";
 
 const HomeUser = () => {
 
