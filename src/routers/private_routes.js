@@ -6,11 +6,11 @@ import React, { lazy } from "react";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BusinessIcon from '@mui/icons-material/Business';
 import MainCategoryIcon from '@mui/icons-material/Category';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import SubCategoryIcon from '@mui/icons-material/Segment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SubSubCategoryIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import { appConfig } from "../constants/app_cont";
-
 
 /**
  * Import all page components
@@ -34,6 +34,9 @@ const JobOffer = {
 const Hire = {
     HomeComponent: lazy(() => import('../pages/hire/home'))
 };
+const doc_entry = {
+    HomeComponent: lazy(() => import('../pages/doc-entry/home'))
+};
 
 const Settings = {
 
@@ -48,7 +51,7 @@ const Settings = {
     GroupDocument: {
         HomeComponent: lazy(() => import('../pages/settings/group-document/home')),
     },
-    
+
     MainCategories: {
         HomeComponent: lazy(() => import('../pages/settings/main-categories/home')),
     },
@@ -60,6 +63,7 @@ const Settings = {
     SubSubCategories: {
         HomeComponent: lazy(() => import('../pages/settings/child-sub-categories/home')),
     },
+
 
     Department: {
         HomeComponent: lazy(() => import('../pages/settings/department/home')),
@@ -93,7 +97,14 @@ const User = {
 
 
 export const PRIVATE_ROUTES = [
-
+    /** document-entry */
+    {
+        name: "Document Entry",
+        path: "/doc_entry",
+        component: <doc_entry.HomeComponent />,
+        icon: <InsertDriveFileIcon style={{ color: appConfig.systemColor }} />,
+        isDivider: false,
+    },
     /**Settings */
     {
         name: "Settings",
@@ -135,7 +146,7 @@ export const PRIVATE_ROUTES = [
                 icon: <SubCategoryIcon style={{ color: appConfig.systemColor }} />,
                 // isHide: true
             },
-            // Sub-Sub categories
+            // child-Sub categories
             {
                 name: "Child Sub-Categories",
                 path: "child-sub-categories",
@@ -143,6 +154,7 @@ export const PRIVATE_ROUTES = [
                 icon: <SubSubCategoryIcon style={{ color: appConfig.systemColor }} />,
                 // isHide: true
             },
+
             ////'
         ]
     },

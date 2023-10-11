@@ -1,3 +1,23 @@
+const docEntry = [
+    "docCode",
+    "docNameEn",
+    "docNameKh",
+    "deptId",
+    "campusId",
+    "year",
+    "issuedDate",
+    "issueNum",
+    "numOfPage",
+    "approvedBy",
+    "docType",
+    "mainCate",
+    "subCateId",
+    "subSubCateId",
+    "file",
+    "isScret",
+    "chronoNum",
+    "remark",
+]
 const upsert_candidate = [
     "firstName",
     "lastName",
@@ -225,6 +245,7 @@ export const KEY_POST = {
     subCategory,
     category,
 
+    docEntry,
     view_candidate,
     upsert_candidate,
     invite_candidate,
