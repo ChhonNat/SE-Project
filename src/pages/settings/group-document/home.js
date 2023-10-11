@@ -119,16 +119,7 @@ const HomeGroupDocument = () => {
       <AsyncDatatable
         asyncURL={API_URL.groupDocument.get}
         headers={TABLE_CONFIG.tblGroupDocument}
-        bannerText="Group Documents"
-        // filter={
-        //   {
-        //     "searchParams":{
-        //       "nameEn":"",
-        //       "nameKh":"",
-        //       "createdBy":""
-        //   },
-        //   }
-        // }
+        bannerText="All Group Documents"
         searchPlaceHolder="Search"
         ordinal="asc"
         setOrdinalBy="id"
@@ -145,7 +136,7 @@ const HomeGroupDocument = () => {
               {
                 name: "Active",
                 eventName: "active",
-                icon: <ToggleOnIcon color="info" />,
+                icon: <ToggleOnIcon color="success" />,
                 hidden: false,
                 enable: [
                   {
@@ -157,7 +148,7 @@ const HomeGroupDocument = () => {
               {
                 name: "Inactive",
                 eventName: "inactive",
-                icon: <ToggleOffIcon color="danger" />,
+                icon: <ToggleOffIcon color='error' />,
                 hidden: false,
                 enable: [
                   {

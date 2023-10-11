@@ -17,53 +17,53 @@ const HomeChildSubCategory = () => {
     const [openUpsertChildSubCateModal, setOpenUpsertChildSubCateModal] = useState(false);
     const [editChildSubCate, setEditChildSubCate] = useState({});
 
-const handleMoreEvent = async (eName, data) => {
-    let postStatus = null;
+    const handleMoreEvent = async (eName, data) => {
+        let postStatus = null;
 
-    Object.keys(data).forEach((key) => {
+        Object.keys(data).forEach((key) => {
 
-        if (key.toLocaleLowerCase() === 'id') {
-            if (eName.toLowerCase() === 'active') {
-                postStatus = data[key];
+            if (key.toLocaleLowerCase() === 'id') {
+                if (eName.toLowerCase() === 'active') {
+                    postStatus = data[key];
 
-            } else {
-                postStatus = data[key];
+                } else {
+                    postStatus = data[key];
+                }
             }
+        });
+
+        try {
+
+            let tempData;
+            if (eName.toLowerCase() === 'active') {
+                tempData = await childSuCategoryService.restore(postStatus);
+            } else {
+                tempData = await childSuCategoryService.softDelete(postStatus);
+            }
+
+            const { data, status } = tempData;
+
+            if (status === HTTP_STATUS.success) {
+
+                if (status === DATA_STATUS.success)
+                    setIsReload(!isReload)
+
+                /**
+                 * Alert after request responses
+                 */
+                Swal.fire({
+                    title: status === DATA_STATUS.success ? "Success" : "Error",
+                    text: data?.message,
+                    icon: status === DATA_STATUS.success ? "success" : "error",
+                    confirmButtonText: "OK",
+                    size: 200,
+                });
+            }
+
+        } catch (error) {
+            console.log('post error', error);
         }
-    });
-
-    try {
-
-        let tempData;
-        if (eName.toLowerCase() === 'active') {
-            tempData = await childSuCategoryService.restore(postStatus);
-        } else {
-            tempData = await childSuCategoryService.softDelete(postStatus);
-        }
-
-        const { data, status } = tempData;
-
-        if (status === HTTP_STATUS.success) {
-
-            if (status === DATA_STATUS.success)
-                setIsReload(!isReload)
-
-            /**
-             * Alert after request responses
-             */
-            Swal.fire({
-                title: status === DATA_STATUS.success ? "Success" : "Error",
-                text: data?.message,
-                icon: status === DATA_STATUS.success ? "success" : "error",
-                confirmButtonText: "OK",
-                size: 200,
-            });
-        }
-
-    } catch (error) {
-        console.log('post error', error);
     }
-}
 
 
     return (
@@ -86,14 +86,7 @@ const handleMoreEvent = async (eName, data) => {
             <AsyncDatatable
                 asyncURL={API_URL.childSubCategory.get}
                 headers={TABLE_CONFIG.tbSubSubCategory}
-                // filter = {
-                //     {
-                //       "searchParams":{
-                //         "searchValue":""
-                //     }
-                //     }
-                // }
-                bannerText="Categories"
+                bannerText="All Child Sub-Categories"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
@@ -109,7 +102,7 @@ const handleMoreEvent = async (eName, data) => {
                             {
                                 name: "Active",
                                 eventName: "active",
-                                icon: <ToggleOnIcon color="info" />,
+                                icon: <ToggleOnIcon color="success" />,
                                 hidden: false,
                                 enable: [
                                     {
@@ -121,7 +114,7 @@ const handleMoreEvent = async (eName, data) => {
                             {
                                 name: "Inactive",
                                 eventName: "inactive",
-                                icon: <ToggleOffIcon color="danger" />,
+                                icon: <ToggleOffIcon color="error" />,
                                 hidden: false,
                                 enable: [
                                     {

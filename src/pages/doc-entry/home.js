@@ -15,7 +15,7 @@ const HomeDocEntry = () => {
             <AsyncDatatable
                 asyncURL={API_URL.docEntry.get}
                 headers={TABLE_CONFIG.tblGroupDocument}
-                bannerText="Document Entry"
+                bannerText="All Document Entries"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
