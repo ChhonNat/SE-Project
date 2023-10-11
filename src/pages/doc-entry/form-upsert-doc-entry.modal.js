@@ -364,10 +364,10 @@ const UpsertDocEntryForm = (props) => {
                                 callToApi={API_URL.lookup.listGDoc.get}
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
-                                    setValue("docType", value?.id);
+                                    setValue("typeOfDocId", value?.id);
                                 }}
-                                value={watchDocEntry?.docType || null}
-                                err={errors?.docType?.message}
+                                value={watchDocEntry?.typeOfDocId || null}
+                                err={errors?.typeOfDocId?.message}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -378,10 +378,10 @@ const UpsertDocEntryForm = (props) => {
                                 callToApi={API_URL.lookup.listMCate.get}
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
-                                    setValue("mainCate", value?.id);
+                                    setValue("mainCateId", value?.id);
                                 }}
-                                value={watchDocEntry?.mainCate || null}
-                                err={errors?.mainCate?.message}
+                                value={watchDocEntry?.mainCateId || null}
+                                err={errors?.mainCateId?.message}
                             />
                         </Grid>
                         <Grid item xs={12}>
