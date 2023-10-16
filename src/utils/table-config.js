@@ -69,7 +69,9 @@ const tblDocEntry = [
   },
   {
     id: "year",
-    label: "Year"
+    label: "Year",
+    type: "data",
+    dateFormat: "YYYY"
   },
   {
     id: "inactive",

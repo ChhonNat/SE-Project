@@ -20,8 +20,6 @@ import FooterComponent from "../../components/Page/footer";
 import TitleComponent from "../../components/Page/title";
 import SelectComponent from "../../components/Selector/select";
 import { API_URL } from "../../constants/api_url";
-import { DATA_STATUS } from "../../constants/data_status";
-import { HTTP_STATUS } from "../../constants/http_status";
 import { KEY_POST } from "../../constants/key_post";
 import { DocEntryModel } from "../../models/doc-entry.model";
 import { docEntryService } from "../../services/doc-entry.service";
@@ -51,7 +49,7 @@ const UpsertDocEntryForm = (props) => {
     });
 
     const watchDocEntry = watch();
-    const formatKeys = ["issuedDate", "roles", "issueNum"];
+    const formatKeys = ["issuedDate", "issueNum"];
 
     useEffect(() => {
 
@@ -61,29 +59,21 @@ const UpsertDocEntryForm = (props) => {
         if (docEntry?.id && open) {
             Object.keys(docEntry).forEach((key) => {
                 if (KEY_POST.docEntry.includes(key)) {
-                    if (formatKeys.includes(key)) {
-                        key === 'department' ? setValue('departmentId', docEntry[key]?.id) : setValue(key, ConverterService.convertUnixDateToMUI(docEntry[key]));
+                    if (key === formatKeys[0]) {
+                        const appliedDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
+                        setValue(key, appliedDate);
                     } else {
                         setValue(key, docEntry[key]);
                     }
                 }
             });
         } else {
-            setValue('isScret', 0);
+            setValue('isSecret', 0);
         }
     }, [open]);
 
     const onError = (data) => {
         console.log(data);
-        if (docEntry?.id) {
-            if (watchDocEntry?.password || watchDocEntry?.confirmPassword) {
-                if (watchDocEntry?.password !== watchDocEntry?.confirmPassword)
-                    setError("confirmPassword", {
-                        message: "Confirm password doesn't match!",
-                    });
-            }
-        }
-
         if (!watchDocEntry?.roles?.length)
             setError("roles", { message: "Role is required!" });
     };
@@ -98,42 +88,35 @@ const UpsertDocEntryForm = (props) => {
 
     // handle checkbox
     const handleChange = (e) => {
-        setValue('isScret', e.target.checked ? 1 : 0);
+        setValue('isSecret', e.target.checked ? 1 : 0);
     };
 
     const submit = async (data) => {
-
-        if (docEntry?.id) {
-            if (watchDocEntry?.password || watchDocEntry?.confirmPassword) {
-                if (watchDocEntry?.password !== watchDocEntry?.confirmPassword) {
-                    setError("confirmPassword", {
-                        message: "Confirm password doesn't match!",
-                    });
-                    return false;
-                }
-            }
-        }
-
         const submitData = {};
 
         Object.keys(data).forEach((key) => {
 
             if (KEY_POST.docEntry.includes(key) && !docEntry?.id) {
-
                 if (formatKeys.includes(key)) {
-
                     if (formatKeys[0] === key) {
                         submitData[key] = ConverterService.convertDateToAPI2(data[key]);
                     }
 
-                    if (formatKeys[2] === key) {
+                    if (formatKeys[1] === key) {
                         submitData[key] = parseInt(data[key] ? data[key] : 0);
                     }
+                } else if (key === 'documentCode') {
+                    submitData['docCode'] = data[key];
+                } else if (key === 'documentNameEn') {
+                    submitData['docNameEn'] = data[key];
+                } else if (key === 'documentNameKh') {
+                    submitData['docNameKh'] = data[key];
+                } else if (key === 'isSecret') {
+                    submitData['isScret'] = data[key];
                 } else {
                     submitData[key] = data[key];
                 }
             } else {
-
                 if (formatKeys.includes(key)) {
 
                     if (formatKeys[0] === key) {
@@ -141,7 +124,7 @@ const UpsertDocEntryForm = (props) => {
                     }
 
                     if (formatKeys[1] === key) {
-                        
+
                         const oldRoles = [...docEntry?.roles];
                         const mapRole = {};
 
@@ -170,22 +153,32 @@ const UpsertDocEntryForm = (props) => {
                         submitData[key] = data[key];
                     }
 
-                    if (formatKeys[2] === key) {
+                    if (formatKeys[1] === key) {
                         submitData[key] = parseInt(data[key] ? data[key] : 0);
                     }
+                } else if (key === 'documentCode') {
+                    submitData['docCode'] = data[key];
+                } else if (key === 'documentNameEn') {
+                    submitData['docNameEn'] = data[key];
+                } else if (key === 'documentNameKh') {
+                    submitData['docNameKh'] = data[key];
+                } else if (key === 'isSecret') {
+                    submitData['isScret'] = data[key];
                 } else {
                     submitData[key] = data[key];
                 }
             }
         });
-
+console.log("My-data: ", submitData)
         try {
             let submitDocEntry;
 
-            if (docEntry?.id)
+            if (docEntry?.id){
                 submitDocEntry = await docEntryService.updateDocEntry(docEntry?.id, submitData, "multipart/form-data");
-            else
+            }
+            else{
                 submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
+            }
 
             const { data } = submitDocEntry;
             const { message, success } = data;
@@ -249,10 +242,10 @@ const UpsertDocEntryForm = (props) => {
                             <TextField
                                 label={<LabelRequire label="Name" />}
                                 sx={{ width: "100%" }}
-                                {...register("docNameEn")}
+                                {...register("documentNameEn")}
                                 size="small"
-                                error={errors?.docNameEn ? true : false}
-                                helperText={errors?.docNameEn?.message}
+                                error={errors?.documentNameEn ? true : false}
+                                helperText={errors?.documentNameEn?.message}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -260,7 +253,7 @@ const UpsertDocEntryForm = (props) => {
                                 label={"Name(Kh)"}
                                 sx={{ width: "100%" }}
                                 size="small"
-                                {...register("docNameKh")}
+                                {...register("documentNameKh")}
                             />
                         </Grid>
 
@@ -268,10 +261,10 @@ const UpsertDocEntryForm = (props) => {
                             <TextField
                                 label={<LabelRequire label="Numbering" />}
                                 sx={{ width: "100%" }}
-                                {...register("docCode")}
+                                {...register("documentCode")}
                                 size="small"
-                                error={errors?.docCode ? true : false}
-                                helperText={errors?.docCode?.message}
+                                error={errors?.documentCode ? true : false}
+                                helperText={errors?.documentCode?.message}
                             />
                         </Grid>
                         <Grid item xs={8}>
@@ -291,7 +284,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
                             <FormGroup>
                                 <FormControlLabel
-                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isScret ? true : false} />}
+                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isSecret ? true : false} />}
                                     label={"Is Confidential"}
                                     sx={{ width: "100%" }}
                                     size="small"
