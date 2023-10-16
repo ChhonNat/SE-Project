@@ -47,11 +47,11 @@ const UpsertDocEntryForm = (props) => {
         watch,
         setError,
     } = useForm({
-        resolver: zodResolver(docEntry?.id ? DocEntryModel.Update : DocEntryModel.Create),
+        resolver: zodResolver(docEntry?.id ? DocEntryModel.Update : DocEntryModel.Create)
     });
 
     const watchDocEntry = watch();
-    const formatKeys = ["issuedDate", "roles", "issueNum"];
+    const formatKeys = ["issuedDate", "issueNum", "files"];
 
     useEffect(() => {
 
@@ -75,17 +75,6 @@ const UpsertDocEntryForm = (props) => {
 
     const onError = (data) => {
         console.log(data);
-        if (docEntry?.id) {
-            if (watchDocEntry?.password || watchDocEntry?.confirmPassword) {
-                if (watchDocEntry?.password !== watchDocEntry?.confirmPassword)
-                    setError("confirmPassword", {
-                        message: "Confirm password doesn't match!",
-                    });
-            }
-        }
-
-        if (!watchDocEntry?.roles?.length)
-            setError("roles", { message: "Role is required!" });
     };
 
     // handle select year
@@ -103,78 +92,49 @@ const UpsertDocEntryForm = (props) => {
 
     const submit = async (data) => {
 
-        if (docEntry?.id) {
-            if (watchDocEntry?.password || watchDocEntry?.confirmPassword) {
-                if (watchDocEntry?.password !== watchDocEntry?.confirmPassword) {
-                    setError("confirmPassword", {
-                        message: "Confirm password doesn't match!",
-                    });
-                    return false;
-                }
-            }
-        }
+        const submitData = new FormData();
 
-        const submitData = {};
+        if (!data?.files?.length)
+            setError("files", { message: "File is required!" });
 
         Object.keys(data).forEach((key) => {
 
-            if (KEY_POST.docEntry.includes(key) && !docEntry?.id) {
+            if (!docEntry?.id) {
 
-                if (formatKeys.includes(key)) {
+                if (KEY_POST.docEntry.includes(key)) {
 
-                    if (formatKeys[0] === key) {
-                        submitData[key] = ConverterService.convertDateToAPI2(data[key]);
+                    if (formatKeys.includes(key)) {
+
+                        if (formatKeys[0] === key)
+                            submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
+
+
+                        if (formatKeys[1] === key)
+                            submitData.append(key, parseInt(data[key] ? data[key] : 0));
+
+                        if (formatKeys[2] === key)
+                            for (let i = 0; i < data?.files.length; i++) {
+                                submitData.append("files", data?.files[i]);
+                            }
+
+                    } else {
+
+                        submitData.append(key, data[key]);
                     }
-
-                    if (formatKeys[2] === key) {
-                        submitData[key] = parseInt(data[key] ? data[key] : 0);
-                    }
-                } else {
-                    submitData[key] = data[key];
                 }
+
             } else {
 
                 if (formatKeys.includes(key)) {
 
-                    if (formatKeys[0] === key) {
-                        submitData[key] = ConverterService.convertDateToAPI2(data[key]);
-                    }
+                    if (formatKeys[0] === key)
+                        submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
 
-                    if (formatKeys[1] === key) {
-                        
-                        const oldRoles = [...docEntry?.roles];
-                        const mapRole = {};
+                    if (formatKeys[1] === key)
+                        submitData.append(key, parseInt(data[key] ? data[key] : 0));
 
-                        if (oldRoles?.length) {
-                            oldRoles.forEach((ele) => {
-                                if (!ele?.id) {
-                                    mapRole = {};
-                                }
-
-                                mapRole[ele?.id] = ele;
-                            });
-                        }
-
-                        if (typeof data[key] === "string") data[key] = oldRoles;
-
-                        data[key] = data[key].map((ele) => {
-                            const isObject = typeof ele === "object";
-                            return isObject
-                                ? { id: ele?.id, recId: ele?.recId }
-                                : {
-                                    id: mapRole[ele] ? mapRole[ele]?.id : ele,
-                                    recId: mapRole[ele] ? mapRole[ele]?.recId : 0,
-                                };
-                        });
-
-                        submitData[key] = data[key];
-                    }
-
-                    if (formatKeys[2] === key) {
-                        submitData[key] = parseInt(data[key] ? data[key] : 0);
-                    }
                 } else {
-                    submitData[key] = data[key];
+                    submitData.append(key, data[key]);
                 }
             }
         });
@@ -280,10 +240,11 @@ const UpsertDocEntryForm = (props) => {
                                 size="small"
                                 inputProps={{
                                     multiple: true,
-                                    accept: "application/pdf, image/jpeg, image/png"
+                                    accept: "application/pdf, image/jpeg, image/png, images/jpg"
                                 }}
                                 InputLabelProps={shrinkOpt}
-                                onChange={(e) => setValue("files", e?.target?.files[0])}
+                                // onChange={(e) => setValue("files", [...e?.target?.files])}
+                                {...register("files")}
                                 error={errors?.files ? true : false}
                                 helperText={errors?.files?.message}
                             />
