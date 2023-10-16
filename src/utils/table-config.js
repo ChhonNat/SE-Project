@@ -11,10 +11,11 @@ const tblDocEntry = [
   {
     id: "documentCode",
     label: "Code",
+    type: "link"
   },
   {
     id: "documentNameEn",
-    label: "Name(En)",
+    label: "Name",
   },
   {
     id: "documentNameKh",
@@ -22,7 +23,7 @@ const tblDocEntry = [
   },
   {
     id: "deptName",
-    label: "Deportment",
+    label: "Department",
   },
   {
     id: "campusName",
@@ -63,14 +64,12 @@ const tblDocEntry = [
   {
     id: "issuedDate",
     label: "Issue Date",
-  },
-  {
-    id: "issuedDate",
-    label: "Issue Date",
+    type: "date",
+    dateFormat: "MMM DD, YYYY hh:mm:ss A"
   },
   {
     id: "year",
-    label: "Year",
+    label: "Year"
   },
   {
     id: "inactive",

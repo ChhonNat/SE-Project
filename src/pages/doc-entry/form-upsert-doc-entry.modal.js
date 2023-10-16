@@ -117,8 +117,11 @@ const UpsertDocEntryForm = (props) => {
         const submitData = {};
 
         Object.keys(data).forEach((key) => {
+
             if (KEY_POST.docEntry.includes(key) && !docEntry?.id) {
+
                 if (formatKeys.includes(key)) {
+
                     if (formatKeys[0] === key) {
                         submitData[key] = ConverterService.convertDateToAPI2(data[key]);
                     }
@@ -130,12 +133,15 @@ const UpsertDocEntryForm = (props) => {
                     submitData[key] = data[key];
                 }
             } else {
+
                 if (formatKeys.includes(key)) {
+
                     if (formatKeys[0] === key) {
                         submitData[key] = ConverterService.convertDateToAPI2(data[key]);
                     }
 
                     if (formatKeys[1] === key) {
+                        
                         const oldRoles = [...docEntry?.roles];
                         const mapRole = {};
 
@@ -178,9 +184,10 @@ const UpsertDocEntryForm = (props) => {
 
             if (docEntry?.id)
                 submitDocEntry = await docEntryService.updateDocEntry(docEntry?.id, submitData, "multipart/form-data");
-            else submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
+            else
+                submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
 
-            const {data } = submitDocEntry;
+            const { data } = submitDocEntry;
             const { message, success } = data;
 
             if (success) {
@@ -267,7 +274,7 @@ const UpsertDocEntryForm = (props) => {
                                 helperText={errors?.docCode?.message}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={8}>
                             <TextField
                                 type="file"
                                 size="small"
@@ -281,7 +288,7 @@ const UpsertDocEntryForm = (props) => {
                                 helperText={errors?.files?.message}
                             />
                         </Grid>
-                        <Grid item xs={6} sx={{ display: "flex", justifyContent: "end" }}>
+                        <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
                             <FormGroup>
                                 <FormControlLabel
                                     control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isScret ? true : false} />}
