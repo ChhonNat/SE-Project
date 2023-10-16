@@ -3,10 +3,12 @@ import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import UpsertDocEntryForm from "./form-upsert-doc-entry.modal";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 
 const HomeDocEntry = () => {
 
     const [openModal, setOpenModal] = useState(false);
+    const [openFileModal, setOpenFileModal] = useState(false);
     const [isReload, setIsReload] = useState(false);
     const [editDocEntry, setEditDocEntry] = useState({});
 
@@ -23,7 +25,8 @@ const HomeDocEntry = () => {
                     search: true,
                     refresh: true,
                     create: true,
-                    edit: true
+                    edit: true,
+                    viewFile: true
                 }}
                 filter={
                     {
@@ -37,6 +40,14 @@ const HomeDocEntry = () => {
                 }}
                 isReloadData={isReload ? true : false}
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
+                handleViewFileEvent={(data) => {
+                    setEditDocEntry(data);
+                    setOpenFileModal(true);
+                }}
+                handleLinkEvent={(data) => {
+                    setEditDocEntry(data);
+                    setOpenFileModal(true);
+                }}
             />
 
             {/* Create and Update form */}
@@ -52,6 +63,16 @@ const HomeDocEntry = () => {
                     }
                     handleEventSucceed={() => setIsReload(!isReload)}
                     docEntry={editDocEntry}
+                />
+            }
+
+            {/* View file entry modal */}
+            {
+                openFileModal &&
+                <ViewFileModal
+                    openModal={openFileModal}
+                    onCloseModal={() => setOpenFileModal(false)}
+                    id={editDocEntry?.id}
                 />
             }
 

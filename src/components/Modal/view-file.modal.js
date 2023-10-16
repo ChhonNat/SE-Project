@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import TitleComponent from "../Page/title";
 import FooterComponent from "../Page/footer";
+import axiosAPI from "../../services/http.service";
 import {
   Dialog,
   DialogActions,
@@ -9,42 +10,86 @@ import {
   IconButton,
   Slide,
 } from "@mui/material";
-import { Block, Close } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import { API_URL } from "../../constants/api_url";
-import axiosAPI from "../../services/http.service";
 import { HTTP_STATUS } from "../../constants/http_status";
+import { docEntryService } from "../../services/doc-entry.service";
+import { appConfig } from "../../constants/app_cont";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const ViewFileModal = (props) => {
+
   const { openModal, onCloseModal, id, modalTitle, downloadFileUrl } = props;
 
-  const url = downloadFileUrl
-    ? `${downloadFileUrl}${id}`
-    : `${API_URL.candidate.downloadCVFile}${id}`;
-  const [displayPdf, setDisplayPdf] = useState("");
+  const url = `${API_URL.docEntry.viewFile}`;
+
+  const [lstDocEntryFiles, setLstDocEntryFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  // const [displayPdf, setDisplayPdf] = useState("");
+
 
   useEffect(() => {
-    getFileToDisplay();
-  }, []);
+    if (id) {
+      getAllFile();
+    }
+  }, [id]);
 
-  const getFileToDisplay = async () => {
+  const getAllFile = async () => {
+
+    setLoading(true);
+
     try {
-      const reqFile = await axiosAPI.get(url, { responseType: "arraybuffer" });
-      const { status } = reqFile;
 
-      if (status === HTTP_STATUS.success) {
-        const { data } = reqFile;
-        const blob = new Blob([data], { type: "application/pdf" });
-        const blobToPdf = window.URL.createObjectURL(blob) + "#view=FitW";
-        setDisplayPdf(blobToPdf);
+      const reqAllDocEntryFile = await docEntryService.getAllDocEntryFile(id);
+      const { data } = reqAllDocEntryFile;
+      const { success } = data;
+
+      if (success) {
+
+        setLstDocEntryFiles(data?.data || []);
+        setLoading(false);
+      } else {
+        setLstDocEntryFiles([]);
+        setLoading(false);
       }
+
     } catch (error) {
+      setLstDocEntryFiles([]);
+      setLoading(false);
       console.log(error);
     }
+
   };
+
+  // useEffect(() => {
+  //   if (lstDocEntryFiles?.length) {
+  //     getFileToDisplay()
+  //   }
+  // }, [lstDocEntryFiles]);
+
+  // const getFileToDisplay = async () => {
+
+  //   try {
+
+  //     const reqFile = await axiosAPI.get(`${url}${lstDocEntryFiles[0]?.fileName}`, { responseType: "arraybuffer" });
+  //     const { status } = reqFile;
+
+  //     if (status === HTTP_STATUS.success) {
+
+  //       const { data } = reqFile;
+
+  //       const blob = new Blob([data], { type: "application/pdf" });
+  //       const blobToPdf = window.URL.createObjectURL(blob) + "#view=FitW";
+  //       setDisplayPdf(blobToPdf);
+
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>
@@ -74,15 +119,24 @@ const ViewFileModal = (props) => {
         </DialogTitle>
 
         <DialogContent dividers>
-          <embed
-            src={displayPdf}
-            style={{
-              webkitWidth: "-webkit-fill-available",
-              height: "100%",
-              width: "100%",
-            }}
-          />
+          {
+            !loading && lstDocEntryFiles?.length ?
+              lstDocEntryFiles.map((ele) =>
+                <embed
+                  src={`${appConfig.apiLink}/api/v1/documents/view?fileName=${ele?.fileName}`}
+                  style={{
+                    webkitWidth: "-webkit-fill-available",
+                    height: "100%",
+                    width: "100%",
+                  }}
+                />
+              )
+              :
+              <></>
+          }
+
         </DialogContent>
+
         <DialogActions>
           <FooterComponent
             handleCancel={onCloseModal}

@@ -43,11 +43,13 @@ const TableRows = ({
   actions,
 }) => {
   return displayRecords.map((row, index) => {
+
     const isItemSelected = isSelected(row[checkColumn]);
 
     const labelId = `enhanced-table-checkbox-${index}`;
 
     const checkButtonAction = (objData, condition) => {
+      
       const trueCondition = [];
       if (condition && condition.length) {
         condition.forEach((ele, index) => {
@@ -56,9 +58,11 @@ const TableRows = ({
         });
       }
 
-      if (!trueCondition?.length) return false;
+      if (!trueCondition?.length) 
+      return false;
 
-      if (trueCondition?.includes(false)) return false;
+      if (trueCondition?.includes(false)) 
+      return false;
 
       return true;
     };

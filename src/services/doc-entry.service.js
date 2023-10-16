@@ -10,7 +10,12 @@ const updateDocEntry = (id, param, contentType) => {
     return httpService._put(API_URL.docEntry.edit+id, param, contentType);
 };
 
+const getAllDocEntryFile = (id,param,contentType) => {
+    return httpService._get(API_URL.docEntry.listAllFile+id, param, contentType);
+};
+
 export const docEntryService = {
     createDocEntry,
-    updateDocEntry
+    updateDocEntry,
+    getAllDocEntryFile
 };
