@@ -212,7 +212,8 @@ const CandidateScheduleFormModal = (props) => {
       const { message } = data;
 
       if (status === HTTP_STATUS.success) {
-        if (data?.status === DATA_STATUS.success) handleEventSucceed();
+        if (data?.status === DATA_STATUS.success) 
+        handleEventSucceed();
 
         Swal.fire({
           title: data?.status === DATA_STATUS.success ? "Success" : "Warning",
@@ -382,7 +383,7 @@ const CandidateScheduleFormModal = (props) => {
                             : watchInterview?.departments
                         }
                         handleOnChange={(e, val) => {
-                          val?.length ? setValue("departments", val?.length ? val : []) : setValue("departments",[])
+                          val?.length ? setValue("departments", val?.length ? val : []) : setValue("departments", [])
                         }}
                         err={errors?.departments?.message}
                       />
@@ -400,11 +401,11 @@ const CandidateScheduleFormModal = (props) => {
                     value={
                       !watchInterview?.departments?.length
                         ? [
-                            {
-                              id: editData?.departmentId,
-                              nameEn: editData?.departmentName,
-                            },
-                          ]
+                          {
+                            id: editData?.departmentId,
+                            nameEn: editData?.departmentName,
+                          },
+                        ]
                         : watchInterview?.departments
                     }
                     handleOnChange={(e, val) => {

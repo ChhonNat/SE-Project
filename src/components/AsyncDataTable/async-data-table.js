@@ -76,20 +76,20 @@ const AsyncDatatable = (props) => {
       // searchValue: searchValue,
       // orderColumn: orderBy,
       // ordinal: order,
-      "searchParams": {
-        "searchValue": searchValue
+      searchParams: {
+        searchValue: searchValue
       },
-      "columnOrder": "ordering",
-      "orderBy": "DESC",
-      "limit": 10,
-      "offset": 0
+      columnOrder: "ordering",
+      orderBy: "ASC",
+      limit: 10,
+      offset: 0
     };
 
     // add custom filter
     if (filter && Object.keys(filter) && Object.keys(filter)?.length) {
       postData = {
         ...postData,
-        // ...filter,
+        ...filter,
       }
     };
 

@@ -69,7 +69,7 @@ const UpsertDocEntryForm = (props) => {
                 }
             });
         } else {
-            setValue('isScret',0);
+            setValue('isScret', 0);
         }
     }, [open]);
 
@@ -98,7 +98,7 @@ const UpsertDocEntryForm = (props) => {
 
     // handle checkbox
     const handleChange = (e) => {
-        setValue('isScret',e.target.checked ? 1 : 0);
+        setValue('isScret', e.target.checked ? 1 : 0);
     };
 
     const submit = async (data) => {
@@ -180,15 +180,10 @@ const UpsertDocEntryForm = (props) => {
                 submitDocEntry = await docEntryService.updateDocEntry(docEntry?.id, submitData, "multipart/form-data");
             else submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
 
-            const { status, data } = submitDocEntry;
-            const { message } = data;
+            const {data } = submitDocEntry;
+            const { message, success } = data;
 
-            if (status === HTTP_STATUS.success) {
-                if (data?.status === DATA_STATUS.success) handleEventSucceed();
-
-                /**
-                 * Alert after request responses
-                 */
+            if (success) {
                 Swal.fire({
                     title: data?.success ? "Success" : "Error",
                     text: message,
@@ -196,7 +191,7 @@ const UpsertDocEntryForm = (props) => {
                     confirmButtonText: "OK",
                     size: 200,
                 });
-
+                handleEventSucceed();
                 handleCloseModal();
             }
         } catch (error) {
@@ -220,7 +215,7 @@ const UpsertDocEntryForm = (props) => {
             onClose={onCloseModal}
         >
             <DialogTitle>
-                <TitleComponent title={docEntry?.id ? "Edit document" : "Add new document"} />
+                <TitleComponent title={docEntry?.id ? "Edit Document" : "Add New Document"} />
                 {onCloseModal ? (
                     <IconButton
                         aria-label="close"
@@ -245,17 +240,7 @@ const UpsertDocEntryForm = (props) => {
                     >
                         <Grid item xs={12}>
                             <TextField
-                                label={<LabelRequire label="Numbering" />}
-                                sx={{ width: "100%" }}
-                                {...register("docCode")}
-                                size="small"
-                                error={errors?.docCode ? true : false}
-                                helperText={errors?.docCode?.message}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                label={<LabelRequire label="Document Name (EN)" />}
+                                label={<LabelRequire label="Name" />}
                                 sx={{ width: "100%" }}
                                 {...register("docNameEn")}
                                 size="small"
@@ -265,26 +250,69 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={"Document Name (KH)"}
+                                label={"Name(Kh)"}
                                 sx={{ width: "100%" }}
                                 size="small"
-                                helperText="(Optional)"
                                 {...register("docNameKh")}
                             />
                         </Grid>
 
                         <Grid item xs={12}>
-                            <AsyncAutoComplete
-                                id="sourceDocId"
-                                label={<LabelRequire label="Source Department" />}
+                            <TextField
+                                label={<LabelRequire label="Numbering" />}
+                                sx={{ width: "100%" }}
+                                {...register("docCode")}
                                 size="small"
-                                callToApi={API_URL.lookup.department.get}
-                                bindField={"nameEn"}
-                                handleOnChange={(e, value) => {
-                                    setValue("deptId", value?.id);
+                                error={errors?.docCode ? true : false}
+                                helperText={errors?.docCode?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                type="file"
+                                size="small"
+                                inputProps={{
+                                    multiple: true,
+                                    accept: "application/pdf, image/jpeg, image/png"
                                 }}
-                                value={watchDocEntry?.deptId || null}
-                                err={errors?.deptId?.message}
+                                InputLabelProps={shrinkOpt}
+                                onChange={(e) => setValue("files", e?.target?.files[0])}
+                                error={errors?.files ? true : false}
+                                helperText={errors?.files?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={6} sx={{ display: "flex", justifyContent: "end" }}>
+                            <FormGroup>
+                                <FormControlLabel
+                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isScret ? true : false} />}
+                                    label={"Is Confidential"}
+                                    sx={{ width: "100%" }}
+                                    size="small"
+                                />
+                            </FormGroup>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                type="date"
+                                label={<LabelRequire label="Issue Date" />}
+                                sx={{ width: "100%" }}
+                                InputLabelProps={shrinkOpt}
+                                {...register("issuedDate")}
+                                size="small"
+                                error={errors?.issuedDate ? true : false}
+                                helperText={errors?.issuedDate?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <SelectComponent
+                                id={"year-id"}
+                                label={"Year"}
+                                isRequire={true}
+                                size={"small"}
+                                customDatas={years}
+                                value={watchDocEntry?.year || ""}
+                                handleOnChange={(e) => setValue("year", e?.target?.value)}
+                                err={errors?.year?.message}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -301,65 +329,24 @@ const UpsertDocEntryForm = (props) => {
                                 err={errors?.campusId?.message}
                             />
                         </Grid>
-
                         <Grid item xs={12}>
-                            <SelectComponent
-                                id={"year-id"}
-                                label={"year"}
-                                isRequire={true}
-                                size={"small"}
-                                customDatas={years}
-                                value={watchDocEntry?.year || ""}
-                                handleOnChange={(e) => setValue("year", e?.target?.value)}
-                                err={errors?.year?.message}
-                            />
-                        </Grid>
-
-                        <Grid item xs={12}>
-                            <TextField
-                                type="date"
-                                label={<LabelRequire label="Issue Date" />}
-                                sx={{ width: "100%" }}
-                                InputLabelProps={shrinkOpt}
-                                {...register("issuedDate")}
+                            <AsyncAutoComplete
+                                id="sourceDocId"
+                                label={<LabelRequire label="Source Department" />}
                                 size="small"
-                                error={errors?.issuedDate ? true : false}
-                                helperText={errors?.issuedDate?.message}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                type="number"
-                                label={"Issue number"}
-                                sx={{ width: "100%" }}
-                                size="small"
-                                {...register("issueNum")}
-                                helperText="(Optional)"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                label={<LabelRequire label="Number of page" />}
-                                sx={{ width: "100%" }}
-                                {...register("numOfPage")}
-                                size="small"
-                                error={errors?.numOfPage ? true : false}
-                                helperText={errors?.numOfPage?.message}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                label={"Approved by"}
-                                sx={{ width: "100%" }}
-                                size="small"
-                                helperText="(Optional)"
-                                {...register("approvedBy")}
+                                callToApi={API_URL.lookup.department.get}
+                                bindField={"nameEn"}
+                                handleOnChange={(e, value) => {
+                                    setValue("deptId", value?.id);
+                                }}
+                                value={watchDocEntry?.deptId || null}
+                                err={errors?.deptId?.message}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="docTypeId"
-                                label={<LabelRequire label="Type of document" />}
+                                label={<LabelRequire label="Type Of Document" />}
                                 size="small"
                                 callToApi={API_URL.lookup.listGDoc.get}
                                 bindField={"nameEn"}
@@ -373,7 +360,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="mainCateId"
-                                label={<LabelRequire label="Main category" />}
+                                label={<LabelRequire label="Main Category" />}
                                 size="small"
                                 callToApi={API_URL.lookup.listMCate.get}
                                 bindField={"nameEn"}
@@ -387,7 +374,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="subMainCateId"
-                                label={"Sub category"}
+                                label={"Sub-Category"}
                                 size="small"
                                 callToApi={API_URL.lookup.subCate.get}
                                 bindField={"nameEn"}
@@ -401,7 +388,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="childSubMainCateId"
-                                label={"Child Sub category"}
+                                label={"Child Sub-Category"}
                                 size="small"
                                 callToApi={API_URL.lookup.childSubCate.get}
                                 bindField={"nameEn"}
@@ -412,41 +399,15 @@ const UpsertDocEntryForm = (props) => {
                                 value={watchDocEntry?.subSubCateId || null}
                             />
                         </Grid>
-
-                        <Grid item xs={6}>
-                            <TextField
-                                type="file"
-                                size="small"
-                                // label={
-                                //     <LabelRequire
-                                //         label={
-                                //             candidate?.id && modalType !== isClonedocEntryInfo
-                                //                 ? "Update File"
-                                //                 : "Upload File"
-                                //         }
-                                //     />
-                                // }
-                                inputProps={{
-                                    multiple: true,
-                                    accept: "application/pdf, image/jpeg, image/png"
-                                }}
-
-                                InputLabelProps={shrinkOpt}
-                                onChange={(e) => setValue("files", e?.target?.files[0])}
-                                error={errors?.files ? true : false}
-                                helperText={errors?.files?.message}
-                            />
-                        </Grid>
-
                         <Grid item xs={12}>
-                            <FormGroup>
-                                <FormControlLabel
-                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isScret ? true : false} />}
-                                    label={"Is confidential"}
-                                    sx={{ width: "100%" }}
-                                    size="small"
-                                />
-                            </FormGroup>
+                            <TextField
+                                label={<LabelRequire label="Number Of Page" />}
+                                sx={{ width: "100%" }}
+                                {...register("numOfPage")}
+                                size="small"
+                                error={errors?.numOfPage ? true : false}
+                                helperText={errors?.numOfPage?.message}
+                            />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -460,11 +421,28 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                type="number"
+                                label={"Issue Number"}
+                                sx={{ width: "100%" }}
+                                size="small"
+                                {...register("issueNum")}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label={"Approved By"}
+                                sx={{ width: "100%" }}
+                                size="small"
+                                {...register("approvedBy")}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
                                 label={"Remark"}
                                 sx={{ width: "100%" }}
                                 size="small"
                                 {...register("remark")}
-                                helperText="(Optional)"
                             />
                         </Grid>
 

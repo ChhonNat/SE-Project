@@ -3,7 +3,7 @@ import { STATUS } from "../constants/status";
 /**
  * Document Entry
  */
-const tbDocEntry = [
+const tblDocEntry = [
   {
     id: "index",
     label: "No.",
@@ -233,7 +233,7 @@ const tbSubSubCategory = [
   },
   {
     id: "nameKh",
-    label: "Name KH"
+    label: "Name(Kh)"
   },
   {
     id: "subCateName",
@@ -1031,7 +1031,7 @@ const tblUser = [
 ];
 
 export const TABLE_CONFIG = {
-  tbDocEntry,
+  tblDocEntry,
   tblGroupDocument,
   tblMainCategory,
   tbSubCategory,

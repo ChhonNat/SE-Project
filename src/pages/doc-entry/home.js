@@ -14,8 +14,8 @@ const HomeDocEntry = () => {
         <>
             <AsyncDatatable
                 asyncURL={API_URL.docEntry.get}
-                headers={TABLE_CONFIG.tbDocEntry}
-                bannerText="Document Entry"
+                headers={TABLE_CONFIG.tblDocEntry}
+                bannerText="All Document Entries"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
@@ -25,14 +25,11 @@ const HomeDocEntry = () => {
                     create: true,
                     edit: true
                 }}
-                // filter={
-                //     {
-                //         "columnOrder": "document_code",
-                //         "orderBy": "DESC",
-                //         "limit": 10,
-                //         "offset": 0
-                //     }
-                // }
+                filter={
+                    {
+                        columnOrder: "document_code",
+                    }
+                }
                 onHandleAddNewEvent={() => setOpenModal(true)}
                 handleEditEvent={(data) => {
                     setEditDocEntry(data);
