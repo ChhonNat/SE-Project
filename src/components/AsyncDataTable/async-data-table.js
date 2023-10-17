@@ -50,7 +50,7 @@ const AsyncDatatable = (props) => {
   const [dense, setDense] = useState(true);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchText, setSearchText] = useState('');
-  const { data, loading, error, message, sendRequest } = _useHttp();
+  const { data, loading, error, message, sendRequest, totalRecords } = _useHttp();
   const [initialData, setInitialData] = useState([]);
 
 
@@ -63,7 +63,7 @@ const AsyncDatatable = (props) => {
 
 
   let rows = useMemo(() => (data ? data : initialData), [data]);
-  let rowCount = useMemo(() => (data?.totalRecords ? data?.totalRecords : 0), [data]);
+  let rowCount = useMemo(() => (totalRecords ? totalRecords : 0), [data]);
 
   /**
    * Get row data
@@ -81,8 +81,8 @@ const AsyncDatatable = (props) => {
       },
       columnOrder: "ordering",
       orderBy: "ASC",
-      limit: 10,
-      offset: 0
+      limit: rowsPerPage,
+      offset: page * rowsPerPage
     };
 
     // add custom filter

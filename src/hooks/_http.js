@@ -12,19 +12,22 @@ const _httpReducer = (httpState, action) => {
                 loading: true,
                 error: null,
                 data: [],
+                totalRecords: action?.totalRecords
             };
         case 'RESPONSE':
             return {
                 ...httpState,
                 loading: false,
                 data: action.data,
-                message: action?.message
+                message: action?.message,
+                totalRecords: action?.totalRecords
             };
         case 'ERROR':
             return {
                 loading: false,
                 error: action.error,
                 data: [],
+                totalRecords: action?.totalRecords
                 // message: action?.message
             };
         default:
@@ -39,7 +42,8 @@ const _useHttp = () => {
         error: null,
         data: null,
         data1: null,
-        message: null
+        message: null,
+        totalRecords: 0
     });
 
     const sendRequest =
@@ -57,12 +61,12 @@ const _useHttp = () => {
                     await axiosAPI.get(url, postData)
                         .then(function (result) {
 
-                            const { data, success, message } = result?.data;
+                            const { data, success, message, totalRecords } = result?.data;
                             // data.message = message;
 
                             // if response success return message, if error return error
                             success ?
-                                dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success' }) :
+                                dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success', totalRecords: totalRecords }) :
                                 dispatchHttp({ type: 'ERROR', error: message || 'Error' });
                         })
                         .catch((error) => {
@@ -80,13 +84,13 @@ const _useHttp = () => {
                     await axiosAPI.post(url, postData)
                         .then(function (result) {
 
-                            const { data, success, message } = result?.data;
+                            const { data, success, message, totalRecords } = result?.data;
                             data.message = message;
                             // data.status = success;
 
                             // if response success return message, if error return error
                             success ?
-                                dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success' }) :
+                                dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success', totalRecords: totalRecords }) :
                                 dispatchHttp({ type: 'ERROR', error: message || 'Error' });
 
                         })
@@ -105,11 +109,11 @@ const _useHttp = () => {
                     await axiosAPI.put(url, postData)
                         .then(function (result) {
 
-                            const { data, success, message } = result?.data;
+                            const { data, success, message, totalRecords } = result?.data;
 
                             // if response success return message, if error return error
                             success ?
-                                dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success' }) :
+                                dispatchHttp({ type: 'RESPONSE', data: data, message: message || 'Success', totalRecords: totalRecords }) :
                                 dispatchHttp({ type: 'ERROR', error: message || 'Error' });
                         })
                         .catch((error) => {
@@ -128,6 +132,7 @@ const _useHttp = () => {
         data: httpState?.data,
         error: httpState?.error,
         message: httpState?.message,
+        totalRecords: httpState?.totalRecords,
         sendRequest,
     };
 };

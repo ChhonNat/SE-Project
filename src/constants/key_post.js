@@ -13,11 +13,12 @@ const docEntry = [
     "mainCateId",
     "subCateId",
     "subSubCateId",
-    "file",
+    "files",
     "isScret",
     "chronoNum",
     "remark",
-]
+];
+
 const upsert_candidate = [
     "firstName",
     "lastName",
