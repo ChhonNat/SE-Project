@@ -49,7 +49,7 @@ const UpsertDocEntryForm = (props) => {
     });
 
     const watchDocEntry = watch();
-    const formatKeys = ["issuedDate", "issueNum", "files"];
+    const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh", "isSecret"];
 
     useEffect(() => {
 
@@ -58,13 +58,20 @@ const UpsertDocEntryForm = (props) => {
 
         if (docEntry?.id && open) {
             Object.keys(docEntry).forEach((key) => {
-                if (KEY_POST.docEntry.includes(key)) {
-                    if (key === formatKeys[0]) {
-                        const appliedDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
-                        setValue(key, appliedDate);
-                    } else {
-                        setValue(key, docEntry[key]);
-                    }
+                if (key === formatKeys[0]) {
+                    const appliedDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
+                    setValue(key, appliedDate);
+                }else if(key === formatKeys[3]){
+                    setValue("docCode", docEntry[key]);
+                }else if(key === formatKeys[4]){
+                    setValue("docNameEn", docEntry[key]);
+                }else if(key === formatKeys[5]){
+                    setValue("docNameKh", docEntry[key]);
+                }else if(key === formatKeys[6]){
+                    setValue("isScret", docEntry[key]);
+                }
+                 else {
+                    setValue(key, docEntry[key]);
                 }
             });
         } else {
@@ -86,7 +93,7 @@ const UpsertDocEntryForm = (props) => {
 
     // handle checkbox
     const handleChange = (e) => {
-        setValue('isSecret', e.target.checked ? 1 : 0);
+        setValue('isScret', e.target.checked ? 1 : 0);
     };
 
     const submit = async (data) => {
@@ -136,6 +143,7 @@ const UpsertDocEntryForm = (props) => {
                 }
             }
         });
+
         console.log("My-data: ", submitData)
         try {
             let submitDocEntry;
@@ -209,10 +217,10 @@ const UpsertDocEntryForm = (props) => {
                             <TextField
                                 label={<LabelRequire label="Name" />}
                                 sx={{ width: "100%" }}
-                                {...register("documentNameEn")}
+                                {...register("docNameEn")}
                                 size="small"
-                                error={errors?.documentNameEn ? true : false}
-                                helperText={errors?.documentNameEn?.message}
+                                error={errors?.docNameEn ? true : false}
+                                helperText={errors?.docNameEn?.message}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -220,7 +228,7 @@ const UpsertDocEntryForm = (props) => {
                                 label={"Name(Kh)"}
                                 sx={{ width: "100%" }}
                                 size="small"
-                                {...register("documentNameKh")}
+                                {...register("docNameKh")}
                             />
                         </Grid>
 
@@ -228,10 +236,10 @@ const UpsertDocEntryForm = (props) => {
                             <TextField
                                 label={<LabelRequire label="Numbering" />}
                                 sx={{ width: "100%" }}
-                                {...register("documentCode")}
+                                {...register("docCode")}
                                 size="small"
-                                error={errors?.documentCode ? true : false}
-                                helperText={errors?.documentCode?.message}
+                                error={errors?.docCode ? true : false}
+                                helperText={errors?.docCode?.message}
                             />
                         </Grid>
                         <Grid item xs={8}>
@@ -252,7 +260,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
                             <FormGroup>
                                 <FormControlLabel
-                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isSecret ? true : false} />}
+                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isScret ? true : false} />}
                                     label={"Is Confidential"}
                                     sx={{ width: "100%" }}
                                     size="small"

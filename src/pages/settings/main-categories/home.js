@@ -51,9 +51,9 @@ const HomeGroupDocument = () => {
          * Alert after request responses
          */
         Swal.fire({
-          title: status === DATA_STATUS.success ? "Success" : "Error",
+          title: data.success ? "Success" : "Error",
           text: data?.message,
-          icon: status === DATA_STATUS.success ? "success" : "error",
+          icon: data.success ? "success" : "error",
           confirmButtonText: "OK",
           size: 200,
         });

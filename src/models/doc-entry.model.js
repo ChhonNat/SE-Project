@@ -1,9 +1,9 @@
 import { any, number, object, string } from "zod";
 
 const Create = object({
-    documentCode: string().min(1, { message: "numbering is required!" }),
-    documentNameEn: string().min(1, { message: "document name English is required!" }),
-    documentNameKh: string().optional().nullable(),
+    docCode: string().min(1, { message: "numbering is required!" }),
+    docNameEn: string().min(1, { message: "document name English is required!" }),
+    docNameKh: string().optional().nullable(),
     deptId: number().min(1, { message: "source of document is required!" }),
     campusId: number().min(1, { message: "campus is required!" }),
     year: number().min(1, { message: "year is required!" }),
@@ -16,7 +16,7 @@ const Create = object({
     subCateId: number().default(0).nullable(),
     subSubCateId: number().default(0).nullable(),
     files: any().default(null),
-    isSecret: number().optional(0),
+    isScret: number().optional(0),
     chronoNum: string().min(1, { message: "chrono No is required!" }),
     remark: string().optional().nullable()
 });

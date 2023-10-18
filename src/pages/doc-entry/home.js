@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import UpsertDocEntryForm from "./form-upsert-doc-entry.modal";
-import ViewFileModal from "../../components/Modal/view-file.modal";
 
 const HomeDocEntry = () => {
 
@@ -17,7 +17,7 @@ const HomeDocEntry = () => {
             <AsyncDatatable
                 asyncURL={API_URL.docEntry.get}
                 headers={TABLE_CONFIG.tblDocEntry}
-                bannerText="All Document Entries"
+                bannerText="All Documents"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"

@@ -15,25 +15,25 @@ import { appConfig } from "../constants/app_cont";
 /**
  * Import all page components
  */
-const Candidate = {
-    HomeComponent: lazy(() => import('../pages/candidate/home')),
-};
+// const Candidate = {
+//     HomeComponent: lazy(() => import('../pages/candidate/home')),
+// };
 
-const Interview = {
-    HomeComponent: lazy(() => import('../pages/interview/home')),
-};
+// const Interview = {
+//     HomeComponent: lazy(() => import('../pages/interview/home')),
+// };
 
-const ReferenceCheck = {
-    HomeComponent: lazy(() => import('../pages/reference-check/home'))
-};
+// const ReferenceCheck = {
+//     HomeComponent: lazy(() => import('../pages/reference-check/home'))
+// };
 
-const JobOffer = {
-    HomeComponent: lazy(() => import('../pages/job-offer/home'))
-};
+// const JobOffer = {
+//     HomeComponent: lazy(() => import('../pages/job-offer/home'))
+// };
 
-const Hire = {
-    HomeComponent: lazy(() => import('../pages/hire/home'))
-};
+// const Hire = {
+//     HomeComponent: lazy(() => import('../pages/hire/home'))
+// };
 const DocEntry = {
     HomeComponent: lazy(() => import('../pages/doc-entry/home'))
 };
@@ -99,7 +99,7 @@ const User = {
 export const PRIVATE_ROUTES = [
     /** document-entry */
     {
-        name: "Document Entries",
+        name: "Documents Entry",
         path: "/doc-entry",
         component: <DocEntry.HomeComponent />,
         icon: <InsertDriveFileIcon style={{ color: appConfig.systemColor }} />,
@@ -124,7 +124,7 @@ export const PRIVATE_ROUTES = [
 
             // Main business
             {
-                name: "Group Documents",
+                name: "Type of Documents",
                 path: "group-document",
                 component: <Settings.GroupDocument.HomeComponent />,
                 icon: <BusinessIcon style={{ color: appConfig.systemColor }} />,
