@@ -65,7 +65,7 @@ const tblDocEntry = [
     id: "issuedDate",
     label: "Issue Date",
     type: "date",
-    dateFormat: "MMM DD, YYYY hh:mm:ss A"
+    dateFormat: "MMM DD, YYYY"
   },
   {
     id: "year",

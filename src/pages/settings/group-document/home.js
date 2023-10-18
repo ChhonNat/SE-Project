@@ -1,7 +1,6 @@
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import Swal from 'sweetalert2';
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import { API_URL } from "../../../constants/api_url";
@@ -13,40 +12,7 @@ import UpsertGDocFormModal from "./form-upsert-g-doc.modal";
 
 const HomeGroupDocument = () => {
 
-  const user = useSelector((state) => state?.userAuthendicated);
-  const [selectedData, setSelectedData] = useState({ open: false, row: {} });
-
-  const [editCandidate, setEditCandidate] = useState({});
-  const [detailCandidate, setDetailCandidate] = useState({});
-
-  const [openUpsertCandidateModal, setOpenUpsertCandidateModal] =
-    useState(false);
-  const [openCandidateDetailModal, setOpenCandidateDetailModal] =
-    useState(false);
   const [openReviewCVModal, setOpenReviewCVModal] = useState(false);
-  const [openScheduleModal, setOpenScheduleModal] = useState(false);
-  const [openProcessModal, setOpenProcessModal] = useState(false);
-
-  const [verifyTypeModal, setVerifyTypeModal] = useState("");
-
-  // Handle click each candidate to update the info
-  const handleEditCandidate = (candidate) => {
-    setEditCandidate(candidate);
-    setOpenUpsertCandidateModal(true);
-  };
-
-  //handle review candidate before shortlist
-  const handleReviewCandidate = (candidate) => {
-    setEditCandidate(candidate);
-    setOpenReviewCVModal(true);
-  };
-
-  //   const handleCloseModal = () => {
-  //     reset();
-  //     clearErrors();
-  //     onCloseModal();
-  // }
-
 
   const [isReload, setIsReload] = useState(false);
   const [openUpsertGDocModal, setOpenUpsertGDocModal] = useState(false);
@@ -87,9 +53,9 @@ const HomeGroupDocument = () => {
          * Alert after request responses
          */
         Swal.fire({
-          title: status === DATA_STATUS.success ? "Success" : "Error",
+          title: data.success ? "Success" : "Error",
           text: data?.message,
-          icon: status === DATA_STATUS.success ? "success" : "error",
+          icon: data.success ? "success" : "error",
           confirmButtonText: "OK",
           size: 200,
         });
@@ -119,7 +85,7 @@ const HomeGroupDocument = () => {
       <AsyncDatatable
         asyncURL={API_URL.groupDocument.get}
         headers={TABLE_CONFIG.tblGroupDocument}
-        bannerText="All Group Documents"
+        bannerText="All Type of Documents"
         searchPlaceHolder="Search"
         ordinal="asc"
         setOrdinalBy="id"
@@ -172,7 +138,7 @@ const HomeGroupDocument = () => {
       {/* Modal create and update GROUP DOCUMENT */}
       {openUpsertGDocModal && (
         <UpsertGDocFormModal
-          title={editGDoc?.id ? "Edit Group Document" : "Add Group Document"}
+          title={editGDoc?.id ? "Edit Type of Document" : "Add Type of Document"}
           openModal={openUpsertGDocModal}
           editData={editGDoc}
           onCloseModal={() => {

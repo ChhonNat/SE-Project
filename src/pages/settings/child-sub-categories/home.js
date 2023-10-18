@@ -41,8 +41,7 @@ const HomeChildSubCategory = () => {
                 tempData = await childSuCategoryService.softDelete(postStatus);
             }
 
-            const { data, status } = tempData;
-
+            const { data, status, } = tempData;
             if (status === HTTP_STATUS.success) {
 
                 if (status === DATA_STATUS.success)
@@ -52,9 +51,9 @@ const HomeChildSubCategory = () => {
                  * Alert after request responses
                  */
                 Swal.fire({
-                    title: status === DATA_STATUS.success ? "Success" : "Error",
+                    title: data.success ? "Success" : "Error",
                     text: data?.message,
-                    icon: status === DATA_STATUS.success ? "success" : "error",
+                    icon: data.success ? "success" : "error",
                     confirmButtonText: "OK",
                     size: 200,
                 });
