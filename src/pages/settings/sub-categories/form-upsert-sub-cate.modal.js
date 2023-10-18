@@ -146,19 +146,22 @@ const UpsertSubCateFormModel = (props) => {
                         {/* Input Fields */}
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
-                            {/*Address line */}
-                            {/* <Grid item xs={12}>
-                                <TextField
-                                    sx={{ width: '100%' }}
-                                    id="outlined-multiline-static"
-                                    label="Group Document Name"
+                            {/* select models */}
+                            <Grid item xs={12}>
+                                <AsyncAutoComplete
+                                    id="subCate-id"
+                                    label="Main Category"
                                     size="small"
-                                    multiline
-                                    variant="outlined"
-                                    {...register('groupDocId')}
+                                    callToApi={API_URL.lookup.listMCate.get}
+                                    bindField={"nameEn"}
+                                    handleOnChange={(e, value) => {
+                                        setValue("mainCateId", value?.id);
+                                    }}
+                                    value={watchData?.mainCateId || null}
+                                    isRequire={true}
+                                    err={errors?.mainCateId?.message}
                                 />
-                            </Grid> */}
-
+                            </Grid>
 
                             {/* English name */}
                             <Grid item xs={12}>
@@ -187,23 +190,6 @@ const UpsertSubCateFormModel = (props) => {
                                     error={errors?.nameKh ? true : false}
                                     helperText={errors?.nameKh?.message}
                                     {...register('nameKh')}
-                                />
-                            </Grid>
-
-                            {/* select models */}
-                            <Grid item xs={12}>
-                                <AsyncAutoComplete
-                                    id="subCate-id"
-                                    label="Main Category"
-                                    size="small"
-                                    callToApi={API_URL.lookup.listMCate.get}
-                                    bindField={"nameEn"}
-                                    handleOnChange={(e, value) => {
-                                        setValue("mainCateId", value?.id);
-                                    }}
-                                    value={watchData?.mainCateId || null}
-                                    isRequire={true}
-                                    err={errors?.mainCateId?.message}
                                 />
                             </Grid>
 

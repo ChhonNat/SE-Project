@@ -146,18 +146,22 @@ const UpsertMCateFormModel = (props) => {
                         {/* Input Fields */}
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
-                            {/*Address line */}
-                            {/* <Grid item xs={12}>
-                                <TextField
-                                    sx={{ width: '100%' }}
-                                    id="outlined-multiline-static"
-                                    label="Group Document Name"
+                            {/* select models */}
+                            <Grid item xs={12}>
+                                <AsyncAutoComplete
+                                    id="groupDoc-id"
+                                    label="Group Document"
                                     size="small"
-                                    multiline
-                                    variant="outlined"
-                                    {...register('groupDocId')}
+                                    callToApi={API_URL.lookup.listGDoc.get}
+                                    bindField={"nameEn"}
+                                    handleOnChange={(e, value) => {
+                                        setValue("groupDocId", value?.id);
+                                    }}
+                                    value={watchData?.groupDocId || null}
+                                    isRequire={true}
+                                    err={errors?.groupDocId?.message}
                                 />
-                            </Grid> */}
+                            </Grid>
 
                             {/* English name */}
                             <Grid item xs={12}>
@@ -188,24 +192,6 @@ const UpsertMCateFormModel = (props) => {
                                     {...register('nameKh')}
                                 />
                             </Grid>
-
-                            {/* select models */}
-                            <Grid item xs={12}>
-                                <AsyncAutoComplete
-                                    id="groupDoc-id"
-                                    label="Group Document"
-                                    size="small"
-                                    callToApi={API_URL.lookup.listGDoc.get}
-                                    bindField={"nameEn"}
-                                    handleOnChange={(e, value) => {
-                                        setValue("groupDocId", value?.id);
-                                    }}
-                                    value={watchData?.groupDocId || null}
-                                    isRequire={true}
-                                    err={errors?.groupDocId?.message}
-                                />
-                            </Grid>
-
 
                             {/*Short name */}
                             <Grid item xs={12}>

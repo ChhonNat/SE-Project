@@ -74,17 +74,6 @@ const UpsertDocEntryForm = (props) => {
 
     const onError = (data) => {
         console.log(data);
-        if (docEntry?.id) {
-            if (watchDocEntry?.password || watchDocEntry?.confirmPassword) {
-                if (watchDocEntry?.password !== watchDocEntry?.confirmPassword)
-                    setError("confirmPassword", {
-                        message: "Confirm password doesn't match!",
-                    });
-            }
-        }
-
-        if (!watchDocEntry?.roles?.length)
-            setError("roles", { message: "Role is required!" });
     };
 
     // handle select year
@@ -102,8 +91,8 @@ const UpsertDocEntryForm = (props) => {
 
     const submit = async (data) => {
 
+        // const submitData = docEntry?.id ? new FormData() : {};
         const submitData = new FormData();
-
         if (!data?.files?.length)
             setError("files", { message: "File is required!" });
 
@@ -147,14 +136,14 @@ const UpsertDocEntryForm = (props) => {
                 }
             }
         });
-console.log("My-data: ", submitData)
+        console.log("My-data: ", submitData)
         try {
             let submitDocEntry;
 
-            if (docEntry?.id){
+            if (docEntry?.id) {
                 submitDocEntry = await docEntryService.updateDocEntry(docEntry?.id, submitData, "multipart/form-data");
             }
-            else{
+            else {
                 submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
             }
 
