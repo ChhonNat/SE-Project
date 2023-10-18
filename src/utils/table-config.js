@@ -1,7 +1,7 @@
 import { STATUS } from "../constants/status";
 
 /**
- * User management
+ * Document Entry
  */
 const tblDocEntry = [
   {
@@ -69,7 +69,9 @@ const tblDocEntry = [
   },
   {
     id: "year",
-    label: "Year"
+    label: "Year",
+    type: "data",
+    dateFormat: "YYYY"
   },
   {
     id: "inactive",

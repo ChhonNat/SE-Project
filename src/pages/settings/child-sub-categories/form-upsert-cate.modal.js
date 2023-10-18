@@ -145,7 +145,22 @@ const UpsertCateFormModel = (props) => {
 
                         {/* Input Fields */}
                         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-
+                            {/* select models */}
+                            <Grid item xs={12}>
+                                <AsyncAutoComplete
+                                    id="category-id"
+                                    label="Sub Category"
+                                    size="small"
+                                    callToApi={API_URL.lookup.subCate.get}
+                                    bindField={"nameEn"}
+                                    handleOnChange={(e, value) => {
+                                        setValue("subCateId", value?.id);
+                                    }}
+                                    value={watchData?.subCateId || null}
+                                    isRequire={true}
+                                    err={errors?.subCateId?.message}
+                                />
+                            </Grid>
 
                             {/* English name */}
                             <Grid item xs={12}>
@@ -174,23 +189,6 @@ const UpsertCateFormModel = (props) => {
                                     error={errors?.nameKh ? true : false}
                                     helperText={errors?.nameKh?.message}
                                     {...register('nameKh')}
-                                />
-                            </Grid>
-
-                            {/* select models */}
-                            <Grid item xs={12}>
-                                <AsyncAutoComplete
-                                    id="category-id"
-                                    label="Sub Category"
-                                    size="small"
-                                    callToApi={API_URL.lookup.subCate.get}
-                                    bindField={"nameEn"}
-                                    handleOnChange={(e, value) => {
-                                        setValue("subCateId", value?.id);
-                                    }}
-                                    value={watchData?.subCateId || null}
-                                    isRequire={true}
-                                    err={errors?.subCateId?.message}
                                 />
                             </Grid>
 

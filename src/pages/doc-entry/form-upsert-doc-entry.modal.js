@@ -20,8 +20,6 @@ import FooterComponent from "../../components/Page/footer";
 import TitleComponent from "../../components/Page/title";
 import SelectComponent from "../../components/Selector/select";
 import { API_URL } from "../../constants/api_url";
-import { DATA_STATUS } from "../../constants/data_status";
-import { HTTP_STATUS } from "../../constants/http_status";
 import { KEY_POST } from "../../constants/key_post";
 import { DocEntryModel } from "../../models/doc-entry.model";
 import { docEntryService } from "../../services/doc-entry.service";
@@ -61,15 +59,16 @@ const UpsertDocEntryForm = (props) => {
         if (docEntry?.id && open) {
             Object.keys(docEntry).forEach((key) => {
                 if (KEY_POST.docEntry.includes(key)) {
-                    if (formatKeys.includes(key)) {
-                        key === 'department' ? setValue('departmentId', docEntry[key]?.id) : setValue(key, ConverterService.convertUnixDateToMUI(docEntry[key]));
+                    if (key === formatKeys[0]) {
+                        const appliedDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
+                        setValue(key, appliedDate);
                     } else {
                         setValue(key, docEntry[key]);
                     }
                 }
             });
         } else {
-            setValue('isScret', 0);
+            setValue('isSecret', 0);
         }
     }, [open]);
 
@@ -87,13 +86,13 @@ const UpsertDocEntryForm = (props) => {
 
     // handle checkbox
     const handleChange = (e) => {
-        setValue('isScret', e.target.checked ? 1 : 0);
+        setValue('isSecret', e.target.checked ? 1 : 0);
     };
 
     const submit = async (data) => {
 
+        // const submitData = docEntry?.id ? new FormData() : {};
         const submitData = new FormData();
-
         if (!data?.files?.length)
             setError("files", { message: "File is required!" });
 
@@ -124,7 +123,6 @@ const UpsertDocEntryForm = (props) => {
                 }
 
             } else {
-
                 if (formatKeys.includes(key)) {
 
                     if (formatKeys[0] === key)
@@ -138,14 +136,16 @@ const UpsertDocEntryForm = (props) => {
                 }
             }
         });
-
+        console.log("My-data: ", submitData)
         try {
             let submitDocEntry;
 
-            if (docEntry?.id)
+            if (docEntry?.id) {
                 submitDocEntry = await docEntryService.updateDocEntry(docEntry?.id, submitData, "multipart/form-data");
-            else
+            }
+            else {
                 submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
+            }
 
             const { data } = submitDocEntry;
             const { message, success } = data;
@@ -209,10 +209,10 @@ const UpsertDocEntryForm = (props) => {
                             <TextField
                                 label={<LabelRequire label="Name" />}
                                 sx={{ width: "100%" }}
-                                {...register("docNameEn")}
+                                {...register("documentNameEn")}
                                 size="small"
-                                error={errors?.docNameEn ? true : false}
-                                helperText={errors?.docNameEn?.message}
+                                error={errors?.documentNameEn ? true : false}
+                                helperText={errors?.documentNameEn?.message}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -220,7 +220,7 @@ const UpsertDocEntryForm = (props) => {
                                 label={"Name(Kh)"}
                                 sx={{ width: "100%" }}
                                 size="small"
-                                {...register("docNameKh")}
+                                {...register("documentNameKh")}
                             />
                         </Grid>
 
@@ -228,10 +228,10 @@ const UpsertDocEntryForm = (props) => {
                             <TextField
                                 label={<LabelRequire label="Numbering" />}
                                 sx={{ width: "100%" }}
-                                {...register("docCode")}
+                                {...register("documentCode")}
                                 size="small"
-                                error={errors?.docCode ? true : false}
-                                helperText={errors?.docCode?.message}
+                                error={errors?.documentCode ? true : false}
+                                helperText={errors?.documentCode?.message}
                             />
                         </Grid>
                         <Grid item xs={8}>
@@ -252,7 +252,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
                             <FormGroup>
                                 <FormControlLabel
-                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isScret ? true : false} />}
+                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isSecret ? true : false} />}
                                     label={"Is Confidential"}
                                     sx={{ width: "100%" }}
                                     size="small"
