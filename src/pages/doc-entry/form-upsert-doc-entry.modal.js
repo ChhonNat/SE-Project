@@ -160,7 +160,7 @@ const UpsertDocEntryForm = (props) => {
         console.log("MY-data: ", data)
         const submitData = new FormData();
         if (!data?.files?.length)
-            setError("files", { message: "File is required!" });
+        setError("files", { message: "File is required!" });
 
         Object.keys(data).forEach((key) => {
 
