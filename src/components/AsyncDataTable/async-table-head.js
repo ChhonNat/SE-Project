@@ -1,28 +1,28 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { tableCellClasses } from "@mui/material/TableCell";
+import styled from "@emotion/styled";
+import { Box } from "@mui/material";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
-import styled from "@emotion/styled";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
+import PropTypes from "prop-types";
+import React from "react";
 import uuid from "react-uuid";
-import { Box } from "@mui/material";
-import { CheckBox } from "@mui/icons-material";
 
 /**
  * Style Table Header
  */
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme?.palette?.datatable?.headerBg,
-    color: theme?.palette?.datatable?.color,
+    backgroundColor: theme?.palette?.datatable?.headerBg || '#3f51b5',
+    color: theme?.palette?.datatable?.color || '#fff',
+
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
   },
 }));
+
 
 /**
  * Custom Table Header
@@ -80,7 +80,7 @@ const EnhancedTableHead = (props) => {
               >
                 {allowShort && (
                   <TableSortLabel
-                    active={orderBy === headCell.sqlField}
+                    // active={orderBy === headCell.sqlField}
                     direction={
                       allowShort
                         ? orderBy === headCell.sqlField
@@ -93,14 +93,19 @@ const EnhancedTableHead = (props) => {
                         ? createSortHandler(headCell.sqlField)
                         : undefined
                     }
-                    sx={{ fontSize: 13, fontWeight: "bold" }}
+                    sx={{
+                      fontSize: 13,
+                      fontWeight: "bold",
+                      color: orderBy === headCell.sqlField ? "#f5f5f5" : "#fff",
+                      "&:hover": {
+                        color: "#dedede", // Change font color to red on hover
+                      },
+                    }}
                   >
                     {headCell.label}
                     {orderBy === headCell.sqlField ? (
                       <Box component="span" sx={visuallyHidden}>
-                        {order === "desc"
-                          ? "sorted descending"
-                          : "sorted ascending"}{" "}
+                        {order === "desc" ? "sorted descending" : "sorted ascending"}{" "}
                       </Box>
                     ) : null}
                   </TableSortLabel>
@@ -108,6 +113,7 @@ const EnhancedTableHead = (props) => {
 
                 {!allowShort && headCell.label}
               </StyledTableCell>
+
             );
           })
         ) : (

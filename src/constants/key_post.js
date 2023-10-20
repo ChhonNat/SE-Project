@@ -1,7 +1,7 @@
 const docEntry = [
-    "documentCode",
-    "documentNameEn",
-    "documentNameKh",
+    "docCode",
+    "docNameEn",
+    "docNameKh",
     "deptId",
     "campusId",
     "year",

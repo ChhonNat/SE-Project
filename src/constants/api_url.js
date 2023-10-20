@@ -205,6 +205,7 @@ export const API_URL = {
     docEntry: {
         get: `${API_VERSION}/documents/list`,
         create: `${API_VERSION}/documents/create`,
+        edit: `${API_VERSION}/documents/update/`,
         listAllFile:   `${API_VERSION}/documents/list-file-names?documentId=`,
         viewFile: `${API_VERSION}/documents/view?fileName=`
     },

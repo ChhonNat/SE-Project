@@ -1,17 +1,14 @@
-import { Button, ButtonGroup, IconButton, Slide } from "@mui/material";
-import React, { forwardRef, useEffect, useState } from "react";
-import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import ConfirmModal from "../Modal/confirm-delete";
-import Tooltip from '@mui/material/Tooltip';
-import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Button, ButtonGroup, IconButton, Slide } from "@mui/material";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import FileOpenIcon from '@mui/icons-material/FileOpen';
+import Tooltip from '@mui/material/Tooltip';
+import React, { forwardRef, useState } from "react";
+import ConfirmModal from "../Modal/confirm-delete";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -85,7 +82,7 @@ const AsyncTableAction = (props) => {
                 }
 
                 {useActions?.viewFile &&
-                    <Tooltip title="View Evaluate Form">
+                    <Tooltip title="View File">
                         <Button variant="text" size="small" color="inherit"
                             onClick={onHandleViewFileEvent}>
                             <FileOpenIcon fontSize="small" />
