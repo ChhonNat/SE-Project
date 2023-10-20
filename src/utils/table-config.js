@@ -10,7 +10,7 @@ const tblDocEntry = [
   },
   {
     id: "documentCode",
-    label: "Code",
+    label: "Numbering",
     type: "link"
   },
   {
@@ -26,6 +26,10 @@ const tblDocEntry = [
     label: "Department",
   },
   {
+    id: "createdBy",
+    label: "Create By",
+  },
+  {
     id: "campusName",
     label: "Campus",
   },
@@ -37,10 +41,10 @@ const tblDocEntry = [
     id: "numOfPage",
     label: "Number of page",
   },
-  {
-    id: "approvedBy",
-    label: "Approved By",
-  },
+  // {
+  //   id: "approvedBy",
+  //   label: "Approved By",
+  // },
   {
     id: "typeOfDocName",
     label: "Type of Document",
@@ -73,22 +77,22 @@ const tblDocEntry = [
     type: "data",
     dateFormat: "YYYY"
   },
-  {
-    id: "inactive",
-    label: "Status",
-    type: "status",
-    statusColor: { [STATUS.RECORD.ACTIVE]: "Green", [STATUS.RECORD.INACTIVE]: "Red" }
-  },
+  // {
+  //   id: "inactive",
+  //   label: "Status",
+  //   type: "status",
+  //   statusColor: { [STATUS.RECORD.ACTIVE]: "Green", [STATUS.RECORD.INACTIVE]: "Red" }
+  // },
   {
     id: "createdAt",
     label: "Created At",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
-  {
-    id: "remark",
-    label: "Remark",
-  },
+  // {
+  //   id: "remark",
+  //   label: "Remark",
+  // },
   {
     id: "action",
     label: "Actions",

@@ -85,7 +85,7 @@ const HomeChildSubCategory = () => {
             <AsyncDatatable
                 asyncURL={API_URL.childSubCategory.get}
                 headers={TABLE_CONFIG.tbSubSubCategory}
-                bannerText="All Child Sub-Categories"
+                bannerText="All Sub-Sub-Categories"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
@@ -138,7 +138,7 @@ const HomeChildSubCategory = () => {
 
             {openUpsertChildSubCateModal && (
                 <UpsertCateFormModel
-                    title={editChildSubCate?.id ? "Edit Child Sub-Category" : "Add Child Sub-Category"}
+                    title={editChildSubCate?.id ? "Edit Sub-Sub-Category" : "Add Sub-Sub-Category"}
                     openModal={openUpsertChildSubCateModal}
                     editData={editChildSubCate}
                     onCloseModal={() => {

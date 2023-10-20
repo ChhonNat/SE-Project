@@ -150,7 +150,7 @@ const UpsertMCateFormModel = (props) => {
                             <Grid item xs={12}>
                                 <AsyncAutoComplete
                                     id="groupDoc-id"
-                                    label="Group Document"
+                                    label="Type of Document"
                                     size="small"
                                     callToApi={API_URL.lookup.listGDoc.get}
                                     bindField={"nameEn"}
