@@ -8,13 +8,14 @@ import { visuallyHidden } from "@mui/utils";
 import PropTypes from "prop-types";
 import React from "react";
 import uuid from "react-uuid";
+import { appConfig } from "../../constants/app_cont";
 
 /**
  * Style Table Header
  */
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme?.palette?.datatable?.headerBg || '#3f51b5',
+    backgroundColor: theme?.palette?.datatable?.headerBg || appConfig.systemColor,
     color: theme?.palette?.datatable?.color || '#fff',
 
   },
