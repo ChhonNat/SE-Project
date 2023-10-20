@@ -1,5 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Close } from "@mui/icons-material";
+import FolderIcon from '@mui/icons-material/Folder';
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import {
     Box, Checkbox, Dialog,
     DialogActions,
@@ -9,9 +11,20 @@ import {
     FormGroup,
     Grid,
     IconButton,
+    ListItemText,
     Slide, TextField
 } from "@mui/material";
-import React, { forwardRef, useEffect } from "react";
+import List from "@mui/material/List";
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import dayjs from "dayjs";
+import React, { forwardRef, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import AsyncAutoComplete from "../../components/AutoComplete/auto-complete";
@@ -24,7 +37,7 @@ import { KEY_POST } from "../../constants/key_post";
 import { DocEntryModel } from "../../models/doc-entry.model";
 import { docEntryService } from "../../services/doc-entry.service";
 import { ConverterService } from "../../utils/converter";
-
+import DescriptionIcon from '@mui/icons-material/Description';
 
 const shrinkOpt = { shrink: true };
 
@@ -51,38 +64,6 @@ const UpsertDocEntryForm = (props) => {
     const watchDocEntry = watch();
     const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh", "isSecret"];
 
-    useEffect(() => {
-
-        reset();
-        clearErrors();
-
-        if (docEntry?.id && open) {
-            Object.keys(docEntry).forEach((key) => {
-                if (key === formatKeys[0]) {
-                    const appliedDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
-                    setValue(key, appliedDate);
-                }else if(key === formatKeys[3]){
-                    setValue("docCode", docEntry[key]);
-                }else if(key === formatKeys[4]){
-                    setValue("docNameEn", docEntry[key]);
-                }else if(key === formatKeys[5]){
-                    setValue("docNameKh", docEntry[key]);
-                }else if(key === formatKeys[6]){
-                    setValue("isScret", docEntry[key]);
-                }
-                 else {
-                    setValue(key, docEntry[key]);
-                }
-            });
-        } else {
-            setValue('isSecret', 0);
-        }
-    }, [open]);
-
-    const onError = (data) => {
-        console.log(data);
-    };
-
     // handle select year
     const currentYear = new Date().getFullYear();
     const earliestYear = 1970;
@@ -96,9 +77,87 @@ const UpsertDocEntryForm = (props) => {
         setValue('isScret', e.target.checked ? 1 : 0);
     };
 
-    const submit = async (data) => {
+    // handle change datepicker
+    const [selectedDate, setSelectedDate] = useState(null);
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        const formattedDate = dayjs(date).format('YYYY/MM/DD');
+        setValue('issuedDate', formattedDate);
+    };
 
-        // const submitData = docEntry?.id ? new FormData() : {};
+
+    // handle list files
+    const [checked, setChecked] = React.useState([0]);
+
+    const handleToggle = (value) => () => {
+        const currentIndex = checked.indexOf(value);
+        const newChecked = [...checked];
+
+        if (currentIndex === -1) {
+            newChecked.push(value);
+        } else {
+            newChecked.splice(currentIndex, 1);
+        }
+
+        setChecked(newChecked);
+    };
+
+    const [showList, setShowList] = useState(false);
+
+    const data = [
+        { icon: <DescriptionIcon />, label: "Authentication" },
+        { icon: <DescriptionIcon />, label: "Database" },
+        { icon: <DescriptionIcon />, label: "Storage" },
+        { icon: <DescriptionIcon />, label: "Hosting" }
+    ];
+
+    const FireNav = styled(List)({
+        "& .MuiListItemButton-root": {
+            paddingLeft: 24,
+            paddingRight: 24
+        },
+        "& .MuiListItemIcon-root": {
+            minWidth: 0,
+            marginRight: 16
+        },
+        "& .MuiSvgIcon-root": {
+            fontSize: 20
+        }
+    });
+
+    useEffect(() => {
+
+        reset();
+        clearErrors();
+
+        if (docEntry?.id && open) {
+            Object.keys(docEntry).forEach((key) => {
+                if (key === formatKeys[0]) {
+                    const issueDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
+                    setSelectedDate(dayjs(issueDate));
+                    setValue(key, issueDate);
+                } else if (key === formatKeys[3]) {
+                    setValue("docCode", docEntry[key]);
+                } else if (key === formatKeys[4]) {
+                    setValue("docNameEn", docEntry[key]);
+                } else if (key === formatKeys[5]) {
+                    setValue("docNameKh", docEntry[key]);
+                } else if (key === formatKeys[6]) {
+                    setValue("isScret", docEntry[key]);
+                } else {
+                    console.log(typeof docEntry[key] + " = " + key + " = " + docEntry[key])
+                    setValue(key, docEntry[key]);
+                }
+            });
+        };
+    }, [open]);
+
+    const onError = (data) => {
+        console.log("Error data submit: ", data);
+    };
+
+    const submit = async (data) => {
+        console.log("MY-data: ", data)
         const submitData = new FormData();
         if (!data?.files?.length)
             setError("files", { message: "File is required!" });
@@ -144,7 +203,6 @@ const UpsertDocEntryForm = (props) => {
             }
         });
 
-        console.log("My-data: ", submitData)
         try {
             let submitDocEntry;
 
@@ -251,10 +309,10 @@ const UpsertDocEntryForm = (props) => {
                                     accept: "application/pdf, image/jpeg, image/png, images/jpg"
                                 }}
                                 InputLabelProps={shrinkOpt}
-                                // onChange={(e) => setValue("files", [...e?.target?.files])}
                                 {...register("files")}
-                                error={errors?.files ? true : false}
-                                helperText={errors?.files?.message}
+                            // onChange={(e) => setValue("files", [...e?.target?.files])}
+                            // error={errors?.files ? true : false}
+                            // helperText={errors?.files?.message}
                             />
                         </Grid>
                         <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
@@ -267,18 +325,132 @@ const UpsertDocEntryForm = (props) => {
                                 />
                             </FormGroup>
                         </Grid>
+
+                        {docEntry?.id &&
+                            <Grid item xs={12}>
+                                <Box sx={{ display: "flex" }}>
+                                    <Paper elevation={0} sx={{ maxWidth: "100%" }}>
+                                        <FireNav component="nav" disablePadding>
+                                            <Box
+                                                sx={{
+                                                    pb: showList ? 2 : 0
+                                                }}
+                                            >
+                                                <ListItemButton
+                                                    alignItems="flex-start"
+                                                    onClick={() => setShowList(!showList)}
+                                                    sx={{
+                                                        px: 3,
+                                                        pt: 2.5,
+                                                        pb: showList ? 0 : 2.5,
+                                                        "&:hover, &:focus": { "& svg": { opacity: showList ? 1 : 0 } }
+                                                    }}
+                                                >
+                                                    <ListItemText
+                                                        primary="Files"
+                                                        primaryTypographyProps={{
+                                                            fontSize: 15,
+                                                            fontWeight: "medium",
+                                                            lineHeight: "20px",
+                                                            mb: "2px"
+                                                        }}
+                                                        secondary="Authentication, Firestore Database, Realtime Database, Storage, Hosting, Functions, and Machine Learning"
+                                                        secondaryTypographyProps={{
+                                                            noWrap: true,
+                                                            fontSize: 12,
+                                                            lineHeight: "16px",
+                                                            color: showList ? "rgba(0,0,0,0)" : ""
+                                                        }}
+                                                        sx={{ my: 0 }}
+                                                    />
+                                                    <KeyboardArrowDown
+                                                        sx={{
+                                                            mr: -1,
+                                                            opacity: 0,
+                                                            transform: showList ? "rotate(-180deg)" : "rotate(0)",
+                                                            transition: "0.2s"
+                                                        }}
+                                                    />
+                                                </ListItemButton>
+                                                {showList &&
+                                                    data.map((item) => (
+                                                        <ListItemButton
+                                                            key={item.label}
+                                                            sx={{ py: 0, minHeight: 32}}
+                                                        >
+                                                            <ListItemIcon sx={{ color: "inherit" }}>
+                                                                {item.icon}
+                                                            </ListItemIcon>
+                                                            <ListItemText
+                                                                primary={item.label}
+                                                                primaryTypographyProps={{
+                                                                    fontSize: 14,
+                                                                    fontWeight: "medium"
+                                                                }}
+                                                            />
+                                                        </ListItemButton>
+                                                    ))}
+                                            </Box>
+                                        </FireNav>
+                                    </Paper>
+                                </Box>
+                            </Grid>
+                        }
+
+                        {/* {docEntry?.id &&
+                            <Grid item xs={12}>
+                                <List sx={{ width: '100%', height: "180px", overflowY: 'auto', bgcolor: 'background.paper' }}>
+                                    {[0, 1, 2, 3, 4, 5].map((value) => {
+                                        const labelId = `checkbox-list-label-${value}`;
+
+                                        return (
+                                            <ListItem
+                                                key={value}
+                                                secondaryAction={
+                                                    <IconButton edge="end" aria-label="comments">
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                }
+                                                disablePadding
+                                                typography="body1"
+                                            >
+                                                <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+
+                                                    <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+                                                </ListItemButton>
+                                            </ListItem>
+                                        );
+                                    })}
+                                </List>
+                            </Grid>
+                        } */}
+
                         <Grid item xs={12}>
-                            <TextField
-                                type="date"
-                                label={<LabelRequire label="Issue Date" />}
-                                sx={{ width: "100%" }}
-                                InputLabelProps={shrinkOpt}
-                                {...register("issuedDate")}
-                                size="small"
-                                error={errors?.issuedDate ? true : false}
-                                helperText={errors?.issuedDate?.message}
-                            />
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={['DatePicker']}>
+                                    <DatePicker
+                                        required
+                                        label={<LabelRequire label="Issue Date" />}
+                                        sx={{ width: "100%" }}
+                                        InputLabelProps={shrinkOpt}
+                                        views={['year', 'month', 'day']}
+                                        format="LL"
+                                        value={selectedDate}
+                                        onChange={handleDateChange}
+                                        slotProps={{
+                                            textField: {
+                                                size: "small",
+                                                error: selectedDate === null && errors?.issuedDate ? true : false,
+                                                helperText: errors?.issuedDate ? "issue date is required!" : ""
+                                            },
+                                        }}
+                                    />
+
+                                </DemoContainer>
+                            </LocalizationProvider>
                         </Grid>
+
+
                         <Grid item xs={12}>
                             <SelectComponent
                                 id={"year-id"}
@@ -289,7 +461,9 @@ const UpsertDocEntryForm = (props) => {
                                 value={watchDocEntry?.year || ""}
                                 handleOnChange={(e) => setValue("year", e?.target?.value)}
                                 err={errors?.year?.message}
+                            // MenuProps={{ PaperProps: { sx: { maxHeight: 100 } } }}
                             />
+
                         </Grid>
                         <Grid item xs={12}>
                             <AsyncAutoComplete
