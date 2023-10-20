@@ -57,7 +57,9 @@ const UpsertDocEntryForm = (props) => {
         clearErrors();
 
         if (docEntry?.id && open) {
+
             Object.keys(docEntry).forEach((key) => {
+
                 if (KEY_POST.docEntry.includes(key)) {
                     if (key === formatKeys[0]) {
                         const appliedDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
@@ -67,6 +69,7 @@ const UpsertDocEntryForm = (props) => {
                     }
                 }
             });
+
         } else {
             setValue('isSecret', 0);
         }
@@ -94,7 +97,7 @@ const UpsertDocEntryForm = (props) => {
         // const submitData = docEntry?.id ? new FormData() : {};
         const submitData = new FormData();
         if (!data?.files?.length)
-            setError("files", { message: "File is required!" });
+        setError("files", { message: "File is required!" });
 
         Object.keys(data).forEach((key) => {
 
