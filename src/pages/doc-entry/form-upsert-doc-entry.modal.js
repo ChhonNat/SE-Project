@@ -48,7 +48,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 });
 
 const UpsertDocEntryForm = (props) => {
-    const { open, onCloseModal, handleEventSucceed, docEntry } = props;
+    const { open, onCloseModal, openFileModal, handleEventSucceed, docEntry } = props;
 
     const {
         register,
@@ -65,6 +65,7 @@ const UpsertDocEntryForm = (props) => {
 
     const watchDocEntry = watch();
     const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh", "isSecret"];
+    const updateKeys = ["documentId", "fileName", "files"];
 
     // handle select year
     const currentYear = new Date().getFullYear();
@@ -87,35 +88,40 @@ const UpsertDocEntryForm = (props) => {
         setValue('issuedDate', formattedDate);
     };
 
-
     // handle list files
-    const files = [
-        { label: "Authentication" },
-        { label: "Database" },
-        { label: "Storage" },
-        { label: "Hosting" },
-        { label: "Hosting" },
-        { label: "Hosting" }
-    ];
-
-
-    const [tmpFiles, setTmpFiles] = useState([]);
+    const [lstDocEntryFiles, setLstDocEntryFiles] = useState([]);
     const [showList, setShowList] = useState(false);
     const [tmpFileRm, setTmpFileRm] = useState([]);
-    
-    console.log("cath the value removed: ", tmpFileRm);
-    console.log("tmpFiles: ", tmpFiles);
+
+    // console.log("cath the value removed: ", tmpFileRm);
+    // console.log("tmpFiles: ", lstDocEntryFiles);
+
+    const getAllFile = async (id) => {
+        try {
+            const reqAllDocEntryFile = await docEntryService.getAllDocEntryFile(id);
+            const { data } = reqAllDocEntryFile;
+            const { success } = data;
+
+            if (success) {
+                setLstDocEntryFiles(data?.data || []);
+            } else {
+                setLstDocEntryFiles([]);
+            }
+        } catch (error) {
+            setLstDocEntryFiles([]);
+            console.log(error);
+        }
+    };
 
     const handleViewFile = (value) => () => {
-        
+
         console.log("catch the value: : ", value)
     };
 
     const handleRemoveFileUI = useCallback((id, item) => {
-      setTmpFileRm(prev => [...prev,item]);
-      setTmpFiles(prev => prev.toSpliced(id, 1));
+        setTmpFileRm(prev => [...prev, item]);
+        setLstDocEntryFiles(prev => prev.toSpliced(id, 1));
     }, []);
-
 
     const FireNav = styled(List)({
         "& .MuiListItemButton-root": {
@@ -138,7 +144,7 @@ const UpsertDocEntryForm = (props) => {
 
         if (docEntry?.id && open) {
 
-            setTmpFiles(files);
+            getAllFile(docEntry?.id);
 
             Object.keys(docEntry).forEach((key) => {
                 if (key === formatKeys[0]) {
@@ -166,7 +172,6 @@ const UpsertDocEntryForm = (props) => {
     };
 
     const submit = async (data) => {
-        console.log("MY-data: ", data)
         const submitData = new FormData();
         if (!data?.files?.length)
             setError("files", { message: "File is required!" });
@@ -206,17 +211,30 @@ const UpsertDocEntryForm = (props) => {
                     if (formatKeys[1] === key)
                         submitData.append(key, parseInt(data[key] ? data[key] : 0));
 
+                // }else if (updateKeys.length) {
+                //     updateKeys.map(key => {
+                //         console.log("Update keys: ", key)
+                //     })
                 } else {
                     submitData.append(key, data[key]);
                 }
             }
+            
         });
 
+        if(updateKeys.length){
+            updateKeys.map((key) => {
+                if(key === updateKeys[0]) submitData.append(key, docEntry?.id);
+                else if (key === updateKeys[1]) submitData.append(key, "");
+                else submitData.append(key, "");
+            });
+        };
+        
         try {
             let submitDocEntry;
-
+            
             if (docEntry?.id) {
-                submitDocEntry = await docEntryService.updateDocEntry(docEntry?.id, submitData, "multipart/form-data");
+                submitDocEntry = await docEntryService.updateDocEntry(submitData, "multipart/form-data");
             }
             else {
                 submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
@@ -335,10 +353,10 @@ const UpsertDocEntryForm = (props) => {
                             </FormGroup>
                         </Grid>
 
-                        {docEntry?.id &&
+                        {docEntry?.id && lstDocEntryFiles.length ?
                             <Grid item xs={12}>
                                 <Box sx={{ display: "flex", pd: 0 }}>
-                                    <Paper elevation={0} sx={{ maxWidth: "100%" }}>
+                                    <Paper elevation={0} sx={{ width: "100%" }}>
                                         <FireNav component="nav" disablePadding>
                                             <Box
                                                 sx={{
@@ -364,14 +382,14 @@ const UpsertDocEntryForm = (props) => {
                                                             lineHeight: "20px",
                                                             mb: "2px"
                                                         }}
-                                                        secondary="Authentication, Firestore Database, Realtime Database, Storage, Hosting, Functions, and Machine Learning"
+                                                        secondary={lstDocEntryFiles.map((file) => file.fileName).join(', ')}
                                                         secondaryTypographyProps={{
                                                             noWrap: true,
                                                             fontSize: 12,
                                                             lineHeight: "16px",
                                                             color: showList ? "rgba(0,0,0,0)" : ""
                                                         }}
-                                                        sx={{ my: 0 }}
+                                                        sx={{ my: 0, width: "100%" }}
                                                     />
                                                     <KeyboardArrowDown
                                                         sx={{
@@ -384,22 +402,22 @@ const UpsertDocEntryForm = (props) => {
                                                 </ListItemButton>
                                                 {showList &&
                                                     <List sx={{ width: '100%', maxHeight: "180px", overflowY: 'auto', bgcolor: 'background.paper' }}>
-                                                        {tmpFiles.map((value, index) => {
+                                                        {lstDocEntryFiles.map((file, index) => {
                                                             return (
                                                                 <ListItem
                                                                     key={index}
                                                                     secondaryAction={
-                                                                        <IconButton edge="end" aria-label="comments" sx={{ marginRight: '10px' }} onClick={() => handleRemoveFileUI(index, value)}>
+                                                                        <IconButton edge="end" aria-label="comments" sx={{ marginRight: '10px' }} onClick={() => handleRemoveFileUI(index, file)}>
                                                                             <DeleteIcon />
                                                                         </IconButton>
                                                                     }
                                                                     disablePadding
                                                                 >
-                                                                    <ListItemButton role={undefined} onClick={handleViewFile(value)} dense>
+                                                                    <ListItemButton role={undefined} onClick={openFileModal} dense>
                                                                         <ListItemIcon>
                                                                             <InsertDriveFileIcon />
                                                                         </ListItemIcon>
-                                                                        <ListItemText id={index} sx={{ fontSize: "16px" }} primary={value.label} />
+                                                                        <ListItemText id={index} sx={{ fontSize: "16px" }} primary={file.fileName} />
                                                                     </ListItemButton>
                                                                 </ListItem>
                                                             );
@@ -411,6 +429,7 @@ const UpsertDocEntryForm = (props) => {
                                     </Paper>
                                 </Box>
                             </Grid>
+                            : ""
                         }
 
                         <Grid item xs={12}>

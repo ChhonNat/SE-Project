@@ -1,7 +1,4 @@
-import React, { forwardRef, useEffect, useState } from "react";
-import TitleComponent from "../Page/title";
-import FooterComponent from "../Page/footer";
-import axiosAPI from "../../services/http.service";
+import { Close } from "@mui/icons-material";
 import {
   Dialog,
   DialogActions,
@@ -10,11 +7,12 @@ import {
   IconButton,
   Slide,
 } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import React, { forwardRef, useEffect, useState } from "react";
 import { API_URL } from "../../constants/api_url";
-import { HTTP_STATUS } from "../../constants/http_status";
-import { docEntryService } from "../../services/doc-entry.service";
 import { appConfig } from "../../constants/app_cont";
+import { docEntryService } from "../../services/doc-entry.service";
+import FooterComponent from "../Page/footer";
+import TitleComponent from "../Page/title";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -29,7 +27,6 @@ const ViewFileModal = (props) => {
   const [lstDocEntryFiles, setLstDocEntryFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   // const [displayPdf, setDisplayPdf] = useState("");
-
 
   useEffect(() => {
     if (id) {
