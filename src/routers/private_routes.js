@@ -165,5 +165,6 @@ export const PRIVATE_ROUTES = [
         component: <User.HomeComponent />,
         icon: <AccountCircleIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
+        isHide: true
     }
 ];
