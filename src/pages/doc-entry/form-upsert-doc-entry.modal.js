@@ -89,33 +89,33 @@ const UpsertDocEntryForm = (props) => {
 
 
     // handle list files
-    const data = [
-        {label: "Authentication" },
-        {label: "Database" },
-        {label: "Storage" },
-        {label: "Hosting" },
-        {label: "Hosting" },
-        {label: "Hosting" }
+    const files = [
+        { label: "Authentication" },
+        { label: "Database" },
+        { label: "Storage" },
+        { label: "Hosting" },
+        { label: "Hosting" },
+        { label: "Hosting" }
     ];
 
 
-    const [tmpData, setTmpData] = useState([]);
-    const handleRemoveFileUI = (value) => () => {
+    const [tmpFiles, setTmpFiles] = useState([]);
+    const [showList, setShowList] = useState(false);
+    const [tmpFileRm, setTmpFileRm] = useState([]);
+    
+    console.log("cath the value removed: ", tmpFileRm);
+    console.log("tmpFiles: ", tmpFiles);
+
+    const handleViewFile = (value) => () => {
         
         console.log("catch the value: : ", value)
     };
-    
-    const [showList, setShowList] = useState(false);
-    
-    const [tmpFileRm, setTmpFileRm] = useState([]);
-    const handleDeleteIconClick = useCallback((item, id) => {
-        // const newValue = [...tmpFileRm] || [];
-        // newValue[id] = item;
-        // setTmpFileRm(prev => [...prev,newValue]);
-        setTmpFileRm(item)
 
+    const handleRemoveFileUI = useCallback((id, item) => {
+      setTmpFileRm(prev => [...prev,item]);
+      setTmpFiles(prev => prev.toSpliced(id, 1));
     }, []);
-    console.log("cath the value: ", tmpFileRm);
+
 
     const FireNav = styled(List)({
         "& .MuiListItemButton-root": {
@@ -138,7 +138,7 @@ const UpsertDocEntryForm = (props) => {
 
         if (docEntry?.id && open) {
 
-            setTmpData(data);
+            setTmpFiles(files);
 
             Object.keys(docEntry).forEach((key) => {
                 if (key === formatKeys[0]) {
@@ -160,7 +160,6 @@ const UpsertDocEntryForm = (props) => {
             });
         };
     }, [open]);
-    console.log("tmpData: ", tmpData);
 
     const onError = (data) => {
         console.log("Error data submit: ", data);
@@ -385,18 +384,18 @@ const UpsertDocEntryForm = (props) => {
                                                 </ListItemButton>
                                                 {showList &&
                                                     <List sx={{ width: '100%', maxHeight: "180px", overflowY: 'auto', bgcolor: 'background.paper' }}>
-                                                        {data.map((value, index) => {
+                                                        {tmpFiles.map((value, index) => {
                                                             return (
                                                                 <ListItem
                                                                     key={index}
                                                                     secondaryAction={
-                                                                        <IconButton edge="end" aria-label="comments" sx={{ marginRight: '10px' }} onClick={() => handleDeleteIconClick(value, index)}>
+                                                                        <IconButton edge="end" aria-label="comments" sx={{ marginRight: '10px' }} onClick={() => handleRemoveFileUI(index, value)}>
                                                                             <DeleteIcon />
                                                                         </IconButton>
                                                                     }
                                                                     disablePadding
                                                                 >
-                                                                    <ListItemButton role={undefined} onClick={handleRemoveFileUI(value)} dense>
+                                                                    <ListItemButton role={undefined} onClick={handleViewFile(value)} dense>
                                                                         <ListItemIcon>
                                                                             <InsertDriveFileIcon />
                                                                         </ListItemIcon>
