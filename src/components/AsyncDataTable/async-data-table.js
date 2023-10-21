@@ -40,7 +40,9 @@ const AsyncDatatable = (props) => {
     onHandleRefreshEvent,
     useTableActions,
     handleDeleteEvent,
-    filter
+    handleFilterEvent,
+    filter,
+    isFilterChanged
   } = props;
 
 
@@ -71,12 +73,13 @@ const AsyncDatatable = (props) => {
    */
   const getRows = useCallback(async (searchValue = '') => {
 
+    // start: page * rowsPerPage,
+    // length: rowsPerPage,
+    // searchValue: searchValue,
+    // orderColumn: orderBy,
+    // ordinal: order,
+
     let postData = {
-      // start: page * rowsPerPage,
-      // length: rowsPerPage,
-      // searchValue: searchValue,
-      // orderColumn: orderBy,
-      // ordinal: order,
       searchParams: {
         searchValue: searchValue
       },
@@ -91,12 +94,13 @@ const AsyncDatatable = (props) => {
       postData = {
         ...postData,
         ...filter,
-      }
+      };
+      postData.searchParams.searchValue = searchValue;
     };
 
     await sendRequest(asyncURL, 'POST', postData);
   },
-    [sendRequest, asyncURL, rowsPerPage, orderBy, order, page]
+    [sendRequest, asyncURL, rowsPerPage, orderBy, order, page, isFilterChanged]
   );
 
   useEffect(() => {
@@ -208,6 +212,7 @@ const AsyncDatatable = (props) => {
           setSearchText={setSearchText}
           searchText={searchText}
           useActions={useTableActions}
+          handleFilterEvent={(fName, data) => handleFilterEvent(fName, data)}
         />
 
 
