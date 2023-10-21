@@ -63,6 +63,7 @@ const HomeDocEntry = () => {
                     }
                     handleEventSucceed={() => setIsReload(!isReload)}
                     docEntry={editDocEntry}
+                    openFileModal={() => setOpenFileModal(true)}
                 />
             }
 

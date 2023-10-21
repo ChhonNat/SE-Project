@@ -1,8 +1,8 @@
-import { FormControl, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
-import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import _useHttp from "../../hooks/_http";
-import { HTTP_METHODS } from "../../constants/http_method";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import FormHelperText from '@mui/material/FormHelperText';
+import React, { useEffect, useState } from "react";
+import { HTTP_METHODS } from "../../constants/http_method";
+import _useHttp from "../../hooks/_http";
 import LabelRequire from "../Label/require";
 
 /**

@@ -6,7 +6,7 @@ const createDocEntry = (param, contentType) => {
     return httpService._post(API_URL.docEntry.create,param,contentType);
 };
 
-const updateDocEntry = (id, param, contentType) => {
+const updateDocEntry = (param, contentType) => {
     return httpService._put(API_URL.docEntry.edit, param, contentType);
 };
 

@@ -39,7 +39,7 @@ const Update = object({
     files: any().default(null),
     isScret: number().optional(0),
     chronoNum: string().min(1, { message: "chrono No is required!" }),
-    remark: string().optional().nullable()
+    remark: string().optional().nullable(),
 });
 
 export const DocEntryModel = {
