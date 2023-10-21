@@ -1,7 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Close } from "@mui/icons-material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import {
     Box, Checkbox, Dialog,
@@ -39,8 +37,6 @@ import { KEY_POST } from "../../constants/key_post";
 import { DocEntryModel } from "../../models/doc-entry.model";
 import { docEntryService } from "../../services/doc-entry.service";
 import { ConverterService } from "../../utils/converter";
-import ViewFileModal from "../../components/Modal/view-file.modal";
-
 
 const shrinkOpt = { shrink: true };
 
