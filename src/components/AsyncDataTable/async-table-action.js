@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import React, { forwardRef, useState } from "react";
 import ConfirmModal from "../Modal/confirm-delete";
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -90,7 +91,8 @@ const AsyncTableAction = (props) => {
                             color="inherit"
                             onClick={onHandleViewFileEvent}
                             >
-                            <FileOpenIcon fontSize="small" />
+                            <FileDownloadIcon fontSize='small' color='info' />
+                            {/* <FileOpenIcon fontSize="small" /> */}
                         </Button>
                     </Tooltip>
                 }

@@ -50,6 +50,7 @@ const HomeDocEntry = () => {
                     search: true,
                     refresh: true,
                     create: true,
+                    view: true,
                     delete: true,
                     edit: true,
                     viewFile: true
@@ -73,6 +74,10 @@ const HomeDocEntry = () => {
                     window.open(`${appConfig.apiLink}${API_URL.docEntry.downloadAllFile}${data.id}`,'_blank')
                 }}
                 handleLinkEvent={(data) => {
+                    setEditDocEntry(data);
+                    setOpenFileModal(true);
+                }}
+                handleViewEvent={(data) => {
                     setEditDocEntry(data);
                     setOpenFileModal(true);
                 }}
