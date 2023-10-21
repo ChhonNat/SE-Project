@@ -23,6 +23,7 @@ const AsyncAutoComplete = (props) => {
     err,
     returnValueAs,
     disabled,
+    sx
   } = props;
 
   const { data, loading, error, message, sendRequest } = _useHttp();
