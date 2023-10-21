@@ -16,7 +16,7 @@ const Create = object({
     subCateId: number().default(0).nullable(),
     subSubCateId: number().default(0).nullable(),
     files: any().default(null),
-    isScret: number().optional(0),
+    isSecret: number().optional(0),
     chronoNum: string().min(1, { message: "chrono No is required!" }),
     remark: string().optional().nullable()
 });
@@ -37,7 +37,7 @@ const Update = object({
     subCateId: number().default(0).nullable(),
     subSubCateId: number().default(0).nullable(),
     files: any().default(null),
-    isScret: number().optional(0),
+    isSecret: number().optional(0),
     chronoNum: string().min(1, { message: "chrono No is required!" }),
     remark: string().optional().nullable(),
 });

@@ -14,7 +14,7 @@ const docEntry = [
     "subCateId",
     "subSubCateId",
     "files",
-    "isScret",
+    "isSecret",
     "chronoNum",
     "remark",
 ];

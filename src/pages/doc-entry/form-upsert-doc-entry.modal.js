@@ -64,7 +64,7 @@ const UpsertDocEntryForm = (props) => {
     });
 
     const watchDocEntry = watch();
-    const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh", "isSecret"];
+    const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh"];
     const updateKeys = ["documentId", "fileName", "files"];
 
     // handle select year
@@ -76,8 +76,10 @@ const UpsertDocEntryForm = (props) => {
     );
 
     // handle checkbox
+    // const [isSecret, setIsSecret] = useState(false);
     const handleChange = (e) => {
-        setValue('isScret', e.target.checked ? 1 : 0);
+        // setIsSecret(e.target.checked);
+        setValue('isSecret', e.target.checked ? 1 : 0);
     };
 
     // handle change datepicker
@@ -147,6 +149,7 @@ const UpsertDocEntryForm = (props) => {
             getAllFile(docEntry?.id);
 
             Object.keys(docEntry).forEach((key) => {
+                console.log(typeof docEntry[key] + " = " + key + " = " + docEntry[key])
                 if (key === formatKeys[0]) {
                     const issueDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
                     setSelectedDate(dayjs(issueDate));
@@ -157,10 +160,7 @@ const UpsertDocEntryForm = (props) => {
                     setValue("docNameEn", docEntry[key]);
                 } else if (key === formatKeys[5]) {
                     setValue("docNameKh", docEntry[key]);
-                } else if (key === formatKeys[6]) {
-                    setValue("isScret", docEntry[key]);
                 } else {
-                    // console.log(typeof docEntry[key] + " = " + key + " = " + docEntry[key])
                     setValue(key, docEntry[key]);
                 }
             });
@@ -172,12 +172,19 @@ const UpsertDocEntryForm = (props) => {
     };
 
     const submit = async (data) => {
+        // console.log("MY_DATA:", data)
         const submitData = new FormData();
         if (!data?.files?.length)
             setError("files", { message: "File is required!" });
 
+        if (updateKeys.length && docEntry?.id) {
+            updateKeys.map((key) => {
+                if (key === updateKeys[0]) submitData.append(key, docEntry?.id);
+                if (key === updateKeys[1]) submitData.append(key, "");
+                if (key === updateKeys[2]) submitData.append(key, "");
+            });
+        };
         Object.keys(data).forEach((key) => {
-
             if (!docEntry?.id) {
 
                 if (KEY_POST.docEntry.includes(key)) {
@@ -186,23 +193,18 @@ const UpsertDocEntryForm = (props) => {
 
                         if (formatKeys[0] === key)
                             submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
-
-
                         if (formatKeys[1] === key)
                             submitData.append(key, parseInt(data[key] ? data[key] : 0));
-
                         if (formatKeys[2] === key)
                             for (let i = 0; i < data?.files.length; i++) {
                                 submitData.append("files", data?.files[i]);
                             }
-
                     } else {
-
                         submitData.append(key, data[key]);
                     }
                 }
-
             } else {
+
                 if (formatKeys.includes(key)) {
 
                     if (formatKeys[0] === key)
@@ -210,37 +212,27 @@ const UpsertDocEntryForm = (props) => {
 
                     if (formatKeys[1] === key)
                         submitData.append(key, parseInt(data[key] ? data[key] : 0));
-
-                // }else if (updateKeys.length) {
-                //     updateKeys.map(key => {
-                //         console.log("Update keys: ", key)
-                //     })
                 } else {
+                    console.log("Key-data>>>", key +" data= ",data[key]);
                     submitData.append(key, data[key]);
                 }
             }
-            
+
         });
 
-        if(updateKeys.length){
-            updateKeys.map((key) => {
-                if(key === updateKeys[0]) submitData.append(key, docEntry?.id);
-                else if (key === updateKeys[1]) submitData.append(key, "");
-                else submitData.append(key, "");
-            });
-        };
-        
+
+
         try {
             let submitDocEntry;
-            
+
             if (docEntry?.id) {
                 submitDocEntry = await docEntryService.updateDocEntry(submitData, "multipart/form-data");
             }
             else {
                 submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
             }
-
             const { data } = submitDocEntry;
+            console.log(data);
             const { message, success } = data;
 
             if (success) {
@@ -252,8 +244,15 @@ const UpsertDocEntryForm = (props) => {
                     size: 200,
                 });
                 handleEventSucceed();
-                handleCloseModal();
+            } else {
+                Swal.fire({
+                    title: data?.success ? "Success" : "Error",
+                    text: message,
+                    icon: data?.success ? "success" : "error",
+                    size: 200,
+                });
             }
+            handleCloseModal();
         } catch (error) {
             console.log(error);
         }
@@ -345,7 +344,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
                             <FormGroup>
                                 <FormControlLabel
-                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isScret ? true : false} />}
+                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isSecret ? true : false} />}
                                     label={"Is Confidential"}
                                     sx={{ width: "100%" }}
                                     size="small"
