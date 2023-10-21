@@ -26,10 +26,6 @@ const tblDocEntry = [
     label: "Department",
   },
   {
-    id: "createdBy",
-    label: "Create By",
-  },
-  {
     id: "campusName",
     label: "Campus",
   },
@@ -88,6 +84,10 @@ const tblDocEntry = [
     label: "Created At",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
+  },
+  {
+    id: "createdBy",
+    label: "Create By",
   },
   // {
   //   id: "remark",

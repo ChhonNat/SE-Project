@@ -14,8 +14,18 @@ const getAllDocEntryFile = (id,param,contentType) => {
     return httpService._get(API_URL.docEntry.listAllFile+id, param, contentType);
 };
 
+const deleteDocEntry = (id, contentType) => {
+    return httpService._put(API_URL.docEntry.delete + id, contentType);
+};
+
+const downloadAllFile = (id, contentType) => {
+    return httpService._get(API_URL.docEntry.downloadAllFile + id, contentType);
+};
+
 export const docEntryService = {
     createDocEntry,
     updateDocEntry,
-    getAllDocEntryFile
+    getAllDocEntryFile,
+    deleteDocEntry,
+    downloadAllFile
 };

@@ -3,7 +3,7 @@ import React from "react";
 
 const ConfirmModal = (props) => {
 
-    const { open, onHandleCloseModal, TransitionModal } = props;
+    const { open, onHandleCloseModal, onHandleDelete, TransitionModal } = props;
     
     return (
         <Dialog
@@ -17,7 +17,7 @@ const ConfirmModal = (props) => {
             <DialogTitle>{"Delete"}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    Are you sure you want to delete this record?
+                    Are you sure you want to delete?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -30,6 +30,7 @@ const ConfirmModal = (props) => {
                 </Button>
                 <Button
                     variant="outlined"
+                    onClick={onHandleDelete}
                 >
                     Agree
                 </Button>
