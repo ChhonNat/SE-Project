@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Close } from "@mui/icons-material";
-import FolderIcon from '@mui/icons-material/Folder';
+import DeleteIcon from '@mui/icons-material/Delete';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import {
     Box, Checkbox, Dialog,
@@ -11,12 +12,13 @@ import {
     FormGroup,
     Grid,
     IconButton,
+    ListItemIcon,
     ListItemText,
     Slide, TextField
 } from "@mui/material";
 import List from "@mui/material/List";
+import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -24,7 +26,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from "dayjs";
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import AsyncAutoComplete from "../../components/AutoComplete/auto-complete";
@@ -37,7 +39,7 @@ import { KEY_POST } from "../../constants/key_post";
 import { DocEntryModel } from "../../models/doc-entry.model";
 import { docEntryService } from "../../services/doc-entry.service";
 import { ConverterService } from "../../utils/converter";
-import DescriptionIcon from '@mui/icons-material/Description';
+
 
 const shrinkOpt = { shrink: true };
 
@@ -87,29 +89,33 @@ const UpsertDocEntryForm = (props) => {
 
 
     // handle list files
-    const [checked, setChecked] = React.useState([0]);
-
-    const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-
-        setChecked(newChecked);
-    };
-
-    const [showList, setShowList] = useState(false);
-
     const data = [
-        { icon: <DescriptionIcon />, label: "Authentication" },
-        { icon: <DescriptionIcon />, label: "Database" },
-        { icon: <DescriptionIcon />, label: "Storage" },
-        { icon: <DescriptionIcon />, label: "Hosting" }
+        {label: "Authentication" },
+        {label: "Database" },
+        {label: "Storage" },
+        {label: "Hosting" },
+        {label: "Hosting" },
+        {label: "Hosting" }
     ];
+
+
+    const [tmpData, setTmpData] = useState([]);
+    const handleRemoveFileUI = (value) => () => {
+        
+        console.log("catch the value: : ", value)
+    };
+    
+    const [showList, setShowList] = useState(false);
+    
+    const [tmpFileRm, setTmpFileRm] = useState([]);
+    const handleDeleteIconClick = useCallback((item, id) => {
+        // const newValue = [...tmpFileRm] || [];
+        // newValue[id] = item;
+        // setTmpFileRm(prev => [...prev,newValue]);
+        setTmpFileRm(item)
+
+    }, []);
+    console.log("cath the value: ", tmpFileRm);
 
     const FireNav = styled(List)({
         "& .MuiListItemButton-root": {
@@ -131,6 +137,9 @@ const UpsertDocEntryForm = (props) => {
         clearErrors();
 
         if (docEntry?.id && open) {
+
+            setTmpData(data);
+
             Object.keys(docEntry).forEach((key) => {
                 if (key === formatKeys[0]) {
                     const issueDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
@@ -145,12 +154,13 @@ const UpsertDocEntryForm = (props) => {
                 } else if (key === formatKeys[6]) {
                     setValue("isScret", docEntry[key]);
                 } else {
-                    console.log(typeof docEntry[key] + " = " + key + " = " + docEntry[key])
+                    // console.log(typeof docEntry[key] + " = " + key + " = " + docEntry[key])
                     setValue(key, docEntry[key]);
                 }
             });
         };
     }, [open]);
+    console.log("tmpData: ", tmpData);
 
     const onError = (data) => {
         console.log("Error data submit: ", data);
@@ -160,7 +170,7 @@ const UpsertDocEntryForm = (props) => {
         console.log("MY-data: ", data)
         const submitData = new FormData();
         if (!data?.files?.length)
-        setError("files", { message: "File is required!" });
+            setError("files", { message: "File is required!" });
 
         Object.keys(data).forEach((key) => {
 
@@ -328,12 +338,13 @@ const UpsertDocEntryForm = (props) => {
 
                         {docEntry?.id &&
                             <Grid item xs={12}>
-                                <Box sx={{ display: "flex" }}>
+                                <Box sx={{ display: "flex", pd: 0 }}>
                                     <Paper elevation={0} sx={{ maxWidth: "100%" }}>
                                         <FireNav component="nav" disablePadding>
                                             <Box
                                                 sx={{
-                                                    pb: showList ? 2 : 0
+                                                    bgcolor: showList ? "rgba(71, 98, 130, 0.3)" : "",
+                                                    mb: 0,
                                                 }}
                                             >
                                                 <ListItemButton
@@ -373,57 +384,35 @@ const UpsertDocEntryForm = (props) => {
                                                     />
                                                 </ListItemButton>
                                                 {showList &&
-                                                    data.map((item) => (
-                                                        <ListItemButton
-                                                            key={item.label}
-                                                            sx={{ py: 0, minHeight: 32}}
-                                                        >
-                                                            <ListItemIcon sx={{ color: "inherit" }}>
-                                                                {item.icon}
-                                                            </ListItemIcon>
-                                                            <ListItemText
-                                                                primary={item.label}
-                                                                primaryTypographyProps={{
-                                                                    fontSize: 14,
-                                                                    fontWeight: "medium"
-                                                                }}
-                                                            />
-                                                        </ListItemButton>
-                                                    ))}
+                                                    <List sx={{ width: '100%', maxHeight: "180px", overflowY: 'auto', bgcolor: 'background.paper' }}>
+                                                        {data.map((value, index) => {
+                                                            return (
+                                                                <ListItem
+                                                                    key={index}
+                                                                    secondaryAction={
+                                                                        <IconButton edge="end" aria-label="comments" sx={{ marginRight: '10px' }} onClick={() => handleDeleteIconClick(value, index)}>
+                                                                            <DeleteIcon />
+                                                                        </IconButton>
+                                                                    }
+                                                                    disablePadding
+                                                                >
+                                                                    <ListItemButton role={undefined} onClick={handleRemoveFileUI(value)} dense>
+                                                                        <ListItemIcon>
+                                                                            <InsertDriveFileIcon />
+                                                                        </ListItemIcon>
+                                                                        <ListItemText id={index} sx={{ fontSize: "16px" }} primary={value.label} />
+                                                                    </ListItemButton>
+                                                                </ListItem>
+                                                            );
+                                                        })}
+                                                    </List>
+                                                }
                                             </Box>
                                         </FireNav>
                                     </Paper>
                                 </Box>
                             </Grid>
                         }
-
-                        {/* {docEntry?.id &&
-                            <Grid item xs={12}>
-                                <List sx={{ width: '100%', height: "180px", overflowY: 'auto', bgcolor: 'background.paper' }}>
-                                    {[0, 1, 2, 3, 4, 5].map((value) => {
-                                        const labelId = `checkbox-list-label-${value}`;
-
-                                        return (
-                                            <ListItem
-                                                key={value}
-                                                secondaryAction={
-                                                    <IconButton edge="end" aria-label="comments">
-                                                        <DeleteIcon />
-                                                    </IconButton>
-                                                }
-                                                disablePadding
-                                                typography="body1"
-                                            >
-                                                <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
-
-                                                    <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
-                                                </ListItemButton>
-                                            </ListItem>
-                                        );
-                                    })}
-                                </List>
-                            </Grid>
-                        } */}
 
                         <Grid item xs={12}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -450,7 +439,6 @@ const UpsertDocEntryForm = (props) => {
                             </LocalizationProvider>
                         </Grid>
 
-
                         <Grid item xs={12}>
                             <SelectComponent
                                 id={"year-id"}
@@ -461,9 +449,7 @@ const UpsertDocEntryForm = (props) => {
                                 value={watchDocEntry?.year || ""}
                                 handleOnChange={(e) => setValue("year", e?.target?.value)}
                                 err={errors?.year?.message}
-                            // MenuProps={{ PaperProps: { sx: { maxHeight: 100 } } }}
                             />
-
                         </Grid>
                         <Grid item xs={12}>
                             <AsyncAutoComplete
