@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Close } from "@mui/icons-material";
-import FolderIcon from '@mui/icons-material/Folder';
+import DeleteIcon from '@mui/icons-material/Delete';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import {
     Box, Checkbox, Dialog,
@@ -11,12 +12,13 @@ import {
     FormGroup,
     Grid,
     IconButton,
+    ListItemIcon,
     ListItemText,
     Slide, TextField
 } from "@mui/material";
 import List from "@mui/material/List";
+import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -24,7 +26,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from "dayjs";
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import AsyncAutoComplete from "../../components/AutoComplete/auto-complete";
@@ -37,7 +39,7 @@ import { KEY_POST } from "../../constants/key_post";
 import { DocEntryModel } from "../../models/doc-entry.model";
 import { docEntryService } from "../../services/doc-entry.service";
 import { ConverterService } from "../../utils/converter";
-import DescriptionIcon from '@mui/icons-material/Description';
+
 
 const shrinkOpt = { shrink: true };
 
@@ -46,7 +48,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 });
 
 const UpsertDocEntryForm = (props) => {
-    const { open, onCloseModal, handleEventSucceed, docEntry } = props;
+    const { open, onCloseModal, openFileModal, handleEventSucceed, docEntry } = props;
 
     const {
         register,
@@ -63,6 +65,7 @@ const UpsertDocEntryForm = (props) => {
 
     const watchDocEntry = watch();
     const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh", "isSecret"];
+    const updateKeys = ["documentId", "fileName", "files"];
 
     // handle select year
     const currentYear = new Date().getFullYear();
@@ -85,31 +88,36 @@ const UpsertDocEntryForm = (props) => {
         setValue('issuedDate', formattedDate);
     };
 
-
     // handle list files
-    const [checked, setChecked] = React.useState([0]);
+    const [lstDocEntryFiles, setLstDocEntryFiles] = useState([]);
+    const [showList, setShowList] = useState(false);
+    const [tmpFileRm, setTmpFileRm] = useState([]);
 
-    const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
+    const getAllFile = async (id) => {
+        try {
+            const reqAllDocEntryFile = await docEntryService.getAllDocEntryFile(id);
+            const { data } = reqAllDocEntryFile;
+            const { success } = data;
 
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
+            if (success) {
+                setLstDocEntryFiles(data?.data || []);
+            } else {
+                setLstDocEntryFiles([]);
+            }
+        } catch (error) {
+            setLstDocEntryFiles([]);
+            console.log(error);
         }
-
-        setChecked(newChecked);
     };
 
-    const [showList, setShowList] = useState(false);
+    const handleViewFile = (value) => () => {
+        console.log("catch the value: : ", value)
+    };
 
-    const data = [
-        { icon: <DescriptionIcon />, label: "Authentication" },
-        { icon: <DescriptionIcon />, label: "Database" },
-        { icon: <DescriptionIcon />, label: "Storage" },
-        { icon: <DescriptionIcon />, label: "Hosting" }
-    ];
+    const handleRemoveFileUI = useCallback((id, item) => {
+        setTmpFileRm(prev => [...prev, item]);
+        setLstDocEntryFiles(prev => prev.toSpliced(id, 1));
+    }, []);
 
     const FireNav = styled(List)({
         "& .MuiListItemButton-root": {
@@ -131,6 +139,9 @@ const UpsertDocEntryForm = (props) => {
         clearErrors();
 
         if (docEntry?.id && open) {
+
+            getAllFile(docEntry?.id);
+
             Object.keys(docEntry).forEach((key) => {
                 if (key === formatKeys[0]) {
                     const issueDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
@@ -145,7 +156,6 @@ const UpsertDocEntryForm = (props) => {
                 } else if (key === formatKeys[6]) {
                     setValue("isScret", docEntry[key]);
                 } else {
-                    console.log(typeof docEntry[key] + " = " + key + " = " + docEntry[key])
                     setValue(key, docEntry[key]);
                 }
             });
@@ -154,13 +164,31 @@ const UpsertDocEntryForm = (props) => {
 
     const onError = (data) => {
         console.log("Error data submit: ", data);
+        if (!watchDocEntry?.files?.length)
+            setError("files", { message: "File is required!" });
     };
 
     const submit = async (data) => {
-        console.log("MY-data: ", data)
+
         const submitData = new FormData();
-        if (!data?.files?.length)
-        setError("files", { message: "File is required!" });
+
+        if (!docEntry?.id) {
+
+            if (!data?.files?.length)
+                setError("files", { message: "File is required!" });
+
+        } else {
+
+            if (tmpFileRm?.length) {
+                data.fileName = tmpFileRm.map((ele) => ele.fileName).join(',');
+            }
+
+            if (!lstDocEntryFiles?.length && !data?.files?.length) {
+                setError("files", { message: "File is required!" });
+            }
+
+            submitData.append("documentId", docEntry?.id);
+        }
 
         Object.keys(data).forEach((key) => {
 
@@ -189,6 +217,7 @@ const UpsertDocEntryForm = (props) => {
                 }
 
             } else {
+
                 if (formatKeys.includes(key)) {
 
                     if (formatKeys[0] === key)
@@ -197,17 +226,23 @@ const UpsertDocEntryForm = (props) => {
                     if (formatKeys[1] === key)
                         submitData.append(key, parseInt(data[key] ? data[key] : 0));
 
+                    if (formatKeys[2] === key && data?.files?.length)
+                        for (let i = 0; i < data?.files.length; i++) {
+                            submitData.append("files", data?.files[i]);
+                        }
+
                 } else {
                     submitData.append(key, data[key]);
                 }
             }
+
         });
 
         try {
             let submitDocEntry;
 
             if (docEntry?.id) {
-                submitDocEntry = await docEntryService.updateDocEntry(docEntry?.id, submitData, "multipart/form-data");
+                submitDocEntry = await docEntryService.updateDocEntry(submitData, "multipart/form-data");
             }
             else {
                 submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
@@ -216,17 +251,18 @@ const UpsertDocEntryForm = (props) => {
             const { data } = submitDocEntry;
             const { message, success } = data;
 
-            if (success) {
-                Swal.fire({
-                    title: data?.success ? "Success" : "Error",
-                    text: message,
-                    icon: data?.success ? "success" : "error",
-                    confirmButtonText: "OK",
-                    size: 200,
-                });
-                handleEventSucceed();
-                handleCloseModal();
-            }
+
+            Swal.fire({
+                title: success ? "Success" : "Warning",
+                text: message,
+                icon: success ? "success" : "waning",
+                confirmButtonText: "OK",
+                size: 200,
+            });
+
+            handleEventSucceed();
+            handleCloseModal();
+
         } catch (error) {
             console.log(error);
         }
@@ -310,9 +346,9 @@ const UpsertDocEntryForm = (props) => {
                                 }}
                                 InputLabelProps={shrinkOpt}
                                 {...register("files")}
-                            // onChange={(e) => setValue("files", [...e?.target?.files])}
-                            // error={errors?.files ? true : false}
-                            // helperText={errors?.files?.message}
+                                // onChange={(e) => setValue("files", [...e?.target?.files])}
+                                error={errors?.files ? true : false}
+                                helperText={errors?.files?.message}
                             />
                         </Grid>
                         <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
@@ -326,14 +362,15 @@ const UpsertDocEntryForm = (props) => {
                             </FormGroup>
                         </Grid>
 
-                        {docEntry?.id &&
+                        {docEntry?.id && lstDocEntryFiles.length ?
                             <Grid item xs={12}>
-                                <Box sx={{ display: "flex" }}>
-                                    <Paper elevation={0} sx={{ maxWidth: "100%" }}>
+                                <Box sx={{ display: "flex", pd: 0 }}>
+                                    <Paper elevation={0} sx={{ width: "100%" }}>
                                         <FireNav component="nav" disablePadding>
                                             <Box
                                                 sx={{
-                                                    pb: showList ? 2 : 0
+                                                    bgcolor: showList ? "rgba(71, 98, 130, 0.3)" : "",
+                                                    mb: 0,
                                                 }}
                                             >
                                                 <ListItemButton
@@ -354,14 +391,14 @@ const UpsertDocEntryForm = (props) => {
                                                             lineHeight: "20px",
                                                             mb: "2px"
                                                         }}
-                                                        secondary="Authentication, Firestore Database, Realtime Database, Storage, Hosting, Functions, and Machine Learning"
+                                                        secondary={lstDocEntryFiles.map((file) => file.fileName).join(', ')}
                                                         secondaryTypographyProps={{
                                                             noWrap: true,
                                                             fontSize: 12,
                                                             lineHeight: "16px",
                                                             color: showList ? "rgba(0,0,0,0)" : ""
                                                         }}
-                                                        sx={{ my: 0 }}
+                                                        sx={{ my: 0, width: "100%" }}
                                                     />
                                                     <KeyboardArrowDown
                                                         sx={{
@@ -373,57 +410,36 @@ const UpsertDocEntryForm = (props) => {
                                                     />
                                                 </ListItemButton>
                                                 {showList &&
-                                                    data.map((item) => (
-                                                        <ListItemButton
-                                                            key={item.label}
-                                                            sx={{ py: 0, minHeight: 32}}
-                                                        >
-                                                            <ListItemIcon sx={{ color: "inherit" }}>
-                                                                {item.icon}
-                                                            </ListItemIcon>
-                                                            <ListItemText
-                                                                primary={item.label}
-                                                                primaryTypographyProps={{
-                                                                    fontSize: 14,
-                                                                    fontWeight: "medium"
-                                                                }}
-                                                            />
-                                                        </ListItemButton>
-                                                    ))}
+                                                    <List sx={{ width: '100%', maxHeight: "180px", overflowY: 'auto', bgcolor: 'background.paper' }}>
+                                                        {lstDocEntryFiles.map((file, index) => {
+                                                            return (
+                                                                <ListItem
+                                                                    key={index}
+                                                                    secondaryAction={
+                                                                        <IconButton edge="end" aria-label="comments" sx={{ marginRight: '10px' }} onClick={() => handleRemoveFileUI(index, file)}>
+                                                                            <DeleteIcon color="error" />
+                                                                        </IconButton>
+                                                                    }
+                                                                    disablePadding
+                                                                >
+                                                                    <ListItemButton role={undefined} onClick={openFileModal} dense>
+                                                                        <ListItemIcon>
+                                                                            <InsertDriveFileIcon />
+                                                                        </ListItemIcon>
+                                                                        <ListItemText id={index} sx={{ fontSize: "16px", color: "blue", textDecoration: "undefined" }} primary={file?.fileName} />
+                                                                    </ListItemButton>
+                                                                </ListItem>
+                                                            );
+                                                        })}
+                                                    </List>
+                                                }
                                             </Box>
                                         </FireNav>
                                     </Paper>
                                 </Box>
                             </Grid>
+                            : ""
                         }
-
-                        {/* {docEntry?.id &&
-                            <Grid item xs={12}>
-                                <List sx={{ width: '100%', height: "180px", overflowY: 'auto', bgcolor: 'background.paper' }}>
-                                    {[0, 1, 2, 3, 4, 5].map((value) => {
-                                        const labelId = `checkbox-list-label-${value}`;
-
-                                        return (
-                                            <ListItem
-                                                key={value}
-                                                secondaryAction={
-                                                    <IconButton edge="end" aria-label="comments">
-                                                        <DeleteIcon />
-                                                    </IconButton>
-                                                }
-                                                disablePadding
-                                                typography="body1"
-                                            >
-                                                <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
-
-                                                    <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
-                                                </ListItemButton>
-                                            </ListItem>
-                                        );
-                                    })}
-                                </List>
-                            </Grid>
-                        } */}
 
                         <Grid item xs={12}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -450,7 +466,6 @@ const UpsertDocEntryForm = (props) => {
                             </LocalizationProvider>
                         </Grid>
 
-
                         <Grid item xs={12}>
                             <SelectComponent
                                 id={"year-id"}
@@ -461,9 +476,7 @@ const UpsertDocEntryForm = (props) => {
                                 value={watchDocEntry?.year || ""}
                                 handleOnChange={(e) => setValue("year", e?.target?.value)}
                                 err={errors?.year?.message}
-                            // MenuProps={{ PaperProps: { sx: { maxHeight: 100 } } }}
                             />
-
                         </Grid>
                         <Grid item xs={12}>
                             <AsyncAutoComplete

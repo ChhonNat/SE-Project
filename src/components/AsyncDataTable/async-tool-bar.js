@@ -1,3 +1,4 @@
+import { ExpandLess, ExpandMore, FilterList } from '@mui/icons-material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import CloseIcon from '@mui/icons-material/Close';
@@ -5,13 +6,18 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import {
   Button,
+  Collapse,
   FormControlLabel,
   Grid,
   IconButton,
   InputBase,
+  List,
+  ListItemButton,
+  ListItemText,
   Paper,
   Stack,
   Switch,
+  TextField,
   Toolbar,
   alpha
 } from '@mui/material';
@@ -19,7 +25,18 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import AsyncAutoComplete from '../AutoComplete/auto-complete';
+import { makeStyles } from "@mui/styles";
 
+const shrinkOpt = { shrink: true };
+
+const useStyles = makeStyles({
+  field: {
+    "&&": {
+      marginRight: "24px"
+    }
+  }
+});
 
 const AsynTableToolbar = (props) => {
 
@@ -33,10 +50,15 @@ const AsynTableToolbar = (props) => {
     title = 'Datatable',
     searchPlaceHolder = 'Search',
     searchText,
-    useActions
+    useActions,
+    handleFilterEvent
   } = props;
 
+const classTextField = useStyles();
+
+
   const [searchVal, setSearchVal] = useState('');
+  const [openCollapse, setOpenCollape] = useState(false);
 
   const setSearchText = (val) => {
     props.setSearchText(val);
@@ -47,6 +69,11 @@ const AsynTableToolbar = (props) => {
     setSearchVal('');
     setSearchText('');
   }
+
+    //Handle toggle click open collapse
+    const handleClick = () => {
+      setOpenCollape(!openCollapse)
+    };
 
   return (
     <Toolbar
@@ -145,6 +172,98 @@ const AsynTableToolbar = (props) => {
 
         </Grid>
 
+        <Grid item xs={12}>
+          {
+            useActions?.filter ?
+              <>
+                <List
+                  sx={{ width: "100%", bgcolor: "background.paper", paddingTop: '0px' }}
+                  component="nav"
+                  aria-labelledby="nested-list-subheader"
+                >
+                  <ListItemButton
+                    onClick={() => handleClick()}
+                    sx={{
+                      marginBottom: '1rem',
+                      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                      borderRadius: 1,
+                    }}
+                  >
+                    <ListItemText
+                      primary={
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <FilterList fontSize='small' />
+                          <label style={{ fontWeight: "bold", fontSize: 13 }}>Filter</label>
+                        </div>
+                      }
+                    />
+                    {openCollapse ? (<ExpandLess />) : (<ExpandMore />)}
+                  </ListItemButton>
+                  <Collapse
+                    in={openCollapse}
+                    timeout="auto"
+                    unmountOnExit
+                  >
+
+                    <Grid container xs={12} >
+                      {
+                        useActions?.filterOption?.filters?.length ?
+                          useActions?.filterOption?.filters?.map((filter, index) => (
+                            <>
+                              <Grid xs={filter?.grid ? filter?.grid : 2} key={index} marginBottom={2}>
+                                {
+                                  filter?.type && ["custom"].includes((filter?.type)) && filter?.component
+                                }
+                                {filter?.type && ["date"].includes(filter?.type) &&
+                                  <TextField
+                                    label={filter?.label ? filter?.label : "Date"}
+                                    size="small"
+                                    sx={{ width: "100%", marginLeft: 3 }}
+                                    type="date"
+                                    InputLabelProps={shrinkOpt}
+                                    onChange={(e) => handleFilterEvent(filter?.filterName, e?.target?.value)}
+                                    value={filter?.value}
+                                    InputProps={{
+                                      inputProps: { max: filter?.max, min: filter?.min },
+                                      className: classTextField.field
+                                    }}
+                                  />
+                                }
+                                {filter?.type && ["select"].includes(filter?.type) &&
+                                  <AsyncAutoComplete
+                                    label={filter?.label ? filter?.label : "Select"}
+                                    size="small"
+                                    sx={{ marginLeft: 3 }}
+                                    callToApi={filter?.selectOption?.asyncUrl}
+                                    customDatas={filter?.selectOption?.customDatas}
+                                    bindField={filter?.selectOption?.bindField || "name"}
+                                    handleOnChange={(e, value) => handleFilterEvent(filter?.filterName, value)}
+                                    value={filter?.selectOption?.value}
+                                  />
+                                }
+
+                              </Grid>
+
+                            </>
+                          ))
+                          :
+                          <></>
+                      }
+                    </Grid>
+
+                    {/* <Grid container xs={12} justifyContent="end">
+                      <Button onClick={handleClear} className="materialBtn">
+                        Clear
+                      </Button>
+                    </Grid> */}
+                  </Collapse>
+                </List>
+              </>
+              :
+              <>
+              </>
+          }
+        </Grid>
 
       </Grid>
     </Toolbar>

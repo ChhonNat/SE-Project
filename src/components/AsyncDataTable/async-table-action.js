@@ -25,6 +25,7 @@ const AsyncTableAction = (props) => {
         onHandleViewSecFileEvent,
         onHandleViewThirdFileEvent,
         onHandleMoreEvent,
+        onHandleDeleteEvent
     } = props;
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -76,15 +77,19 @@ const AsyncTableAction = (props) => {
                     <Tooltip title="View record">
                         <Button variant="text" size="small" color="primary"
                             onClick={onHandleViewEvent}>
-                            <VisibilityIcon fontSize="small"/>
+                            <VisibilityIcon fontSize="small" />
                         </Button>
                     </Tooltip>
                 }
 
                 {useActions?.viewFile &&
-                    <Tooltip title="View File">
-                        <Button variant="text" size="small" color="inherit"
-                            onClick={onHandleViewFileEvent}>
+                    <Tooltip title="Download File">
+                        <Button 
+                            variant="text" 
+                            size="small" 
+                            color="inherit"
+                            onClick={onHandleViewFileEvent}
+                            >
                             <FileOpenIcon fontSize="small" />
                         </Button>
                     </Tooltip>
@@ -94,10 +99,10 @@ const AsyncTableAction = (props) => {
                     <Tooltip title="View Reference Form">
                         <Button
                             variant="text"
-                            size="small" 
+                            size="small"
                             color="info"
                             onClick={onHandleViewSecFileEvent}>
-                            <FileOpenIcon fontSize="small"/>
+                            <FileOpenIcon fontSize="small" />
                         </Button>
                     </Tooltip>
                 }
@@ -117,7 +122,7 @@ const AsyncTableAction = (props) => {
                     <Tooltip title="Edit record">
                         <Button variant="text" size="small" color="inherit"
                             onClick={onHandleEditEvent}>
-                            <DriveFileRenameOutlineOutlinedIcon fontSize="small"/>
+                            <DriveFileRenameOutlineOutlinedIcon fontSize="small" />
                         </Button>
                     </Tooltip>
                 }
@@ -125,9 +130,9 @@ const AsyncTableAction = (props) => {
                 {/* Show button to delete the candidate */}
                 {useActions?.delete &&
                     <Tooltip title="Delete record">
-                        <Button variant="text" size="small" color="info"
+                        <Button variant="text" size="small" color="error"
                             onClick={() => setShowDeleteModal(true)}>
-                            <DeleteOutlineOutlinedIcon fontSize="small"/>
+                            <DeleteOutlineOutlinedIcon fontSize="small" />
                         </Button>
                     </Tooltip>
                 }
@@ -182,6 +187,10 @@ const AsyncTableAction = (props) => {
                 TransitionModal={TransitionModal}
                 open={showDeleteModal}
                 onHandleCloseModal={() => setShowDeleteModal(false)}
+                onHandleDelete={() => {
+                    onHandleDeleteEvent();
+                    setShowDeleteModal(false);
+                }}
             />
 
 

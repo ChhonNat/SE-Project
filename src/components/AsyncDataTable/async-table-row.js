@@ -34,6 +34,7 @@ const TableRows = ({
   handleViewSecFileEvent,
   handleViewThirdFileEvent,
   handleEditEvent,
+  handleDeleteEvent,
   handleMoreEvent,
   handleLinkEvent,
   headers,
@@ -49,7 +50,7 @@ const TableRows = ({
     const labelId = `enhanced-table-checkbox-${index}`;
 
     const checkButtonAction = (objData, condition) => {
-      
+
       const trueCondition = [];
       if (condition && condition.length) {
         condition.forEach((ele, index) => {
@@ -58,11 +59,11 @@ const TableRows = ({
         });
       }
 
-      if (!trueCondition?.length) 
-      return false;
+      if (!trueCondition?.length)
+        return false;
 
-      if (trueCondition?.includes(false)) 
-      return false;
+      if (trueCondition?.includes(false))
+        return false;
 
       return true;
     };
@@ -129,8 +130,8 @@ const TableRows = ({
             const arrayValue =
               isArray && row[head?.id]?.length
                 ? row[head?.id].map(function (ele) {
-                    return ele[head?.arrayId] || ele;
-                  })
+                  return ele[head?.arrayId] || ele;
+                })
                 : [];
 
             /**Map button action with the condidtion */
@@ -220,7 +221,7 @@ const TableRows = ({
                       }}
                     >
                       {/* Use table index */}
-                      {showIndex && page * pageSize  + index + 1}
+                      {showIndex && page * pageSize + index + 1}
 
                       {/* Use table date */}
                       {typeDate ? (
@@ -290,12 +291,12 @@ const TableRows = ({
                           ? !isObject
                             ? row[head?.id]
                             : (row[head?.id] &&
-                                row[head?.id][head?.obj?.name]) ||
-                              (row[head?.orId] &&
-                                row[head?.orId][head?.obj?.name])
+                              row[head?.id][head?.obj?.name]) ||
+                            (row[head?.orId] &&
+                              row[head?.orId][head?.obj?.name])
                           : arrayValue?.length
-                          ? arrayValue.join(",\r\n").toString()
-                          : "")}
+                            ? arrayValue.join(",\r\n").toString()
+                            : "")}
 
                       {/* Custom button actions */}
                       {isAction && (
@@ -312,6 +313,7 @@ const TableRows = ({
                           onHandleMoreEvent={(eventName) =>
                             handleMoreEvent(eventName, row)
                           }
+                          onHandleDeleteEvent={() => handleDeleteEvent(row)}
                           useActions={buttonAction}
                           row={row}
                         />
