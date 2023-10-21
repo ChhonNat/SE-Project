@@ -39,6 +39,7 @@ import { KEY_POST } from "../../constants/key_post";
 import { DocEntryModel } from "../../models/doc-entry.model";
 import { docEntryService } from "../../services/doc-entry.service";
 import { ConverterService } from "../../utils/converter";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 
 
 const shrinkOpt = { shrink: true };
@@ -48,7 +49,9 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 });
 
 const UpsertDocEntryForm = (props) => {
-    const { open, onCloseModal, openFileModal, handleEventSucceed, docEntry } = props;
+    const { open, onCloseModal, handleEventSucceed, docEntry } = props;
+    const [ viewFileName, setViewFileName] = useState("");
+    const [ openFileModal, setOpenFileModal] = useState(false);
 
     const {
         register,
@@ -422,7 +425,13 @@ const UpsertDocEntryForm = (props) => {
                                                                     }
                                                                     disablePadding
                                                                 >
-                                                                    <ListItemButton role={undefined} onClick={openFileModal} dense>
+                                                                    <ListItemButton
+                                                                        role={undefined}
+                                                                        onClick={() => {
+                                                                            setViewFileName(file?.fileName);
+                                                                            setOpenFileModal(true);
+                                                                        }}
+                                                                        dense>
                                                                         <ListItemIcon>
                                                                             <InsertDriveFileIcon />
                                                                         </ListItemIcon>
@@ -620,6 +629,17 @@ const UpsertDocEntryForm = (props) => {
                     handleCancel={handleCloseModal}
                 />
             </DialogActions>
+
+            {/* View file entry modal */}
+            {
+                openFileModal &&
+                <ViewFileModal
+                    openModal={openFileModal}
+                    onCloseModal={() => setOpenFileModal(false)}
+                    fileName={viewFileName}
+                />
+            }
+
         </Dialog>
     );
 };
