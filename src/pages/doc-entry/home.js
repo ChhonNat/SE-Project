@@ -4,6 +4,9 @@ import ViewFileModal from "../../components/Modal/view-file.modal";
 import { API_URL } from "../../constants/api_url";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import UpsertDocEntryForm from "./form-upsert-doc-entry.modal";
+import { docEntryService } from "../../services/doc-entry.service";
+import Swal from "sweetalert2";
+import { appConfig } from "../../constants/app_cont";
 
 const HomeDocEntry = () => {
 
@@ -11,6 +14,28 @@ const HomeDocEntry = () => {
     const [openFileModal, setOpenFileModal] = useState(false);
     const [isReload, setIsReload] = useState(false);
     const [editDocEntry, setEditDocEntry] = useState({});
+
+    const handleDelete = async (id) => {
+        try {
+
+            const reqDeleteDoc = await docEntryService.deleteDocEntry(id);
+
+            const { data } = reqDeleteDoc;
+            const { success, message } = data;
+
+            Swal.fire({
+                title: success ? "Success" : "Warning",
+                text: message,
+                icon: success ? "success" : "warning",
+                confirmButtonText: "OK",
+                size: 200,
+            });
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
@@ -25,6 +50,7 @@ const HomeDocEntry = () => {
                     search: true,
                     refresh: true,
                     create: true,
+                    delete: true,
                     edit: true,
                     viewFile: true
                 }}
@@ -40,14 +66,17 @@ const HomeDocEntry = () => {
                 }}
                 isReloadData={isReload ? true : false}
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
-                handleViewFileEvent={(data) => {
-                    setEditDocEntry(data);
-                    setOpenFileModal(true);
+                handleViewFileEvent={async (data) => {
+                    if(!data.id)
+                    return;
+
+                    window.open(`${appConfig.apiLink}${API_URL.docEntry.downloadAllFile}${data.id}`,'_blank')
                 }}
                 handleLinkEvent={(data) => {
                     setEditDocEntry(data);
                     setOpenFileModal(true);
                 }}
+                handleDeleteEvent={(data) => handleDelete(data.id)}
             />
 
             {/* Create and Update form */}

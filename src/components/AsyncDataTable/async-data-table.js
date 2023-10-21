@@ -39,6 +39,7 @@ const AsyncDatatable = (props) => {
     onHandleAddNewEvent,
     onHandleRefreshEvent,
     useTableActions,
+    handleDeleteEvent,
     filter
   } = props;
 
@@ -247,6 +248,7 @@ const AsyncDatatable = (props) => {
                 handleEditEvent={(record) => handleEditEvent(record)}
                 handleLinkEvent={(record) => handleLinkEvent(record)}
                 handleMoreEvent={(eName, record) => handleMoreEvent(eName, record)}
+                handleDeleteEvent={(record) => handleDeleteEvent(record)}
               />
               {
 

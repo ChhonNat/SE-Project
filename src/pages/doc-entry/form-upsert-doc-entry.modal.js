@@ -93,9 +93,6 @@ const UpsertDocEntryForm = (props) => {
     const [showList, setShowList] = useState(false);
     const [tmpFileRm, setTmpFileRm] = useState([]);
 
-    // console.log("cath the value removed: ", tmpFileRm);
-    // console.log("tmpFiles: ", lstDocEntryFiles);
-
     const getAllFile = async (id) => {
         try {
             const reqAllDocEntryFile = await docEntryService.getAllDocEntryFile(id);
@@ -114,7 +111,6 @@ const UpsertDocEntryForm = (props) => {
     };
 
     const handleViewFile = (value) => () => {
-
         console.log("catch the value: : ", value)
     };
 
@@ -160,7 +156,6 @@ const UpsertDocEntryForm = (props) => {
                 } else if (key === formatKeys[6]) {
                     setValue("isScret", docEntry[key]);
                 } else {
-                    // console.log(typeof docEntry[key] + " = " + key + " = " + docEntry[key])
                     setValue(key, docEntry[key]);
                 }
             });
@@ -169,12 +164,31 @@ const UpsertDocEntryForm = (props) => {
 
     const onError = (data) => {
         console.log("Error data submit: ", data);
+        if (!watchDocEntry?.files?.length)
+            setError("files", { message: "File is required!" });
     };
 
     const submit = async (data) => {
+
         const submitData = new FormData();
-        if (!data?.files?.length)
-            setError("files", { message: "File is required!" });
+
+        if (!docEntry?.id) {
+
+            if (!data?.files?.length)
+                setError("files", { message: "File is required!" });
+
+        } else {
+
+            if (tmpFileRm?.length) {
+                data.fileName = tmpFileRm.map((ele) => ele.fileName).join(',');
+            }
+
+            if (!lstDocEntryFiles?.length && !data?.files?.length) {
+                setError("files", { message: "File is required!" });
+            }
+
+            submitData.append("documentId", docEntry?.id);
+        }
 
         Object.keys(data).forEach((key) => {
 
@@ -203,6 +217,7 @@ const UpsertDocEntryForm = (props) => {
                 }
 
             } else {
+
                 if (formatKeys.includes(key)) {
 
                     if (formatKeys[0] === key)
@@ -211,28 +226,21 @@ const UpsertDocEntryForm = (props) => {
                     if (formatKeys[1] === key)
                         submitData.append(key, parseInt(data[key] ? data[key] : 0));
 
-                // }else if (updateKeys.length) {
-                //     updateKeys.map(key => {
-                //         console.log("Update keys: ", key)
-                //     })
+                    if (formatKeys[2] === key && data?.files?.length)
+                        for (let i = 0; i < data?.files.length; i++) {
+                            submitData.append("files", data?.files[i]);
+                        }
+
                 } else {
                     submitData.append(key, data[key]);
                 }
             }
-            
+
         });
 
-        if(updateKeys.length){
-            updateKeys.map((key) => {
-                if(key === updateKeys[0]) submitData.append(key, docEntry?.id);
-                else if (key === updateKeys[1]) submitData.append(key, "");
-                else submitData.append(key, "");
-            });
-        };
-        
         try {
             let submitDocEntry;
-            
+
             if (docEntry?.id) {
                 submitDocEntry = await docEntryService.updateDocEntry(submitData, "multipart/form-data");
             }
@@ -243,17 +251,18 @@ const UpsertDocEntryForm = (props) => {
             const { data } = submitDocEntry;
             const { message, success } = data;
 
-            if (success) {
-                Swal.fire({
-                    title: data?.success ? "Success" : "Error",
-                    text: message,
-                    icon: data?.success ? "success" : "error",
-                    confirmButtonText: "OK",
-                    size: 200,
-                });
-                handleEventSucceed();
-                handleCloseModal();
-            }
+
+            Swal.fire({
+                title: success ? "Success" : "Warning",
+                text: message,
+                icon: success ? "success" : "waning",
+                confirmButtonText: "OK",
+                size: 200,
+            });
+
+            handleEventSucceed();
+            handleCloseModal();
+
         } catch (error) {
             console.log(error);
         }
@@ -337,9 +346,9 @@ const UpsertDocEntryForm = (props) => {
                                 }}
                                 InputLabelProps={shrinkOpt}
                                 {...register("files")}
-                            // onChange={(e) => setValue("files", [...e?.target?.files])}
-                            // error={errors?.files ? true : false}
-                            // helperText={errors?.files?.message}
+                                // onChange={(e) => setValue("files", [...e?.target?.files])}
+                                error={errors?.files ? true : false}
+                                helperText={errors?.files?.message}
                             />
                         </Grid>
                         <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
@@ -408,7 +417,7 @@ const UpsertDocEntryForm = (props) => {
                                                                     key={index}
                                                                     secondaryAction={
                                                                         <IconButton edge="end" aria-label="comments" sx={{ marginRight: '10px' }} onClick={() => handleRemoveFileUI(index, file)}>
-                                                                            <DeleteIcon />
+                                                                            <DeleteIcon color="error" />
                                                                         </IconButton>
                                                                     }
                                                                     disablePadding
@@ -417,7 +426,7 @@ const UpsertDocEntryForm = (props) => {
                                                                         <ListItemIcon>
                                                                             <InsertDriveFileIcon />
                                                                         </ListItemIcon>
-                                                                        <ListItemText id={index} sx={{ fontSize: "16px" }} primary={file.fileName} />
+                                                                        <ListItemText id={index} sx={{ fontSize: "16px", color: "blue", textDecoration: "undefined" }} primary={file?.fileName} />
                                                                     </ListItemButton>
                                                                 </ListItem>
                                                             );
