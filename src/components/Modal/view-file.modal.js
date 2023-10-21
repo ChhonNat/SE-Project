@@ -20,7 +20,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const ViewFileModal = (props) => {
 
-  const { openModal, onCloseModal, id, modalTitle, downloadFileUrl } = props;
+  const { openModal, onCloseModal, id, fileName, modalTitle, downloadFileUrl } = props;
 
   const url = `${API_URL.docEntry.viewFile}`;
 
@@ -129,7 +129,14 @@ const ViewFileModal = (props) => {
                 />
               )
               :
-              <></>
+              <embed
+                src={`${appConfig.apiLink}/api/v1/documents/view?fileName=${fileName}`}
+                style={{
+                  webkitWidth: "-webkit-fill-available",
+                  height: "100%",
+                  width: "100%",
+                }}
+              />
           }
 
         </DialogContent>
