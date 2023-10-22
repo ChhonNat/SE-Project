@@ -100,9 +100,7 @@ const SelectComponent = (props) => {
                             </MenuItem>;
                         }) : <div></div>
                     ) : (
-                        customDatas?.length ? customDatas.map((ele, index) => {
-                            console.log(ele);
-                            
+                        customDatas?.length ? customDatas.map((ele, index) => {                            
                             return <MenuItem
                                 value={returnValueAs ? returnValueAs : ele?.id || ele}
                                 key={index}

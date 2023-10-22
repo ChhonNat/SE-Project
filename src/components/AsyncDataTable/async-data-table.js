@@ -84,7 +84,7 @@ const AsyncDatatable = (props) => {
         searchValue: searchValue
       },
       columnOrder: "ordering",
-      orderBy: "ASC",
+      orderBy: "DESC",
       limit: rowsPerPage,
       offset: page * rowsPerPage
     };

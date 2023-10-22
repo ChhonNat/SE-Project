@@ -50,8 +50,8 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const UpsertDocEntryForm = (props) => {
     const { open, onCloseModal, handleEventSucceed, docEntry } = props;
-    const [ viewFileName, setViewFileName] = useState("");
-    const [ openFileModal, setOpenFileModal] = useState(false);
+    const [viewFileName, setViewFileName] = useState("");
+    const [openFileModal, setOpenFileModal] = useState(false);
 
     const {
         register,
@@ -68,7 +68,6 @@ const UpsertDocEntryForm = (props) => {
 
     const watchDocEntry = watch();
     const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh", "isSecret"];
-    const updateKeys = ["documentId", "fileName", "files"];
 
     // handle select year
     const currentYear = new Date().getFullYear();
@@ -80,7 +79,7 @@ const UpsertDocEntryForm = (props) => {
 
     // handle checkbox
     const handleChange = (e) => {
-        setValue('isScret', e.target.checked ? 1 : 0);
+        setValue('isSecret', e.target.checked ? 1 : 0);
     };
 
     // handle change datepicker
@@ -157,7 +156,7 @@ const UpsertDocEntryForm = (props) => {
                 } else if (key === formatKeys[5]) {
                     setValue("docNameKh", docEntry[key]);
                 } else if (key === formatKeys[6]) {
-                    setValue("isScret", docEntry[key]);
+                    setValue("isSecret", docEntry[key]);
                 } else {
                     setValue(key, docEntry[key]);
                 }
@@ -213,6 +212,9 @@ const UpsertDocEntryForm = (props) => {
                                 submitData.append("files", data?.files[i]);
                             }
 
+                        if (formatKeys[6] === key)
+                            submitData.append(key, parseInt(data[key] ? data[key] : 0));
+
                     } else {
 
                         submitData.append(key, data[key]);
@@ -233,6 +235,9 @@ const UpsertDocEntryForm = (props) => {
                         for (let i = 0; i < data?.files.length; i++) {
                             submitData.append("files", data?.files[i]);
                         }
+
+                    if (formatKeys[6] === key)
+                        submitData.append(key, parseInt(data[key] ? data[key] : 0));
 
                 } else {
                     submitData.append(key, data[key]);
@@ -357,7 +362,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
                             <FormGroup>
                                 <FormControlLabel
-                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isScret ? true : false} />}
+                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isSecret ? true : false} />}
                                     label={"Is Confidential"}
                                     sx={{ width: "100%" }}
                                     size="small"

@@ -100,7 +100,7 @@ const HomeDocEntry = () => {
                 isFilterChanged={filterChanged}
                 filter={
                     {
-                        columnOrder: "document_code",
+                        columnOrder: "created_at",
                         searchParams: {
                             fName: fName ? fName : "",
                             fNameKh: fNameKh ? fNameKh : "",
