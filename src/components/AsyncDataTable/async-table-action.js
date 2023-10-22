@@ -1,5 +1,6 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -9,7 +10,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import React, { forwardRef, useState } from "react";
 import ConfirmModal from "../Modal/confirm-delete";
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -75,7 +75,7 @@ const AsyncTableAction = (props) => {
             >
 
                 {useActions?.view &&
-                    <Tooltip title="View record">
+                    <Tooltip title="View Files">
                         <Button variant="text" size="small" color="primary"
                             onClick={onHandleViewEvent}>
                             <VisibilityIcon fontSize="small" />

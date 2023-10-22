@@ -49,8 +49,8 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 
 const UpsertDocEntryForm = (props) => {
     const { open, onCloseModal, handleEventSucceed, docEntry } = props;
-    const [ viewFileName, setViewFileName] = useState("");
-    const [ openFileModal, setOpenFileModal] = useState(false);
+    const [viewFileName, setViewFileName] = useState("");
+    const [openFileModal, setOpenFileModal] = useState(false);
 
     const {
         register,
@@ -207,6 +207,9 @@ const UpsertDocEntryForm = (props) => {
                                 submitData.append("files", data?.files[i]);
                             }
 
+                        if (formatKeys[6] === key)
+                            submitData.append(key, parseInt(data[key] ? data[key] : 0));
+
                     } else {
 
                         submitData.append(key, data[key]);
@@ -227,6 +230,9 @@ const UpsertDocEntryForm = (props) => {
                         for (let i = 0; i < data?.files.length; i++) {
                             submitData.append("files", data?.files[i]);
                         }
+
+                    if (formatKeys[6] === key)
+                        submitData.append(key, parseInt(data[key] ? data[key] : 0));
 
                 } else {
                     submitData.append(key, data[key]);
@@ -252,7 +258,7 @@ const UpsertDocEntryForm = (props) => {
             Swal.fire({
                 title: success ? "Success" : "Warning",
                 text: message,
-                icon: success ? "success" : "waning",
+                icon: success ? "success" : "warning",
                 confirmButtonText: "OK",
                 size: 200,
             });

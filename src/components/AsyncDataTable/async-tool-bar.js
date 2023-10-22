@@ -27,14 +27,15 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import AsyncAutoComplete from '../AutoComplete/auto-complete';
 import { makeStyles } from "@mui/styles";
+import SelectComponent from '../Selector/select';
 
 const shrinkOpt = { shrink: true };
 
 const useStyles = makeStyles({
   field: {
-    "&&": {
-      marginRight: "24px"
-    }
+    // "&&": {
+    //   marginRight: "24px"
+    // }
   }
 });
 
@@ -54,7 +55,7 @@ const AsynTableToolbar = (props) => {
     handleFilterEvent
   } = props;
 
-const classTextField = useStyles();
+  const classTextField = useStyles();
 
 
   const [searchVal, setSearchVal] = useState('');
@@ -70,10 +71,10 @@ const classTextField = useStyles();
     setSearchText('');
   }
 
-    //Handle toggle click open collapse
-    const handleClick = () => {
-      setOpenCollape(!openCollapse)
-    };
+  //Handle toggle click open collapse
+  const handleClick = () => {
+    setOpenCollape(!openCollapse)
+  };
 
   return (
     <Toolbar
@@ -212,13 +213,11 @@ const classTextField = useStyles();
                             <>
                               <Grid xs={filter?.grid ? filter?.grid : 2} key={index} marginBottom={2}>
                                 {
-                                  filter?.type && ["custom"].includes((filter?.type)) && filter?.component
-                                }
-                                {filter?.type && ["date"].includes(filter?.type) &&
+                                  filter?.type && ["date"].includes(filter?.type) &&
                                   <TextField
                                     label={filter?.label ? filter?.label : "Date"}
                                     size="small"
-                                    sx={{ width: "100%", marginLeft: 3 }}
+                                    sx={{ width: "100%" }}
                                     type="date"
                                     InputLabelProps={shrinkOpt}
                                     onChange={(e) => handleFilterEvent(filter?.filterName, e?.target?.value)}
@@ -229,17 +228,48 @@ const classTextField = useStyles();
                                     }}
                                   />
                                 }
-                                {filter?.type && ["select"].includes(filter?.type) &&
+                                {
+                                  filter?.type && ["text"].includes(filter?.type) &&
+                                  <TextField
+                                    label={filter?.label ? filter?.label : "Text"}
+                                    size="small"
+                                    sx={{ width: "100%" }}
+                                    type="text"
+                                    InputLabelProps={shrinkOpt}
+                                    onChange={(e) => handleFilterEvent(filter?.filterName, e?.target?.value)}
+                                    value={filter?.value}
+                                    InputProps={{
+                                      className: classTextField.field
+                                    }}
+                                  />
+                                }
+                                {
+                                  filter?.type && ["select"].includes(filter?.type) &&
                                   <AsyncAutoComplete
                                     label={filter?.label ? filter?.label : "Select"}
                                     size="small"
-                                    sx={{ marginLeft: 3 }}
+                                    sx={{ width: "100%", marginRight: 3 }}
                                     callToApi={filter?.selectOption?.asyncUrl}
                                     customDatas={filter?.selectOption?.customDatas}
-                                    bindField={filter?.selectOption?.bindField || "name"}
+                                    bindField={filter?.selectOption?.bindField || ""}
+                                    handleOnChange={(e, value) => handleFilterEvent(filter?.filterName, value)}
+                                    value={filter?.selectOption?.value || ""}
+                                  />
+                                }
+
+                                {
+                                  filter?.type && ["normal-select"].includes(filter?.type) &&
+                                  <SelectComponent
+                                    id={"id"}
+                                    label={filter?.label ? filter?.label : "Select"}
+                                    size={"small"}
+                                    sx={{ width: "100%", marginRight: 3 }}
+                                    callToApi={filter?.selectOption?.asyncUrl}
+                                    customDatas={filter?.selectOption?.customDatas}
                                     handleOnChange={(e, value) => handleFilterEvent(filter?.filterName, value)}
                                     value={filter?.selectOption?.value}
                                   />
+                                 
                                 }
 
                               </Grid>
