@@ -76,7 +76,7 @@ const AsyncAutoComplete = (props) => {
       }
     } else {
       setSelectValue(
-        !customDatas?.length ? {} : customDatas.find((ele) => ele?.id === value)
+        !customDatas?.length ? {} : customDatas.find((ele) => ele?.id === value || ele === value)
       );
     }
   }, [data, customDatas, callToApi, value]);
@@ -85,6 +85,7 @@ const AsyncAutoComplete = (props) => {
    * Check option value select value is the same return select value equal to option
    */
   const checkOptionEqToVal = (option, value) => {
+
     let searchResult = "";
 
     if (option && value)
@@ -143,13 +144,13 @@ const AsyncAutoComplete = (props) => {
         isOptionEqualToValue={(option, value) =>
           checkOptionEqToVal(option, value)
         }
-        getOptionLabel={(option) => option[bindField] || ""}
+        getOptionLabel={(option) => bindField ? option[bindField] : option}
         onChange={handleOnChange}
         value={selectValue}
         disabled={disabled}
         renderOption={(props, option) => (
-          <Box component="li" {...props} key={option?.id}>
-            {option[bindField] || ""}
+          <Box component="li" {...props} key={option?.id ? option.id : option}>
+            {bindField ? option[bindField] : option}
           </Box>
         )}
         renderInput={(params) => (

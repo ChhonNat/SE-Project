@@ -17,10 +17,7 @@ const HomeDocEntry = () => {
 
     const currentYear = new Date().getFullYear();
     const earliestYear = 1970;
-    const years = Array.from(
-        { length: currentYear - earliestYear + 1 },
-        (_, index) => currentYear - index
-    );
+    const years = Array.from({ length: currentYear - earliestYear + 1 }, (_, index) => currentYear - index);
 
     const [fName, setFName] = useState("");
     const [fNameKh, setFNameKh] = useState("");
@@ -129,21 +126,27 @@ const HomeDocEntry = () => {
                     filterOption: {
                         filters: [
                             {
-                                grid: 3,
+                                grid: 2.9,
                                 label: "Name",
                                 filterName: "name",
                                 type: "text",
                                 value: fName ? fName : "",
                             },
                             {
-                                grid: 3,
+                                grid: 0.1,
+                            },
+                            {
+                                grid: 2.9,
                                 label: "Name (Kh)",
                                 filterName: "nameKh",
                                 type: "text",
                                 value: fNameKh ? fNameKh : "",
                             },
                             {
-                                grid: 3,
+                                grid: 0.1
+                            },
+                            {
+                                grid: 2.9,
                                 label: "Department",
                                 filterName: "depId",
                                 type: "select",
@@ -154,7 +157,10 @@ const HomeDocEntry = () => {
                                 }
                             },
                             {
-                                grid: 3,
+                                grid: 0.1
+                            },
+                            {
+                                grid: 2.9,
                                 label: "Campus",
                                 filterName: "camId",
                                 type: "select",
@@ -165,7 +171,10 @@ const HomeDocEntry = () => {
                                 }
                             },
                             {
-                                grid: 3,
+                                grid: 0.1
+                            },
+                            {
+                                grid: 2.9,
                                 label: "Type Document",
                                 filterName: "typeId",
                                 type: "select",
@@ -176,7 +185,10 @@ const HomeDocEntry = () => {
                                 }
                             },
                             {
-                                grid: 3,
+                                grid: 0.1
+                            },
+                            {
+                                grid: 2.9,
                                 label: "Main Category",
                                 filterName: "mainCateId",
                                 type: "select",
@@ -187,7 +199,10 @@ const HomeDocEntry = () => {
                                 }
                             },
                             {
-                                grid: 3,
+                                grid: 0.1
+                            },
+                            {
+                                grid: 2.9,
                                 label: "Sub Category",
                                 filterName: "subCateId",
                                 type: "select",
@@ -198,7 +213,10 @@ const HomeDocEntry = () => {
                                 }
                             },
                             {
-                                grid: 3,
+                                grid: 0.1
+                            },
+                            {
+                                grid: 2.9,
                                 label: "Issued Datae",
                                 filterName: "issuedDate",
                                 type: "date",
@@ -207,12 +225,11 @@ const HomeDocEntry = () => {
                                 }
                             },
                             {
-                                grid: 3,
+                                grid: 2.9,
                                 label: "Year",
                                 filterName: "year",
-                                type: "normal-select",
+                                type: "select",
                                 selectOption: {
-                                    asyncUrl: "",
                                     customDatas: years,
                                     value: fYear ? fYear : ""
                                 }
