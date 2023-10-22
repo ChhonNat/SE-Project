@@ -269,7 +269,11 @@ const AsynTableToolbar = (props) => {
                                     handleOnChange={(e, value) => handleFilterEvent(filter?.filterName, value)}
                                     value={filter?.selectOption?.value}
                                   />
-                                 
+
+                                }
+
+                                {
+                                  filter?.type && ["custom"].includes(filter?.type) && filter?.component
                                 }
 
                               </Grid>

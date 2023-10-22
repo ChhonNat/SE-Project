@@ -7,6 +7,7 @@ import UpsertDocEntryForm from "./form-upsert-doc-entry.modal";
 import { docEntryService } from "../../services/doc-entry.service";
 import Swal from "sweetalert2";
 import { appConfig } from "../../constants/app_cont";
+import { Button } from "@mui/material";
 
 const HomeDocEntry = () => {
 
@@ -34,7 +35,6 @@ const HomeDocEntry = () => {
     useEffect(() => {
         setFilterChanged(!filterChanged)
     }, [fName, fNameKh, fDepId, fCamId, fTypeId, fMainId, fSubId, fIssueDate, fYear]);
-
 
     const mapFilterEvent = {
         name: {
@@ -65,6 +65,12 @@ const HomeDocEntry = () => {
             action: (val) => setFYear(val)
         }
     };
+
+    const resetFilter = () => {
+        Object.keys(mapFilterEvent).map((key) => mapFilterEvent[key].action(''));
+    };
+
+    const enableResetFilter = fName || fNameKh || fDepId || fCamId || fTypeId || fMainId || fSubId || fIssueDate || fYear;
 
     const handleDelete = async (id) => {
         try {
@@ -101,6 +107,7 @@ const HomeDocEntry = () => {
                 filter={
                     {
                         columnOrder: "created_at",
+                        orderBy: "DESC",
                         searchParams: {
                             fName: fName ? fName : "",
                             fNameKh: fNameKh ? fNameKh : "",
@@ -233,6 +240,19 @@ const HomeDocEntry = () => {
                                     customDatas: years,
                                     value: fYear ? fYear : ""
                                 }
+                            },
+                            {
+                                grid: 0.1
+                            },
+                            {
+                                grid: 2.9,
+                                type: "custom",
+                                component: <Button 
+                                            variant="contained" 
+                                            color="error" 
+                                            onClick={resetFilter} 
+                                            disabled={!enableResetFilter}
+                                            >Reset</Button>
                             },
                         ]
                     },
