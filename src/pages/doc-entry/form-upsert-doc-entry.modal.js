@@ -166,8 +166,8 @@ const UpsertDocEntryForm = (props) => {
 
     const onError = (data) => {
         console.log("Error data submit: ", data);
-        if (!watchDocEntry?.files?.length)
-            setError("files", { message: "File is required!" });
+        // if (!watchDocEntry?.files?.length)
+        //     setError("files", { message: "File is required!" });
     };
 
     const submit = async (data) => {

@@ -38,13 +38,16 @@ const FooterComponent = (props) => {
 
     const {
         handleSave,
+        handleSaveNew,
         handleReject,
         handleCancel,
         saveButtonType,
+        saveNewButtonType,
         saveButtonLabel,
+        saveNewButtonLabel,
         cancelButtonLabel,
         rejectButtonLabel,
-        actions
+        actions,
     } = props;
 
     return (
@@ -87,6 +90,17 @@ const FooterComponent = (props) => {
                         onClick={handleSave}
                     >
                         {saveButtonLabel ? saveButtonLabel : 'Save'}
+                    </PrimaryButton>
+                }
+
+                {
+                    actions?.submitNew &&
+                    <PrimaryButton
+                        variant="outlined"
+                        type={saveNewButtonType || 'button'}
+                        onClick={handleSaveNew}
+                    >
+                        {saveNewButtonLabel ? saveNewButtonLabel : 'Save & New'}
                     </PrimaryButton>
                 }
 

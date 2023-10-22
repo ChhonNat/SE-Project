@@ -157,7 +157,7 @@ const tblMainCategory = [
   },
   {
     id: "groupDocumentName",
-    label: "Group Document"
+    label: "Type Of Document"
   },
   {
     id: "ordering",
