@@ -149,6 +149,8 @@ const UpsertDocEntryForm = (props) => {
                     const issueDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
                     setSelectedDate(dayjs(issueDate));
                     setValue(key, issueDate);
+                } else if(key === formatKeys[1]){
+                    setValue("issueNum", String(docEntry[key]));
                 } else if (key === formatKeys[3]) {
                     setValue("docCode", docEntry[key]);
                 } else if (key === formatKeys[4]) {
@@ -488,7 +490,7 @@ const UpsertDocEntryForm = (props) => {
                                 size={"small"}
                                 customDatas={years}
                                 value={watchDocEntry?.year || ""}
-                                handleOnChange={(e) => setValue("year", e?.target?.value)}
+                                handleOnChange={(e) => setValue("year", String(e?.target?.value))}
                                 err={errors?.year?.message}
                             />
                         </Grid>
