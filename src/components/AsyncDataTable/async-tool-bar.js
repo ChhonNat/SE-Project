@@ -33,9 +33,9 @@ const shrinkOpt = { shrink: true };
 
 const useStyles = makeStyles({
   field: {
-    "&&": {
-      marginRight: "24px"
-    }
+    // "&&": {
+    //   marginRight: "24px"
+    // }
   }
 });
 
@@ -251,9 +251,9 @@ const AsynTableToolbar = (props) => {
                                     sx={{ width: "100%", marginRight: 3 }}
                                     callToApi={filter?.selectOption?.asyncUrl}
                                     customDatas={filter?.selectOption?.customDatas}
-                                    bindField={filter?.selectOption?.bindField || "name"}
+                                    bindField={filter?.selectOption?.bindField || ""}
                                     handleOnChange={(e, value) => handleFilterEvent(filter?.filterName, value)}
-                                    value={filter?.selectOption?.value}
+                                    value={filter?.selectOption?.value || ""}
                                   />
                                 }
 

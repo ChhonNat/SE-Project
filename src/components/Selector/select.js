@@ -67,7 +67,7 @@ const SelectComponent = (props) => {
         <FormControl
             fullWidth
             size={size ? size : 'medium'}
-            error={ err ? (value ? false : true) : false }
+            error={err ? (value ? false : true) : false}
         >
             <InputLabel id={id}>{!isRequire ? label : <LabelRequire label={label} />}</InputLabel>
             <Select
@@ -101,11 +101,18 @@ const SelectComponent = (props) => {
                         }) : <div></div>
                     ) : (
                         customDatas?.length ? customDatas.map((ele, index) => {
-                            return <MenuItem value={returnValueAs ? returnValueAs : ele?.id || ele} key={index} >
+                            console.log(ele);
+                            
+                            return <MenuItem
+                                value={returnValueAs ? returnValueAs : ele?.id || ele}
+                                key={index}
+                            >
                                 {
                                     bindField ?
                                         ele[bindField] :
-                                        ele || ele?.name || ele?.fullName ? ele?.name || ele?.fullName || ele : ele?.last_name + " " + ele?.first_name
+                                        ele 
+                                        || ele?.name || ele?.fullName ? ele?.name || 
+                                        ele?.fullName || ele : ele?.last_name + " " + ele?.first_name
                                 }
                             </MenuItem>;
                         }) : <div></div>
