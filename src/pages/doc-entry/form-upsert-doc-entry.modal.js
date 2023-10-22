@@ -180,9 +180,9 @@ const UpsertDocEntryForm = (props) => {
                 data.fileName = tmpFileRm.map((ele) => ele.fileName).join(',');
             }
 
-            // if (!lstDocEntryFiles?.length && !data?.files?.length) {
-            //     setError("files", { message: "File is required!" });
-            // }
+            if (!lstDocEntryFiles?.length && !data?.files?.length) {
+                setError("files", { message: "File is required!" });
+            }
 
             submitData.append("documentId", docEntry?.id);
         }
