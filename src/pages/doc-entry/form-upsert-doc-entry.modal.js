@@ -1,5 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Close } from "@mui/icons-material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import {
     Box, Checkbox, Dialog,
@@ -29,6 +31,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import AsyncAutoComplete from "../../components/AutoComplete/auto-complete";
 import LabelRequire from "../../components/Label/require";
+import ViewFileModal from "../../components/Modal/view-file.modal";
 import FooterComponent from "../../components/Page/footer";
 import TitleComponent from "../../components/Page/title";
 import SelectComponent from "../../components/Selector/select";
@@ -63,8 +66,7 @@ const UpsertDocEntryForm = (props) => {
     });
 
     const watchDocEntry = watch();
-    const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh", "isSecret"];
-    const updateKeys = ["documentId", "fileName", "files"];
+    const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh"];
 
     // handle select year
     const currentYear = new Date().getFullYear();
@@ -76,7 +78,7 @@ const UpsertDocEntryForm = (props) => {
 
     // handle checkbox
     const handleChange = (e) => {
-        setValue('isScret', e.target.checked ? 1 : 0);
+        setValue('isSecret', e.target.checked ? 1 : 0);
     };
 
     // handle change datepicker
@@ -109,10 +111,6 @@ const UpsertDocEntryForm = (props) => {
         }
     };
 
-    const handleViewFile = (value) => () => {
-        console.log("catch the value: : ", value)
-    };
-
     const handleRemoveFileUI = useCallback((id, item) => {
         setTmpFileRm(prev => [...prev, item]);
         setLstDocEntryFiles(prev => prev.toSpliced(id, 1));
@@ -140,8 +138,8 @@ const UpsertDocEntryForm = (props) => {
         if (docEntry?.id && open) {
 
             getAllFile(docEntry?.id);
-
             Object.keys(docEntry).forEach((key) => {
+                console.log("Key", key+ " = ",docEntry[key])
                 if (key === formatKeys[0]) {
                     const issueDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
                     setSelectedDate(dayjs(issueDate));
@@ -152,8 +150,8 @@ const UpsertDocEntryForm = (props) => {
                     setValue("docNameEn", docEntry[key]);
                 } else if (key === formatKeys[5]) {
                     setValue("docNameKh", docEntry[key]);
-                } else if (key === formatKeys[6]) {
-                    setValue("isScret", docEntry[key]);
+                } else if (key === "year") {
+                    setValue(key, parseInt(docEntry[key]));
                 } else {
                     setValue(key, docEntry[key]);
                 }
@@ -182,9 +180,9 @@ const UpsertDocEntryForm = (props) => {
                 data.fileName = tmpFileRm.map((ele) => ele.fileName).join(',');
             }
 
-            if (!lstDocEntryFiles?.length && !data?.files?.length) {
-                setError("files", { message: "File is required!" });
-            }
+            // if (!lstDocEntryFiles?.length && !data?.files?.length) {
+            //     setError("files", { message: "File is required!" });
+            // }
 
             submitData.append("documentId", docEntry?.id);
         }
@@ -353,7 +351,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
                             <FormGroup>
                                 <FormControlLabel
-                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isScret ? true : false} />}
+                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isSecret ? true : false} />}
                                     label={"Is Confidential"}
                                     sx={{ width: "100%" }}
                                     size="small"
