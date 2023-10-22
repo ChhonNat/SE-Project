@@ -67,8 +67,7 @@ const UpsertDocEntryForm = (props) => {
     });
 
     const watchDocEntry = watch();
-    const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh"];
-    const updateKeys = ["documentId", "fileName", "files"];
+    const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh", "isSecret"];
 
     // handle select year
     const currentYear = new Date().getFullYear();
@@ -81,7 +80,6 @@ const UpsertDocEntryForm = (props) => {
     // handle checkbox
     // const [isSecret, setIsSecret] = useState(false);
     const handleChange = (e) => {
-        // setIsSecret(e.target.checked);
         setValue('isSecret', e.target.checked ? 1 : 0);
     };
 
@@ -159,8 +157,9 @@ const UpsertDocEntryForm = (props) => {
                     setValue("docNameEn", docEntry[key]);
                 } else if (key === formatKeys[5]) {
                     setValue("docNameKh", docEntry[key]);
+                } else if (key === formatKeys[6]) {
+                    setValue("isSecret", docEntry[key]);
                 } else {
-                    // console.log(typeof docEntry[key] + " = " + key + " = " + docEntry[key])
                     setValue(key, docEntry[key]);
                 }
             });
@@ -174,6 +173,7 @@ const UpsertDocEntryForm = (props) => {
     };
 
     const submit = async (data) => {
+
         const submitData = new FormData();
 
         if (!docEntry?.id) {
@@ -181,28 +181,51 @@ const UpsertDocEntryForm = (props) => {
             if (!data?.files?.length)
                 setError("files", { message: "File is required!" });
 
-            Object.keys(data).forEach((key) => {
-                if (!docEntry?.id) {
+        } else {
+
+            if (tmpFileRm?.length) {
+                data.fileName = tmpFileRm.map((ele) => ele.fileName).join(',');
+            }
+
+            if (!lstDocEntryFiles?.length && !data?.files?.length) {
+                setError("files", { message: "File is required!" });
+            }
+
+            submitData.append("documentId", docEntry?.id);
+        }
+
+        Object.keys(data).forEach((key) => {
+
+            if (!docEntry?.id) {
 
                     if (KEY_POST.docEntry.includes(key)) {
 
                         if (formatKeys.includes(key)) {
 
-                            if (formatKeys[0] === key)
-                                submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
-                            if (formatKeys[1] === key)
-                                submitData.append(key, parseInt(data[key] ? data[key] : 0));
-                            if (formatKeys[2] === key)
-                                for (let i = 0; i < data?.files.length; i++) {
-                                    submitData.append("files", data?.files[i]);
-                                }
-                        } else {
-                            submitData.append(key, data[key]);
-                        }
-                    }
-                } else {
+                        if (formatKeys[0] === key)
+                            submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
 
-                    if (formatKeys.includes(key)) {
+
+                        if (formatKeys[1] === key)
+                            submitData.append(key, parseInt(data[key] ? data[key] : 0));
+
+                        if (formatKeys[2] === key)
+                            for (let i = 0; i < data?.files.length; i++) {
+                                submitData.append("files", data?.files[i]);
+                            }
+
+                        if (formatKeys[6] === key)
+                            submitData.append(key, parseInt(data[key] ? data[key] : 0));
+
+                    } else {
+
+                        submitData.append(key, data[key]);
+                    }
+                }
+
+            } else {
+
+                if (formatKeys.includes(key)) {
 
                         if (formatKeys[0] === key)
                             submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
@@ -210,54 +233,50 @@ const UpsertDocEntryForm = (props) => {
                         if (formatKeys[1] === key)
                             submitData.append(key, parseInt(data[key] ? data[key] : 0));
 
-                        // }else if (updateKeys.length) {
-                        //     updateKeys.map(key => {
-                        //         console.log("Update keys: ", key)
-                        //     })
-                    } else {
-                        console.log("Key-data>>>", key + " data= ", data[key]);
-                        submitData.append(key, data[key]);
-                    }
-                }
+                    if (formatKeys[2] === key && data?.files?.length)
+                        for (let i = 0; i < data?.files.length; i++) {
+                            submitData.append("files", data?.files[i]);
+                        }
 
+                    if (formatKeys[6] === key)
+                        submitData.append(key, parseInt(data[key] ? data[key] : 0));
+
+                } else {
+                    submitData.append(key, data[key]);
+                }
+            }
+
+        });
+
+        try {
+            let submitDocEntry;
+
+            if (docEntry?.id) {
+                submitDocEntry = await docEntryService.updateDocEntry(submitData, "multipart/form-data");
+            }
+            else {
+                submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
+            }
+
+            const { data } = submitDocEntry;
+            const { message, success } = data;
+
+
+            Swal.fire({
+                title: success ? "Success" : "Warning",
+                text: message,
+                icon: success ? "success" : "waning",
+                confirmButtonText: "OK",
+                size: 200,
             });
 
-            if (updateKeys.length) {
-                updateKeys.map((key) => {
-                    if (key === updateKeys[0]) submitData.append(key, docEntry?.id);
-                    else if (key === updateKeys[1]) submitData.append(key, "");
-                    else submitData.append(key, "");
-                });
-            };
+            handleEventSucceed();
+            handleCloseModal();
 
-            try {
-                let submitDocEntry;
-
-                if (docEntry?.id) {
-                    submitDocEntry = await docEntryService.updateDocEntry(submitData, "multipart/form-data");
-                }
-                else {
-                    submitDocEntry = await docEntryService.createDocEntry(submitData, "multipart/form-data");
-                }
-                const { data } = submitDocEntry;
-                console.log(data);
-                const { message, success } = data;
-
-                if (success) {
-                    Swal.fire({
-                        title: data?.success ? "Success" : "Error",
-                        text: message,
-                        icon: data?.success ? "success" : "error",
-                        confirmButtonText: "OK",
-                        size: 200,
-                    });
-                    handleEventSucceed();
-                    handleCloseModal();
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        };
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
         const handleCloseModal = () => {
             reset();
@@ -317,126 +336,126 @@ const UpsertDocEntryForm = (props) => {
                                 />
                             </Grid>
 
-                            <Grid item xs={12}>
-                                <TextField
-                                    label={<LabelRequire label="Numbering" />}
+                        <Grid item xs={12}>
+                            <TextField
+                                label={<LabelRequire label="Numbering" />}
+                                sx={{ width: "100%" }}
+                                {...register("docCode")}
+                                size="small"
+                                error={errors?.docCode ? true : false}
+                                helperText={errors?.docCode?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={8}>
+                            <TextField
+                                type="file"
+                                size="small"
+                                inputProps={{
+                                    multiple: true,
+                                    accept: "application/pdf, image/jpeg, image/png, images/jpg"
+                                }}
+                                InputLabelProps={shrinkOpt}
+                                {...register("files")}
+                                // onChange={(e) => setValue("files", [...e?.target?.files])}
+                                error={errors?.files ? true : false}
+                                helperText={errors?.files?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
+                            <FormGroup>
+                                <FormControlLabel
+                                    control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isSecret ? true : false} />}
+                                    label={"Is Confidential"}
                                     sx={{ width: "100%" }}
-                                    {...register("docCode")}
                                     size="small"
-                                    error={errors?.docCode ? true : false}
-                                    helperText={errors?.docCode?.message}
                                 />
-                            </Grid>
-                            <Grid item xs={8}>
-                                <TextField
-                                    type="file"
-                                    size="small"
-                                    inputProps={{
-                                        multiple: true,
-                                        accept: "application/pdf, image/jpeg, image/png, images/jpg"
-                                    }}
-                                    InputLabelProps={shrinkOpt}
-                                    {...register("files")}
-                                    // onChange={(e) => setValue("files", [...e?.target?.files])}
-                                    error={errors?.files ? true : false}
-                                    helperText={errors?.files?.message}
-                                />
-                            </Grid>
-                            <Grid item xs={4} sx={{ display: "flex", justifyContent: "end" }}>
-                                <FormGroup>
-                                    <FormControlLabel
-                                        control={<Checkbox onChange={handleChange} checked={watchDocEntry?.isSecret ? true : false} />}
-                                        label={"Is Confidential"}
-                                        sx={{ width: "100%" }}
-                                        size="small"
-                                    />
-                                </FormGroup>
-                            </Grid>
+                            </FormGroup>
+                        </Grid>
 
-                            {docEntry?.id && lstDocEntryFiles.length ?
-                                <Grid item xs={12}>
-                                    <Box sx={{ display: "flex", pd: 0 }}>
-                                        <Paper elevation={0} sx={{ width: "100%" }}>
-                                            <FireNav component="nav" disablePadding>
-                                                <Box
+                        {docEntry?.id && lstDocEntryFiles.length ?
+                            <Grid item xs={12}>
+                                <Box sx={{ display: "flex", pd: 0 }}>
+                                    <Paper elevation={0} sx={{ width: "100%" }}>
+                                        <FireNav component="nav" disablePadding>
+                                            <Box
+                                                sx={{
+                                                    bgcolor: showList ? "rgba(71, 98, 130, 0.3)" : "",
+                                                    mb: 0,
+                                                }}
+                                            >
+                                                <ListItemButton
+                                                    alignItems="flex-start"
+                                                    onClick={() => setShowList(!showList)}
                                                     sx={{
-                                                        bgcolor: showList ? "rgba(71, 98, 130, 0.3)" : "",
-                                                        mb: 0,
+                                                        px: 3,
+                                                        pt: 2.5,
+                                                        pb: showList ? 0 : 2.5,
+                                                        "&:hover, &:focus": { "& svg": { opacity: showList ? 1 : 0 } }
                                                     }}
                                                 >
-                                                    <ListItemButton
-                                                        alignItems="flex-start"
-                                                        onClick={() => setShowList(!showList)}
-                                                        sx={{
-                                                            px: 3,
-                                                            pt: 2.5,
-                                                            pb: showList ? 0 : 2.5,
-                                                            "&:hover, &:focus": { "& svg": { opacity: showList ? 1 : 0 } }
+                                                    <ListItemText
+                                                        primary="Files"
+                                                        primaryTypographyProps={{
+                                                            fontSize: 15,
+                                                            fontWeight: "medium",
+                                                            lineHeight: "20px",
+                                                            mb: "2px"
                                                         }}
-                                                    >
-                                                        <ListItemText
-                                                            primary="Files"
-                                                            primaryTypographyProps={{
-                                                                fontSize: 15,
-                                                                fontWeight: "medium",
-                                                                lineHeight: "20px",
-                                                                mb: "2px"
-                                                            }}
-                                                            secondary={lstDocEntryFiles.map((file) => file.fileName).join(', ')}
-                                                            secondaryTypographyProps={{
-                                                                noWrap: true,
-                                                                fontSize: 12,
-                                                                lineHeight: "16px",
-                                                                color: showList ? "rgba(0,0,0,0)" : ""
-                                                            }}
-                                                            sx={{ my: 0, width: "100%" }}
-                                                        />
-                                                        <KeyboardArrowDown
-                                                            sx={{
-                                                                mr: -1,
-                                                                opacity: 0,
-                                                                transform: showList ? "rotate(-180deg)" : "rotate(0)",
-                                                                transition: "0.2s"
-                                                            }}
-                                                        />
-                                                    </ListItemButton>
-                                                    {showList &&
-                                                        <List sx={{ width: '100%', maxHeight: "180px", overflowY: 'auto', bgcolor: 'background.paper' }}>
-                                                            {lstDocEntryFiles.map((file, index) => {
-                                                                return (
-                                                                    <ListItem
-                                                                        key={index}
-                                                                        secondaryAction={
-                                                                            <IconButton edge="end" aria-label="comments" sx={{ marginRight: '10px' }} onClick={() => handleRemoveFileUI(index, file)}>
-                                                                                <DeleteIcon color="error" />
-                                                                            </IconButton>
-                                                                        }
-                                                                        disablePadding
-                                                                    >
-                                                                        <ListItemButton
-                                                                            role={undefined}
-                                                                            onClick={() => {
-                                                                                setViewFileName(file?.fileName);
-                                                                                setOpenFileModal(true);
-                                                                            }}
-                                                                            dense>
-                                                                            <ListItemIcon>
-                                                                                <InsertDriveFileIcon />
-                                                                            </ListItemIcon>
-                                                                            <ListItemText id={index} sx={{ fontSize: "16px", color: "blue", textDecoration: "undefined" }} primary={file?.fileName} />
-                                                                        </ListItemButton>
-                                                                    </ListItem>
-                                                                );
-                                                            })}
-                                                        </List>
-                                                    }
-                                                </Box>
-                                            </FireNav>
-                                        </Paper>
-                                    </Box>
-                                </Grid>
-                                : ""
-                            }
+                                                        secondary={lstDocEntryFiles.map((file) => file.fileName).join(', ')}
+                                                        secondaryTypographyProps={{
+                                                            noWrap: true,
+                                                            fontSize: 12,
+                                                            lineHeight: "16px",
+                                                            color: showList ? "rgba(0,0,0,0)" : ""
+                                                        }}
+                                                        sx={{ my: 0, width: "100%" }}
+                                                    />
+                                                    <KeyboardArrowDown
+                                                        sx={{
+                                                            mr: -1,
+                                                            opacity: 0,
+                                                            transform: showList ? "rotate(-180deg)" : "rotate(0)",
+                                                            transition: "0.2s"
+                                                        }}
+                                                    />
+                                                </ListItemButton>
+                                                {showList &&
+                                                    <List sx={{ width: '100%', maxHeight: "180px", overflowY: 'auto', bgcolor: 'background.paper' }}>
+                                                        {lstDocEntryFiles.map((file, index) => {
+                                                            return (
+                                                                <ListItem
+                                                                    key={index}
+                                                                    secondaryAction={
+                                                                        <IconButton edge="end" aria-label="comments" sx={{ marginRight: '10px' }} onClick={() => handleRemoveFileUI(index, file)}>
+                                                                            <DeleteIcon color="error" />
+                                                                        </IconButton>
+                                                                    }
+                                                                    disablePadding
+                                                                >
+                                                                    <ListItemButton
+                                                                        role={undefined}
+                                                                        onClick={() => {
+                                                                            setViewFileName(file?.fileName);
+                                                                            setOpenFileModal(true);
+                                                                        }}
+                                                                        dense>
+                                                                        <ListItemIcon>
+                                                                            <InsertDriveFileIcon />
+                                                                        </ListItemIcon>
+                                                                        <ListItemText id={index} sx={{ fontSize: "16px", color: "blue", textDecoration: "undefined" }} primary={file?.fileName} />
+                                                                    </ListItemButton>
+                                                                </ListItem>
+                                                            );
+                                                        })}
+                                                    </List>
+                                                }
+                                            </Box>
+                                        </FireNav>
+                                    </Paper>
+                                </Box>
+                            </Grid>
+                            : ""
+                        }
 
                             <Grid item xs={12}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -606,30 +625,30 @@ const UpsertDocEntryForm = (props) => {
                                 />
                             </Grid>
 
-                        </Grid>
-                    </Box>
-                </DialogContent>
-                <DialogActions>
-                    <FooterComponent
-                        saveButtonType="submit"
-                        saveButtonLabel={docEntry?.id ? "Update" : "Save"}
-                        actions={{ cancel: true, submit: true }}
-                        handleCancel={handleCloseModal}
-                    />
-                </DialogActions>
+                    </Grid>
+                </Box>
+            </DialogContent>
+            <DialogActions>
+                <FooterComponent
+                    saveButtonType="submit"
+                    saveButtonLabel={docEntry?.id ? "Update" : "Save"}
+                    actions={{ cancel: true, submit: true }}
+                    handleCancel={handleCloseModal}
+                />
+            </DialogActions>
 
-                {/* View file entry modal */}
-                {
-                    openFileModal &&
-                    <ViewFileModal
-                        openModal={openFileModal}
-                        onCloseModal={() => setOpenFileModal(false)}
-                        fileName={viewFileName}
-                    />
-                }
+            {/* View file entry modal */}
+            {
+                openFileModal &&
+                <ViewFileModal
+                    openModal={openFileModal}
+                    onCloseModal={() => setOpenFileModal(false)}
+                    fileName={viewFileName}
+                />
+            }
 
-            </Dialog>
-        );
-    };
+        </Dialog>
+    );
 };
+
 export default UpsertDocEntryForm;
