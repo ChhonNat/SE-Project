@@ -151,6 +151,8 @@ const UpsertDocEntryForm = (props) => {
                     const issueDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
                     setSelectedDate(dayjs(issueDate));
                     setValue(key, issueDate);
+                } else if(key === formatKeys[1]){
+                    setValue("issueNum", String(docEntry[key]));
                 } else if (key === formatKeys[3]) {
                     setValue("docCode", docEntry[key]);
                 } else if (key === formatKeys[4]) {
@@ -168,8 +170,8 @@ const UpsertDocEntryForm = (props) => {
 
     const onError = (data) => {
         console.log("Error data submit: ", data);
-        if (!watchDocEntry?.files?.length)
-            setError("files", { message: "File is required!" });
+        // if (!watchDocEntry?.files?.length)
+        //     setError("files", { message: "File is required!" });
     };
 
     const submit = async (data) => {
@@ -482,139 +484,139 @@ const UpsertDocEntryForm = (props) => {
                                 </LocalizationProvider>
                             </Grid>
 
-                            <Grid item xs={12}>
-                                <SelectComponent
-                                    id={"year-id"}
-                                    label={"Year"}
-                                    isRequire={true}
-                                    size={"small"}
-                                    customDatas={years}
-                                    value={watchDocEntry?.year || ""}
-                                    handleOnChange={(e) => setValue("year", e?.target?.value)}
-                                    err={errors?.year?.message}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <AsyncAutoComplete
-                                    id="campusId"
-                                    label={<LabelRequire label="Campus" />}
-                                    size="small"
-                                    callToApi={API_URL.lookup.campus.get}
-                                    bindField={"nameEn"}
-                                    handleOnChange={(e, value) => {
-                                        setValue("campusId", value?.id);
-                                    }}
-                                    value={watchDocEntry?.campusId || null}
-                                    err={errors?.campusId?.message}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <AsyncAutoComplete
-                                    id="sourceDocId"
-                                    label={<LabelRequire label="Source Department" />}
-                                    size="small"
-                                    callToApi={API_URL.lookup.department.get}
-                                    bindField={"nameEn"}
-                                    handleOnChange={(e, value) => {
-                                        setValue("deptId", value?.id);
-                                    }}
-                                    value={watchDocEntry?.deptId || null}
-                                    err={errors?.deptId?.message}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <AsyncAutoComplete
-                                    id="docTypeId"
-                                    label={<LabelRequire label="Type Of Document" />}
-                                    size="small"
-                                    callToApi={API_URL.lookup.listGDoc.get}
-                                    bindField={"nameEn"}
-                                    handleOnChange={(e, value) => {
-                                        setValue("typeOfDocId", value?.id);
-                                    }}
-                                    value={watchDocEntry?.typeOfDocId || null}
-                                    err={errors?.typeOfDocId?.message}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <AsyncAutoComplete
-                                    id="mainCateId"
-                                    label={<LabelRequire label="Main Category" />}
-                                    size="small"
-                                    callToApi={API_URL.lookup.listMCate.get}
-                                    bindField={"nameEn"}
-                                    handleOnChange={(e, value) => {
-                                        setValue("mainCateId", value?.id);
-                                    }}
-                                    value={watchDocEntry?.mainCateId || null}
-                                    err={errors?.mainCateId?.message}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <AsyncAutoComplete
-                                    id="subMainCateId"
-                                    label={"Sub-Category"}
-                                    size="small"
-                                    callToApi={API_URL.lookup.subCate.get}
-                                    bindField={"nameEn"}
-                                    handleOnChange={(e, value) => {
-                                        setValue("subCateId", value?.id);
-                                    }}
-                                    helperText="(Optional)"
-                                    value={watchDocEntry?.subCateId || null}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <AsyncAutoComplete
-                                    id="childSubMainCateId"
-                                    label={"Child Sub-Category"}
-                                    size="small"
-                                    callToApi={API_URL.lookup.childSubCate.get}
-                                    bindField={"nameEn"}
-                                    handleOnChange={(e, value) => {
-                                        setValue("subSubCateId", value?.id);
-                                    }}
-                                    helperText="(Optional)"
-                                    value={watchDocEntry?.subSubCateId || null}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    label={<LabelRequire label="Number Of Page" />}
-                                    sx={{ width: "100%" }}
-                                    {...register("numOfPage")}
-                                    size="small"
-                                    error={errors?.numOfPage ? true : false}
-                                    helperText={errors?.numOfPage?.message}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    label={<LabelRequire label="Chrono No." />}
-                                    sx={{ width: "100%" }}
-                                    {...register("chronoNum")}
-                                    size="small"
-                                    error={errors?.chronoNum ? true : false}
-                                    helperText={errors?.chronoNum?.message}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    type="number"
-                                    label={"Issue Number"}
-                                    sx={{ width: "100%" }}
-                                    size="small"
-                                    {...register("issueNum")}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    label={"Approved By"}
-                                    sx={{ width: "100%" }}
-                                    size="small"
-                                    {...register("approvedBy")}
-                                />
-                            </Grid>
+                        <Grid item xs={12}>
+                            <SelectComponent
+                                id={"year-id"}
+                                label={"Year"}
+                                isRequire={true}
+                                size={"small"}
+                                customDatas={years}
+                                value={watchDocEntry?.year || ""}
+                                handleOnChange={(e) => setValue("year", String(e?.target?.value))}
+                                err={errors?.year?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <AsyncAutoComplete
+                                id="campusId"
+                                label={<LabelRequire label="Campus" />}
+                                size="small"
+                                callToApi={API_URL.lookup.campus.get}
+                                bindField={"nameEn"}
+                                handleOnChange={(e, value) => {
+                                    setValue("campusId", value?.id);
+                                }}
+                                value={watchDocEntry?.campusId || null}
+                                err={errors?.campusId?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <AsyncAutoComplete
+                                id="sourceDocId"
+                                label={<LabelRequire label="Source Department" />}
+                                size="small"
+                                callToApi={API_URL.lookup.department.get}
+                                bindField={"nameEn"}
+                                handleOnChange={(e, value) => {
+                                    setValue("deptId", value?.id);
+                                }}
+                                value={watchDocEntry?.deptId || null}
+                                err={errors?.deptId?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <AsyncAutoComplete
+                                id="docTypeId"
+                                label={<LabelRequire label="Type Of Document" />}
+                                size="small"
+                                callToApi={API_URL.lookup.listGDoc.get}
+                                bindField={"nameEn"}
+                                handleOnChange={(e, value) => {
+                                    setValue("typeOfDocId", value?.id);
+                                }}
+                                value={watchDocEntry?.typeOfDocId || null}
+                                err={errors?.typeOfDocId?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <AsyncAutoComplete
+                                id="mainCateId"
+                                label={<LabelRequire label="Main Category" />}
+                                size="small"
+                                callToApi={API_URL.lookup.listMCate.get}
+                                bindField={"nameEn"}
+                                handleOnChange={(e, value) => {
+                                    setValue("mainCateId", value?.id);
+                                }}
+                                value={watchDocEntry?.mainCateId || null}
+                                err={errors?.mainCateId?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <AsyncAutoComplete
+                                id="subMainCateId"
+                                label={"Sub-Category"}
+                                size="small"
+                                callToApi={API_URL.lookup.subCate.get}
+                                bindField={"nameEn"}
+                                handleOnChange={(e, value) => {
+                                    setValue("subCateId", value?.id);
+                                }}
+                                helperText="(Optional)"
+                                value={watchDocEntry?.subCateId || null}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <AsyncAutoComplete
+                                id="childSubMainCateId"
+                                label={"Child Sub-Category"}
+                                size="small"
+                                callToApi={API_URL.lookup.childSubCate.get}
+                                bindField={"nameEn"}
+                                handleOnChange={(e, value) => {
+                                    setValue("subSubCateId", value?.id);
+                                }}
+                                helperText="(Optional)"
+                                value={watchDocEntry?.subSubCateId || null}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label={<LabelRequire label="Number Of Page" />}
+                                sx={{ width: "100%" }}
+                                {...register("numOfPage")}
+                                size="small"
+                                error={errors?.numOfPage ? true : false}
+                                helperText={errors?.numOfPage?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label={<LabelRequire label="Chrono No." />}
+                                sx={{ width: "100%" }}
+                                {...register("chronoNum")}
+                                size="small"
+                                error={errors?.chronoNum ? true : false}
+                                helperText={errors?.chronoNum?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                type="number"
+                                label={"Issue Number"}
+                                sx={{ width: "100%" }}
+                                size="small"
+                                {...register("issueNum")}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label={"Approved By"}
+                                sx={{ width: "100%" }}
+                                size="small"
+                                {...register("approvedBy")}
+                            />
+                        </Grid>
 
                             <Grid item xs={12}>
                                 <TextField
