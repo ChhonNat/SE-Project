@@ -6,7 +6,7 @@ import { STATUS } from "../constants/status";
 const tblDocEntry = [
   {
     id: "index",
-    label: "No.",
+    label: "Nº",
   },
   {
     id: "documentCode",
@@ -15,7 +15,7 @@ const tblDocEntry = [
   },
   {
     id: "documentNameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "documentNameKh",
@@ -55,7 +55,7 @@ const tblDocEntry = [
   },
   {
     id: "subSubCateName",
-    label: "Child Sub-Category",
+    label: "Sub-Sub-Category",
   },
   {
     id: "chronoNum",
@@ -102,11 +102,11 @@ const tblDocEntry = [
 const tblGroupDocument = [
   {
     id: "index",
-    label: "No.",
+    label: "Nº",
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "Name(En)"
   },
   {
     id: "nameKh",
@@ -145,11 +145,11 @@ const tblGroupDocument = [
 const tblMainCategory = [
   {
     id: "index",
-    label: "No.",
+    label: "Nº",
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "Name(En)"
   },
   {
     id: "nameKh",
@@ -188,11 +188,11 @@ const tblMainCategory = [
 const tbSubCategory = [
   {
     id: "index",
-    label: "No.",
+    label: "Nº",
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "Name(En)"
   },
   {
     id: "nameKh",
@@ -230,11 +230,11 @@ const tbSubCategory = [
 const tbSubSubCategory = [
   {
     id: "index",
-    label: "No.",
+    label: "Nº",
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "Name(En)"
   },
   {
     id: "nameKh",
