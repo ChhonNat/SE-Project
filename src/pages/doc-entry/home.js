@@ -1,13 +1,13 @@
+import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import ViewFileModal from "../../components/Modal/view-file.modal";
 import { API_URL } from "../../constants/api_url";
+import { appConfig } from "../../constants/app_cont";
+import { docEntryService } from "../../services/doc-entry.service";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import UpsertDocEntryForm from "./form-upsert-doc-entry.modal";
-import { docEntryService } from "../../services/doc-entry.service";
-import Swal from "sweetalert2";
-import { appConfig } from "../../constants/app_cont";
-import { Button } from "@mui/material";
 
 const HomeDocEntry = () => {
 
@@ -278,10 +278,6 @@ const HomeDocEntry = () => {
                 handleViewEvent={(data) => {
                     setEditDocEntry(data);
                     setOpenFileModal(true);
-                }}
-                handleDeleteEvent={(data) => handleDelete(data.id)}
-                handleFilterEvent={(fName, value) => {
-                    mapFilterEvent[fName].action(value?.id ? value.id : value);
                 }}
             />
 

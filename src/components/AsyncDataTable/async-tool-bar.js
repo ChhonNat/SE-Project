@@ -23,10 +23,10 @@ import {
 } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import { makeStyles } from "@mui/styles";
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import AsyncAutoComplete from '../AutoComplete/auto-complete';
-import { makeStyles } from "@mui/styles";
 import SelectComponent from '../Selector/select';
 
 const shrinkOpt = { shrink: true };
