@@ -100,7 +100,7 @@ const SelectComponent = (props) => {
                             </MenuItem>;
                         }) : <div></div>
                     ) : (
-                        customDatas?.length ? customDatas.map((ele, index) => {                            
+                        customDatas?.length ? customDatas.map((ele, index) => {
                             return <MenuItem
                                 value={returnValueAs ? returnValueAs : ele?.id || ele}
                                 key={index}
@@ -108,9 +108,9 @@ const SelectComponent = (props) => {
                                 {
                                     bindField ?
                                         ele[bindField] :
-                                        ele 
-                                        || ele?.name || ele?.fullName ? ele?.name || 
-                                        ele?.fullName || ele : ele?.last_name + " " + ele?.first_name
+                                        ele
+                                            || ele?.name || ele?.fullName ? ele?.name ||
+                                            ele?.fullName || ele : ele?.last_name + " " + ele?.first_name
                                 }
                             </MenuItem>;
                         }) : <div></div>

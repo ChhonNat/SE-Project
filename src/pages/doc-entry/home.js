@@ -1,18 +1,18 @@
-import React, { forwardRef, useEffect, useState } from "react";
-import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import ViewFileModal from "../../components/Modal/view-file.modal";
-import { API_URL } from "../../constants/api_url";
-import { docEntryService } from "../../services/doc-entry.service";
-import { TABLE_CONFIG } from "../../utils/table-config";
-import UpsertDocEntryForm from "./form-upsert-doc-entry.modal";
-import Swal from "sweetalert2";
-import { appConfig } from "../../constants/app_cont";
-import { Button, Slide } from "@mui/material";
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Button, Slide } from "@mui/material";
+import React, { forwardRef, useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import ConfirmModal from "../../components/Modal/confirm-delete";
+import ViewFileModal from "../../components/Modal/view-file.modal";
+import { API_URL } from "../../constants/api_url";
+import { appConfig } from "../../constants/app_cont";
+import { docEntryService } from "../../services/doc-entry.service";
+import { TABLE_CONFIG } from "../../utils/table-config";
+import UpsertDocEntryForm from "./form-upsert-doc-entry.modal";
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -31,16 +31,15 @@ const HomeDocEntry = () => {
     const earliestYear = 1970;
     const years = Array.from({ length: currentYear - earliestYear + 1 }, (_, index) => currentYear - index);
 
-    const [fName, setFName] = useState("");
-    const [fNameKh, setFNameKh] = useState("");
-    const [fDepId, setFDepId] = useState("");
-    const [fCamId, setFCamId] = useState("");
-    const [fTypeId, setFTypeId] = useState("");
-    const [fMainId, setFMainId] = useState("");
-    const [fSubId, setFSubId] = useState("");
-    const [fIssueDate, setFIssueDate] = useState("");
+    const [fName, setFName] = useState(null);
+    const [fNameKh, setFNameKh] = useState(null);
+    const [fDepId, setFDepId] = useState(null);
+    const [fCamId, setFCamId] = useState(null);
+    const [fTypeId, setFTypeId] = useState(null);
+    const [fMainId, setFMainId] = useState(null);
+    const [fSubId, setFSubId] = useState(null);
+    const [fIssueDate, setFIssueDate] = useState(null);
     const [fYear, setFYear] = useState(0);
-
     const [filterChanged, setFilterChanged] = useState(false);
 
     useEffect(() => {
@@ -78,7 +77,9 @@ const HomeDocEntry = () => {
     };
 
     const resetFilter = () => {
-        Object.keys(mapFilterEvent).map((key) => mapFilterEvent[key].action(''));
+        Object.keys(mapFilterEvent).map((key) => {
+            mapFilterEvent[key].action(null);
+        });
     };
 
     const enableResetFilter = fName || fNameKh || fDepId || fCamId || fTypeId || fMainId || fSubId || fIssueDate || fYear;
@@ -150,7 +151,7 @@ const HomeDocEntry = () => {
                         filters: [
                             {
                                 grid: 2.9,
-                                label: "Name(En)",
+                                label: "Name (EN)",
                                 filterName: "name",
                                 type: "text",
                                 value: fName ? fName : "",
@@ -160,7 +161,7 @@ const HomeDocEntry = () => {
                             },
                             {
                                 grid: 2.9,
-                                label: "Name (Kh)",
+                                label: "Name (KH)",
                                 filterName: "nameKh",
                                 type: "text",
                                 value: fNameKh ? fNameKh : "",
@@ -170,7 +171,7 @@ const HomeDocEntry = () => {
                             },
                             {
                                 grid: 2.9,
-                                label: "Department",
+                                label: "Departments",
                                 filterName: "depId",
                                 type: "select",
                                 selectOption: {
@@ -198,7 +199,7 @@ const HomeDocEntry = () => {
                             },
                             {
                                 grid: 2.9,
-                                label: "Type Document",
+                                label: "Types of Document",
                                 filterName: "typeId",
                                 type: "select",
                                 selectOption: {
@@ -212,7 +213,7 @@ const HomeDocEntry = () => {
                             },
                             {
                                 grid: 2.9,
-                                label: "Main Category",
+                                label: "Main Categories",
                                 filterName: "mainCateId",
                                 type: "select",
                                 selectOption: {
@@ -226,7 +227,7 @@ const HomeDocEntry = () => {
                             },
                             {
                                 grid: 2.9,
-                                label: "Sub Category",
+                                label: "Sub Categories",
                                 filterName: "subCateId",
                                 type: "select",
                                 selectOption: {
@@ -238,11 +239,23 @@ const HomeDocEntry = () => {
                             {
                                 grid: 0.1
                             },
+                            // {
+                            //     grid: 2.9,
+                            //     label: "Issued Date",
+                            //     filterName: "issuedDate",
+                            //     type: "date",
+                            //     selectOption: {
+                            //         value: fIssueDate ? fIssueDate : ""
+                            //     }
+                            // },
                             {
                                 grid: 2.9,
-                                label: "Issued Datae",
+                                label: "Issued Date",
+                                fullFormat: true,
+                                size: "small",
                                 filterName: "issuedDate",
-                                type: "date",
+                                type: "fullDate",
+                                value: fIssueDate ?? null,
                                 selectOption: {
                                     value: fIssueDate ? fIssueDate : ""
                                 }
