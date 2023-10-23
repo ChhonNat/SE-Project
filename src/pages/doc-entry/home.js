@@ -1,13 +1,22 @@
-import { Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
+import React, { forwardRef, useEffect, useState } from "react";
 import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
 import ViewFileModal from "../../components/Modal/view-file.modal";
 import { API_URL } from "../../constants/api_url";
-import { appConfig } from "../../constants/app_cont";
 import { docEntryService } from "../../services/doc-entry.service";
 import { TABLE_CONFIG } from "../../utils/table-config";
 import UpsertDocEntryForm from "./form-upsert-doc-entry.modal";
+import Swal from "sweetalert2";
+import { appConfig } from "../../constants/app_cont";
+import { Button, Slide } from "@mui/material";
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import ConfirmModal from "../../components/Modal/confirm-delete";
+
+const TransitionModal = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const HomeDocEntry = () => {
 
@@ -15,6 +24,8 @@ const HomeDocEntry = () => {
     const [openFileModal, setOpenFileModal] = useState(false);
     const [isReload, setIsReload] = useState(false);
     const [editDocEntry, setEditDocEntry] = useState({});
+
+    const [openDelModal, setOpenDelModal] = useState(false);
 
     const currentYear = new Date().getFullYear();
     const earliestYear = 1970;
@@ -88,6 +99,11 @@ const HomeDocEntry = () => {
                 size: 200,
             });
 
+            if (success) {
+                setOpenDelModal(false);
+                setIsReload(!isReload);
+            }
+
 
         } catch (error) {
             console.log(error);
@@ -125,16 +141,16 @@ const HomeDocEntry = () => {
                     search: true,
                     refresh: true,
                     create: true,
-                    view: true,
-                    delete: true,
-                    edit: true,
-                    viewFile: true,
+                    // view: true,
+                    // delete: true,
+                    // edit: true,
+                    // viewFile: true,
                     filter: true,
                     filterOption: {
                         filters: [
                             {
                                 grid: 2.9,
-                                label: "Name",
+                                label: "Name(En)",
                                 filterName: "name",
                                 type: "text",
                                 value: fName ? fName : "",
@@ -247,30 +263,64 @@ const HomeDocEntry = () => {
                             {
                                 grid: 2.9,
                                 type: "custom",
-                                component: <Button 
-                                            variant="contained" 
-                                            color="error" 
-                                            onClick={resetFilter} 
-                                            disabled={!enableResetFilter}
-                                            >Reset</Button>
+                                component: <Button
+                                    variant="contained"
+                                    color="error"
+                                    onClick={resetFilter}
+                                    disabled={!enableResetFilter}
+                                >Reset</Button>
                             },
                         ]
                     },
+                    moreOption: {
+                        buttons: [
+                            {
+                                name: "View File",
+                                eventName: "viewFile",
+                                icon: <VisibilityIcon color="primary" />,
+                                enable: true
+                            },
+                            {
+                                name: "Download File",
+                                eventName: "downloadFile",
+                                icon: <FileDownloadIcon color="info" />,
+                                enable: true
+                            },
+                            {
+                                name: "Edit",
+                                eventName: "edit",
+                                icon: <BorderColorIcon />,
+                                enable: true
+                            },
+                            {
+                                name: "Delete",
+                                eventName: "delete",
+                                icon: <DeleteOutlineIcon color="error" />,
+                                enable: true
+                            }
+                        ]
+                    }
                 }}
 
                 onHandleAddNewEvent={() => setOpenModal(true)}
-                handleEditEvent={(data) => {
-                    setEditDocEntry(data);
-                    setOpenModal(true)
-                }}
+
                 isReloadData={isReload ? true : false}
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
-                handleViewFileEvent={async (data) => {
-                    if (!data.id)
-                        return;
+                // handleEditEvent={(data) => {
+                //     setEditDocEntry(data);
+                //     setOpenModal(true)
+                // }}
+                // handleViewFileEvent={async (data) => {
+                //     if (!data.id)
+                //         return;
 
-                    window.open(`${appConfig.apiLink}${API_URL.docEntry.downloadAllFile}${data.id}`, '_blank')
-                }}
+                //     window.open(`${appConfig.apiLink}${API_URL.docEntry.downloadAllFile}${data.id}`, '_blank')
+                // }}
+                // handleViewEvent={(data) => {
+                //     setEditDocEntry(data);
+                //     setOpenFileModal(true);
+                // }}
+                // handleDeleteEvent={(data) => handleDelete(data.id)}
                 handleLinkEvent={(data) => {
                     setEditDocEntry(data);
                     setOpenFileModal(true);
@@ -278,6 +328,34 @@ const HomeDocEntry = () => {
                 handleViewEvent={(data) => {
                     setEditDocEntry(data);
                     setOpenFileModal(true);
+                }}
+
+                handleFilterEvent={(fName, value) => {
+                    mapFilterEvent[fName].action(value?.id ? value.id : value);
+                }}
+                handleMoreEvent={(eName, data) => {
+
+                    if (!eName)
+                        return;
+
+                    if (eName === 'viewFile') {
+                        setEditDocEntry(data);
+                        setOpenFileModal(true);
+                    }
+
+                    if (eName === 'downloadFile') {
+                        window.open(`${appConfig.apiLink}${API_URL.docEntry.downloadAllFile}${data.id}`, '_blank')
+                    }
+
+                    if (eName === 'edit') {
+                        setEditDocEntry(data);
+                        setOpenModal(true)
+                    }
+
+                    if (eName === 'delete') {
+                        setEditDocEntry(data);
+                        setOpenDelModal(true);
+                    }
                 }}
             />
 
@@ -307,6 +385,13 @@ const HomeDocEntry = () => {
                 />
             }
 
+            {/* Confirm delete modal when click on delete button */}
+            <ConfirmModal
+                TransitionModal={TransitionModal}
+                open={openDelModal}
+                onHandleCloseModal={() => setOpenDelModal(false)}
+                onHandleDelete={() => handleDelete(editDocEntry?.id)}
+            />
         </>
     )
 }

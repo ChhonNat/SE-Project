@@ -165,7 +165,7 @@ const UpsertDepartmentFormModal = (props) => {
                 <TextField
                   type="text"
                   id="name-en"
-                  label={<LabelRequire label="Name" />}
+                  label={<LabelRequire label="Name(En)" />}
                   variant="outlined"
                   fullWidth
                   size="small"

@@ -357,7 +357,7 @@ const tblInterview = [
   },
   {
     id: "candidate",
-    label: "Name",
+    label: "Name(En)",
     obj: { name: "fullName" },
   },
   {
@@ -513,7 +513,7 @@ const tblHire = [
   },
   {
     id: "candidate",
-    label: "Name",
+    label: "Name(En)",
     obj: { name: "fullName" },
   },
   {
@@ -568,7 +568,7 @@ const tblPosition = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -616,7 +616,7 @@ const tblPositionLevel = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -702,7 +702,7 @@ const tblDepartment = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -747,7 +747,7 @@ const tblHeadDepartment = [
   },
   {
     id: "fullName",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "phoneNumber",
@@ -802,7 +802,7 @@ const tblCommittee = [
   },
   {
     id: "fullName",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "phoneNumber",
@@ -853,7 +853,7 @@ const tblMainBusiness = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -875,7 +875,7 @@ const tblBusinessUnit = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -913,7 +913,7 @@ const tblLocation = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -947,7 +947,7 @@ const tblCampus = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
