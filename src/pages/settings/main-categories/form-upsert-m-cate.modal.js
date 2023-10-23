@@ -150,7 +150,7 @@ const UpsertMCateFormModel = (props) => {
                             <Grid item xs={12}>
                                 <AsyncAutoComplete
                                     id="groupDoc-id"
-                                    label="Type of Document"
+                                    label="Types of Document "
                                     size="small"
                                     callToApi={API_URL.lookup.listGDoc.get}
                                     bindField={"nameEn"}
@@ -168,7 +168,7 @@ const UpsertMCateFormModel = (props) => {
                                 <TextField
                                     type="text"
                                     id="en-name"
-                                    label={<LabelRequire label="Name(En)" />}
+                                    label={<LabelRequire label="Name (EN)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -183,7 +183,7 @@ const UpsertMCateFormModel = (props) => {
                                 <TextField
                                     type="text"
                                     id="kh-name"
-                                    label={<LabelRequire label="Name(Kh)" />}
+                                    label={<LabelRequire label="Name (KH)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"

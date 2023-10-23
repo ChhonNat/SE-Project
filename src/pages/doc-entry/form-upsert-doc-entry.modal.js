@@ -41,7 +41,6 @@ import { DocEntryModel } from "../../models/doc-entry.model";
 import { docEntryService } from "../../services/doc-entry.service";
 import { ConverterService } from "../../utils/converter";
 
-
 const shrinkOpt = { shrink: true };
 
 const TransitionModal = forwardRef(function Transition(props, ref) {
@@ -113,10 +112,6 @@ const UpsertDocEntryForm = (props) => {
         }
     };
 
-    const handleViewFile = (value) => () => {
-        console.log("catch the value: : ", value)
-    };
-
     const handleRemoveFileUI = useCallback((id, item) => {
         setTmpFileRm(prev => [...prev, item]);
         setLstDocEntryFiles(prev => prev.toSpliced(id, 1));
@@ -142,16 +137,13 @@ const UpsertDocEntryForm = (props) => {
         clearErrors();
 
         if (docEntry?.id && open) {
-
             getAllFile(docEntry?.id);
-
             Object.keys(docEntry).forEach((key) => {
-                console.log(typeof docEntry[key] + " = " + key + " = " + docEntry[key])
                 if (key === formatKeys[0]) {
                     const issueDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
                     setSelectedDate(dayjs(issueDate));
                     setValue(key, issueDate);
-                } else if(key === formatKeys[1]){
+                } else if (key === formatKeys[1]) {
                     setValue("issueNum", String(docEntry[key]));
                 } else if (key === formatKeys[3]) {
                     setValue("docCode", docEntry[key]);
@@ -200,9 +192,9 @@ const UpsertDocEntryForm = (props) => {
 
             if (!docEntry?.id) {
 
-                    if (KEY_POST.docEntry.includes(key)) {
+                if (KEY_POST.docEntry.includes(key)) {
 
-                        if (formatKeys.includes(key)) {
+                    if (formatKeys.includes(key)) {
 
                         if (formatKeys[0] === key)
                             submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
@@ -229,11 +221,11 @@ const UpsertDocEntryForm = (props) => {
 
                 if (formatKeys.includes(key)) {
 
-                        if (formatKeys[0] === key)
-                            submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
+                    if (formatKeys[0] === key)
+                        submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
 
-                        if (formatKeys[1] === key)
-                            submitData.append(key, parseInt(data[key] ? data[key] : 0));
+                    if (formatKeys[1] === key)
+                        submitData.append(key, parseInt(data[key] ? data[key] : 0));
 
                     if (formatKeys[2] === key && data?.files?.length)
                         for (let i = 0; i < data?.files.length; i++) {
@@ -280,63 +272,63 @@ const UpsertDocEntryForm = (props) => {
         }
     };
 
-        const handleCloseModal = () => {
-            reset();
-            clearErrors();
-            onCloseModal();
-        };
+    const handleCloseModal = () => {
+        reset();
+        clearErrors();
+        onCloseModal();
+    };
 
-        return (
-            <Dialog
-                maxWidth="sm"
-                TransitionComponent={TransitionModal}
-                open={open}
-                component="form"
-                onSubmit={handleSubmit(submit, onError)}
-                onClose={onCloseModal}
-            >
-                <DialogTitle>
-                    <TitleComponent title={docEntry?.id ? "Edit Document" : "Add New Document"} />
-                    {onCloseModal ? (
-                        <IconButton
-                            aria-label="close"
-                            onClick={onCloseModal}
-                            sx={{
-                                position: "absolute",
-                                right: 8,
-                                top: 8,
-                                color: (theme) => theme.palette.grey[500],
-                            }}
-                        >
-                            <Close />
-                        </IconButton>
-                    ) : null}
-                </DialogTitle>
-                <DialogContent dividers>
-                    <Box sx={{ width: "100%" }}>
-                        <Grid
-                            container
-                            rowSpacing={2}
-                            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                        >
-                            <Grid item xs={12}>
-                                <TextField
-                                    label={<LabelRequire label="Name(En)" />}
-                                    sx={{ width: "100%" }}
-                                    {...register("docNameEn")}
-                                    size="small"
-                                    error={errors?.docNameEn ? true : false}
-                                    helperText={errors?.docNameEn?.message}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    label={"Name(Kh)"}
-                                    sx={{ width: "100%" }}
-                                    size="small"
-                                    {...register("docNameKh")}
-                                />
-                            </Grid>
+    return (
+        <Dialog
+            maxWidth="sm"
+            TransitionComponent={TransitionModal}
+            open={open}
+            component="form"
+            onSubmit={handleSubmit(submit, onError)}
+            onClose={onCloseModal}
+        >
+            <DialogTitle>
+                <TitleComponent title={docEntry?.id ? "Edit Document" : "Add New Document"} />
+                {onCloseModal ? (
+                    <IconButton
+                        aria-label="close"
+                        onClick={onCloseModal}
+                        sx={{
+                            position: "absolute",
+                            right: 8,
+                            top: 8,
+                            color: (theme) => theme.palette.grey[500],
+                        }}
+                    >
+                        <Close />
+                    </IconButton>
+                ) : null}
+            </DialogTitle>
+            <DialogContent dividers>
+                <Box sx={{ width: "100%" }}>
+                    <Grid
+                        container
+                        rowSpacing={2}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                        <Grid item xs={12}>
+                            <TextField
+                                label={<LabelRequire label="Name (EN)" />}
+                                sx={{ width: "100%" }}
+                                {...register("docNameEn")}
+                                size="small"
+                                error={errors?.docNameEn ? true : false}
+                                helperText={errors?.docNameEn?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label={"Name (KH)"}
+                                sx={{ width: "100%" }}
+                                size="small"
+                                {...register("docNameKh")}
+                            />
+                        </Grid>
 
                         <Grid item xs={12}>
                             <TextField
@@ -392,7 +384,8 @@ const UpsertDocEntryForm = (props) => {
                                                         px: 3,
                                                         pt: 2.5,
                                                         pb: showList ? 0 : 2.5,
-                                                        "&:hover, &:focus": { "& svg": { opacity: showList ? 1 : 0 } }
+                                                        // "&:hover, &:focus": { "& svg": { opacity: showList ? 1 : 0 } },
+                                                        "& svg": { opacity: 1 }
                                                     }}
                                                 >
                                                     <ListItemText
@@ -458,31 +451,30 @@ const UpsertDocEntryForm = (props) => {
                             </Grid>
                             : ""
                         }
+                        <Grid item xs={12}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={['DatePicker']}>
+                                    <DatePicker
+                                        required
+                                        label={<LabelRequire label="Issue Date" />}
+                                        sx={{ width: "100%" }}
+                                        InputLabelProps={shrinkOpt}
+                                        views={['year', 'month', 'day']}
+                                        format="LL"
+                                        value={selectedDate}
+                                        onChange={handleDateChange}
+                                        slotProps={{
+                                            textField: {
+                                                size: "small",
+                                                error: selectedDate === null && errors?.issuedDate ? true : false,
+                                                helperText: errors?.issuedDate ? "issue date is required!" : ""
+                                            },
+                                        }}
+                                    />
 
-                            <Grid item xs={12}>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DemoContainer components={['DatePicker']}>
-                                        <DatePicker
-                                            required
-                                            label={<LabelRequire label="Issue Date" />}
-                                            sx={{ width: "100%" }}
-                                            InputLabelProps={shrinkOpt}
-                                            views={['year', 'month', 'day']}
-                                            format="LL"
-                                            value={selectedDate}
-                                            onChange={handleDateChange}
-                                            slotProps={{
-                                                textField: {
-                                                    size: "small",
-                                                    error: selectedDate === null && errors?.issuedDate ? true : false,
-                                                    helperText: errors?.issuedDate ? "issue date is required!" : ""
-                                                },
-                                            }}
-                                        />
-
-                                    </DemoContainer>
-                                </LocalizationProvider>
-                            </Grid>
+                                </DemoContainer>
+                            </LocalizationProvider>
+                        </Grid>
 
                         <Grid item xs={12}>
                             <SelectComponent
@@ -513,7 +505,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="sourceDocId"
-                                label={<LabelRequire label="Source Department" />}
+                                label={<LabelRequire label="Source Departments" />}
                                 size="small"
                                 callToApi={API_URL.lookup.department.get}
                                 bindField={"nameEn"}
@@ -527,7 +519,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="docTypeId"
-                                label={<LabelRequire label="Type Of Document" />}
+                                label={<LabelRequire label="Types Of Document" />}
                                 size="small"
                                 callToApi={API_URL.lookup.listGDoc.get}
                                 bindField={"nameEn"}
@@ -541,7 +533,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="mainCateId"
-                                label={<LabelRequire label="Main Category" />}
+                                label={<LabelRequire label="Main Categories" />}
                                 size="small"
                                 callToApi={API_URL.lookup.listMCate.get}
                                 bindField={"nameEn"}
@@ -555,7 +547,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="subMainCateId"
-                                label={"Sub-Category"}
+                                label={"Sub Categories"}
                                 size="small"
                                 callToApi={API_URL.lookup.subCate.get}
                                 bindField={"nameEn"}
@@ -569,7 +561,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="childSubMainCateId"
-                                label={"Child Sub-Category"}
+                                label={"Sub Sub Categories"}
                                 size="small"
                                 callToApi={API_URL.lookup.childSubCate.get}
                                 bindField={"nameEn"}
@@ -582,7 +574,7 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={<LabelRequire label="Number Of Page" />}
+                                label={<LabelRequire label="Number of Page" />}
                                 sx={{ width: "100%" }}
                                 {...register("numOfPage")}
                                 size="small"
@@ -592,7 +584,7 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={<LabelRequire label="Chrono No." />}
+                                label={<LabelRequire label="Arch File Number" />}
                                 sx={{ width: "100%" }}
                                 {...register("chronoNum")}
                                 size="small"
@@ -611,21 +603,21 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={"Approved By"}
+                                label={"Approved by"}
                                 sx={{ width: "100%" }}
                                 size="small"
                                 {...register("approvedBy")}
                             />
                         </Grid>
 
-                            <Grid item xs={12}>
-                                <TextField
-                                    label={"Remark"}
-                                    sx={{ width: "100%" }}
-                                    size="small"
-                                    {...register("remark")}
-                                />
-                            </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label={"Remark"}
+                                sx={{ width: "100%" }}
+                                size="small"
+                                {...register("remark")}
+                            />
+                        </Grid>
 
                     </Grid>
                 </Box>

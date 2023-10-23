@@ -149,7 +149,7 @@ const UpsertCateFormModel = (props) => {
                             <Grid item xs={12}>
                                 <AsyncAutoComplete
                                     id="category-id"
-                                    label="Sub Category"
+                                    label="Sub Categories"
                                     size="small"
                                     callToApi={API_URL.lookup.subCate.get}
                                     bindField={"nameEn"}
@@ -167,7 +167,7 @@ const UpsertCateFormModel = (props) => {
                                 <TextField
                                     type="text"
                                     id="en-name"
-                                    label={<LabelRequire label="Name(En)" />}
+                                    label={<LabelRequire label="Name (EN)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -182,7 +182,7 @@ const UpsertCateFormModel = (props) => {
                                 <TextField
                                     type="text"
                                     id="kh-name"
-                                    label={<LabelRequire label="Name (Kh)" />}
+                                    label={<LabelRequire label="Name (KH)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"

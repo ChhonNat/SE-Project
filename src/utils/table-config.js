@@ -15,15 +15,15 @@ const tblDocEntry = [
   },
   {
     id: "documentNameEn",
-    label: "Name(En)",
+    label: "Name (EN)",
   },
   {
     id: "documentNameKh",
-    label: "Name(Kh)",
+    label: "Name (KH)",
   },
   {
     id: "deptName",
-    label: "Department",
+    label: "Departments",
   },
   {
     id: "campusName",
@@ -35,7 +35,7 @@ const tblDocEntry = [
   },
   {
     id: "numOfPage",
-    label: "Number of page",
+    label: "Number of Page",
   },
   // {
   //   id: "approvedBy",
@@ -43,7 +43,7 @@ const tblDocEntry = [
   // },
   {
     id: "typeOfDocName",
-    label: "Type of Document",
+    label: "Types of Document",
   },
   {
     id: "mainCateName",
@@ -51,15 +51,15 @@ const tblDocEntry = [
   },
   {
     id: "subCateName",
-    label: "Sub Category",
+    label: "Sub Categories",
   },
   {
     id: "subSubCateName",
-    label: "Sub-Sub-Category",
+    label: "Sub Sub Categories",
   },
   {
     id: "chronoNum",
-    label: "Chrono Number",
+    label: "Arch File Number",
   },
   {
     id: "issuedDate",
@@ -81,13 +81,13 @@ const tblDocEntry = [
   // },
   {
     id: "createdAt",
-    label: "Created At",
+    label: "Created on",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
   {
     id: "createdBy",
-    label: "Create By",
+    label: "Created by",
   },
   // {
   //   id: "remark",
@@ -106,11 +106,11 @@ const tblGroupDocument = [
   },
   {
     id: "nameEn",
-    label: "Name(En)"
+    label: "Name (EN)"
   },
   {
     id: "nameKh",
-    label: "Name(Kh)"
+    label: "Name (KH)"
   },
   {
     id: "acronym",
@@ -128,13 +128,13 @@ const tblGroupDocument = [
   },
   {
     id: "createdAt",
-    label: "Created At",
+    label: "Created on",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
   {
     id: "createdBy",
-    label: "Created By",
+    label: "Created by",
   },
   {
     id: "action",
@@ -149,15 +149,15 @@ const tblMainCategory = [
   },
   {
     id: "nameEn",
-    label: "Name(En)"
+    label: "Name (EN)"
   },
   {
     id: "nameKh",
-    label: "Name(Kh)"
+    label: "Name (KH)"
   },
   {
     id: "groupDocumentName",
-    label: "Type Of Document"
+    label: "Types of Document",
   },
   {
     id: "ordering",
@@ -171,13 +171,13 @@ const tblMainCategory = [
   },
   {
     id: "createdAt",
-    label: "Created At",
+    label: "Created on",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
   {
     id: "createdBy",
-    label: "Created By",
+    label: "Created by",
   },
   {
     id: "action",
@@ -192,11 +192,11 @@ const tbSubCategory = [
   },
   {
     id: "nameEn",
-    label: "Name(En)"
+    label: "Name (EN)"
   },
   {
     id: "nameKh",
-    label: "Name(Kh)"
+    label: "Name (KH)"
   },
   {
     id: "mainCateName",
@@ -214,13 +214,13 @@ const tbSubCategory = [
   },
   {
     id: "createdAt",
-    label: "Created At",
+    label: "Created on",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
   {
     id: "createdBy",
-    label: "Created By",
+    label: "Created by",
   },
   {
     id: "action",
@@ -234,15 +234,15 @@ const tbSubSubCategory = [
   },
   {
     id: "nameEn",
-    label: "Name(En)"
+    label: "Name (EN)"
   },
   {
     id: "nameKh",
-    label: "Name(Kh)"
+    label: "Name (KH)"
   },
   {
     id: "subCateName",
-    label: "Sub Category"
+    label: "Sub Categories"
   },
   {
     id: "ordering",
@@ -256,13 +256,13 @@ const tbSubSubCategory = [
   },
   {
     id: "createdAt",
-    label: "Created At",
+    label: "Created on",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
   {
     id: "createdBy",
-    label: "Created By",
+    label: "Created by",
   },
   {
     id: "action",

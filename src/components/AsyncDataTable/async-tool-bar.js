@@ -24,6 +24,9 @@ import {
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from "@mui/styles";
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import AsyncAutoComplete from '../AutoComplete/auto-complete';
@@ -75,7 +78,7 @@ const AsynTableToolbar = (props) => {
   const handleClick = () => {
     setOpenCollape(!openCollapse)
   };
-
+  
   return (
     <Toolbar
       sx={{
@@ -227,6 +230,28 @@ const AsynTableToolbar = (props) => {
                                       className: classTextField.field
                                     }}
                                   />
+                                }
+                                {
+                                  filter?.type && ["fullDate"].includes(filter?.type) &&
+                                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DatePicker
+                                      required
+                                      label={filter?.label ? filter?.label : "Full Date"}
+                                      sx={{ width: "100%", pt: 0, zIndex: "10" }}
+                                      InputLabelProps={shrinkOpt}
+                                      views={['year', 'month', 'day']}
+                                      format={filter?.fullFormat ? "LL" : null}
+                                      onChange={(e) => handleFilterEvent(filter?.filterName, dayjs(e).format('YYYY/MM/DD'))}
+                                      value={filter?.value}
+                                      slotProps={{
+                                        textField: {
+                                          size: filter?.size ?? "small",
+                                          error: false,
+                                          // helperText: errors?.issuedDate ? "issue date is required!" : ""
+                                        },
+                                      }}
+                                    />
+                                  </LocalizationProvider>
                                 }
                                 {
                                   filter?.type && ["text"].includes(filter?.type) &&
