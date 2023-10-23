@@ -176,7 +176,7 @@ const UpsertPositionForm = (props) => {
                 <TextField
                   type="text"
                   id="name"
-                  label={<LabelRequire label="Name" />}
+                  label={<LabelRequire label="Name(En)" />}
                   variant="outlined"
                   fullWidth
                   size="small"

@@ -321,7 +321,7 @@ const UpsertDocEntryForm = (props) => {
                         >
                             <Grid item xs={12}>
                                 <TextField
-                                    label={<LabelRequire label="Name" />}
+                                    label={<LabelRequire label="Name(En)" />}
                                     sx={{ width: "100%" }}
                                     {...register("docNameEn")}
                                     size="small"
