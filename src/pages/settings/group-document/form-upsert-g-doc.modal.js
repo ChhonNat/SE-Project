@@ -141,7 +141,7 @@ const UpsertGDocFormModal = (props) => {
                                 <TextField
                                     type="text"
                                     id="en-name"
-                                    label={<LabelRequire label="Name" />}
+                                    label={<LabelRequire label="Name (EN)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"
@@ -155,7 +155,7 @@ const UpsertGDocFormModal = (props) => {
                                 <TextField
                                     type="text"
                                     id="kh-name"
-                                    label={<LabelRequire label="Name(Kh)" />}
+                                    label={<LabelRequire label="Name (KH)" />}
                                     variant="outlined"
                                     fullWidth
                                     size="small"

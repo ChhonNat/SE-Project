@@ -124,7 +124,7 @@ export const PRIVATE_ROUTES = [
 
             // Main business
             {
-                name: "Type of Documents",
+                name: "Types of Document",
                 path: "group-document",
                 component: <Settings.GroupDocument.HomeComponent />,
                 icon: <BusinessIcon style={{ color: appConfig.systemColor }} />,
@@ -140,7 +140,7 @@ export const PRIVATE_ROUTES = [
             },
             // Sub categories
             {
-                name: "Sub-Categories",
+                name: "Sub Categories",
                 path: "sub-categories",
                 component: <Settings.SubCategories.HomeComponent />,
                 icon: <SubCategoryIcon style={{ color: appConfig.systemColor }} />,
@@ -148,7 +148,7 @@ export const PRIVATE_ROUTES = [
             },
             // child-Sub categories
             {
-                name: "Sub-Sub-Categories",
+                name: "Sub Sub Categories",
                 path: "child-sub-categories",
                 component: <Settings.SubSubCategories.HomeComponent />,
                 icon: <SubSubCategoryIcon style={{ color: appConfig.systemColor }} />,

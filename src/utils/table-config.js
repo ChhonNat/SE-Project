@@ -6,7 +6,7 @@ import { STATUS } from "../constants/status";
 const tblDocEntry = [
   {
     id: "index",
-    label: "No.",
+    label: "Nº",
   },
   {
     id: "documentCode",
@@ -15,15 +15,15 @@ const tblDocEntry = [
   },
   {
     id: "documentNameEn",
-    label: "Name",
+    label: "Name (EN)",
   },
   {
     id: "documentNameKh",
-    label: "Name(Kh)",
+    label: "Name (KH)",
   },
   {
     id: "deptName",
-    label: "Department",
+    label: "Departments",
   },
   {
     id: "campusName",
@@ -35,7 +35,7 @@ const tblDocEntry = [
   },
   {
     id: "numOfPage",
-    label: "Number of page",
+    label: "Number of Page",
   },
   // {
   //   id: "approvedBy",
@@ -43,7 +43,7 @@ const tblDocEntry = [
   // },
   {
     id: "typeOfDocName",
-    label: "Type of Document",
+    label: "Types of Document",
   },
   {
     id: "mainCateName",
@@ -51,15 +51,15 @@ const tblDocEntry = [
   },
   {
     id: "subCateName",
-    label: "Sub Category",
+    label: "Sub Categories",
   },
   {
     id: "subSubCateName",
-    label: "Child Sub-Category",
+    label: "Sub Sub Categories",
   },
   {
     id: "chronoNum",
-    label: "Chrono Number",
+    label: "Arch File Number",
   },
   {
     id: "issuedDate",
@@ -81,13 +81,13 @@ const tblDocEntry = [
   // },
   {
     id: "createdAt",
-    label: "Created At",
+    label: "Created on",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
   {
     id: "createdBy",
-    label: "Create By",
+    label: "Created by",
   },
   // {
   //   id: "remark",
@@ -102,15 +102,15 @@ const tblDocEntry = [
 const tblGroupDocument = [
   {
     id: "index",
-    label: "No.",
+    label: "Nº",
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "Name (EN)"
   },
   {
     id: "nameKh",
-    label: "Name(Kh)"
+    label: "Name (KH)"
   },
   {
     id: "acronym",
@@ -128,13 +128,13 @@ const tblGroupDocument = [
   },
   {
     id: "createdAt",
-    label: "Created At",
+    label: "Created on",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
   {
     id: "createdBy",
-    label: "Created By",
+    label: "Created by",
   },
   {
     id: "action",
@@ -145,19 +145,19 @@ const tblGroupDocument = [
 const tblMainCategory = [
   {
     id: "index",
-    label: "No.",
+    label: "Nº",
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "Name (EN)"
   },
   {
     id: "nameKh",
-    label: "Name(Kh)"
+    label: "Name (KH)"
   },
   {
     id: "groupDocumentName",
-    label: "Group Document"
+    label: "Types of Document",
   },
   {
     id: "ordering",
@@ -171,13 +171,13 @@ const tblMainCategory = [
   },
   {
     id: "createdAt",
-    label: "Created At",
+    label: "Created on",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
   {
     id: "createdBy",
-    label: "Created By",
+    label: "Created by",
   },
   {
     id: "action",
@@ -188,15 +188,15 @@ const tblMainCategory = [
 const tbSubCategory = [
   {
     id: "index",
-    label: "No.",
+    label: "Nº",
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "Name (EN)"
   },
   {
     id: "nameKh",
-    label: "Name(Kh)"
+    label: "Name (KH)"
   },
   {
     id: "mainCateName",
@@ -214,13 +214,13 @@ const tbSubCategory = [
   },
   {
     id: "createdAt",
-    label: "Created At",
+    label: "Created on",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
   {
     id: "createdBy",
-    label: "Created By",
+    label: "Created by",
   },
   {
     id: "action",
@@ -230,19 +230,19 @@ const tbSubCategory = [
 const tbSubSubCategory = [
   {
     id: "index",
-    label: "No.",
+    label: "Nº",
   },
   {
     id: "nameEn",
-    label: "Name"
+    label: "Name (EN)"
   },
   {
     id: "nameKh",
-    label: "Name(Kh)"
+    label: "Name (KH)"
   },
   {
     id: "subCateName",
-    label: "Sub Category"
+    label: "Sub Categories"
   },
   {
     id: "ordering",
@@ -256,13 +256,13 @@ const tbSubSubCategory = [
   },
   {
     id: "createdAt",
-    label: "Created At",
+    label: "Created on",
     type: "date",
     dateFormat: "MMM DD, YYYY hh:mm:ss A",
   },
   {
     id: "createdBy",
-    label: "Created By",
+    label: "Created by",
   },
   {
     id: "action",
@@ -357,7 +357,7 @@ const tblInterview = [
   },
   {
     id: "candidate",
-    label: "Name",
+    label: "Name(En)",
     obj: { name: "fullName" },
   },
   {
@@ -513,7 +513,7 @@ const tblHire = [
   },
   {
     id: "candidate",
-    label: "Name",
+    label: "Name(En)",
     obj: { name: "fullName" },
   },
   {
@@ -568,7 +568,7 @@ const tblPosition = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -616,7 +616,7 @@ const tblPositionLevel = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -702,7 +702,7 @@ const tblDepartment = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -747,7 +747,7 @@ const tblHeadDepartment = [
   },
   {
     id: "fullName",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "phoneNumber",
@@ -802,7 +802,7 @@ const tblCommittee = [
   },
   {
     id: "fullName",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "phoneNumber",
@@ -853,7 +853,7 @@ const tblMainBusiness = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -875,7 +875,7 @@ const tblBusinessUnit = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -913,7 +913,7 @@ const tblLocation = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",
@@ -947,7 +947,7 @@ const tblCampus = [
   },
   {
     id: "nameEn",
-    label: "Name",
+    label: "Name(En)",
   },
   {
     id: "nameKh",

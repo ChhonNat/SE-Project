@@ -178,3 +178,12 @@ html,body,#root,h1,h2,h3,h4,h5,h6{
 .swal2-container .swal2-actions {
   margin-top: 0.8em !important;
 }
+
+.swal2-container {
+  display: -webkit-box;
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  z-index: 300000 !important;
+}

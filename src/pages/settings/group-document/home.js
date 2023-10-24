@@ -85,7 +85,7 @@ const HomeGroupDocument = () => {
       <AsyncDatatable
         asyncURL={API_URL.groupDocument.get}
         headers={TABLE_CONFIG.tblGroupDocument}
-        bannerText="All Type of Documents"
+        bannerText="All Types of Document"
         searchPlaceHolder="Search"
         ordinal="asc"
         setOrdinalBy="id"

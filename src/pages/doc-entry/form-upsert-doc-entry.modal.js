@@ -77,6 +77,7 @@ const UpsertDocEntryForm = (props) => {
     );
 
     // handle checkbox
+    // const [isSecret, setIsSecret] = useState(false);
     const handleChange = (e) => {
         setValue('isSecret', e.target.checked ? 1 : 0);
     };
@@ -136,7 +137,6 @@ const UpsertDocEntryForm = (props) => {
         clearErrors();
 
         if (docEntry?.id && open) {
-
             getAllFile(docEntry?.id);
             Object.keys(docEntry).forEach((key) => {
                 console.log("Key", key+ " = ",docEntry[key])
@@ -144,6 +144,8 @@ const UpsertDocEntryForm = (props) => {
                     const issueDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
                     setSelectedDate(dayjs(issueDate));
                     setValue(key, issueDate);
+                } else if (key === formatKeys[1]) {
+                    setValue("issueNum", String(docEntry[key]));
                 } else if (key === formatKeys[3]) {
                     setValue("docCode", docEntry[key]);
                 } else if (key === formatKeys[4]) {
@@ -161,8 +163,8 @@ const UpsertDocEntryForm = (props) => {
 
     const onError = (data) => {
         console.log("Error data submit: ", data);
-        if (!watchDocEntry?.files?.length)
-            setError("files", { message: "File is required!" });
+        // if (!watchDocEntry?.files?.length)
+        //     setError("files", { message: "File is required!" });
     };
 
     const submit = async (data) => {
@@ -312,7 +314,7 @@ const UpsertDocEntryForm = (props) => {
                     >
                         <Grid item xs={12}>
                             <TextField
-                                label={<LabelRequire label="Name" />}
+                                label={<LabelRequire label="Name (EN)" />}
                                 sx={{ width: "100%" }}
                                 {...register("docNameEn")}
                                 size="small"
@@ -322,7 +324,7 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={"Name(Kh)"}
+                                label={"Name (KH)"}
                                 sx={{ width: "100%" }}
                                 size="small"
                                 {...register("docNameKh")}
@@ -383,7 +385,8 @@ const UpsertDocEntryForm = (props) => {
                                                         px: 3,
                                                         pt: 2.5,
                                                         pb: showList ? 0 : 2.5,
-                                                        "&:hover, &:focus": { "& svg": { opacity: showList ? 1 : 0 } }
+                                                        // "&:hover, &:focus": { "& svg": { opacity: showList ? 1 : 0 } },
+                                                        "& svg": { opacity: 1 }
                                                     }}
                                                 >
                                                     <ListItemText
@@ -449,7 +452,6 @@ const UpsertDocEntryForm = (props) => {
                             </Grid>
                             : ""
                         }
-
                         <Grid item xs={12}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DemoContainer components={['DatePicker']}>
@@ -483,7 +485,7 @@ const UpsertDocEntryForm = (props) => {
                                 size={"small"}
                                 customDatas={years}
                                 value={watchDocEntry?.year || ""}
-                                handleOnChange={(e) => setValue("year", e?.target?.value)}
+                                handleOnChange={(e) => setValue("year", String(e?.target?.value))}
                                 err={errors?.year?.message}
                             />
                         </Grid>
@@ -504,7 +506,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="sourceDocId"
-                                label={<LabelRequire label="Source Department" />}
+                                label={<LabelRequire label="Source Departments" />}
                                 size="small"
                                 callToApi={API_URL.lookup.department.get}
                                 bindField={"nameEn"}
@@ -518,7 +520,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="docTypeId"
-                                label={<LabelRequire label="Type Of Document" />}
+                                label={<LabelRequire label="Types Of Document" />}
                                 size="small"
                                 callToApi={API_URL.lookup.listGDoc.get}
                                 bindField={"nameEn"}
@@ -532,7 +534,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="mainCateId"
-                                label={<LabelRequire label="Main Category" />}
+                                label={<LabelRequire label="Main Categories" />}
                                 size="small"
                                 callToApi={API_URL.lookup.listMCate.get}
                                 bindField={"nameEn"}
@@ -546,7 +548,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="subMainCateId"
-                                label={"Sub-Category"}
+                                label={"Sub Categories"}
                                 size="small"
                                 callToApi={API_URL.lookup.subCate.get}
                                 bindField={"nameEn"}
@@ -560,7 +562,7 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="childSubMainCateId"
-                                label={"Child Sub-Category"}
+                                label={"Sub Sub Categories"}
                                 size="small"
                                 callToApi={API_URL.lookup.childSubCate.get}
                                 bindField={"nameEn"}
@@ -573,7 +575,7 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={<LabelRequire label="Number Of Page" />}
+                                label={<LabelRequire label="Number of Page" />}
                                 sx={{ width: "100%" }}
                                 {...register("numOfPage")}
                                 size="small"
@@ -583,7 +585,7 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={<LabelRequire label="Chrono No." />}
+                                label={<LabelRequire label="Arch File Number" />}
                                 sx={{ width: "100%" }}
                                 {...register("chronoNum")}
                                 size="small"
@@ -602,7 +604,7 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={"Approved By"}
+                                label={"Approved by"}
                                 sx={{ width: "100%" }}
                                 size="small"
                                 {...register("approvedBy")}
