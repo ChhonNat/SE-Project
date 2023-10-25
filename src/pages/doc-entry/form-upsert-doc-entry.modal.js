@@ -76,8 +76,12 @@ const UpsertDocEntryForm = (props) => {
         (_, index) => currentYear - index
     );
 
+    // handle merge api autocomplete
+    const handleApi = (id, key) => {
+        return  "?"+key+"="+id;
+    };
+
     // handle checkbox
-    // const [isSecret, setIsSecret] = useState(false);
     const handleChange = (e) => {
         setValue('isSecret', e.target.checked ? 1 : 0);
     };
@@ -536,12 +540,12 @@ const UpsertDocEntryForm = (props) => {
                                 id="mainCateId"
                                 label={"Main Categories"}
                                 size="small"
-                                callToApi={watchDocEntry.typeOfDocId ? API_URL.lookup.listMCate.get+"?groupDocId="+watchDocEntry?.typeOfDocId : ''}
+                                callToApi={watchDocEntry.typeOfDocId ? API_URL.lookup.listMCate.get+handleApi(watchDocEntry?.typeOfDocId, "groupDocId") : null}
                                 bindField={"nameEn"}
-                                // handleOnChange={(e, value) => {
-                                //     setValue("mainCateId", value?.id);
-                                // }}
-                                // value={watchDocEntry?.mainCateId || null}
+                                handleOnChange={(e, value) => {
+                                    setValue("mainCateId", value?.id);
+                                }}
+                                value={watchDocEntry?.mainCateId || null}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -549,7 +553,7 @@ const UpsertDocEntryForm = (props) => {
                                 id="subMainCateId"
                                 label={"Sub Categories"}
                                 size="small"
-                                callToApi={API_URL.lookup.subCate.get}
+                                callToApi={watchDocEntry.mainCateId ? API_URL.lookup.subCate.get+handleApi(watchDocEntry?.mainCateId, "mainCateId") : null}
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("subCateId", value?.id);
@@ -563,7 +567,7 @@ const UpsertDocEntryForm = (props) => {
                                 id="childSubMainCateId"
                                 label={"Sub Sub Categories"}
                                 size="small"
-                                callToApi={API_URL.lookup.childSubCate.get}
+                                callToApi={watchDocEntry.subCateId ? API_URL.lookup.childSubCate.get+handleApi(watchDocEntry?.mainCateId, "subCateId") : null}
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("subSubCateId", value?.id);

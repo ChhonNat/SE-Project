@@ -138,15 +138,15 @@ const AsyncAutoComplete = (props) => {
               ? options
               : []
             : customDatas?.length
-            ? customDatas
-            : []
+              ? customDatas
+              : []
         }
         isOptionEqualToValue={(option, value) =>
           checkOptionEqToVal(option, value)
         }
         getOptionLabel={(option) => bindField ? option[bindField] : option}
         onChange={handleOnChange}
-        value={selectValue}
+        value={selectValue && Object.keys(selectValue)?.length ? selectValue : null}
         disabled={disabled}
         renderOption={(props, option) => (
           <Box component="li" {...props} key={option?.id ? option.id : option}>
