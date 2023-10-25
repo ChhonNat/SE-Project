@@ -1,14 +1,13 @@
 import React, { Suspense, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Layout/navbar";
-import Sidebar from "./components/Layout/sidebar";
 import MainPageComponent from "./components/Layout/page-wrapper";
-
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { isLogin } from "./store/authentication/authenticationService";
+import Sidebar from "./components/Layout/sidebar";
 import { PRIVATE_ROUTES } from "./routers/private_routes";
 import { PUBLIC_ROUTES } from "./routers/public_routes";
+import { isLogin } from "./store/authentication/authenticationService";
 
 const detectedRoute = ["/login"];
 
@@ -116,7 +115,7 @@ const App = () => {
           <Routes>
             {PUBLIC_ROUTES &&
               PUBLIC_ROUTES?.length &&
-              PUBLIC_ROUTES.filter((route) => !route?.isHide) .map((route, index) => (
+              PUBLIC_ROUTES.filter((route) => !route?.isHide).map((route, index) => (
                 <React.Fragment key={index}>
                   <Route path={route?.path} element={route?.component} />
                 </React.Fragment>

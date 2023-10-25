@@ -534,15 +534,14 @@ const UpsertDocEntryForm = (props) => {
                         <Grid item xs={12}>
                             <AsyncAutoComplete
                                 id="mainCateId"
-                                label={<LabelRequire label="Main Categories" />}
+                                label={"Main Categories"}
                                 size="small"
-                                callToApi={API_URL.lookup.listMCate.get}
+                                callToApi={watchDocEntry.typeOfDocId ? API_URL.lookup.listMCate.get+"?groupDocId="+watchDocEntry?.typeOfDocId : ''}
                                 bindField={"nameEn"}
-                                handleOnChange={(e, value) => {
-                                    setValue("mainCateId", value?.id);
-                                }}
-                                value={watchDocEntry?.mainCateId || null}
-                                err={errors?.mainCateId?.message}
+                                // handleOnChange={(e, value) => {
+                                //     setValue("mainCateId", value?.id);
+                                // }}
+                                // value={watchDocEntry?.mainCateId || null}
                             />
                         </Grid>
                         <Grid item xs={12}>

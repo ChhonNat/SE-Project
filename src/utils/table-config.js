@@ -47,7 +47,7 @@ const tblDocEntry = [
   },
   {
     id: "mainCateName",
-    label: "Main Category",
+    label: "Main Categories",
   },
   {
     id: "subCateName",
