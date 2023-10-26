@@ -70,7 +70,7 @@ const UpsertDocEntryForm = (props) => {
 
 
     // require file
-    const [isFile, setIsFile]= useState(false);
+    const [isFile, setIsFile] = useState(false);
 
     // handle select year
     const currentYear = new Date().getFullYear();
@@ -82,7 +82,7 @@ const UpsertDocEntryForm = (props) => {
 
     // handle merge api autocomplete
     const handleApi = (id, key) => {
-        return  "?"+key+"="+id;
+        return "?" + key + "=" + id;
     };
 
     // handle checkbox
@@ -159,8 +159,8 @@ const UpsertDocEntryForm = (props) => {
                     setValue("docNameEn", docEntry[key]);
                 } else if (key === formatKeys[5]) {
                     setValue("docNameKh", docEntry[key]);
-                // } else if (key === "year") {
-                //     setValue(key, parseInt(docEntry[key]));
+                    // } else if (key === "year") {
+                    //     setValue(key, parseInt(docEntry[key]));
                 } else {
                     setValue(key, docEntry[key]);
                 }
@@ -168,11 +168,18 @@ const UpsertDocEntryForm = (props) => {
         };
     }, [open]);
 
+    // handle submit new
+    let isNewSubmit = "";
+    const handleSubmitNew = (type) => {
+        isNewSubmit = type;
+    }
+
     const onError = (data) => {
         console.log("Error data submit: ", data);
-        if (!watchDocEntry?.files?.length && !docEntry.id)
+        if (!watchDocEntry?.files?.length && !docEntry.id) {
             setIsFile(true);
             setError("files", { message: "File is required!" });
+        }
     };
 
     const submit = async (data) => {
@@ -274,7 +281,12 @@ const UpsertDocEntryForm = (props) => {
             });
 
             handleEventSucceed();
-            handleCloseModal();
+            if (isNewSubmit.toLowerCase() !== "newSubmit".toLowerCase()) {
+                handleCloseModal();
+            } else {
+                setSelectedDate(null);
+                reset();
+            }
 
         } catch (error) {
             console.log(error);
@@ -361,7 +373,7 @@ const UpsertDocEntryForm = (props) => {
                                 {...register("files")}
                                 // onChange={(e) => setValue("files", [...e?.target?.files])}
                                 required={docEntry.id ? false : isFile}
-                                error={isFile && !watchDocEntry?.files?.length? true : false}
+                                error={isFile && !watchDocEntry?.files?.length ? true : false}
                                 helperText={errors?.files?.message}
                             />
                         </Grid>
@@ -547,7 +559,7 @@ const UpsertDocEntryForm = (props) => {
                                 id="mainCateId"
                                 label={"Main Categories"}
                                 size="small"
-                                callToApi={watchDocEntry.typeOfDocId ? API_URL.lookup.listMCate.get+handleApi(watchDocEntry?.typeOfDocId, "groupDocId") : null}
+                                callToApi={watchDocEntry.typeOfDocId ? API_URL.lookup.listMCate.get + handleApi(watchDocEntry?.typeOfDocId, "groupDocId") : null}
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("mainCateId", value?.id);
@@ -563,7 +575,7 @@ const UpsertDocEntryForm = (props) => {
                                 id="subMainCateId"
                                 label={"Sub Categories"}
                                 size="small"
-                                callToApi={watchDocEntry.mainCateId ? API_URL.lookup.subCate.get+handleApi(watchDocEntry?.mainCateId, "mainCateId") : null}
+                                callToApi={watchDocEntry.mainCateId ? API_URL.lookup.subCate.get + handleApi(watchDocEntry?.mainCateId, "mainCateId") : null}
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("subCateId", value?.id);
@@ -578,7 +590,7 @@ const UpsertDocEntryForm = (props) => {
                                 id="childSubMainCateId"
                                 label={"Sub Sub Categories"}
                                 size="small"
-                                callToApi={watchDocEntry.subCateId ? API_URL.lookup.childSubCate.get+handleApi(watchDocEntry?.mainCateId, "subCateId") : null}
+                                callToApi={watchDocEntry.subCateId ? API_URL.lookup.childSubCate.get + handleApi(watchDocEntry?.mainCateId, "subCateId") : null}
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("subSubCateId", value?.id);
@@ -603,8 +615,8 @@ const UpsertDocEntryForm = (props) => {
                                 sx={{ width: "100%" }}
                                 {...register("chronoNum")}
                                 size="small"
-                                // error={errors?.chronoNum ? true : false}
-                                // helperText={errors?.chronoNum?.message}
+                            // error={errors?.chronoNum ? true : false}
+                            // helperText={errors?.chronoNum?.message}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -640,10 +652,13 @@ const UpsertDocEntryForm = (props) => {
             <DialogActions>
                 <FooterComponent
                     saveButtonType="submit"
+                    saveNewButtonType={!docEntry.id && "newSubmit"}
                     saveButtonLabel={docEntry?.id ? "Update" : "Save"}
                     saveNewButtonLabel={docEntry?.id ? "" : "Save & New"}
-                    actions={{ cancel: true, submit: true, submitNew: docEntry.id ? false : true }}
+                    actions={{ cancel: true, submit: true, submitNew: docEntry?.id ? false : true }}
                     handleCancel={handleCloseModal}
+                    // handleSaveNew = {handleSubmit(submit, onError)}
+                    handleSaveNew={handleSubmitNew}
                 />
             </DialogActions>
 

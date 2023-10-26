@@ -98,7 +98,7 @@ const FooterComponent = (props) => {
                     <PrimaryButton
                         variant="outlined"
                         type={saveNewButtonType || 'button'}
-                        onClick={handleSaveNew}
+                        onClick={() => handleSaveNew(saveNewButtonType)}
                     >
                         {saveNewButtonLabel ? saveNewButtonLabel : 'Save & New'}
                     </PrimaryButton>
