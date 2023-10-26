@@ -359,7 +359,7 @@ const UpsertDocEntryForm = (props) => {
                                 size="small"
                                 error={errors?.docCode? true : false}
                                 helperText={errors?.docCode?.message}
-                                inputProps={{ maxLength: 6 }}
+                                inputProps={{ maxLength: 15 }}
                             />
                         </Grid>
                         <Grid item xs={8}>
