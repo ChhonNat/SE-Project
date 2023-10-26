@@ -17,7 +17,7 @@ const Create = object({
     subSubCateId: number().default(0).nullable(),
     files: any().default(null),
     isSecret: number().optional(),
-    chronoNum: string().min(1, { message: "chrono No is required!" }),
+    chronoNum: string().optional().nullable(),
     remark: string().optional().nullable()
 });
 
@@ -27,7 +27,7 @@ const Update = object({
     docNameKh: string().optional().nullable(),
     deptId: number().min(1, { message: "source of document is required!" }),
     campusId: number().min(1, { message: "campus is required!" }),
-    year: number().min(1, { message: "year is required!" }),
+    year: string().min(1, { message: "year is required!" }),
     issuedDate: string().min(1, { message: "issued date is required!" }),
     issueNum: string().optional().default('0'),
     numOfPage: string().min(1, { message: "number of page is required!" }),
@@ -38,7 +38,7 @@ const Update = object({
     subSubCateId: number().default(0).optional().nullable(),
     files: any().default(null).nullable(),
     isSecret: number().optional(),
-    chronoNum: string().min(1, { message: "chrono No is required!" }),
+    chronoNum: string().optional().nullable(),
     remark: string().optional().nullable(),
 });
 

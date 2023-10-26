@@ -68,6 +68,10 @@ const UpsertDocEntryForm = (props) => {
     const watchDocEntry = watch();
     const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh"];
 
+
+    // require file
+    const [isFile, setIsFile]= useState(false);
+
     // handle select year
     const currentYear = new Date().getFullYear();
     const earliestYear = 1970;
@@ -143,7 +147,6 @@ const UpsertDocEntryForm = (props) => {
         if (docEntry?.id && open) {
             getAllFile(docEntry?.id);
             Object.keys(docEntry).forEach((key) => {
-                console.log("Key", key+ " = ",docEntry[key])
                 if (key === formatKeys[0]) {
                     const issueDate = ConverterService.convertUnixDateToMUI(docEntry[key]);
                     setSelectedDate(dayjs(issueDate));
@@ -156,8 +159,8 @@ const UpsertDocEntryForm = (props) => {
                     setValue("docNameEn", docEntry[key]);
                 } else if (key === formatKeys[5]) {
                     setValue("docNameKh", docEntry[key]);
-                } else if (key === "year") {
-                    setValue(key, parseInt(docEntry[key]));
+                // } else if (key === "year") {
+                //     setValue(key, parseInt(docEntry[key]));
                 } else {
                     setValue(key, docEntry[key]);
                 }
@@ -167,8 +170,9 @@ const UpsertDocEntryForm = (props) => {
 
     const onError = (data) => {
         console.log("Error data submit: ", data);
-        // if (!watchDocEntry?.files?.length)
-        //     setError("files", { message: "File is required!" });
+        if (!watchDocEntry?.files?.length && !docEntry.id)
+            setIsFile(true);
+            setError("files", { message: "File is required!" });
     };
 
     const submit = async (data) => {
@@ -237,7 +241,7 @@ const UpsertDocEntryForm = (props) => {
                             submitData.append("files", data?.files[i]);
                         }
 
-                    if (formatKeys[6] === key)
+                    if (key === "year")
                         submitData.append(key, parseInt(data[key] ? data[key] : 0));
 
                 } else {
@@ -356,7 +360,8 @@ const UpsertDocEntryForm = (props) => {
                                 InputLabelProps={shrinkOpt}
                                 {...register("files")}
                                 // onChange={(e) => setValue("files", [...e?.target?.files])}
-                                error={errors?.files ? true : false}
+                                required={docEntry.id ? false : isFile}
+                                error={isFile && !watchDocEntry?.files?.length? true : false}
                                 helperText={errors?.files?.message}
                             />
                         </Grid>
@@ -588,12 +593,12 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label={<LabelRequire label="Arch File Number" />}
+                                label={"Arch File Number"}
                                 sx={{ width: "100%" }}
                                 {...register("chronoNum")}
                                 size="small"
-                                error={errors?.chronoNum ? true : false}
-                                helperText={errors?.chronoNum?.message}
+                                // error={errors?.chronoNum ? true : false}
+                                // helperText={errors?.chronoNum?.message}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -630,7 +635,8 @@ const UpsertDocEntryForm = (props) => {
                 <FooterComponent
                     saveButtonType="submit"
                     saveButtonLabel={docEntry?.id ? "Update" : "Save"}
-                    actions={{ cancel: true, submit: true }}
+                    saveNewButtonLabel={docEntry?.id ? "" : "Save & New"}
+                    actions={{ cancel: true, submit: true, submitNew: docEntry.id ? false : true }}
                     handleCancel={handleCloseModal}
                 />
             </DialogActions>
