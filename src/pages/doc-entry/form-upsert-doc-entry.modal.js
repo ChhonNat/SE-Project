@@ -80,7 +80,7 @@ const UpsertDocEntryForm = (props) => {
         (_, index) => currentYear - index
     );
 
-    // handle merge api autocomplete
+    // handle edit merge api autocomplete
     const handleApi = (id, key) => {
         return "?" + key + "=" + id;
     };
@@ -357,8 +357,9 @@ const UpsertDocEntryForm = (props) => {
                                 sx={{ width: "100%" }}
                                 {...register("docCode")}
                                 size="small"
-                                error={errors?.docCode ? true : false}
+                                error={errors?.docCode? true : false}
                                 helperText={errors?.docCode?.message}
+                                inputProps={{ maxLength: 6 }}
                             />
                         </Grid>
                         <Grid item xs={8}>
@@ -388,7 +389,7 @@ const UpsertDocEntryForm = (props) => {
                             </FormGroup>
                         </Grid>
 
-                        {docEntry?.id && lstDocEntryFiles.length ?
+                        {docEntry?.id &&
                             <Grid item xs={12}>
                                 <Box sx={{ display: "flex", pd: 0 }}>
                                     <Paper elevation={0} sx={{ width: "100%" }}>
@@ -418,7 +419,7 @@ const UpsertDocEntryForm = (props) => {
                                                             lineHeight: "20px",
                                                             mb: "2px"
                                                         }}
-                                                        secondary={lstDocEntryFiles.map((file) => file.fileName).join(', ')}
+                                                        secondary={lstDocEntryFiles.length ? lstDocEntryFiles.map((file) => file.fileName).join(', ') : "Empty file"}
                                                         secondaryTypographyProps={{
                                                             noWrap: true,
                                                             fontSize: 12,
@@ -471,7 +472,6 @@ const UpsertDocEntryForm = (props) => {
                                     </Paper>
                                 </Box>
                             </Grid>
-                            : ""
                         }
                         <Grid item xs={12}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
