@@ -1,7 +1,7 @@
 import { any, number, object, string } from "zod";
 
 const Create = object({
-    docCode: string().min(1, { message: "numbering is required!" }),
+    docCode: string().min(1, { message: "numbering is required!" }).max(15, {message: "Length should not exceed 15 characters"}),
     docNameEn: string().min(1, { message: "document name English is required!" }),
     docNameKh: string().optional().nullable(),
     deptId: number().min(1, { message: "source of document is required!" }),
@@ -22,7 +22,7 @@ const Create = object({
 });
 
 const Update = object({
-    docCode: string().min(1, { message: "numbering is required!" }),
+    docCode: string().min(1, { message: "numbering is required!" }).max(15, {message: "Length should not exceed 15 characters"}),
     docNameEn: string().min(1, { message: "document name English is required!" }),
     docNameKh: string().optional().nullable(),
     deptId: number().min(1, { message: "source of document is required!" }),

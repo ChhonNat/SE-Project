@@ -357,7 +357,7 @@ const UpsertDocEntryForm = (props) => {
                                 sx={{ width: "100%" }}
                                 {...register("docCode")}
                                 size="small"
-                                error={errors?.docCode? true : false}
+                                error={errors?.docCode ? true : false}
                                 helperText={errors?.docCode?.message}
                                 inputProps={{ maxLength: 15 }}
                             />
