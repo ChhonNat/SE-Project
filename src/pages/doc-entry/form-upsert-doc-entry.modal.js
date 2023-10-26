@@ -481,7 +481,6 @@ const UpsertDocEntryForm = (props) => {
                                             },
                                         }}
                                     />
-
                                 </DemoContainer>
                             </LocalizationProvider>
                         </Grid>
@@ -535,6 +534,9 @@ const UpsertDocEntryForm = (props) => {
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("typeOfDocId", value?.id);
+                                    setValue("mainCateId", 0);
+                                    setValue("subCateId", 0);
+                                    setValue("subSubCateId", 0);
                                 }}
                                 value={watchDocEntry?.typeOfDocId || null}
                                 err={errors?.typeOfDocId?.message}
@@ -549,7 +551,10 @@ const UpsertDocEntryForm = (props) => {
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("mainCateId", value?.id);
+                                    setValue("subCateId", 0);
+                                    setValue("subSubCateId", 0);
                                 }}
+                                helperText="(Optional)"
                                 value={watchDocEntry?.mainCateId || null}
                             />
                         </Grid>
@@ -562,6 +567,7 @@ const UpsertDocEntryForm = (props) => {
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("subCateId", value?.id);
+                                    setValue("subSubCateId", 0);
                                 }}
                                 helperText="(Optional)"
                                 value={watchDocEntry?.subCateId || null}
