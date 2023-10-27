@@ -187,75 +187,55 @@ const UpsertDocEntryForm = (props) => {
         const submitData = new FormData();
 
         if (!docEntry?.id) {
-
             if (!data?.files?.length)
                 setError("files", { message: "File is required!" });
-
         } else {
-
             if (tmpFileRm?.length) {
                 data.fileName = tmpFileRm.map((ele) => ele.fileName).join(',');
             }
-
             if (!lstDocEntryFiles?.length && !data?.files?.length) {
+                console.log("list file: ", lstDocEntryFiles.length + " value: ", lstDocEntryFiles)
+                setIsFile(true);
                 setError("files", { message: "File is required!" });
+                return;
             }
-
             submitData.append("documentId", docEntry?.id);
         }
 
         Object.keys(data).forEach((key) => {
-
             if (!docEntry?.id) {
-
                 if (KEY_POST.docEntry.includes(key)) {
-
                     if (formatKeys.includes(key)) {
-
                         if (formatKeys[0] === key)
                             submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
-
-
                         if (formatKeys[1] === key)
                             submitData.append(key, parseInt(data[key] ? data[key] : 0));
-
                         if (formatKeys[2] === key)
                             for (let i = 0; i < data?.files.length; i++) {
                                 submitData.append("files", data?.files[i]);
                             }
-
                         if (formatKeys[6] === key)
                             submitData.append(key, parseInt(data[key] ? data[key] : 0));
-
                     } else {
-
                         submitData.append(key, data[key]);
                     }
                 }
-
             } else {
-
                 if (formatKeys.includes(key)) {
-
                     if (formatKeys[0] === key)
                         submitData.append(key, ConverterService.convertDateToAPI2(data[key]));
-
                     if (formatKeys[1] === key)
                         submitData.append(key, parseInt(data[key] ? data[key] : 0));
-
                     if (formatKeys[2] === key && data?.files?.length)
                         for (let i = 0; i < data?.files.length; i++) {
                             submitData.append("files", data?.files[i]);
                         }
-
                     if (key === "year")
                         submitData.append(key, parseInt(data[key] ? data[key] : 0));
-
                 } else {
                     submitData.append(key, data[key]);
                 }
             }
-
         });
 
         try {
@@ -350,7 +330,6 @@ const UpsertDocEntryForm = (props) => {
                                 {...register("docNameKh")}
                             />
                         </Grid>
-
                         <Grid item xs={12}>
                             <TextField
                                 label={<LabelRequire label="Numbering" />}
@@ -645,7 +624,6 @@ const UpsertDocEntryForm = (props) => {
                                 {...register("remark")}
                             />
                         </Grid>
-
                     </Grid>
                 </Box>
             </DialogContent>
@@ -671,7 +649,6 @@ const UpsertDocEntryForm = (props) => {
                     fileName={viewFileName}
                 />
             }
-
         </Dialog>
     );
 };
