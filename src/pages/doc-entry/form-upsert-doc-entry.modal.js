@@ -68,6 +68,9 @@ const UpsertDocEntryForm = (props) => {
     const watchDocEntry = watch();
     const formatKeys = ["issuedDate", "issueNum", "files", "documentCode", "documentNameEn", "documentNameKh"];
 
+    // handle limit numbering field
+    const [numberingOnfocus, setNumberingOnfocus] = useState(false);
+    const [numberingLimit, setNumberingLimit] = useState('');
 
     // require file
     const [isFile, setIsFile] = useState(false);
@@ -154,6 +157,7 @@ const UpsertDocEntryForm = (props) => {
                 } else if (key === formatKeys[1]) {
                     setValue("issueNum", String(docEntry[key]));
                 } else if (key === formatKeys[3]) {
+                    setNumberingLimit(docEntry[key]);
                     setValue("docCode", docEntry[key]);
                 } else if (key === formatKeys[4]) {
                     setValue("docNameEn", docEntry[key]);
@@ -177,6 +181,7 @@ const UpsertDocEntryForm = (props) => {
     const onError = (data) => {
         console.log("Error data submit: ", data);
         if (!watchDocEntry?.files?.length && !docEntry.id) {
+            setNumberingOnfocus(true);
             setIsFile(true);
             setError("files", { message: "File is required!" });
         }
@@ -193,9 +198,9 @@ const UpsertDocEntryForm = (props) => {
             if (tmpFileRm?.length) {
                 data.fileName = tmpFileRm.map((ele) => ele.fileName).join(',');
             }
-            if (!lstDocEntryFiles?.length && !data?.files?.length) {
-                console.log("list file: ", lstDocEntryFiles.length + " value: ", lstDocEntryFiles)
+            if (!lstDocEntryFiles?.length && !data?.files?.length || numberingLimit.length === 0) {
                 setIsFile(true);
+                // setNumberingOnfocus(false);
                 setError("files", { message: "File is required!" });
                 return;
             }
@@ -265,7 +270,11 @@ const UpsertDocEntryForm = (props) => {
                 handleCloseModal();
             } else {
                 setSelectedDate(null);
+                setNumberingLimit('');
+                setNumberingOnfocus(false);
+                setIsFile(false);
                 reset();
+                return;
             }
 
         } catch (error) {
@@ -332,13 +341,40 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                // onFocus={() => setNumberingOnfocus(false)}
                                 label={<LabelRequire label="Numbering" />}
-                                sx={{ width: "100%" }}
+                                sx={
+                                    (errors.docCode || docEntry.id || open) &&
+                                    {
+                                        '& .MuiFormHelperText-root': {
+                                            display: 'flex',
+                                            justifyContent: numberingLimit.length ? 'end' : 'start',
+                                        }, width: "100%"
+                                    }
+                                }
                                 {...register("docCode")}
                                 size="small"
-                                error={errors?.docCode ? true : false}
-                                helperText={errors?.docCode?.message}
+                                error={
+                                    docEntry.id
+                                        ?
+                                        (numberingLimit.length === 0)
+                                            ?
+                                            true : false
+                                        :
+                                        (numberingLimit.length === 0 && numberingOnfocus) ? true : false
+                                }
+                                helperText={
+                                    numberingLimit.length === 0
+                                        ?
+                                        docEntry.id ?
+                                            "numbering is required!"
+                                            :
+                                            errors?.docCode?.message
+                                        :
+                                        numberingLimit.length + "/15"
+                                }
                                 inputProps={{ maxLength: 15 }}
+                                onChange={(e) => setNumberingLimit(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={8}>
@@ -635,7 +671,6 @@ const UpsertDocEntryForm = (props) => {
                     saveNewButtonLabel={docEntry?.id ? "" : "Save & New"}
                     actions={{ cancel: true, submit: true, submitNew: docEntry?.id ? false : true }}
                     handleCancel={handleCloseModal}
-                    // handleSaveNew = {handleSubmit(submit, onError)}
                     handleSaveNew={handleSubmitNew}
                 />
             </DialogActions>
