@@ -200,7 +200,7 @@ const tbSubCategory = [
   },
   {
     id: "mainCateName",
-    label: "Main Category"
+    label: "Main Categories"
   },
   {
     id: "ordering",

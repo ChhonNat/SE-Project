@@ -260,7 +260,7 @@ const AsynTableToolbar = (props) => {
                                     size="small"
                                     sx={{ width: "100%" }}
                                     type="text"
-                                    InputLabelProps={shrinkOpt}
+                                    // InputLabelProps={shrinkOpt}
                                     onChange={(e) => handleFilterEvent(filter?.filterName, e?.target?.value)}
                                     value={filter?.value}
                                     InputProps={{
@@ -281,22 +281,19 @@ const AsynTableToolbar = (props) => {
                                     value={filter?.selectOption?.value || ""}
                                   />
                                 }
-
                                 {
                                   filter?.type && ["normal-select"].includes(filter?.type) &&
                                   <SelectComponent
-                                    id={"id"}
+                                    id={"year-id"}
                                     label={filter?.label ? filter?.label : "Select"}
                                     size={"small"}
                                     sx={{ width: "100%", marginRight: 3 }}
                                     callToApi={filter?.selectOption?.asyncUrl}
                                     customDatas={filter?.selectOption?.customDatas}
-                                    handleOnChange={(e, value) => handleFilterEvent(filter?.filterName, value)}
+                                    handleOnChange={(e) => handleFilterEvent(filter?.filterName, String(e?.target?.value))}
                                     value={filter?.selectOption?.value}
                                   />
-
                                 }
-
                                 {
                                   filter?.type && ["custom"].includes(filter?.type) && filter?.component
                                 }

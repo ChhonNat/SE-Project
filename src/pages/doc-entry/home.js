@@ -154,7 +154,7 @@ const HomeDocEntry = () => {
                                 label: "Name (EN)",
                                 filterName: "name",
                                 type: "text",
-                                value: fName ? fName : "",
+                                value: fName ?? "",
                             },
                             {
                                 grid: 0.1,
@@ -164,7 +164,7 @@ const HomeDocEntry = () => {
                                 label: "Name (KH)",
                                 filterName: "nameKh",
                                 type: "text",
-                                value: fNameKh ? fNameKh : "",
+                                value: fNameKh ?? "",
                             },
                             {
                                 grid: 0.1
@@ -239,15 +239,6 @@ const HomeDocEntry = () => {
                             {
                                 grid: 0.1
                             },
-                            // {
-                            //     grid: 2.9,
-                            //     label: "Issued Date",
-                            //     filterName: "issuedDate",
-                            //     type: "date",
-                            //     selectOption: {
-                            //         value: fIssueDate ? fIssueDate : ""
-                            //     }
-                            // },
                             {
                                 grid: 2.9,
                                 label: "Issued Date",
@@ -262,9 +253,9 @@ const HomeDocEntry = () => {
                             },
                             {
                                 grid: 2.9,
+                                type: "normal-select",
                                 label: "Year",
                                 filterName: "year",
-                                type: "select",
                                 selectOption: {
                                     customDatas: years,
                                     value: fYear ? fYear : ""

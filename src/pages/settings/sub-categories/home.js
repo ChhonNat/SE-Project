@@ -32,9 +32,7 @@ const HomeSubCategory = () => {
                 }
             }
         });
-
         try {
-
             let tempData;
             if (eName.toLowerCase() === 'active') {
                 tempData = await subCategoryService.restore(postStatus);
@@ -124,7 +122,6 @@ const HomeSubCategory = () => {
                             }
                         ]
                     },
-
                 }}
                 onHandleAddNewEvent={() => setOpenUpsertSubCateModal(true)}
                 handleEditEvent={(data) => {
@@ -134,8 +131,6 @@ const HomeSubCategory = () => {
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
                 handleMoreEvent={(eName, data) => handleMoreEvent(eName, data)}
             />
-
-
 
             {openUpsertSubCateModal && (
                 <UpsertSubCateFormModel
