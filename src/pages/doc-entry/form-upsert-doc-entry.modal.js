@@ -605,7 +605,7 @@ const UpsertDocEntryForm = (props) => {
                                 id="childSubMainCateId"
                                 label={"Sub Sub Categories"}
                                 size="small"
-                                callToApi={watchDocEntry.subCateId ? API_URL.lookup.childSubCate.get + handleApi(watchDocEntry?.mainCateId, "subCateId") : null}
+                                callToApi={watchDocEntry.subCateId ? API_URL.lookup.childSubCate.get + handleApi(watchDocEntry?.subCateId, "subCateId") : null}
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("subSubCateId", value?.id);
