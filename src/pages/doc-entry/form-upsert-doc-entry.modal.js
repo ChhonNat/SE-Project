@@ -269,11 +269,11 @@ const UpsertDocEntryForm = (props) => {
             if (isNewSubmit.toLowerCase() !== "newSubmit".toLowerCase()) {
                 handleCloseModal();
             } else {
-                setSelectedDate(null);
-                setNumberingLimit('');
-                setNumberingOnfocus(false);
-                setIsFile(false);
-                reset();
+                // setSelectedDate(null);
+                // setNumberingLimit('');
+                // setNumberingOnfocus(false);
+                // setIsFile(false);
+                // reset();
                 return;
             }
 
