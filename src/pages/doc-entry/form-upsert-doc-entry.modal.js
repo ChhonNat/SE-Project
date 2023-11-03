@@ -446,17 +446,6 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
 
                         <Grid item xs={12}>
-                            <TextField
-                                label={<LabelRequire label="Number of Page" />}
-                                sx={{ width: "100%" }}
-                                {...register("numOfPage")}
-                                size="small"
-                                error={errors?.numOfPage ? true : false}
-                                helperText={errors?.numOfPage?.message}
-                            />
-                        </Grid>
-
-                        <Grid item xs={12}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DemoContainer components={['DatePicker']}>
                                     <DatePicker
@@ -496,6 +485,75 @@ const UpsertDocEntryForm = (props) => {
                                 sx={{ width: "100%" }}
                                 size="small"
                                 {...register("docNameKh")}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                // onFocus={() => setNumberingOnfocus(false)}
+                                label={<LabelRequire label="Numbering" />}
+                                sx={
+                                    (errors.docCode || docEntry.id || open) &&
+                                    {
+                                        '& .MuiFormHelperText-root': {
+                                            display: 'flex',
+                                            justifyContent: numberingLimit.length ? 'end' : 'start',
+                                        }, width: "100%"
+                                    }
+                                }
+                                {...register("docCode")}
+                                size="small"
+                                error={
+                                    docEntry.id
+                                        ?
+                                        (numberingLimit.length === 0)
+                                            ?
+                                            true : false
+                                    :
+                                    (numberingLimit.length === 0 && numberingOnfocus) ? true : false
+                                }
+                                helperText={
+                                    numberingLimit.length === 0
+                                        ?
+                                        docEntry.id ?
+                                            "numbering is required!"
+                                            :
+                                            errors?.docCode?.message
+                                    :
+                                    numberingLimit.length + "/15"
+                                }
+                                inputProps={{ maxLength: 15 }}
+                                onChange={(e) => setNumberingLimit(e.target.value)}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                type="number"
+                                label={"Issue Number"}
+                                sx={{ width: "100%" }}
+                                size="small"
+                                {...register("issueNum")}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                label={"Approved by"}
+                                sx={{ width: "100%" }}
+                                size="small"
+                                {...register("approvedBy")}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                label={<LabelRequire label="Number of Page" />}
+                                sx={{ width: "100%" }}
+                                {...register("numOfPage")}
+                                size="small"
+                                error={errors?.numOfPage ? true : false}
+                                helperText={errors?.numOfPage?.message}
                             />
                         </Grid>
 
@@ -610,72 +668,7 @@ const UpsertDocEntryForm = (props) => {
                                 </Box>
                             </Grid>
                         }
-
                         
-
-                        
-
-                        
-
-                        <Grid item xs={12}>
-                            <TextField
-                                // onFocus={() => setNumberingOnfocus(false)}
-                                label={<LabelRequire label="Numbering" />}
-                                sx={
-                                    (errors.docCode || docEntry.id || open) &&
-                                    {
-                                        '& .MuiFormHelperText-root': {
-                                            display: 'flex',
-                                            justifyContent: numberingLimit.length ? 'end' : 'start',
-                                        }, width: "100%"
-                                    }
-                                }
-                                {...register("docCode")}
-                                size="small"
-                                error={
-                                    docEntry.id
-                                        ?
-                                        (numberingLimit.length === 0)
-                                            ?
-                                            true : false
-                                    :
-                                    (numberingLimit.length === 0 && numberingOnfocus) ? true : false
-                                }
-                                helperText={
-                                    numberingLimit.length === 0
-                                        ?
-                                        docEntry.id ?
-                                            "numbering is required!"
-                                            :
-                                            errors?.docCode?.message
-                                    :
-                                    numberingLimit.length + "/15"
-                                }
-                                inputProps={{ maxLength: 15 }}
-                                onChange={(e) => setNumberingLimit(e.target.value)}
-                            />
-                        </Grid>
-
-                        
-
-                        <Grid item xs={12}>
-                            <TextField
-                                type="number"
-                                label={"Issue Number"}
-                                sx={{ width: "100%" }}
-                                size="small"
-                                {...register("issueNum")}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                label={"Approved by"}
-                                sx={{ width: "100%" }}
-                                size="small"
-                                {...register("approvedBy")}
-                            />
-                        </Grid>
-
                         <Grid item xs={12}>
                             <TextField
                                 label={"Remark"}
