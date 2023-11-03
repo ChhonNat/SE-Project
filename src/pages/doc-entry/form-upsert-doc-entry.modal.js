@@ -274,6 +274,10 @@ const UpsertDocEntryForm = (props) => {
                 // setNumberingOnfocus(false);
                 // setIsFile(false);
                 // reset();
+                if(success){
+                    setValue('files', "");
+                    setError("files", { message: "File is required!" });
+                }
                 return;
             }
 
@@ -426,6 +430,75 @@ const UpsertDocEntryForm = (props) => {
                             />
                         </Grid>
 
+                        <Grid item xs={12}>
+                            <AsyncAutoComplete
+                                id="sourceDocId"
+                                label={<LabelRequire label="Source Departments" />}
+                                size="small"
+                                callToApi={API_URL.lookup.department.get}
+                                bindField={"nameEn"}
+                                handleOnChange={(e, value) => {
+                                    setValue("deptId", value?.id);
+                                }}
+                                value={watchDocEntry?.deptId || null}
+                                err={errors?.deptId?.message}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                label={<LabelRequire label="Number of Page" />}
+                                sx={{ width: "100%" }}
+                                {...register("numOfPage")}
+                                size="small"
+                                error={errors?.numOfPage ? true : false}
+                                helperText={errors?.numOfPage?.message}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={['DatePicker']}>
+                                    <DatePicker
+                                        required
+                                        label={<LabelRequire label="Issue Date" />}
+                                        sx={{ width: "100%" }}
+                                        InputLabelProps={shrinkOpt}
+                                        views={['year', 'month', 'day']}
+                                        format="LL"
+                                        value={selectedDate}
+                                        onChange={handleDateChange}
+                                        slotProps={{
+                                            textField: {
+                                                size: "small",
+                                                error: selectedDate === null && errors?.issuedDate ? true : false,
+                                                helperText: errors?.issuedDate ? "issue date is required!" : ""
+                                            },
+                                        }}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                label={<LabelRequire label="Name (EN)" />}
+                                sx={{ width: "100%" }}
+                                {...register("docNameEn")}
+                                size="small"
+                                error={errors?.docNameEn ? true : false}
+                                helperText={errors?.docNameEn?.message}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label={"Name (KH)"}
+                                sx={{ width: "100%" }}
+                                size="small"
+                                {...register("docNameKh")}
+                            />
+                        </Grid>
+
                         <Grid item xs={8}>
                             <TextField
                                 type="file"
@@ -538,55 +611,11 @@ const UpsertDocEntryForm = (props) => {
                             </Grid>
                         }
 
-                        <Grid item xs={12}>
-                            <TextField
-                                label={<LabelRequire label="Number of Page" />}
-                                sx={{ width: "100%" }}
-                                {...register("numOfPage")}
-                                size="small"
-                                error={errors?.numOfPage ? true : false}
-                                helperText={errors?.numOfPage?.message}
-                            />
-                        </Grid>
+                        
 
-                        <Grid item xs={12}>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DemoContainer components={['DatePicker']}>
-                                    <DatePicker
-                                        required
-                                        label={<LabelRequire label="Issue Date" />}
-                                        sx={{ width: "100%" }}
-                                        InputLabelProps={shrinkOpt}
-                                        views={['year', 'month', 'day']}
-                                        format="LL"
-                                        value={selectedDate}
-                                        onChange={handleDateChange}
-                                        slotProps={{
-                                            textField: {
-                                                size: "small",
-                                                error: selectedDate === null && errors?.issuedDate ? true : false,
-                                                helperText: errors?.issuedDate ? "issue date is required!" : ""
-                                            },
-                                        }}
-                                    />
-                                </DemoContainer>
-                            </LocalizationProvider>
-                        </Grid>
+                        
 
-                        <Grid item xs={12}>
-                            <AsyncAutoComplete
-                                id="sourceDocId"
-                                label={<LabelRequire label="Source Departments" />}
-                                size="small"
-                                callToApi={API_URL.lookup.department.get}
-                                bindField={"nameEn"}
-                                handleOnChange={(e, value) => {
-                                    setValue("deptId", value?.id);
-                                }}
-                                value={watchDocEntry?.deptId || null}
-                                err={errors?.deptId?.message}
-                            />
-                        </Grid>
+                        
 
                         <Grid item xs={12}>
                             <TextField
@@ -627,24 +656,7 @@ const UpsertDocEntryForm = (props) => {
                             />
                         </Grid>
 
-                        <Grid item xs={12}>
-                            <TextField
-                                label={<LabelRequire label="Name (EN)" />}
-                                sx={{ width: "100%" }}
-                                {...register("docNameEn")}
-                                size="small"
-                                error={errors?.docNameEn ? true : false}
-                                helperText={errors?.docNameEn?.message}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                label={"Name (KH)"}
-                                sx={{ width: "100%" }}
-                                size="small"
-                                {...register("docNameKh")}
-                            />
-                        </Grid>
+                        
 
                         <Grid item xs={12}>
                             <TextField
