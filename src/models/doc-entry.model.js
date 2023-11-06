@@ -28,7 +28,7 @@ const Update = object({
     docNameKh: string().optional().nullable(),
     deptId: number().min(1, { message: "source of document is required!" }),
     campusId: number().min(1, { message: "campus is required!" }),
-    year: number().optional().nullable(),
+    year: number().min(1, { message: "year is required!" }),
     issuedDate: string().min(1, { message: "issued date is required!" }),
     issueNum: string().optional().default('0'),
     numOfPage: string().min(1, { message: "number of page is required!" }),
