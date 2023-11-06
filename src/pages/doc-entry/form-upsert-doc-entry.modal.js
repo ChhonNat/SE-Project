@@ -186,7 +186,7 @@ const UpsertDocEntryForm = (props) => {
         console.log("Error data submit: ", data);
         if (!watchDocEntry?.files?.length && !docEntry.id) {
             setNumberingOnfocus(true);
-            setIsFile(true);
+            // setIsFile(true);
             setError("files", { message: "File is required!" });
         }
     };
@@ -195,14 +195,16 @@ const UpsertDocEntryForm = (props) => {
         const submitData = new FormData();
         if (!docEntry?.id) {
             if (!data?.files?.length)
+                // setIsFile(true);
                 setError("files", { message: "File is required!" });
         } else {
             if (tmpFileRm?.length) {
                 data.fileName = tmpFileRm.map((ele) => ele.fileName).join(',');
             }
             if (!lstDocEntryFiles?.length && !data?.files?.length || numberingLimit.length === 0) {
-                setIsFile(true);
+                // setIsFile(true);
                 // setNumberingOnfocus(false);
+                console.log("test runtime>>>");
                 setError("files", { message: "File is required!" });
                 return;
             }
@@ -283,8 +285,12 @@ const UpsertDocEntryForm = (props) => {
                 // reset();
                 if(success){
                     setValue('files', "");
-                    setIsFile(true);
-                    setError("files", { message: "File is required!" });
+                }
+                if(!success){
+                    if (!watchDocEntry?.files?.length && !docEntry.id) {
+                        // setIsFile(true);
+                        setError("files", { message: "File is required!" });
+                    }
                 }
                 return;
             }
@@ -593,8 +599,8 @@ const UpsertDocEntryForm = (props) => {
                                 InputLabelProps={shrinkOpt}
                                 {...register("files")}
                                 // onChange={(e) => setValue("files", [...e?.target?.files])}
-                                required={docEntry.id ? false : isFile}
-                                error={isFile && !watchDocEntry?.files?.length ? true : false}
+                                required={docEntry.id ? false : errors.files ? true : isFile}
+                                error={(isFile && !watchDocEntry?.files?.length) || errors?.files ? true : false}
                                 helperText={errors?.files?.message}
                             />
                         </Grid>
