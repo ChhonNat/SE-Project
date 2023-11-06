@@ -72,7 +72,7 @@ const UpsertDocEntryForm = (props) => {
     const [numberingLimit, setNumberingLimit] = useState('');
 
     // require file
-    const [isFile, setIsFile] = useState(false);
+    // const [isFile, setIsFile] = useState(false);
 
     // handle select year
     const currentYear = new Date().getFullYear();
@@ -194,9 +194,12 @@ const UpsertDocEntryForm = (props) => {
     const submit = async (data) => {
         const submitData = new FormData();
         if (!docEntry?.id) {
-            if (!data?.files?.length)
+            if (!data?.files?.length){
                 // setIsFile(true);
+                console.log("empty file");
                 setError("files", { message: "File is required!" });
+                return;
+            }
         } else {
             if (tmpFileRm?.length) {
                 data.fileName = tmpFileRm.map((ele) => ele.fileName).join(',');
@@ -599,8 +602,10 @@ const UpsertDocEntryForm = (props) => {
                                 InputLabelProps={shrinkOpt}
                                 {...register("files")}
                                 // onChange={(e) => setValue("files", [...e?.target?.files])}
-                                required={docEntry.id ? false : errors.files ? true : isFile}
-                                error={(isFile && !watchDocEntry?.files?.length) || errors?.files ? true : false}
+                                // required={docEntry.id ? false : errors.files ? true : isFile}
+                                required={errors.files && !docEntry.id ? true : false}
+                                // error={(isFile && !watchDocEntry?.files?.length) || errors?.files ? true : false}
+                                error={errors.files ? true : false}
                                 helperText={errors?.files?.message}
                             />
                         </Grid>
