@@ -231,6 +231,7 @@ const AsynTableToolbar = (props) => {
                                     }}
                                   />
                                 }
+                                {/* select full date datepicker */}
                                 {
                                   filter?.type && ["fullDate"].includes(filter?.type) &&
                                   <LocalizationProvider dateAdapter={AdapterDayjs}>

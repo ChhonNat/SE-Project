@@ -29,7 +29,8 @@ const HomeDocEntry = () => {
 
     const currentYear = new Date().getFullYear();
     const earliestYear = 1970;
-    const years = Array.from({ length: currentYear - earliestYear + 1 }, (_, index) => currentYear - index);
+    const years = Array.from({ length: currentYear - earliestYear + 1 }, (_, index) => `${currentYear - index}`);
+
 
     const [fName, setFName] = useState(null);
     const [fNameKh, setFNameKh] = useState(null);
@@ -39,7 +40,7 @@ const HomeDocEntry = () => {
     const [fMainId, setFMainId] = useState(null);
     const [fSubId, setFSubId] = useState(null);
     const [fIssueDate, setFIssueDate] = useState(null);
-    const [fYear, setFYear] = useState(0);
+    const [fYear, setFYear] = useState(null);
     const [filterChanged, setFilterChanged] = useState(false);
 
     useEffect(() => {
@@ -253,7 +254,7 @@ const HomeDocEntry = () => {
                             },
                             {
                                 grid: 2.9,
-                                type: "normal-select",
+                                type: "select",
                                 label: "Year",
                                 filterName: "year",
                                 selectOption: {

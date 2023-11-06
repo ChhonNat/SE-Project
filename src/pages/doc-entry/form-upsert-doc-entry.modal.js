@@ -34,7 +34,6 @@ import LabelRequire from "../../components/Label/require";
 import ViewFileModal from "../../components/Modal/view-file.modal";
 import FooterComponent from "../../components/Page/footer";
 import TitleComponent from "../../components/Page/title";
-import SelectComponent from "../../components/Selector/select";
 import { API_URL } from "../../constants/api_url";
 import { KEY_POST } from "../../constants/key_post";
 import { DocEntryModel } from "../../models/doc-entry.model";
@@ -78,10 +77,10 @@ const UpsertDocEntryForm = (props) => {
     // handle select year
     const currentYear = new Date().getFullYear();
     const earliestYear = 1970;
-    const years = Array.from(
-        { length: currentYear - earliestYear + 1 },
-        (_, index) => currentYear - index
-    );
+    const years = Array.from({ length: currentYear - earliestYear + 1 }, (_, index) => ({
+        id: index + 1,
+        year: currentYear - index
+    }));
 
     // handle edit merge api autocomplete
     const handleApi = (id, key) => {
@@ -163,8 +162,13 @@ const UpsertDocEntryForm = (props) => {
                     setValue("docNameEn", docEntry[key]);
                 } else if (key === formatKeys[5]) {
                     setValue("docNameKh", docEntry[key]);
-                    // } else if (key === "year") {
-                    //     setValue(key, parseInt(docEntry[key]));
+                } else if (key === "year") {
+                    years.map(ele =>{
+                        const {id, year} = ele;
+                        if(year === parseInt(docEntry[key])){
+                            setValue(key, parseInt(id ?? 0));
+                        }
+                    })
                 } else {
                     setValue(key, docEntry[key]);
                 }
@@ -188,9 +192,7 @@ const UpsertDocEntryForm = (props) => {
     };
 
     const submit = async (data) => {
-
         const submitData = new FormData();
-
         if (!docEntry?.id) {
             if (!data?.files?.length)
                 setError("files", { message: "File is required!" });
@@ -208,6 +210,7 @@ const UpsertDocEntryForm = (props) => {
         }
 
         Object.keys(data).forEach((key) => {
+           
             if (!docEntry?.id) {
                 if (KEY_POST.docEntry.includes(key)) {
                     if (formatKeys.includes(key)) {
@@ -221,6 +224,9 @@ const UpsertDocEntryForm = (props) => {
                             }
                         if (formatKeys[6] === key)
                             submitData.append(key, parseInt(data[key] ? data[key] : 0));
+                    }else if(key === "year"){
+                        const {year} = years[data[key] - 1]
+                        submitData.append(key, year);
                     } else {
                         submitData.append(key, data[key]);
                     }
@@ -235,8 +241,9 @@ const UpsertDocEntryForm = (props) => {
                         for (let i = 0; i < data?.files.length; i++) {
                             submitData.append("files", data?.files[i]);
                         }
-                    if (key === "year")
-                        submitData.append(key, parseInt(data[key] ? data[key] : 0));
+                }else if(key === "year"){
+                    const {year} = years[data[key] - 1]
+                    submitData.append(key, year);
                 } else {
                     submitData.append(key, data[key]);
                 }
@@ -276,6 +283,7 @@ const UpsertDocEntryForm = (props) => {
                 // reset();
                 if(success){
                     setValue('files', "");
+                    setIsFile(true);
                     setError("files", { message: "File is required!" });
                 }
                 return;
@@ -341,6 +349,23 @@ const UpsertDocEntryForm = (props) => {
                         </Grid>
 
                         <Grid item xs={12}>
+                            <AsyncAutoComplete
+                                id="year-id"
+                                label={<LabelRequire label="Year" />}
+                                size="small"
+                                customDatas={years}
+                                // callToApi={API_URL.lookup.campus.get}
+                                bindField={"year"}
+                                handleOnChange={(e, value) => {
+                                    setValue("year", value?.id);
+                                }}
+                                required={true}
+                                value={watchDocEntry?.year || ""}
+                                err={errors?.year?.message}
+                            />
+                        </Grid>
+
+                        {/* <Grid item xs={12}>
                             <SelectComponent
                                 id={"year-id"}
                                 label={"Year"}
@@ -351,7 +376,7 @@ const UpsertDocEntryForm = (props) => {
                                 handleOnChange={(e) => setValue("year", String(e?.target?.value))}
                                 err={errors?.year?.message}
                             />
-                        </Grid>
+                        </Grid> */}
 
                         <Grid item xs={12}>
                             <TextField
