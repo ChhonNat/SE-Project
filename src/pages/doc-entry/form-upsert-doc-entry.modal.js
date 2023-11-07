@@ -71,9 +71,6 @@ const UpsertDocEntryForm = (props) => {
     const [numberingOnfocus, setNumberingOnfocus] = useState(false);
     const [numberingLimit, setNumberingLimit] = useState('');
 
-    // require file
-    // const [isFile, setIsFile] = useState(false);
-
     // handle select year
     const currentYear = new Date().getFullYear();
     const earliestYear = 1970;
@@ -98,12 +95,32 @@ const UpsertDocEntryForm = (props) => {
         setSelectedDate(date);
         const formattedDate = dayjs(date).format('YYYY/MM/DD');
         setValue('issuedDate', formattedDate);
+        handleResetForm(8);
     };
 
     // handle list files
     const [lstDocEntryFiles, setLstDocEntryFiles] = useState([]);
     const [showList, setShowList] = useState(false);
     const [tmpFileRm, setTmpFileRm] = useState([]);
+
+    // Reset Fields Dependency
+    const [frmResetDependence, setFrmResetDependence] = useState(false);
+    const handleResetForm = (valIndex) => {
+        console.log("form reset is runtime>>>>>>>>>>>>>>>>>>>>>")
+        KEY_POST.docEntry.map((key, index) => {
+            if (key === "issuedDate" && index > valIndex) {
+                setSelectedDate(null);
+                setValue(key, '');
+            } else if (key === "isSecret" && index > valIndex) {
+                setValue(key, 0);
+            } else if (key === "docCode" && index > valIndex) {
+                setNumberingLimit('');
+                setValue(key, '');
+            } else if (index > valIndex) {
+                setValue(key, '');
+            }
+        })
+    }
 
     const getAllFile = async (id) => {
         try {
@@ -163,9 +180,9 @@ const UpsertDocEntryForm = (props) => {
                 } else if (key === formatKeys[5]) {
                     setValue("docNameKh", docEntry[key]);
                 } else if (key === "year") {
-                    years.map(ele =>{
-                        const {id, year} = ele;
-                        if(year === parseInt(docEntry[key])){
+                    years.map(ele => {
+                        const { id, year } = ele;
+                        if (year === parseInt(docEntry[key])) {
                             setValue(key, parseInt(id ?? 0));
                         }
                     })
@@ -186,7 +203,6 @@ const UpsertDocEntryForm = (props) => {
         console.log("Error data submit: ", data);
         if (!watchDocEntry?.files?.length && !docEntry.id) {
             setNumberingOnfocus(true);
-            // setIsFile(true);
             setError("files", { message: "File is required!" });
         }
     };
@@ -194,8 +210,7 @@ const UpsertDocEntryForm = (props) => {
     const submit = async (data) => {
         const submitData = new FormData();
         if (!docEntry?.id) {
-            if (!data?.files?.length){
-                // setIsFile(true);
+            if (!data?.files?.length) {
                 console.log("empty file");
                 setError("files", { message: "File is required!" });
                 return;
@@ -205,7 +220,6 @@ const UpsertDocEntryForm = (props) => {
                 data.fileName = tmpFileRm.map((ele) => ele.fileName).join(',');
             }
             if (!lstDocEntryFiles?.length && !data?.files?.length || numberingLimit.length === 0) {
-                // setIsFile(true);
                 // setNumberingOnfocus(false);
                 console.log("test runtime>>>");
                 setError("files", { message: "File is required!" });
@@ -215,7 +229,7 @@ const UpsertDocEntryForm = (props) => {
         }
 
         Object.keys(data).forEach((key) => {
-           
+
             if (!docEntry?.id) {
                 if (KEY_POST.docEntry.includes(key)) {
                     if (formatKeys.includes(key)) {
@@ -229,8 +243,8 @@ const UpsertDocEntryForm = (props) => {
                             }
                         if (formatKeys[6] === key)
                             submitData.append(key, parseInt(data[key] ? data[key] : 0));
-                    }else if(key === "year"){
-                        const {year} = years[data[key] - 1]
+                    } else if (key === "year") {
+                        const { year } = years[data[key] - 1]
                         submitData.append(key, year);
                     } else {
                         submitData.append(key, data[key]);
@@ -246,8 +260,8 @@ const UpsertDocEntryForm = (props) => {
                         for (let i = 0; i < data?.files.length; i++) {
                             submitData.append("files", data?.files[i]);
                         }
-                }else if(key === "year"){
-                    const {year} = years[data[key] - 1]
+                } else if (key === "year") {
+                    const { year } = years[data[key] - 1]
                     submitData.append(key, year);
                 } else {
                     submitData.append(key, data[key]);
@@ -284,14 +298,13 @@ const UpsertDocEntryForm = (props) => {
                 // setSelectedDate(null);
                 // setNumberingLimit('');
                 // setNumberingOnfocus(false);
-                // setIsFile(false);
                 // reset();
-                if(success){
+                if (success) {
                     setValue('files', "");
+                    setFrmResetDependence(true);
                 }
-                if(!success){
+                if (!success) {
                     if (!watchDocEntry?.files?.length && !docEntry.id) {
-                        // setIsFile(true);
                         setError("files", { message: "File is required!" });
                     }
                 }
@@ -351,6 +364,7 @@ const UpsertDocEntryForm = (props) => {
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("campusId", value?.id);
+                                    { frmResetDependence && handleResetForm(0) }
                                 }}
                                 value={watchDocEntry?.campusId || null}
                                 err={errors?.campusId?.message}
@@ -367,6 +381,7 @@ const UpsertDocEntryForm = (props) => {
                                 bindField={"year"}
                                 handleOnChange={(e, value) => {
                                     setValue("year", value?.id);
+                                    { frmResetDependence && handleResetForm(1) }
                                 }}
                                 required={true}
                                 value={watchDocEntry?.year || ""}
@@ -393,6 +408,8 @@ const UpsertDocEntryForm = (props) => {
                                 sx={{ width: "100%" }}
                                 {...register("chronoNum")}
                                 size="small"
+                                // InputLabelProps={shrinkOpt}
+                                onChange={() => frmResetDependence && handleResetForm(2)}
                             // error={errors?.chronoNum ? true : false}
                             // helperText={errors?.chronoNum?.message}
                             />
@@ -407,6 +424,7 @@ const UpsertDocEntryForm = (props) => {
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("typeOfDocId", value?.id);
+                                    { frmResetDependence && handleResetForm(3) }
                                     setValue("mainCateId", 0);
                                     setValue("subCateId", 0);
                                     setValue("subSubCateId", 0);
@@ -425,6 +443,7 @@ const UpsertDocEntryForm = (props) => {
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("mainCateId", value?.id);
+                                    { frmResetDependence && handleResetForm(4) }
                                     setValue("subCateId", 0);
                                     setValue("subSubCateId", 0);
                                 }}
@@ -442,6 +461,7 @@ const UpsertDocEntryForm = (props) => {
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("subCateId", value?.id);
+                                    { frmResetDependence && handleResetForm(5) }
                                     setValue("subSubCateId", 0);
                                 }}
                                 helperText="(Optional)"
@@ -458,6 +478,7 @@ const UpsertDocEntryForm = (props) => {
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("subSubCateId", value?.id);
+                                    { frmResetDependence && handleResetForm(6) }
                                 }}
                                 helperText="(Optional)"
                                 value={watchDocEntry?.subSubCateId || null}
@@ -473,6 +494,7 @@ const UpsertDocEntryForm = (props) => {
                                 bindField={"nameEn"}
                                 handleOnChange={(e, value) => {
                                     setValue("deptId", value?.id);
+                                    { frmResetDependence && handleResetForm(7) }
                                 }}
                                 value={watchDocEntry?.deptId || null}
                                 err={errors?.deptId?.message}
@@ -509,6 +531,7 @@ const UpsertDocEntryForm = (props) => {
                                 sx={{ width: "100%" }}
                                 {...register("docNameEn")}
                                 size="small"
+                                onChange={() => { frmResetDependence && handleResetForm(9) }}
                                 error={errors?.docNameEn ? true : false}
                                 helperText={errors?.docNameEn?.message}
                             />
@@ -519,6 +542,7 @@ const UpsertDocEntryForm = (props) => {
                                 sx={{ width: "100%" }}
                                 size="small"
                                 {...register("docNameKh")}
+                                onChange={() => { frmResetDependence && handleResetForm(10) }}
                             />
                         </Grid>
 
@@ -540,24 +564,26 @@ const UpsertDocEntryForm = (props) => {
                                 error={
                                     docEntry.id
                                         ?
-                                        (numberingLimit.length === 0)
-                                            ?
-                                            true : false
-                                    :
-                                    (numberingLimit.length === 0 && numberingOnfocus) ? true : false
+                                        (numberingLimit.length === 0) ? true : false
+                                        :
+                                        (numberingLimit.length === 0 && numberingOnfocus) ? true : false
                                 }
                                 helperText={
                                     numberingLimit.length === 0
                                         ?
-                                        docEntry.id ?
+                                        docEntry.id
+                                            ?
                                             "numbering is required!"
                                             :
                                             errors?.docCode?.message
-                                    :
-                                    numberingLimit.length + "/15"
+                                        :
+                                        numberingLimit.length + "/15"
                                 }
                                 inputProps={{ maxLength: 15 }}
-                                onChange={(e) => setNumberingLimit(e.target.value)}
+                                onChange={(e) => {
+                                    setNumberingLimit(e.target.value);
+                                    { frmResetDependence && handleResetForm(11) }
+                                }}
                             />
                         </Grid>
 
@@ -567,6 +593,7 @@ const UpsertDocEntryForm = (props) => {
                                 label={"Issue Number"}
                                 sx={{ width: "100%" }}
                                 size="small"
+                                onChange={() => { frmResetDependence && handleResetForm(12) }}
                                 {...register("issueNum")}
                             />
                         </Grid>
@@ -576,6 +603,7 @@ const UpsertDocEntryForm = (props) => {
                                 label={"Approved by"}
                                 sx={{ width: "100%" }}
                                 size="small"
+                                onChange={() => { frmResetDependence && handleResetForm(13) }}
                                 {...register("approvedBy")}
                             />
                         </Grid>
@@ -586,6 +614,7 @@ const UpsertDocEntryForm = (props) => {
                                 sx={{ width: "100%" }}
                                 {...register("numOfPage")}
                                 size="small"
+                                onChange={() => { frmResetDependence && handleResetForm(14) }}
                                 error={errors?.numOfPage ? true : false}
                                 helperText={errors?.numOfPage?.message}
                             />
@@ -600,11 +629,9 @@ const UpsertDocEntryForm = (props) => {
                                     accept: "application/pdf, image/jpeg, image/png, images/jpg"
                                 }}
                                 InputLabelProps={shrinkOpt}
+                                onChange={() => { frmResetDependence && handleResetForm(15) }}
                                 {...register("files")}
-                                // onChange={(e) => setValue("files", [...e?.target?.files])}
-                                // required={docEntry.id ? false : errors.files ? true : isFile}
                                 required={errors.files && !docEntry.id ? true : false}
-                                // error={(isFile && !watchDocEntry?.files?.length) || errors?.files ? true : false}
                                 error={errors.files ? true : false}
                                 helperText={errors?.files?.message}
                             />
@@ -704,12 +731,13 @@ const UpsertDocEntryForm = (props) => {
                                 </Box>
                             </Grid>
                         }
-                        
+
                         <Grid item xs={12}>
                             <TextField
                                 label={"Remark"}
                                 sx={{ width: "100%" }}
                                 size="small"
+                                handleOnChange={() => { frmResetDependence && handleResetForm(17) }}
                                 {...register("remark")}
                             />
                         </Grid>
