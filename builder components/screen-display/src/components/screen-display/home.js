@@ -1,6 +1,5 @@
 import { Box, Grid } from '@mui/material';
 import React from 'react';
-import ActiveCounting from './activeCouting';
 import PreviewCounting from './previewedCounting';
 
 const ScreenDisplay = () => {
@@ -9,7 +8,9 @@ const ScreenDisplay = () => {
             <Grid container sx={12}>
                 <Grid item xs={6}>
                     <Grid item xs={12}>
-                        <ActiveCounting />
+                       <Box
+                            sx={{bgcolor: ""}}
+                       />
                     </Grid>
 
                     <Grid item xs={12}>
