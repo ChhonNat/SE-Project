@@ -5,7 +5,7 @@ const apiLink = "http://172.168.0.38:8484";
 //localhost
 // const apiLink = "http://localhost:8080";
 
-const appName = "Archive Management System";
+const appName = "Queue Management System";
 const systemColor = "#283c55";
 const swalTimer = 5000;
 

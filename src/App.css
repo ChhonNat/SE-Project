@@ -1,14 +1,26 @@
-@font-face {
+/* @font-face {
   font-family: 'khmerOsBTB';
   src: url(../public/KhmerOSbattambang.ttf);
-};
-html,body,#root,h1,h2,h3,h4,h5,h6{
+} */
+
+;
+
+html,
+body,
+#root,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 
   font-family: 'Roboto', sans-serif !important;
 }
-.css-8344kk-MuiTableCell-root {
+
+/* .css-8344kk-MuiTableCell-root {
   font-family: 'khmerOsBTB'!important;
-}
+} */
 
 .html {
   overflow: hidden !important;
@@ -48,104 +60,126 @@ html,body,#root,h1,h2,h3,h4,h5,h6{
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
-.dayWeekTitle{
+
+.dayWeekTitle {
   text-align: center;
   background: #1976d2;
   color: white;
 }
-.holidayTitle{
+
+.holidayTitle {
   background: #d32f2f;
   text-align: center;
   color: white;
 }
 
-.dayWeek{
-  text-align:center;
-  padding:1% !important;
+.dayWeek {
+  text-align: center;
+  padding: 1% !important;
   background-color: #f5f5f5;
 }
-.dayLeave{
+
+.dayLeave {
   background-color: #ffe1e1;
 }
-.dayHoliday{
+
+.dayHoliday {
   background: #d32f2f;
   color: #fff;
 }
-.textDescri{
+
+.textDescri {
   color: gray;
 }
-.textDescriHoliday{
+
+.textDescriHoliday {
   color: #fff !important;
 }
-.viewDetail{
+
+.viewDetail {
   color: #1976d2;
   font-size: 12px;
 }
-.viewDetail:hover{
+
+.viewDetail:hover {
   color: #8f8f8f;
 }
-.supDescr{
+
+.supDescr {
   color: #8f8f8f;
   font-size: 11px;
 }
-.iconPlus{
-    background: #F0F1F7;
-    width: 10%;
-    text-align: center;
-    float: right;   
-    color: #9FA2B4;    
+
+.iconPlus {
+  background: #F0F1F7;
+  width: 10%;
+  text-align: center;
+  float: right;
+  color: #9FA2B4;
 }
-.iconPlus:hover{
+
+.iconPlus:hover {
   background: #e2e3e7;
 }
+
 .material-symbols-outlined {
   font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
 }
-.bord_rad_img{
+
+.bord_rad_img {
   border-radius: 50%;
   width: 33px;
 }
-.yellow{
+
+.yellow {
   background-color: #FEC400 !important;
 }
-.tableHover:hover{
+
+.tableHover:hover {
   background: #ececec;
   cursor: pointer;
 }
-.threedot:hover{
+
+.threedot:hover {
   color: black;
 }
-.MuiTablePagination-toolbar{
+
+.MuiTablePagination-toolbar {
   display: flex;
   float: right;
   padding: 10px;
 }
-.hoverBorder{
+
+.hoverBorder {
   border: 1px solid rgb(180 180 180);
-  color:black;
-  padding:8% 0 !important;
+  color: black;
+  padding: 8% 0 !important;
 }
-.hoverBorder:hover{
+
+.hoverBorder:hover {
   border: 1px solid rgb(138, 131, 131);
 }
+
 .css-1ps4owl-MuiTypography-root-MuiLink-root {
   color: #212121 !important;
   text-decoration: none !important;
 }
-.btn-submit{
+
+.btn-submit {
   width: 12ch !important;
   padding: 7px 15px !important;
 }
 
-.global-loading{
+.global-loading {
   color: rgb(25, 118, 210);
   font-weight: bold;
   margin: 0;
@@ -154,7 +188,7 @@ html,body,#root,h1,h2,h3,h4,h5,h6{
   left: 50%;
 }
 
-.page-not-found{
+.page-not-found {
   font-size: 20px;
   font-weight: bold;
   margin: 0;
@@ -164,21 +198,22 @@ html,body,#root,h1,h2,h3,h4,h5,h6{
 }
 
 .swal2-container .swal2-popup {
-    width: unset!important;
-    min-width: 24em;
-} 
-.swal2-container .swal2-icon{
-    font-size: 0.6rem!important;
-    margin-top: 1.75rem !important;
+  width: unset !important;
+  min-width: 24em;
+}
+
+.swal2-container .swal2-icon {
+  font-size: 0.6rem !important;
+  margin-top: 1.75rem !important;
 }
 
 
 .swal2-container .swal2-title {
-  padding: unset!important;
+  padding: unset !important;
 }
 
-.swal2-container .swal2-html-container{
-  font-size: 1em!important;
+.swal2-container .swal2-html-container {
+  font-size: 1em !important;
 }
 
 .swal2-container .swal2-actions {

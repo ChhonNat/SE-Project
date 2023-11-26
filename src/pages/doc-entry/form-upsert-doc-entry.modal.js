@@ -106,7 +106,6 @@ const UpsertDocEntryForm = (props) => {
     // Reset Fields Dependency
     const [frmResetDependence, setFrmResetDependence] = useState(false);
     const handleResetForm = (valIndex) => {
-        console.log("form reset is runtime>>>>>>>>>>>>>>>>>>>>>")
         KEY_POST.docEntry.map((key, index) => {
             if (key === "issuedDate" && index > valIndex) {
                 setSelectedDate(null);

@@ -1,11 +1,12 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Unstable_Grid2";
 import React from "react";
 import "../../App.css";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Unstable_Grid2";
-import logo from "../../logo/login.png";
+import logo from "../../logo/Q_logo_64.ico";
 
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   FormControl,
   IconButton,
@@ -13,11 +14,10 @@ import {
   InputLabel,
   OutlinedInput,
 } from "@mui/material";
-import { userAuthentication } from "../../store/authentication/authenticationService";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { appConfig } from "../../constants/app_cont";
+import { userAuthentication } from "../../store/authentication/authenticationService";
 
 /**
  * username: developer
@@ -48,7 +48,7 @@ export default function Login() {
           alignItems: "center",
         }}
       >
-        <img src={logo} width={400} height={120} />
+        <img src={logo} width={200} />
       </Grid>
 
       <Grid item xs={4} padding={10}>
