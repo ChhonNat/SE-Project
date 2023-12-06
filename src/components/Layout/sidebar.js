@@ -1,23 +1,22 @@
 import React, { useContext, useState } from "react";
 
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Collapse from '@mui/material/Collapse';
 import Divider from "@mui/material/Divider";
+import MuiDrawer from "@mui/material/Drawer";
+import List from '@mui/material/List';
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import logo from "../../logo/logo.png";
-import Collapse from '@mui/material/Collapse';
-import List from '@mui/material/List';
-import MuiDrawer from "@mui/material/Drawer";
+import logo from "../../logo/Q_logo_64.ico";
 
-import { PRIVATE_ROUTES } from "../../routers/private_routes";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { styled, useTheme } from "@mui/material/styles";
+import { Link, useLocation } from "react-router-dom";
+import { appConfig } from "../../constants/app_cont";
 import { LOCAL_STORAGE_KEYS } from "../../constants/local_storage";
 import { LayoutContext } from "../../context/layout-context";
-import { styled, useTheme } from "@mui/material/styles";
-import { appConfig } from "../../constants/app_cont";
+import { PRIVATE_ROUTES } from "../../routers/private_routes";
 
 const drawerWidth = 280;
 
@@ -80,7 +79,7 @@ const drawerHeader = {
         justifyContent: "center"
     },
     img: {
-        styles: { width: "50%" }
+        styles: { width: "50px"}
     }
 };
 

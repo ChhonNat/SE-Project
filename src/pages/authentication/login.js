@@ -26,13 +26,15 @@ import { userAuthentication } from "../../store/authentication/authenticationSer
 
 export default function Login() {
   const dispatch = useDispatch();
-  const [username, setUserName] = useState("");
+  // const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
 
   const login = async (event) => {
     event.preventDefault();
-    dispatch(userAuthentication({ username, password }));
+    // dispatch(userAuthentication({ username, password }));
+    dispatch(userAuthentication({ email, password }));
   };
 
   return (
@@ -81,10 +83,13 @@ export default function Login() {
 
             <Grid item xs={12}>
               <TextField
+                type="email"
                 sx={{ width: "100%", paddingBottom: 3 }}
-                onChange={(event) => setUserName(event.target.value)}
-                value={username}
-                label="Username"
+                // onChange={(event) => setUserName(event.target.value)}
+                onChange={(event) => setEmail(event.target.value)}
+                // value={username}
+                value={email}
+                label="Email"
                 variant="outlined"
               />
             </Grid>
@@ -124,7 +129,8 @@ export default function Login() {
               variant="contained"
               color="info"
               onClick={login}
-              disabled={!username || !password}
+              // disabled={!username || !password}
+              disabled={!email || !password}
             >
               login
             </Button>

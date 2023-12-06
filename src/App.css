@@ -165,9 +165,9 @@ h6 {
   padding: 8% 0 !important;
 }
 
-.hoverBorder:hover {
+/* .hoverBorder:hover {
   border: 1px solid rgb(138, 131, 131);
-}
+} */
 
 .css-1ps4owl-MuiTypography-root-MuiLink-root {
   color: #212121 !important;

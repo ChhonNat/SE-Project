@@ -1,19 +1,20 @@
 //===============sideBar=======================================================================================================
-import "../../App.css";
-import * as React from "react";
-import { styled, useTheme, alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Unstable_Grid2";
+import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Table from "@mui/material/Table";
-import Checkbox from "@mui/material/Checkbox";
-import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Unstable_Grid2";
+import { styled } from "@mui/material/styles";
+import * as React from "react";
+import "../../App.css";
+import { StringToColor } from "../../constants/random-color";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -26,16 +27,27 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 //body==============================
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#4dabf5 ",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
+  border: 'none',
 }));
+
 
 //appBar==============================
 
 export default function MiniDrawer() {
+  // random color
+  const randomColor = (name) => {
+    return {
+      sx: {
+        bgcolor: StringToColor(name),
+      }
+    }
+  };
+
   //table==================
   function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -52,8 +64,11 @@ export default function MiniDrawer() {
       <DrawerHeader />
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2} columns={12}>
-          <Grid xs={3}>
-            <Item className="hoverBorder">
+          <Grid sm={6} md={3}>
+            <Item
+              {...randomColor("Morning")}
+              className="hoverBorder"
+            >
               <span className="textDescri">Morning</span>
               <br></br>
               <br></br>
@@ -61,8 +76,11 @@ export default function MiniDrawer() {
               12:10 PM<br></br>
             </Item>
           </Grid>
-          <Grid xs={3}>
-            <Item className="hoverBorder">
+          <Grid sm={6} md={3}>
+            <Item
+              {...randomColor("Afternoon")}
+              className="hoverBorder"
+            >
               <span className="textDescri">Afternoon</span>
               <br></br>
               <br></br>
@@ -70,8 +88,11 @@ export default function MiniDrawer() {
               06:10 PM<br></br>
             </Item>
           </Grid>
-          <Grid xs={3}>
-            <Item className="hoverBorder">
+          <Grid sm={6} md={3}>
+            <Item
+              {...randomColor("Even ing")}
+              className="hoverBorder"
+            >
               <span className="textDescri">Evening</span>
               <br></br>
               <br></br>
@@ -79,8 +100,11 @@ export default function MiniDrawer() {
               00:00 PM<br></br>
             </Item>
           </Grid>
-          <Grid xs={3}>
-            <Item className="hoverBorder">
+          <Grid sm={6} md={3}>
+            <Item
+              {...randomColor("YourShi ft")}
+              className="hoverBorder"
+            >
               <span className="textDescri">Your Shift</span>
               <br></br>
               <br></br>

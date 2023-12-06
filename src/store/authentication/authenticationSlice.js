@@ -10,7 +10,8 @@ const initialUser = {
   errorMessage: '',
   isAuthenticated: false,
   roles: [],
-  staffId: ''
+  staffId: '',
+  id: ''
 };
 
 //Reducer function

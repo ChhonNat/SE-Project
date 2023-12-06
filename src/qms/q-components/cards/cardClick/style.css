@@ -1,0 +1,30 @@
+.card {
+    box-sizing: border-box;
+    width: 190px;
+    height: 254px;
+    /* background: rgba(217, 217, 217, 0.58); */
+    background-color: #7986cb;
+    border: 1px solid #3f51b5;
+    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6px);
+    border-radius: 17px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-weight: bolder;
+    color: white;
+}
+
+.card:hover {
+    border: 1px solid #e8eaf6;
+    transform: scale(1.05);
+}
+
+.card:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+    background-color: #3f51b5;
+}

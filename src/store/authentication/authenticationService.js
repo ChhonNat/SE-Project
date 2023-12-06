@@ -1,11 +1,11 @@
-import { authActions } from './authenticationSlice';
-import { LOCAL_STORAGE_KEYS } from '../../constants/local_storage';
-import Swal from 'sweetalert2';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { appConfig } from '../../constants/app_cont';
+import { LOCAL_STORAGE_KEYS } from '../../constants/local_storage';
+import { authActions } from './authenticationSlice';
 
 const initialUser = {
-  userName: '',
+  email: '',
   userId: '',
   token: '',
   refreshToken: '',
@@ -16,7 +16,8 @@ const initialUser = {
   staffId: ''
 };
 
-export const userAuthentication = ({ username, password }) => {
+// export const userAuthentication = ({ username, password }) => {
+export const userAuthentication = ({ email, password }) => {
 
 
   return async (dispatch) => {
@@ -28,11 +29,13 @@ export const userAuthentication = ({ username, password }) => {
       },
     };
 
-    const postData = { username, password };
+    // const postData = { username, password };
+    const postData = { email, password };
 
     const authenticates = async () => {
 
-      const response = await axios.post(`${appConfig.apiLink}/api/v1/login`, postData, options)
+      // const response = await axios.post(`${appConfig.apiLink}/api/v1/login`, postData, options)
+      const response = await axios.post(`${appConfig.localApi}/api/user/login`, postData, options)
         .then(function (result) {
 
           return result;
@@ -52,17 +55,19 @@ export const userAuthentication = ({ username, password }) => {
           return error;
         });
 
-      const responseData = response?.data?.data;
-
+        const responseData = response?.data;
+        console.log(responseData);
       const responseUser = {
-        username: responseData?.user?.username,
+        username: responseData?.user?.name,
+        // email: responseData?.user?.email,
         token: responseData.accessToken,
         refreshToken: responseData.refreshToken,
         isError: false,
         errorMessage: '',
         isAuthenticated: true,
         roles: responseData?.user?.grantedAuthorities,
-        staffId: responseData?.user?.staffId,
+        // staffId: responseData?.user?.staffId,
+        staffId: responseData?.user?.id,
       };
 
       return responseUser;

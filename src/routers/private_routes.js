@@ -6,6 +6,7 @@ import React, { lazy } from "react";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BusinessIcon from '@mui/icons-material/Business';
 import MainCategoryIcon from '@mui/icons-material/Category';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import SubCategoryIcon from '@mui/icons-material/Segment';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -15,6 +16,9 @@ import { appConfig } from "../constants/app_cont";
 /**
  * Import all page components
  */
+const Dashboard = {
+    HomeComponent: lazy(() => import('../pages/dashboard/dashboard'))
+};
 // const Candidate = {
 //     HomeComponent: lazy(() => import('../pages/candidate/home')),
 // };
@@ -97,6 +101,15 @@ const User = {
 
 
 export const PRIVATE_ROUTES = [
+     /**Dashboard */
+     {
+        name: "Dashboard",
+        path: "/dashboard",
+        component: <Dashboard.HomeComponent />,
+        icon: <DashboardIcon style={{ color: appConfig.systemColor }} />,
+        isDivider: false,
+        // isHide: true
+    },
     /** document-entry */
     {
         name: "Documents Entry",
@@ -104,6 +117,7 @@ export const PRIVATE_ROUTES = [
         component: <DocEntry.HomeComponent />,
         icon: <InsertDriveFileIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
+        isHide: true
     },
     /**Settings */
     {
@@ -128,7 +142,7 @@ export const PRIVATE_ROUTES = [
                 path: "group-document",
                 component: <Settings.GroupDocument.HomeComponent />,
                 icon: <BusinessIcon style={{ color: appConfig.systemColor }} />,
-                // isHide: true
+                isHide: true
             },
             // Main categories
             {
@@ -136,7 +150,7 @@ export const PRIVATE_ROUTES = [
                 path: "main-categories",
                 component: <Settings.MainCategories.HomeComponent />,
                 icon: <MainCategoryIcon style={{ color: appConfig.systemColor }} />,
-                // isHide: true
+                isHide: true
             },
             // Sub categories
             {
@@ -144,7 +158,7 @@ export const PRIVATE_ROUTES = [
                 path: "sub-categories",
                 component: <Settings.SubCategories.HomeComponent />,
                 icon: <SubCategoryIcon style={{ color: appConfig.systemColor }} />,
-                // isHide: true
+                isHide: true
             },
             // child-Sub categories
             {
@@ -152,7 +166,7 @@ export const PRIVATE_ROUTES = [
                 path: "child-sub-categories",
                 component: <Settings.SubSubCategories.HomeComponent />,
                 icon: <SubSubCategoryIcon style={{ color: appConfig.systemColor }} />,
-                // isHide: true
+                isHide: true
             },
 
             ////'
@@ -165,6 +179,6 @@ export const PRIVATE_ROUTES = [
         component: <User.HomeComponent />,
         icon: <AccountCircleIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
-        isHide: true
+        // isHide: true
     }
 ];

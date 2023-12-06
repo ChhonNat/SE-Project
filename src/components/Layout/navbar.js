@@ -1,33 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
+import MuiAppBar from "@mui/material/AppBar";
+import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Popover from "@mui/material/Popover";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
-import Badge from "@mui/material/Badge";
-import Popover from "@mui/material/Popover";
-import Divider from "@mui/material/Divider";
-import MuiAppBar from "@mui/material/AppBar";
+import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state";
 
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import MailIcon from "@mui/icons-material/Mail";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import OutputIcon from "@mui/icons-material/Output";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
-import OutputIcon from "@mui/icons-material/Output";
-import IconButton from "@mui/material/IconButton";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import Avatar from "@mui/material/Avatar";
 
-import { LayoutContext } from "../../context/layout-context";
-import { useDispatch, useSelector } from "react-redux";
-import { isLogout } from "../../store/authentication/authenticationService";
-import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { appConfig } from "../../constants/app_cont";
+import { LayoutContext } from "../../context/layout-context";
+import { isLogout } from "../../store/authentication/authenticationService";
 
 const drawerWidth = 280;
 
