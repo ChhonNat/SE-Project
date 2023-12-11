@@ -252,7 +252,7 @@ const tbSubSubCategory = [
     id: "inactive",
     label: "Status",
     type: "status",
-    statusColor: { [STATUS.RECORD.ACTIVE]: "Green", [STATUS.RECORD.INACTIVE] : "Red" }
+    statusColor: { [STATUS.RECORD.ACTIVE]: "Green", [STATUS.RECORD.INACTIVE]: "Red" }
   },
   {
     id: "createdAt",
@@ -988,6 +988,36 @@ const tblCampus = [
 /**
  * User management
  */
+const tbCounter = [
+  {
+    id: "index",
+    label: "No.",
+  },
+  {
+    id: "username",
+    label: "Username",
+  },
+  {
+    id: "roles",
+    label: "Role",
+    arrayId: "authority",
+  },
+  {
+    id: "status",
+    label: "Status",
+    type: "status",
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "green",
+      [STATUS.RECORD.INACTIVE]: "red",
+    },
+  },
+  {
+    id: "createdAt",
+    label: "Created At",
+    type: "date",
+    dateFormat: "MMM DD, YYYY hh:mm:ss A",
+  },
+];
 const tblUser = [
   {
     id: "index",
@@ -1057,5 +1087,6 @@ export const TABLE_CONFIG = {
   tblRecruiter,
   tblLocation,
   tblCampus,
+  tbCounter,
   tblUser,
 };

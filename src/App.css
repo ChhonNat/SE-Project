@@ -160,9 +160,12 @@ h6 {
 }
 
 .hoverBorder {
-  border: 1px solid rgb(180 180 180);
-  color: black;
+  /* border: 1px solid rgb(180 180 180);
+  color: black; */
   padding: 8% 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* .hoverBorder:hover {

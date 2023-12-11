@@ -1,5 +1,3 @@
-import React, { useContext } from "react";
-
 import MuiAppBar from "@mui/material/AppBar";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
@@ -8,6 +6,8 @@ import Popover from "@mui/material/Popover";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state";
+import React, { useContext } from "react";
+import profile_avater from './../../qms/assets/profiles/1.jpg';
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -63,7 +63,6 @@ const NavbarComponent = () => {
   const handleSetMinSidebar = () => {
     setToggleNavbar(!toggleNavbar);
   };
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -370,11 +369,11 @@ const NavbarComponent = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        backgroundColor: "gray",
+                        backgroundColor: "white",
                         marginLeft: 1,
                       }}
                     >
-                      <AccountCircle variant="contained" />
+                      <Avatar sx={{ width: 48, height: 48 }} alt="Remy Sharp" src={profile_avater} />
                     </IconButton>
                     <Popover
                       {...bindPopover(popupState)}

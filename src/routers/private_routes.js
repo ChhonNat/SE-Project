@@ -4,15 +4,23 @@ import React, { lazy } from "react";
  * MUI icon
  */
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ArtTrackIcon from '@mui/icons-material/ArtTrack';
 import BusinessIcon from '@mui/icons-material/Business';
 import MainCategoryIcon from '@mui/icons-material/Category';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import PaidIcon from '@mui/icons-material/Paid';
+import RoomServiceIcon from '@mui/icons-material/RoomService';
 import SubCategoryIcon from '@mui/icons-material/Segment';
 import SettingsIcon from '@mui/icons-material/Settings';
+import SpatialAudioOffIcon from '@mui/icons-material/SpatialAudioOff';
 import SubSubCategoryIcon from '@mui/icons-material/SubdirectoryArrowRight';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import { appConfig } from "../constants/app_cont";
-
 /**
  * Import all page components
  */
@@ -40,6 +48,38 @@ const Dashboard = {
 // };
 const DocEntry = {
     HomeComponent: lazy(() => import('../pages/doc-entry/home'))
+};
+
+const UserManagement = {
+    Counters : {
+        HomeComponent: lazy(() => import('../pages/user-management/counters/home'))
+    },
+
+    User : {
+        HomeComponent: lazy(() => import('../pages/user-management/user/home'))
+    },
+
+};
+
+const SystemConfiguration = {
+    DisplaySetting : {
+        HomeComponent: lazy(() => import('../pages/system-configuration/display-setting/home'))
+    },
+    SoundSetting : {
+        HomeComponent: lazy(() => import('../pages/system-configuration/sound-setting/home'))
+    },
+    TicketSetting : {
+        HomeComponent: lazy(() => import('../pages/system-configuration/ticket-setting/home'))
+    },
+};
+
+const ManageServicesPoint = {
+    Payment : {
+        HomeComponent: lazy(() => import('../pages/manage-services-point/payment/home'))
+    },
+    Information : {
+        HomeComponent: lazy(() => import('../pages/manage-services-point/information/home'))
+    },
 };
 
 const Settings = {
@@ -95,14 +135,9 @@ const Settings = {
 
 };
 
-const User = {
-    HomeComponent: lazy(() => import('../pages/user/home'))
-};
-
-
 export const PRIVATE_ROUTES = [
-     /**Dashboard */
-     {
+    /**Dashboard */
+    {
         name: "Dashboard",
         path: "/dashboard",
         component: <Dashboard.HomeComponent />,
@@ -110,6 +145,97 @@ export const PRIVATE_ROUTES = [
         isDivider: false,
         // isHide: true
     },
+    /**User Management */
+    {
+        name: "User Management",
+        path: "/user-management",
+        icon: <ManageAccountsIcon style={{ color: appConfig.systemColor }} />,
+        isDivider: false,
+        /**Children settings */
+        children: [
+
+            /**User setup */
+            {
+                name: "Counters",
+                path: "counters",
+                component: <UserManagement.Counters.HomeComponent />,
+                icon: <SupportAgentIcon style={{ color: appConfig.systemColor }} />,
+                isDivider: false,
+                // isHide: true
+            },
+
+            /**User setup */
+            {
+                name: "Users",
+                path: "user",
+                component: <UserManagement.User.HomeComponent />,
+                icon: <AccountCircleIcon style={{ color: appConfig.systemColor }} />,
+                isDivider: false,
+                // isHide: true
+            },
+        ]
+    },
+    /**System Configuration */
+    {
+        name: "System Configuration",
+        path: "/system-confiiguration",
+        icon: <DisplaySettingsIcon style={{ color: appConfig.systemColor }} />,
+        isDivider: false,
+        /**Children settings */
+        children: [
+            {
+                name: "Display Setting",
+                path: "display-setting",
+                component: <SystemConfiguration.DisplaySetting.HomeComponent />,
+                icon: <ArtTrackIcon style={{ color: appConfig.systemColor }} />,
+                isDivider: false,
+                // isHide: true
+            },
+            {
+                name: "Sound Setting",
+                path: "sound-setting",
+                component: <SystemConfiguration.SoundSetting.HomeComponent />,
+                icon: <SpatialAudioOffIcon style={{ color: appConfig.systemColor }} />,
+                isDivider: false,
+                // isHide: true
+            },
+            {
+                name: "Ticket Setting",
+                path: "ticket-setting",
+                component: <SystemConfiguration.TicketSetting.HomeComponent />,
+                icon: <ConfirmationNumberIcon style={{ color: appConfig.systemColor }} />,
+                isDivider: false,
+                // isHide: true
+            },
+        ]
+    },
+    /**Manage Payment */
+    {
+        name: "Manage Service Points",
+        path: "/system-confiiguration",
+        icon: <RoomServiceIcon style={{ color: appConfig.systemColor }} />,
+        isDivider: false,
+        /**Children settings */
+        children: [
+            {
+                name: "Payments",
+                path: "payment",
+                component: <ManageServicesPoint.Payment.HomeComponent />,
+                icon: <PaidIcon style={{ color: appConfig.systemColor }} />,
+                isDivider: false,
+                // isHide: true
+            },
+            {
+                name: "Information",
+                path: "information",
+                component: <ManageServicesPoint.Information.HomeComponent />,
+                icon: <NewspaperIcon style={{ color: appConfig.systemColor }} />,
+                isDivider: false,
+                // isHide: true
+            },
+        ]
+    },
+
     /** document-entry */
     {
         name: "Documents Entry",
@@ -119,6 +245,7 @@ export const PRIVATE_ROUTES = [
         isDivider: false,
         isHide: true
     },
+
     /**Settings */
     {
         name: "Settings",
@@ -131,10 +258,9 @@ export const PRIVATE_ROUTES = [
             // //Department
             // {
             //     name: "Departments",
-            //     path: "department",
+            //     path: "department",s
             //     component: <Settings.Department.HomeComponent />,
-            //     icon: <CorporateFareTwoTone style={{ color: appConfig.systemColor }} />
-            // },
+            // },s
 
             // Main business
             {
@@ -172,13 +298,4 @@ export const PRIVATE_ROUTES = [
             ////'
         ]
     },
-    /**User setup */
-    {
-        name: "Users",
-        path: "/user",
-        component: <User.HomeComponent />,
-        icon: <AccountCircleIcon style={{ color: appConfig.systemColor }} />,
-        isDivider: false,
-        // isHide: true
-    }
 ];

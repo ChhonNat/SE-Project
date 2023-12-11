@@ -212,6 +212,11 @@ export const API_URL = {
         downloadAllFile:   `${API_VERSION}/documents/download/`,
     },
 
+    counter: {
+        get: `${API_VERSION}/users/search`,
+        create: `${API_VERSION}/users`,
+        edit: `${API_VERSION}/users/`,
+    },
     user: {
         get: `${API_VERSION}/users/search`,
         create: `${API_VERSION}/users`,

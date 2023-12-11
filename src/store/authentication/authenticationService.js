@@ -55,11 +55,9 @@ export const userAuthentication = ({ email, password }) => {
           return error;
         });
 
-        const responseData = response?.data;
-        console.log(responseData);
+      const responseData = response?.data;
       const responseUser = {
         username: responseData?.user?.name,
-        // email: responseData?.user?.email,
         token: responseData.accessToken,
         refreshToken: responseData.refreshToken,
         isError: false,

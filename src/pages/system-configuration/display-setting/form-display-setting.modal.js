@@ -1,10 +1,10 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import LabelRequire from "../../components/Label/require";
-import MultiSelectComponent from "../../components/MultiSelector/select";
-import FooterComponent from "../../components/Page/footer";
-import TitleComponent from "../../components/Page/title";
-import SelectComponent from "../../components/Selector/select";
+import LabelRequire from "../../../components/Label/require";
+import MultiSelectComponent from "../../../components/MultiSelector/select";
+import FooterComponent from "../../../components/Page/footer";
+import TitleComponent from "../../../components/Page/title";
+import SelectComponent from "../../../components/Selector/select";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Close, Visibility, VisibilityOff } from "@mui/icons-material";
@@ -25,14 +25,14 @@ import {
   TextField,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import AsyncAutoComplete from "../../components/AutoComplete/auto-complete";
-import { API_URL } from "../../constants/api_url";
-import { DATA_STATUS } from "../../constants/data_status";
-import { HTTP_STATUS } from "../../constants/http_status";
-import { KEY_POST } from "../../constants/key_post";
-import { UserModel } from "../../models/user.model";
-import { userService } from "../../services/user.service.";
-import { ConverterService } from "../../utils/converter";
+import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
+import { API_URL } from "../../../constants/api_url";
+import { DATA_STATUS } from "../../../constants/data_status";
+import { HTTP_STATUS } from "../../../constants/http_status";
+import { KEY_POST } from "../../../constants/key_post";
+import { UserModel } from "../../../models/user.model";
+import { userService } from "../../../services/user.service.";
+import { ConverterService } from "../../../utils/converter";
 
 const shrinkOpt = { shrink: true };
 
@@ -40,7 +40,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const UpsertUserForm = (props) => {
+const UpsertDisplaySetting = (props) => {
   const { open, onCloseModal, handleEventSucceed, user } = props;
 
   const {
@@ -244,17 +244,7 @@ const UpsertUserForm = (props) => {
           >
             <Grid item xs={12}>
               <TextField
-                label={<LabelRequire label="Staff ID" />}
-                sx={{ width: "100%" }}
-                {...register("staffId")}
-                size="small"
-                error={errors?.staffId ? true : false}
-                helperText={errors?.staffId?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label={<LabelRequire label="First Name" />}
+                label={<LabelRequire label="Username" />}
                 sx={{ width: "100%" }}
                 {...register("firstName")}
                 size="small"
@@ -263,18 +253,8 @@ const UpsertUserForm = (props) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                label={<LabelRequire label="Last Name" />}
-                sx={{ width: "100%" }}
-                {...register("secondName")}
-                size="small"
-                error={errors?.secondName ? true : false}
-                helperText={errors?.secondName?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
               <AsyncAutoComplete
-                id="department-id"
+                id="Role"
                 label="Department"
                 size="small"
                 callToApi={API_URL.lookup.department.get}
@@ -475,4 +455,4 @@ const UpsertUserForm = (props) => {
   );
 };
 
-export default UpsertUserForm;
+export default UpsertDisplaySetting;

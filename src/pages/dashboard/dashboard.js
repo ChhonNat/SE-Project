@@ -1,4 +1,10 @@
 //===============sideBar=======================================================================================================
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import PersonIcon from '@mui/icons-material/Person';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import RoomServiceIcon from '@mui/icons-material/RoomService';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import { Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -14,6 +20,8 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
 import "../../App.css";
+import Axis from '../../components/elements/Charts/Axis ';
+import StackedBarChart from '../../components/elements/Charts/StackedBarChart';
 import { StringToColor } from "../../constants/random-color";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -33,20 +41,24 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "center",
   color: theme.palette.text.secondary,
   border: 'none',
+  height: '8vh'
 }));
 
+// random color
+const randomColor = (name) => {
+  return {
+    sx: {
+      bgcolor: StringToColor(name),
+      color: '#fff'
+    }
+  }
+};
 
 //appBar==============================
 
 export default function MiniDrawer() {
-  // random color
-  const randomColor = (name) => {
-    return {
-      sx: {
-        bgcolor: StringToColor(name),
-      }
-    }
-  };
+
+  const passColor = randomColor('Calender');
 
   //table==================
   function createData(name, calories, fat, carbs, protein) {
@@ -61,62 +73,229 @@ export default function MiniDrawer() {
 
   return (
     <>
-      <DrawerHeader />
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2} columns={12}>
           <Grid sm={6} md={3}>
             <Item
-              {...randomColor("Morning")}
+              {...randomColor("Servicses")}
               className="hoverBorder"
             >
-              <span className="textDescri">Morning</span>
-              <br></br>
-              <br></br>
-              07:00 AM<br></br>
-              12:10 PM<br></br>
+              <Stack
+                direction={'row'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                p={2}
+                m={2}
+                position={'relative'}
+                width={'100%'}
+              // height={'120px'}
+              >
+                <RoomServiceIcon
+                  sx={{
+                    fontSize: "3rem",
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                  }}
+                />
+                <Stack
+                  direction={'column'}
+                >
+                  <Typography
+                    variant="button"
+                    fontSize={18}
+                  >
+                    Servicses
+                  </Typography>
+                  <Typography
+                    variant="h3"
+                  >
+                    4
+                  </Typography>
+                </Stack>
+              </Stack>
             </Item>
           </Grid>
+
           <Grid sm={6} md={3}>
             <Item
-              {...randomColor("Afternoon")}
+              {...randomColor("counters")}
               className="hoverBorder"
             >
-              <span className="textDescri">Afternoon</span>
-              <br></br>
-              <br></br>
-              12:00 PM<br></br>
-              06:10 PM<br></br>
+              <Stack
+                direction={'row'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                p={2}
+                m={2}
+                position={'relative'}
+                width={'100%'}
+              // height={'120px'}
+              >
+                <SupportAgentIcon
+                  sx={{
+                    fontSize: 50,
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                  }}
+                />
+                <Stack
+                  direction={'column'}
+                >
+                  <Typography
+                    variant="button"
+                    fontSize={18}
+                  >
+                    counters
+                  </Typography>
+                  <Typography
+                    variant="h3"
+                  >
+                    8
+                  </Typography>
+                </Stack>
+              </Stack>
             </Item>
           </Grid>
+
           <Grid sm={6} md={3}>
             <Item
-              {...randomColor("Even ing")}
+              {...randomColor("users")}
               className="hoverBorder"
             >
-              <span className="textDescri">Evening</span>
-              <br></br>
-              <br></br>
-              00:00 AM<br></br>
-              00:00 PM<br></br>
+              <Stack
+                direction={'row'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                p={2}
+                m={2}
+                position={'relative'}
+                width={'100%'}
+              // height={'120px'}
+              >
+                <PersonIcon
+                  sx={{
+                    fontSize: 50,
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                  }}
+                />
+                <Stack
+                  direction={'column'}
+                >
+                  <Typography
+                    variant="button"
+                    fontSize={18}
+                  >
+                    users
+                  </Typography>
+                  <Typography
+                    variant="h3"
+                  >
+                    12
+                  </Typography>
+                </Stack>
+              </Stack>
             </Item>
           </Grid>
+
           <Grid sm={6} md={3}>
             <Item
-              {...randomColor("YourShi ft")}
+              {...randomColor("tokens")}
               className="hoverBorder"
             >
-              <span className="textDescri">Your Shift</span>
-              <br></br>
-              <br></br>
-              M: 08:00 - 12:00<br></br>
-              A: 12:00 - 06:00 PM<br></br>
+              <Stack
+                direction={'row'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                p={2}
+                m={2}
+                position={'relative'}
+                width={'100%'}
+              // height={'120px'}
+              >
+                <ConfirmationNumberIcon
+                  sx={{
+                    fontSize: 50,
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                  }}
+                />
+                <Stack
+                  direction={'column'}
+                >
+                  <Typography
+                    variant="button"
+                    fontSize={18}
+                  >
+                    tokens
+                  </Typography>
+                  <Typography
+                    variant="h3"
+                  >
+                    78
+                  </Typography>
+                </Stack>
+              </Stack>
             </Item>
           </Grid>
+
         </Grid>
-      </Box>
+      </Box >
+
+      <DrawerHeader />
+
+      <Typography variant='h6' gutterBottom>Average of visitors yearly</Typography>
+
+      <DrawerHeader />
+
+      <Stack
+        direction={'row'}
+        justifyContent={'space-around'}
+        alignItems={'center'}
+      >
+        <Stack
+          direction={'column'}
+          justifyContent={'center'}
+        >
+          <Stack
+            direction={'row'}
+            alignContent={'center'}
+            spacing={1}
+          >
+            <RadioButtonCheckedIcon fontSize='small' />
+            <Typography variant="body2" gutterBottom>
+              Average monthly visitors
+            </Typography>
+          </Stack>
+          <StackedBarChart />
+        </Stack>
+
+        <Stack
+          direction={'column'}
+          justifyContent={'center'}
+        >
+          <Stack
+            direction={'row'}
+            alignContent={'center'}
+            spacing={1}
+          >
+            <RadioButtonCheckedIcon fontSize='small' />
+            <Typography variant="body2" gutterBottom>
+              Average yearly visitors
+            </Typography>
+          </Stack>
+          <Axis />
+        </Stack>
+      </Stack>
+
+      <DrawerHeader />
       <br></br>
       <Typography>Public Holiday</Typography>
-      <p className="supDescr">as of December 2022</p>
+      <p className="supDescr">as of December 2023</p>
       <Box sx={{ flexGrow: 1, p: 2 }}>
         <Grid
           container

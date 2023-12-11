@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import AsyncDatatable from "../../components/AsyncDataTable/async-data-table";
-import { API_URL } from "../../constants/api_url";
-import { TABLE_CONFIG } from "../../utils/table-config";
-import UpsertUserForm from "./form-upsert-user.modal";
+import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
+import { API_URL } from "../../../constants/api_url";
+import { TABLE_CONFIG } from "../../../utils/table-config";
+import UpsertCounterForm from "./form-upsert-counter.modal";
 
-const HomeUser = () => {
+const HomeCounter = () => {
 
     const [openModal, setOpenModal] = useState(false);
     const [isReload, setIsReload] = useState(false);
@@ -13,9 +13,9 @@ const HomeUser = () => {
     return (
         <>
             <AsyncDatatable
-                asyncURL={API_URL.user.get}
-                headers={TABLE_CONFIG.tblUser}
-                bannerText="All Users"
+                asyncURL={API_URL.counter.get}
+                headers={TABLE_CONFIG.tbCounter}
+                bannerText="Counters"
                 searchPlaceHolder="Search"
                 ordinal="asc"
                 setOrdinalBy="id"
@@ -38,7 +38,7 @@ const HomeUser = () => {
 
             {
                 openModal &&
-                <UpsertUserForm
+                <UpsertCounterForm
                     open={openModal}
                     onCloseModal={() => {
                         setEditUser({})
@@ -54,4 +54,4 @@ const HomeUser = () => {
     )
 }
 
-export default HomeUser;
+export default HomeCounter;
