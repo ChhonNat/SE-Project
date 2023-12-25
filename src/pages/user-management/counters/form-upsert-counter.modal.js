@@ -1,7 +1,6 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import LabelRequire from "../../../components/Label/require";
-import MultiSelectComponent from "../../../components/MultiSelector/select";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
 import SelectComponent from "../../../components/Selector/select";
@@ -25,8 +24,6 @@ import {
   TextField,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
-import { API_URL } from "../../../constants/api_url";
 import { DATA_STATUS } from "../../../constants/data_status";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
@@ -219,7 +216,7 @@ const UpsertCounterForm = (props) => {
       onClose={onCloseModal}
     >
       <DialogTitle>
-        <TitleComponent title={user?.id ? "Edit Uer" : "Add New User"} />
+        <TitleComponent title={user?.id ? "Edit Counter" : "Add New Counter"} />
         {onCloseModal ? (
           <IconButton
             aria-label="close"
@@ -250,93 +247,6 @@ const UpsertCounterForm = (props) => {
                 size="small"
                 error={errors?.firstName ? true : false}
                 helperText={errors?.firstName?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <AsyncAutoComplete
-                id="Role"
-                label="Department"
-                size="small"
-                callToApi={API_URL.lookup.department.get}
-                bindField={"nameEn"}
-                handleOnChange={(e, value) => {
-                  setValue("departmentId", value?.id);
-                }}
-                value={watchUser?.departmentId || null}
-                isRequire={true}
-                err={errors?.departmentId?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <MultiSelectComponent
-                id="role-id"
-                label="Role"
-                isRequire={true}
-                size="small"
-                isSubmit={isSubmitForm}
-                customDatas={[]}
-                callToApi={API_URL.role.get}
-                value={user?.id ? user?.roles : watchUser.roles}
-                bindField="authority"
-                handleEventChange={(e) => setValue("roles", e)}
-                err={errors?.roles?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <SelectComponent
-                label={<LabelRequire label="Gender" />}
-                customDatas={["Male", "Female"]}
-                size="small"
-                error={errors?.gender ? true : false}
-                handleOnChange={(e) => setValue("gender", e?.target?.value)}
-                value={watchUser?.gender}
-                err={errors?.gender?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type="date"
-                label={<LabelRequire label="Birth Date" />}
-                sx={{ width: "100%" }}
-                InputLabelProps={shrinkOpt}
-                {...register("birthDate")}
-                size="small"
-                error={errors?.birthDate ? true : false}
-                helperText={errors?.birthDate?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type="email"
-                label={<LabelRequire label="Email" />}
-                sx={{ width: "100%" }}
-                {...register("email")}
-                size="small"
-                error={errors?.email ? true : false}
-                helperText={errors?.email?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type="phone"
-                label={<LabelRequire label="Phone Number" />}
-                sx={{ width: "100%" }}
-                {...register("phoneNumber")}
-                size="small"
-                error={errors?.phoneNumber ? true : false}
-                helperText={errors?.phoneNumber?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type="text"
-                label={<LabelRequire label="Username" />}
-                sx={{ width: "100%" }}
-                {...register("username")}
-                size="small"
-                error={errors?.username ? true : false}
-                helperText={errors?.username?.message}
-                // disabled={user?.id}
               />
             </Grid>
             <Grid item xs={12}>

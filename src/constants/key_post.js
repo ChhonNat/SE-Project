@@ -225,19 +225,14 @@ const committee = [
 ];
 
 const user = [
-    "staffId",
-    "firstName",
-    "secondName",
-    "gender",
-    "birthDate",
-    "email",
-    "phoneNumber",
     "username",
-    "password",
-    "confirmPassword",
+    "phone_number",
+    "email",
+    "rolesId",
+    "permissions",
+    // "password",
+    // "password_confirmed",
     "status",
-    "roles",
-    "department"
 ]
 
 export const KEY_POST = {

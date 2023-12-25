@@ -1,11 +1,3 @@
-import React, { forwardRef, useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import LabelRequire from "../../../components/Label/require";
-import MultiSelectComponent from "../../../components/MultiSelector/select";
-import FooterComponent from "../../../components/Page/footer";
-import TitleComponent from "../../../components/Page/title";
-import SelectComponent from "../../../components/Selector/select";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Close, Visibility, VisibilityOff } from "@mui/icons-material";
 import {
@@ -24,15 +16,20 @@ import {
   Slide,
   TextField,
 } from "@mui/material";
+import React, { forwardRef, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
+import Swal from "sweetalert2";
+import LabelRequire from "../../../components/Label/require";
+import CheckboxesTags from "../../../components/MultiAutoComplete/CheckboxesTags";
+import FooterComponent from "../../../components/Page/footer";
+import TitleComponent from "../../../components/Page/title";
+import SelectComponent from "../../../components/Selector/select";
 import { API_URL } from "../../../constants/api_url";
-import { DATA_STATUS } from "../../../constants/data_status";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
 import { UserModel } from "../../../models/user.model";
 import { userService } from "../../../services/user.service.";
-import { ConverterService } from "../../../utils/converter";
+import AsyncAutoComplete from './../../../components/AutoComplete/auto-complete';
 
 const shrinkOpt = { shrink: true };
 
@@ -61,18 +58,32 @@ const UpsertUserForm = (props) => {
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
   const [isSubmitForm, setIsSubmitForm] = useState(false);
 
-  const formatKeys = ["birthDate", "roles", "department"];
+  // const splitPermissions = (permissionsString) => {
+  //   // Split the string by comma and trim any extra spaces
+  //   const permissionsArray = permissionsString.split(',').map(permission => permission.trim());
+  //   return permissionsArray;
+  // }
 
+  const handlesetValue = (e, value) => {
+    const permissionNames = value.map(item => item.name); // Extract 'name' from each object
+    setValue("permissions", permissionNames);
+  }
   useEffect(() => {
 
     reset();
     clearErrors();
 
     if (user?.id && open) {
+      // console.log(user);
       Object.keys(user).forEach((key) => {
         if (KEY_POST.user.includes(key)) {
-          if (formatKeys.includes(key)) {
-            key === 'department' ? setValue('departmentId',user[key]?.id) : setValue(key, ConverterService.convertUnixDateToMUI(user[key]));
+          if (key === "rolesId") {
+            setValue('roles', parseInt(user[key]));
+          } else if (key === "permissions") {
+            const tmp = user[key].split(',').map(permission => ({ name: permission.trim() }));
+            const holdArr = tmp.map(item => item.name);
+            console.log(holdArr);
+            setValue(key, holdArr);
           } else {
             setValue(key, user[key]);
           }
@@ -94,79 +105,36 @@ const UpsertUserForm = (props) => {
   };
 
   const onError = (data) => {
-    setIsSubmitForm(true);
-
-    if (user?.id) {
-      if (watchUser?.password || watchUser?.confirmPassword) {
-        if (watchUser?.password !== watchUser?.confirmPassword)
-          setError("confirmPassword", {
-            message: "Confirm password doesn't match!",
-          });
-      }
-    }
-
-    if (!watchUser?.roles?.length)
-      setError("roles", { message: "Role is required!" });
+    console.log("Error: ", data);
   };
 
   const submit = async (data) => {
+    // console.log(data);
     if (user?.id) {
-      if (watchUser?.password || watchUser?.confirmPassword) {
-        if (watchUser?.password !== watchUser?.confirmPassword) {
-          setError("confirmPassword", {
-            message: "Confirm password doesn't match!",
-          });
-          return false;
-        }
-      }
+      // if (watchUser?.password || watchUser?.password_confirmed) {
+      //   if (watchUser?.password !== watchUser?.password_confirmed) {
+      //     setError("password_confirmed", {
+      //       message: "Confirm password doesn't match!",
+      //     });
+      //     return false;
+      //   }
+      // }
+
     }
 
     const submitData = {};
 
     Object.keys(data).forEach((key) => {
       if (KEY_POST.user.includes(key) && !user?.id) {
-        if (formatKeys[0] === key) {
-          submitData[key] = ConverterService.convertDateToAPI(data[key]);
-        } else {
-          submitData[key] = data[key];
-        }
+        // if(key.toLocaleLowerCase() === "roles")
+
+        submitData[key] = data[key];
       } else {
-        if (formatKeys.includes(key)) {
-          if (formatKeys[0] === key) {
-            submitData[key] = ConverterService.convertDateToAPI(data[key]);
-          }
-
-          if (formatKeys[1] === key) {
-            const oldRoles = [...user?.roles];
-            const mapRole = {};
-
-            if (oldRoles?.length) {
-              oldRoles.forEach((ele) => {
-                if (!ele?.id) {
-                  mapRole = {};
-                }
-
-                mapRole[ele?.id] = ele;
-              });
-            }
-
-            if (typeof data[key] === "string") data[key] = oldRoles;
-
-            data[key] = data[key].map((ele) => {
-              const isObject = typeof ele === "object";
-              return isObject
-                ? { id: ele?.id, recId: ele?.recId }
-                : {
-                    id: mapRole[ele] ? mapRole[ele]?.id : ele,
-                    recId: mapRole[ele] ? mapRole[ele]?.recId : 0,
-                  };
-            });
-
-            submitData[key] = data[key];
-          }
-        } else {
-          submitData[key] = data[key];
-        }
+        if (key === "status") {
+          if (data[key].toLowerCase() === "inactive") {
+            submitData[key] = 0;
+          } else submitData[key] = 1;
+        } else submitData[key] = data[key];
       }
     });
 
@@ -176,22 +144,20 @@ const UpsertUserForm = (props) => {
       if (user?.id)
         submitUser = await userService.updateUser(user?.id, submitData);
       else submitUser = await userService.createUser(submitData);
-
       const { status, data } = submitUser;
       const { message } = data;
 
       if (status === HTTP_STATUS.success) {
-        if (data?.status === DATA_STATUS.success) handleEventSucceed();
+        if (data?.success) handleEventSucceed();
 
         /**
          * Alert after request responses
          */
         Swal.fire({
-          title: data?.status === DATA_STATUS.success ? "Success" : "Error",
+          title: data?.success ? "Success" : "Error",
           text: message,
-          icon: data?.status === DATA_STATUS.success ? "success" : "error",
+          icon: data?.success ? "success" : "error",
           confirmButtonText: "OK",
-          size: 200,
         });
 
         handleCloseModal();
@@ -206,8 +172,6 @@ const UpsertUserForm = (props) => {
     clearErrors();
     onCloseModal();
   };
-
-  const [t, setT] = useState(null);
 
   return (
     <Dialog
@@ -244,85 +208,24 @@ const UpsertUserForm = (props) => {
           >
             <Grid item xs={12}>
               <TextField
-                label={<LabelRequire label="Staff ID" />}
+                type="text"
+                label={<LabelRequire label="Username" />}
                 sx={{ width: "100%" }}
-                {...register("staffId")}
+                {...register("username")}
                 size="small"
-                error={errors?.staffId ? true : false}
-                helperText={errors?.staffId?.message}
+                error={errors?.username ? true : false}
+                helperText={errors?.username?.message}
+              // disabled={user?.id}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                label={<LabelRequire label="First Name" />}
+                label={<LabelRequire label="Phone Number" />}
                 sx={{ width: "100%" }}
-                {...register("firstName")}
+                {...register("phone_number")}
                 size="small"
-                error={errors?.firstName ? true : false}
-                helperText={errors?.firstName?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label={<LabelRequire label="Last Name" />}
-                sx={{ width: "100%" }}
-                {...register("secondName")}
-                size="small"
-                error={errors?.secondName ? true : false}
-                helperText={errors?.secondName?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <AsyncAutoComplete
-                id="department-id"
-                label="Department"
-                size="small"
-                callToApi={API_URL.lookup.department.get}
-                bindField={"nameEn"}
-                handleOnChange={(e, value) => {
-                  setValue("departmentId", value?.id);
-                }}
-                value={watchUser?.departmentId || null}
-                isRequire={true}
-                err={errors?.departmentId?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <MultiSelectComponent
-                id="role-id"
-                label="Role"
-                isRequire={true}
-                size="small"
-                isSubmit={isSubmitForm}
-                customDatas={[]}
-                callToApi={API_URL.role.get}
-                value={user?.id ? user?.roles : watchUser.roles}
-                bindField="authority"
-                handleEventChange={(e) => setValue("roles", e)}
-                err={errors?.roles?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <SelectComponent
-                label={<LabelRequire label="Gender" />}
-                customDatas={["Male", "Female"]}
-                size="small"
-                error={errors?.gender ? true : false}
-                handleOnChange={(e) => setValue("gender", e?.target?.value)}
-                value={watchUser?.gender}
-                err={errors?.gender?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type="date"
-                label={<LabelRequire label="Birth Date" />}
-                sx={{ width: "100%" }}
-                InputLabelProps={shrinkOpt}
-                {...register("birthDate")}
-                size="small"
-                error={errors?.birthDate ? true : false}
-                helperText={errors?.birthDate?.message}
+                error={errors?.phone_number ? true : false}
+                helperText={errors?.phone_number?.message}
               />
             </Grid>
             <Grid item xs={12}>
@@ -337,117 +240,135 @@ const UpsertUserForm = (props) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                type="phone"
-                label={<LabelRequire label="Phone Number" />}
-                sx={{ width: "100%" }}
-                {...register("phoneNumber")}
+              <AsyncAutoComplete
+                id="rolesID"
+                label={<LabelRequire label="Roles" />}
                 size="small"
-                error={errors?.phoneNumber ? true : false}
-                helperText={errors?.phoneNumber?.message}
+                callToApi={API_URL.lookup.roles.get}
+                bindField={"name"}
+                handleOnChange={(e, value) => {
+                  setValue("roles", value?.id);
+                }}
+                value={watchUser?.roles || null}
+                err={errors?.roles?.message}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type="text"
-                label={<LabelRequire label="Username" />}
-                sx={{ width: "100%" }}
-                {...register("username")}
-                size="small"
-                error={errors?.username ? true : false}
-                helperText={errors?.username?.message}
-                // disabled={user?.id}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl
-                variant="outlined"
-                sx={{ width: "100%" }}
-                size="small"
-              >
-                <InputLabel
-                  htmlFor="outlined-adornment-password"
-                  error={errors?.password ? true : false}
-                >
-                  {user?.id ? "Password" : <LabelRequire label="Password" />}
-                </InputLabel>
-                <OutlinedInput
-                  id="password"
-                  type={showPwd ? "text" : "password"}
-                  sx={{ width: "100%" }}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleShowPwd}
-                        onMouseDown={handleMouseDownPwd}
-                        edge="end"
-                      >
-                        {showPwd ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
-                  size="small"
-                  {...register("password")}
-                  error={errors?.confirmPassword ? true : false}
-                  helperText={errors?.confirmPassword?.message}
-                />
-                <FormHelperText
-                  id="error-password"
-                  error={errors?.password ? true : false}
-                >
-                  {errors?.password?.message}
-                </FormHelperText>
-              </FormControl>
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl
-                variant="outlined"
-                sx={{ width: "100%" }}
+              <CheckboxesTags
+                id="Permission_id"
+                label={<LabelRequire label="Permissions" />}
                 size="small"
-              >
-                <InputLabel
-                  htmlFor="outlined-adornment-password"
-                  error={errors?.confirmPassword ? true : false}
-                >
-                  {user?.id ? (
-                    "Confirm Password"
-                  ) : (
-                    <LabelRequire label="Confirm Password" />
-                  )}
-                </InputLabel>
-                <OutlinedInput
-                  id="password-id"
-                  type={showConfirmPwd ? "text" : "password"}
-                  sx={{ width: "100%" }}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleShowConfirmPwd}
-                        onMouseDown={handleMouseDownPwd}
-                        edge="end"
-                      >
-                        {showConfirmPwd ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Confirm Password"
-                  size="small"
-                  {...register("confirmPassword")}
-                  error={errors?.confirmPassword ? true : false}
-                  helperText={errors?.confirmPassword?.message}
-                />
-                <FormHelperText
-                  id="error-password"
-                  error={errors?.confirmPassword ? true : false}
-                >
-                  {errors?.confirmPassword?.message}
-                </FormHelperText>
-              </FormControl>
+                callToApi={API_URL.lookup.permissions.get}
+                bindField={"name"}
+                handleOnChange={(e, value) => {
+                  const permissionNames = value.map(item => item.name);
+                  setValue("permissions", permissionNames);
+                }}
+                value={
+                  user.id
+                    ? (
+                      user?.permissions.split(',').map(permission => ({ name: permission.trim() }))
+                    )
+                    : watchUser?.permission
+                }
+                err={errors?.permissions?.message}
+              />
             </Grid>
+
+            {!user.id &&
+              <>
+                <Grid item xs={12}>
+                  <FormControl
+                    variant="outlined"
+                    sx={{ width: "100%" }}
+                    size="small"
+                  >
+                    <InputLabel
+                      htmlFor="outlined-adornment-password"
+                      error={errors?.password ? true : false}
+                    >
+                      {user?.id ? "Password" : <LabelRequire label="Password" />}
+                    </InputLabel>
+                    <OutlinedInput
+                      id="password"
+                      type={showPwd ? "text" : "password"}
+                      sx={{ width: "100%" }}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleShowPwd}
+                            onMouseDown={handleMouseDownPwd}
+                            edge="end"
+                          >
+                            {showPwd ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                      size="small"
+                      {...register("password")}
+                      error={errors?.password_confirmed ? true : false}
+                      helperText={errors?.password_confirmed?.message}
+                    />
+                    <FormHelperText
+                      id="error-password"
+                      error={errors?.password ? true : false}
+                    >
+                      {errors?.password?.message}
+                    </FormHelperText>
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <FormControl
+                    variant="outlined"
+                    sx={{ width: "100%" }}
+                    size="small"
+                  >
+                    <InputLabel
+                      htmlFor="outlined-adornment-password"
+                      error={errors?.password_confirmed ? true : false}
+                    >
+                      {user?.id ? (
+                        "Confirm Password"
+                      ) : (
+                        <LabelRequire label="Confirm Password" />
+                      )}
+                    </InputLabel>
+                    <OutlinedInput
+                      id="password-id"
+                      type={showConfirmPwd ? "text" : "password"}
+                      sx={{ width: "100%" }}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleShowConfirmPwd}
+                            onMouseDown={handleMouseDownPwd}
+                            edge="end"
+                          >
+                            {showConfirmPwd ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Confirm Password"
+                      size="small"
+                      {...register("password_confirmed")}
+                      error={errors?.password_confirmed ? true : false}
+                      helperText={errors?.password_confirmed?.message}
+                    />
+                    <FormHelperText
+                      id="error-password"
+                      error={errors?.password_confirmed ? true : false}
+                    >
+                      {errors?.password_confirmed?.message}
+                    </FormHelperText>
+                  </FormControl>
+                </Grid>
+              </>
+            }
 
             {user?.id && (
               <Grid item xs={12}>

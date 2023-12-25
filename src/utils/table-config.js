@@ -998,11 +998,6 @@ const tbCounter = [
     label: "Username",
   },
   {
-    id: "roles",
-    label: "Role",
-    arrayId: "authority",
-  },
-  {
     id: "status",
     label: "Status",
     type: "status",
@@ -1024,15 +1019,11 @@ const tblUser = [
     label: "No.",
   },
   {
-    id: "fullName",
-    label: "Full Name",
-  },
-  {
     id: "username",
     label: "Username",
   },
   {
-    id: "phoneNumber",
+    id: "phone_number",
     label: "Phone Number",
   },
   {
@@ -1049,14 +1040,19 @@ const tblUser = [
     },
   },
   {
-    id: "createdAt",
+    id: "created_at",
     label: "Created At",
     type: "date",
-    dateFormat: "MMM DD, YYYY hh:mm:ss A",
+    dateFormat: "MMM DD, YYYY hh:mm A",
   },
   {
     id: "roles",
     label: "Role",
+    arrayId: "authority",
+  },
+  {
+    id: "permissions",
+    label: "Permissions",
     arrayId: "authority",
   },
   {

@@ -35,9 +35,8 @@ export const userAuthentication = ({ email, password }) => {
     const authenticates = async () => {
 
       // const response = await axios.post(`${appConfig.apiLink}/api/v1/login`, postData, options)
-      const response = await axios.post(`${appConfig.localApi}/api/user/login`, postData, options)
+      const response = await axios.post(`${appConfig.localApi}/api/login`, postData, options)
         .then(function (result) {
-
           return result;
         })
         .catch((error) => {
@@ -55,19 +54,18 @@ export const userAuthentication = ({ email, password }) => {
           return error;
         });
 
-      const responseData = response?.data;
+      const responseData = response?.data?.data;
       const responseUser = {
-        username: responseData?.user?.name,
-        token: responseData.accessToken,
+        username: responseData?.username,
+        token: responseData?.token,
         refreshToken: responseData.refreshToken,
         isError: false,
         errorMessage: '',
         isAuthenticated: true,
         roles: responseData?.user?.grantedAuthorities,
         // staffId: responseData?.user?.staffId,
-        staffId: responseData?.user?.id,
+        staffId: responseData?.user_id,
       };
-
       return responseUser;
     };
 

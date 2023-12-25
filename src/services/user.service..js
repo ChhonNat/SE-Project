@@ -7,7 +7,7 @@ const createUser = (param, contentType) => {
 };
 
 const updateUser = (id, param, contentType) => {
-    return httpService._put(API_URL.user.edit+id, param, contentType);
+    return httpService._put(API_URL.user.update+id, param, contentType);
 };
 
 export const userService = {

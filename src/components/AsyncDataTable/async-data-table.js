@@ -56,7 +56,6 @@ const AsyncDatatable = (props) => {
   const { data, loading, error, message, sendRequest, totalRecords } = _useHttp();
   const [initialData, setInitialData] = useState([]);
 
-
   useEffect(() => {
 
     if (!loading && !error) {
@@ -80,9 +79,9 @@ const AsyncDatatable = (props) => {
     // ordinal: order,
 
     let postData = {
-      searchParams: {
-        searchValue: searchValue
-      },
+      // searchParams: {
+      //   searchValue: searchValue
+      // },
       columnOrder: "ordering",
       orderBy: "ASC",
       limit: rowsPerPage,
@@ -98,7 +97,7 @@ const AsyncDatatable = (props) => {
       postData.searchParams.searchValue = searchValue;
     };
 
-    await sendRequest(asyncURL, 'POST', postData);
+    await sendRequest(asyncURL, 'GET', postData);
   },
     [sendRequest, asyncURL, rowsPerPage, orderBy, order, page, isFilterChanged]
   );

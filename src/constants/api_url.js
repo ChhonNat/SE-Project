@@ -1,4 +1,5 @@
 const API_VERSION = '/api/v1';
+const API_LOCAL = '/api';
 
 
 export const API_URL = {
@@ -143,11 +144,11 @@ export const API_URL = {
     },
 
     lookup: {
-        listGDoc: {
-            get: `${API_VERSION}/group-document/list-group-documents`
+        roles: {
+            get: `${API_LOCAL}/roles`
         },
-        listMCate: {
-            get: `${API_VERSION}/main-category/list-main-categories`
+        permissions: {
+            get: `${API_LOCAL}/permission`
         },
         subCate: {
             get: `${API_VERSION}/sub-category/list-sub-categories`
@@ -213,14 +214,14 @@ export const API_URL = {
     },
 
     counter: {
-        get: `${API_VERSION}/users/search`,
-        create: `${API_VERSION}/users`,
+        create: `${API_VERSION}/users/search`,
+        get: `${API_VERSION}/users`,
         edit: `${API_VERSION}/users/`,
     },
     user: {
-        get: `${API_VERSION}/users/search`,
-        create: `${API_VERSION}/users`,
-        edit: `${API_VERSION}/users/`,
+        get: `${API_LOCAL}/user`,
+        create: `${API_LOCAL}/createUser`,
+        update: `${API_LOCAL}/updareUser/`,
     },
 
     role: {

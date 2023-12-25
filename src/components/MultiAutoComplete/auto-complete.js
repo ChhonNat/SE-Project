@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import _useHttp from "../../hooks/_http";
-import LabelRequire from "../Label/require";
-import { HTTP_METHODS } from "../../constants/http_method";
 import {
   Box,
   CircularProgress,
   ThemeProvider,
   createTheme,
 } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import React, { useEffect, useState } from "react";
+import { HTTP_METHODS } from "../../constants/http_method";
+import _useHttp from "../../hooks/_http";
+import LabelRequire from "../Label/require";
 
 const AsyncMultiAutoComplete = (props) => {
   const {
@@ -31,7 +31,6 @@ const AsyncMultiAutoComplete = (props) => {
   const { data, loading, error, message, sendRequest } = _useHttp();
   const [options, setOptions] = useState([]);
   const [selectOptions, setSelectOptions] = useState(value ? value : []);
-
   /**
    * When callToApi has value request data to display in auto complete
    */
@@ -106,7 +105,7 @@ const AsyncMultiAutoComplete = (props) => {
         renderInput={(params) => (
           <TextField
             {...params}
-            label={
+            label={ 
               isRequire ? (
                 <LabelRequire
                   label={label}

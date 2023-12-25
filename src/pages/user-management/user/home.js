@@ -20,7 +20,7 @@ const HomeUser = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 useTableActions={{
-                        search: true,
+                        search: false,
                         refresh: true,
                         create: true,
                         edit: true

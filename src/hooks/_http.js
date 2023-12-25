@@ -1,8 +1,5 @@
-import { useReducer, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useReducer } from 'react';
 import axiosAPI from '../services/http.service';
-import { HTTP_STATUS } from '../constants/http_status';
-import { API_URL } from '../constants/api_url';
 
 const _httpReducer = (httpState, action) => {
 
@@ -60,7 +57,6 @@ const _useHttp = () => {
 
                     await axiosAPI.get(url, postData)
                         .then(function (result) {
-
                             const { data, success, message, totalRecords } = result?.data;
                             // data.message = message;
 

@@ -1,5 +1,6 @@
 //DEVELOPMENT
-const apiLink = "http://172.168.0.38:8484";
+// const apiLink = "http://172.168.0.38:8484";
+const apiLink = "http://127.0.0.1:8000";
 const localApi = "http://127.0.0.1:8000";
 
 //UTA

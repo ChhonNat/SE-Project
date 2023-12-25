@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { FormHelperText, IconButton } from '@mui/material';
 import Box from '@mui/material/Box';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import Chip from '@mui/material/Chip';
+import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
-import Chip from '@mui/material/Chip';
-import LabelRequire from '../Label/require';
-import { FormHelperText, IconButton } from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
-import _useHttp from '../../hooks/_http';
+import { useTheme } from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
 import { HTTP_METHODS } from '../../constants/http_method';
+import _useHttp from '../../hooks/_http';
+import LabelRequire from '../Label/require';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -73,7 +73,7 @@ const MultiSelectComponent = (props) => {
 
 
     useEffect(() => {
-
+        
         setDatas(callToApi ? data : customDatas)
     }, [customDatas, data]);
 
@@ -104,7 +104,6 @@ const MultiSelectComponent = (props) => {
         setValues(formatValue);
         handleEventChange(formatValue);
     };
-
     return (
 
         <div>

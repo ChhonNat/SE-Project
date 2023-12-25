@@ -1,9 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-import { appConfig } from "../constants/app_cont";
-import { LOCAL_STORAGE_KEYS } from "../constants/local_storage";
-import { HTTP_STATUS } from "../constants/http_status";
 import { API_URL } from "../constants/api_url";
+import { appConfig } from "../constants/app_cont";
+import { HTTP_STATUS } from "../constants/http_status";
+import { LOCAL_STORAGE_KEYS } from "../constants/local_storage";
 
 const reqHeaders = {
     'Accept': 'application/json',
@@ -21,7 +21,6 @@ const axiosAPI = axios.create({
 await axiosAPI.interceptors.request.use((config) => {
 
     const user = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.auth.user));
-
     if (user?.token) {
         config.headers['Authorization'] = 'Bearer ' + user?.token;
     }
