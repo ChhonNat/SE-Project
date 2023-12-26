@@ -1007,10 +1007,10 @@ const tbCounter = [
     },
   },
   {
-    id: "createdAt",
+    id: "created_at",
     label: "Created At",
     type: "date",
-    dateFormat: "MMM DD, YYYY hh:mm:ss A",
+    dateFormat: "MMM DD, YYYY hh:mm A",
   },
 ];
 const tblUser = [

@@ -20,10 +20,10 @@ const HomeCounter = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 useTableActions={{
-                        search: true,
-                        refresh: true,
-                        create: true,
-                        edit: true
+                    search: false,
+                    refresh: true,
+                    create: false,
+                    edit: false,
                 }}
                 onHandleAddNewEvent={() => setOpenModal(true)}
                 handleEditEvent={(data) => {

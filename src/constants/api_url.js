@@ -215,13 +215,14 @@ export const API_URL = {
 
     counter: {
         create: `${API_VERSION}/users/search`,
-        get: `${API_VERSION}/users`,
+        get: `${API_LOCAL}/counters`,
         edit: `${API_VERSION}/users/`,
     },
     user: {
         get: `${API_LOCAL}/user`,
         create: `${API_LOCAL}/createUser`,
-        update: `${API_LOCAL}/updareUser/`,
+        update: `${API_LOCAL}/updateUser/`,
+        delete: `${API_LOCAL}/deleteUser/`,
     },
 
     role: {

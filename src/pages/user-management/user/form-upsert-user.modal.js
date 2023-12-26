@@ -31,8 +31,6 @@ import { UserModel } from "../../../models/user.model";
 import { userService } from "../../../services/user.service.";
 import AsyncAutoComplete from './../../../components/AutoComplete/auto-complete';
 
-const shrinkOpt = { shrink: true };
-
 const TransitionModal = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -56,18 +54,7 @@ const UpsertUserForm = (props) => {
   const watchUser = watch();
   const [showPwd, setShowPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
-  const [isSubmitForm, setIsSubmitForm] = useState(false);
-
-  // const splitPermissions = (permissionsString) => {
-  //   // Split the string by comma and trim any extra spaces
-  //   const permissionsArray = permissionsString.split(',').map(permission => permission.trim());
-  //   return permissionsArray;
-  // }
-
-  const handlesetValue = (e, value) => {
-    const permissionNames = value.map(item => item.name); // Extract 'name' from each object
-    setValue("permissions", permissionNames);
-  }
+  
   useEffect(() => {
 
     reset();
@@ -110,18 +97,6 @@ const UpsertUserForm = (props) => {
 
   const submit = async (data) => {
     // console.log(data);
-    if (user?.id) {
-      // if (watchUser?.password || watchUser?.password_confirmed) {
-      //   if (watchUser?.password !== watchUser?.password_confirmed) {
-      //     setError("password_confirmed", {
-      //       message: "Confirm password doesn't match!",
-      //     });
-      //     return false;
-      //   }
-      // }
-
-    }
-
     const submitData = {};
 
     Object.keys(data).forEach((key) => {
