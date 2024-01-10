@@ -1,6 +1,6 @@
 export const LOCAL_STORAGE_KEYS = {
     auth: {
-        user: 'RECRUITMENT_USR'
+        user: 'QMS_USER'
     },
     sidebar: {
         setActiveSidebar: 'ACTIVE_SIDEBAR',

@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Unstable_Grid2";
 import React from "react";
 import "../../App.css";
-import logo from "../../logo/Q_logo_64.ico";
+import logo from "../../qms/assets/logo/Abadas_logo_verticle.png";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {

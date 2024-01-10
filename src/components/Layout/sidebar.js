@@ -9,7 +9,7 @@ import List from '@mui/material/List';
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import logo from "../../logo/Q_logo_64.ico";
+import logo from "../../qms/assets/logo/abadas_logo_box_white_180.png";
 
 import { styled, useTheme } from "@mui/material/styles";
 import { Link, useLocation } from "react-router-dom";
@@ -79,7 +79,7 @@ const drawerHeader = {
         justifyContent: "center"
     },
     img: {
-        styles: { width: "50px"}
+        styles: { width: "135px"}
     }
 };
 
