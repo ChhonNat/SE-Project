@@ -10,8 +10,8 @@ import { PRIVATE_ROUTES } from "./routers/private_routes";
 import { PUBLIC_ROUTES } from "./routers/public_routes";
 import { isLogin } from "./store/authentication/authenticationService";
 
-const detectedRoute = ["/login", "/screen/counter"];
-const publicCurrentRoutes = ["/", "/login"];
+const detectedRoute = ["/", "/screen/counter"];
+const publicCurrentRoutes = ["/", "/display"];
 
 const App = () => {
   const user = useSelector((state) => state.userAuthendicated);
@@ -22,7 +22,8 @@ const App = () => {
 
   // ditect publice routes
   const ditectPubliceRotes = (current) => {
-    // if()
+    if (publicCurrentRoutes.includes(current)) return current;
+    else return publicCurrentRoutes[0];
   }
 
   useEffect(() => {
@@ -39,12 +40,11 @@ const App = () => {
     if (detectedRoute.includes(pathname) && user?.roles[0] === "admin") {
       user?.isAuthenticated ? navigate(defaultPath) : navigate(loginPath);
     } else if (detectedRoute.includes(pathname) && user?.roles[0] === "counter") {
-      console.log("True: ", pathname);
       user?.isAuthenticated ? navigate(detectedRoute[1]) : navigate(loginPath);
     } else {
       user?.isAuthenticated
         ? navigate(pathname && pathname !== "/" ? pathname : defaultPath)
-        : navigate(pathname)
+        : navigate(ditectPubliceRotes(pathname));
     }
   }, [user]);
 

@@ -15,7 +15,7 @@ export const PUBLIC_ROUTES = [
     },
     {
         name: "Login",
-        path: "/login",
+        path: "/*",
         component: <Login />,
         children: [
 

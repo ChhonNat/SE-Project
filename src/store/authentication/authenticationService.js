@@ -65,6 +65,7 @@ export const userAuthentication = ({ email, password }) => {
         roles: responseData?.roles,
         // staffId: responseData?.user?.staffId,
         staffId: responseData?.user_id,
+        active: responseData?.status
       };
       return responseUser;
     };
