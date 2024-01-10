@@ -21,6 +21,7 @@ import SpatialAudioOffIcon from '@mui/icons-material/SpatialAudioOff';
 import SubSubCategoryIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import { appConfig } from "../constants/app_cont";
+import { USER_ROLES } from "../constants/roles";
 /**
  * Import all page components
  */
@@ -143,6 +144,7 @@ export const PRIVATE_ROUTES = [
         component: <Dashboard.HomeComponent />,
         icon: <DashboardIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
+        permission: "counter",
         // isHide: true
     },
     /**User Management */
@@ -151,6 +153,7 @@ export const PRIVATE_ROUTES = [
         path: "/user-management",
         icon: <ManageAccountsIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
+        roles: USER_ROLES.admin,
         /**Children settings */
         children: [
 
@@ -181,6 +184,7 @@ export const PRIVATE_ROUTES = [
         path: "/system-confiiguration",
         icon: <DisplaySettingsIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
+        permission: "admin",
         /**Children settings */
         children: [
             {

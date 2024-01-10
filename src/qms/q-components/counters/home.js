@@ -5,10 +5,20 @@ import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { isLogout } from '../../../store/authentication/authenticationService';
 import logo from './../../assets/logo/Abadas_logo_verticle.png';
 import profile from './../../assets/profiles/1.jpg';
 
 export default function Counter() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        dispatch(isLogout());
+        navigate("/login");
+    };
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -25,7 +35,12 @@ export default function Counter() {
                             Sok Kimny
                         </Typography>
                     </Stack>
-                    <Button color="inherit">Login</Button>
+                    <Button
+                        color="inherit"
+                        onClick={handleLogout}
+                    >
+                        Login
+                    </Button>
                 </Toolbar>
             </AppBar>
 
@@ -114,6 +129,7 @@ export default function Counter() {
                             height: '10vh',
                             width: '160px'
                         }}
+
                     >
                         Next call
                     </Button>

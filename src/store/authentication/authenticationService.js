@@ -62,7 +62,7 @@ export const userAuthentication = ({ email, password }) => {
         isError: false,
         errorMessage: '',
         isAuthenticated: true,
-        roles: responseData?.user?.grantedAuthorities,
+        roles: responseData?.roles,
         // staffId: responseData?.user?.staffId,
         staffId: responseData?.user_id,
       };
