@@ -42,7 +42,8 @@ const AsyncDatatable = (props) => {
     handleDeleteEvent,
     handleFilterEvent,
     filter,
-    isFilterChanged
+    isFilterChanged,
+    disableTablePagination
   } = props;
 
 
@@ -378,18 +379,20 @@ const AsyncDatatable = (props) => {
           :
           <Divider/>
         } */}
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 50, 100]}
-          component="div"
-          showFirstButton="true"
-          showLastButton="true"
-          count={rowCount}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+        {disableTablePagination &&
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 50, 100]}
+            component="div"
+            showFirstButton="true"
+            showLastButton="true"
+            count={rowCount}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
 
-        />
+          />
+        }
       </Paper>
     </Box>
   );

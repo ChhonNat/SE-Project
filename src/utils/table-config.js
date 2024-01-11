@@ -1061,6 +1061,46 @@ const tblUser = [
   },
 ];
 
+const tbDisplay = [
+  {
+    id: "index",
+    label: "No.",
+  },
+  {
+    id: "description",
+    label: "Description",
+  },
+  {
+    id: "service_id",
+    label: "Services",
+  },
+  {
+    id: "created_at",
+    label: "Created At",
+    type: "date",
+    dateFormat: "MMM DD, YYYY hh:mm A",
+  },
+  {
+    id: "updated_at",
+    label: "Update At",
+    type: "date",
+    dateFormat: "MMM DD, YYYY hh:mm A",
+  },
+  {
+    id: "status",
+    label: "Status",
+    type: "status",
+    statusColor: {
+      [STATUS.RECORD.ACTIVE]: "green",
+      [STATUS.RECORD.INACTIVE]: "red",
+    },
+  },
+  {
+    id: "action",
+    label: "Actions",
+  },
+];
+
 export const TABLE_CONFIG = {
   tblDocEntry,
   tblGroupDocument,
@@ -1085,4 +1125,5 @@ export const TABLE_CONFIG = {
   tblCampus,
   tbCounter,
   tblUser,
+  tbDisplay
 };

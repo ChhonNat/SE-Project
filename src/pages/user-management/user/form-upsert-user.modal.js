@@ -28,7 +28,7 @@ import { API_URL } from "../../../constants/api_url";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
 import { UserModel } from "../../../models/user.model";
-import { userService } from "../../../services/user.service.";
+import { userService } from "../../../services/user.service";
 import AsyncAutoComplete from './../../../components/AutoComplete/auto-complete';
 
 const TransitionModal = forwardRef(function Transition(props, ref) {

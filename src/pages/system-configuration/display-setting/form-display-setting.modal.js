@@ -1,28 +1,22 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import LabelRequire from "../../../components/Label/require";
-import MultiSelectComponent from "../../../components/MultiSelector/select";
 import FooterComponent from "../../../components/Page/footer";
 import TitleComponent from "../../../components/Page/title";
 import SelectComponent from "../../../components/Selector/select";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Close, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import {
   Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
-  FormHelperText,
   Grid,
   IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
   Slide,
-  TextField,
+  TextField
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import AsyncAutoComplete from "../../../components/AutoComplete/auto-complete";
@@ -30,8 +24,8 @@ import { API_URL } from "../../../constants/api_url";
 import { DATA_STATUS } from "../../../constants/data_status";
 import { HTTP_STATUS } from "../../../constants/http_status";
 import { KEY_POST } from "../../../constants/key_post";
-import { UserModel } from "../../../models/user.model";
-import { userService } from "../../../services/user.service.";
+import { vdoModel } from "../../../models/vdo.model";
+import { VdoService } from "../../../services/vdo.service.";
 import { ConverterService } from "../../../utils/converter";
 
 const shrinkOpt = { shrink: true };
@@ -41,7 +35,7 @@ const TransitionModal = forwardRef(function Transition(props, ref) {
 });
 
 const UpsertDisplaySetting = (props) => {
-  const { open, onCloseModal, handleEventSucceed, user } = props;
+  const { open, onCloseModal, handleEventSucceed, display } = props;
 
   const {
     register,
@@ -53,10 +47,10 @@ const UpsertDisplaySetting = (props) => {
     watch,
     setError,
   } = useForm({
-    resolver: zodResolver(user?.id ? UserModel.Update : UserModel.Create),
+    resolver: zodResolver(display?.id ? vdoModel.Update : vdoModel.Create),
   });
 
-  const watchUser = watch();
+  const watchDisplay = watch();
   const [showPwd, setShowPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
   const [isSubmitForm, setIsSubmitForm] = useState(false);
@@ -68,13 +62,13 @@ const UpsertDisplaySetting = (props) => {
     reset();
     clearErrors();
 
-    if (user?.id && open) {
-      Object.keys(user).forEach((key) => {
-        if (KEY_POST.user.includes(key)) {
+    if (display?.id && open) {
+      Object.keys(display).forEach((key) => {
+        if (KEY_POST.display.includes(key)) {
           if (formatKeys.includes(key)) {
-            key === 'department' ? setValue('departmentId',user[key]?.id) : setValue(key, ConverterService.convertUnixDateToMUI(user[key]));
+            key === 'department' ? setValue('departmentId', display[key]?.id) : setValue(key, ConverterService.convertUnixDateToMUI(display[key]));
           } else {
-            setValue(key, user[key]);
+            setValue(key, display[key]);
           }
         }
       });
@@ -95,24 +89,13 @@ const UpsertDisplaySetting = (props) => {
 
   const onError = (data) => {
     setIsSubmitForm(true);
-
-    if (user?.id) {
-      if (watchUser?.password || watchUser?.confirmPassword) {
-        if (watchUser?.password !== watchUser?.confirmPassword)
-          setError("confirmPassword", {
-            message: "Confirm password doesn't match!",
-          });
-      }
-    }
-
-    if (!watchUser?.roles?.length)
-      setError("roles", { message: "Role is required!" });
+    console.log("Error: ", data);
   };
 
   const submit = async (data) => {
-    if (user?.id) {
-      if (watchUser?.password || watchUser?.confirmPassword) {
-        if (watchUser?.password !== watchUser?.confirmPassword) {
+    if (display?.id) {
+      if (watchDisplay?.password || watchDisplay?.confirmPassword) {
+        if (watchDisplay?.password !== watchDisplay?.confirmPassword) {
           setError("confirmPassword", {
             message: "Confirm password doesn't match!",
           });
@@ -124,7 +107,7 @@ const UpsertDisplaySetting = (props) => {
     const submitData = {};
 
     Object.keys(data).forEach((key) => {
-      if (KEY_POST.user.includes(key) && !user?.id) {
+      if (KEY_POST.display.includes(key) && !display?.id) {
         if (formatKeys[0] === key) {
           submitData[key] = ConverterService.convertDateToAPI(data[key]);
         } else {
@@ -137,7 +120,7 @@ const UpsertDisplaySetting = (props) => {
           }
 
           if (formatKeys[1] === key) {
-            const oldRoles = [...user?.roles];
+            const oldRoles = [...display?.roles];
             const mapRole = {};
 
             if (oldRoles?.length) {
@@ -157,9 +140,9 @@ const UpsertDisplaySetting = (props) => {
               return isObject
                 ? { id: ele?.id, recId: ele?.recId }
                 : {
-                    id: mapRole[ele] ? mapRole[ele]?.id : ele,
-                    recId: mapRole[ele] ? mapRole[ele]?.recId : 0,
-                  };
+                  id: mapRole[ele] ? mapRole[ele]?.id : ele,
+                  recId: mapRole[ele] ? mapRole[ele]?.recId : 0,
+                };
             });
 
             submitData[key] = data[key];
@@ -171,13 +154,14 @@ const UpsertDisplaySetting = (props) => {
     });
 
     try {
-      let submitUser;
+      let submitVdo;
 
-      if (user?.id)
-        submitUser = await userService.updateUser(user?.id, submitData);
-      else submitUser = await userService.createUser(submitData);
+      if (display?.id)
+        submitVdo = await VdoService.updateUser(display?.id, submitData);
+      else
+        submitVdo = await VdoService.createUser(submitData);
 
-      const { status, data } = submitUser;
+      const { status, data } = submitVdo;
       const { message } = data;
 
       if (status === HTTP_STATUS.success) {
@@ -219,7 +203,7 @@ const UpsertDisplaySetting = (props) => {
       onClose={onCloseModal}
     >
       <DialogTitle>
-        <TitleComponent title={user?.id ? "Edit Uer" : "Add New User"} />
+        <TitleComponent title={display?.id ? "Edit Video" : "Add New Video"} />
         {onCloseModal ? (
           <IconButton
             aria-label="close"
@@ -244,199 +228,48 @@ const UpsertDisplaySetting = (props) => {
           >
             <Grid item xs={12}>
               <TextField
-                label={<LabelRequire label="Username" />}
+                label={<LabelRequire label="Video Link" />}
                 sx={{ width: "100%" }}
-                {...register("firstName")}
+                {...register("link")}
                 size="small"
-                error={errors?.firstName ? true : false}
-                helperText={errors?.firstName?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <AsyncAutoComplete
-                id="Role"
-                label="Department"
-                size="small"
-                callToApi={API_URL.lookup.department.get}
-                bindField={"nameEn"}
-                handleOnChange={(e, value) => {
-                  setValue("departmentId", value?.id);
-                }}
-                value={watchUser?.departmentId || null}
-                isRequire={true}
-                err={errors?.departmentId?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <MultiSelectComponent
-                id="role-id"
-                label="Role"
-                isRequire={true}
-                size="small"
-                isSubmit={isSubmitForm}
-                customDatas={[]}
-                callToApi={API_URL.role.get}
-                value={user?.id ? user?.roles : watchUser.roles}
-                bindField="authority"
-                handleEventChange={(e) => setValue("roles", e)}
-                err={errors?.roles?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <SelectComponent
-                label={<LabelRequire label="Gender" />}
-                customDatas={["Male", "Female"]}
-                size="small"
-                error={errors?.gender ? true : false}
-                handleOnChange={(e) => setValue("gender", e?.target?.value)}
-                value={watchUser?.gender}
-                err={errors?.gender?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type="date"
-                label={<LabelRequire label="Birth Date" />}
-                sx={{ width: "100%" }}
-                InputLabelProps={shrinkOpt}
-                {...register("birthDate")}
-                size="small"
-                error={errors?.birthDate ? true : false}
-                helperText={errors?.birthDate?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type="email"
-                label={<LabelRequire label="Email" />}
-                sx={{ width: "100%" }}
-                {...register("email")}
-                size="small"
-                error={errors?.email ? true : false}
-                helperText={errors?.email?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                type="phone"
-                label={<LabelRequire label="Phone Number" />}
-                sx={{ width: "100%" }}
-                {...register("phoneNumber")}
-                size="small"
-                error={errors?.phoneNumber ? true : false}
-                helperText={errors?.phoneNumber?.message}
+                error={errors?.link ? true : false}
+                helperText={errors?.link?.message}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 type="text"
-                label={<LabelRequire label="Username" />}
+                label={<LabelRequire label="Description" />}
                 sx={{ width: "100%" }}
-                {...register("username")}
+                {...register("decsription")}
                 size="small"
-                error={errors?.username ? true : false}
-                helperText={errors?.username?.message}
-                // disabled={user?.id}
+                error={errors?.decsription ? true : false}
+                helperText={errors?.decsription?.message}
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControl
-                variant="outlined"
-                sx={{ width: "100%" }}
+              <AsyncAutoComplete
+                id="service_id"
+                label="Service"
                 size="small"
-              >
-                <InputLabel
-                  htmlFor="outlined-adornment-password"
-                  error={errors?.password ? true : false}
-                >
-                  {user?.id ? "Password" : <LabelRequire label="Password" />}
-                </InputLabel>
-                <OutlinedInput
-                  id="password"
-                  type={showPwd ? "text" : "password"}
-                  sx={{ width: "100%" }}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleShowPwd}
-                        onMouseDown={handleMouseDownPwd}
-                        edge="end"
-                      >
-                        {showPwd ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
-                  size="small"
-                  {...register("password")}
-                  error={errors?.confirmPassword ? true : false}
-                  helperText={errors?.confirmPassword?.message}
-                />
-                <FormHelperText
-                  id="error-password"
-                  error={errors?.password ? true : false}
-                >
-                  {errors?.password?.message}
-                </FormHelperText>
-              </FormControl>
+                callToApi={API_URL.lookup.department.get}
+                bindField={"name"}
+                handleOnChange={(e, value) => {
+                  setValue("serviceId", value?.id);
+                }}
+                value={watchDisplay?.serviceId || null}
+                isRequire={true}
+                err={errors?.serviceId?.message}
+              />
             </Grid>
-
-            <Grid item xs={12}>
-              <FormControl
-                variant="outlined"
-                sx={{ width: "100%" }}
-                size="small"
-              >
-                <InputLabel
-                  htmlFor="outlined-adornment-password"
-                  error={errors?.confirmPassword ? true : false}
-                >
-                  {user?.id ? (
-                    "Confirm Password"
-                  ) : (
-                    <LabelRequire label="Confirm Password" />
-                  )}
-                </InputLabel>
-                <OutlinedInput
-                  id="password-id"
-                  type={showConfirmPwd ? "text" : "password"}
-                  sx={{ width: "100%" }}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleShowConfirmPwd}
-                        onMouseDown={handleMouseDownPwd}
-                        edge="end"
-                      >
-                        {showConfirmPwd ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Confirm Password"
-                  size="small"
-                  {...register("confirmPassword")}
-                  error={errors?.confirmPassword ? true : false}
-                  helperText={errors?.confirmPassword?.message}
-                />
-                <FormHelperText
-                  id="error-password"
-                  error={errors?.confirmPassword ? true : false}
-                >
-                  {errors?.confirmPassword?.message}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-
-            {user?.id && (
+            {display?.id && (
               <Grid item xs={12}>
                 <SelectComponent
                   label="Status"
                   customDatas={["Active", "Inactive"]}
                   size="small"
                   handleOnChange={(e) => setValue("status", e?.target?.value)}
-                  value={watchUser?.status}
+                  value={watchDisplay?.status}
                 />
               </Grid>
             )}
@@ -446,7 +279,7 @@ const UpsertDisplaySetting = (props) => {
       <DialogActions>
         <FooterComponent
           saveButtonType="submit"
-          saveButtonLabel={user?.id ? "Update" : "Save"}
+          saveButtonLabel={display?.id ? "Update" : "Save"}
           actions={{ cancel: true, submit: true }}
           handleCancel={handleCloseModal}
         />

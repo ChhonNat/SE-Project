@@ -13,10 +13,11 @@ const HomePayyment = () => {
     return (
         <>
             <AsyncDatatable
-                asyncURL={API_URL.counter.get}
-                headers={TABLE_CONFIG.tbCounter}
+                asyncURL={API_URL.vdoDemo.get}
+                headers={TABLE_CONFIG.tbDisplay}
                 bannerText="Display Setting"
                 searchPlaceHolder="Search"
+                disableTablePagination={false}
                 ordinal="asc"
                 setOrdinalBy="id"
                 useTableActions={{

@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import ConfirmModal from "../../../components/Modal/confirm-delete";
 import { API_URL } from "../../../constants/api_url";
-import { userService } from "../../../services/user.service.";
+import { userService } from "../../../services/user.service";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import UpsertUserForm from "./form-upsert-user.modal";
 
@@ -54,6 +54,7 @@ const HomeUser = () => {
                 headers={TABLE_CONFIG.tblUser}
                 bannerText="All Users"
                 searchPlaceHolder="Search"
+                disableTablePagination={true}
                 ordinal="asc"
                 setOrdinalBy="id"
                 useTableActions={{

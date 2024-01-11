@@ -224,6 +224,12 @@ export const API_URL = {
         update: `${API_LOCAL}/updateUser/`,
         delete: `${API_LOCAL}/deleteUser/`,
     },
+    vdoDemo: {
+        get: `${API_LOCAL}/vdo`,
+        create: `${API_LOCAL}/createVdo`,
+        update: `${API_LOCAL}/updateVdo/`,
+        delete: `${API_LOCAL}/deleteVdo/`,
+    },
 
     role: {
         get: `${API_VERSION}/users/roles`
