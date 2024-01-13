@@ -1,6 +1,8 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { PUSH_NOTIFICATION } from '../../../constants/pusher';
+import echo from '../../../services/pusher.service';
 import flexStyle from '../../Style/Theme/ItemStyle/flexStyle';
 import ActiveCounting from './activeCouting';
 import DemoDate from './date';
@@ -20,11 +22,28 @@ const productTitles = [
     'Stay connected and in control with our smartwatch technology.',
     'Find the perfect watch to complement your active lifestyle.',
     'Our watches are designed to stand the test of time.'
-  ];
+];
 
 const ScreenDisplay = () => {
+
+    //   get data from pusher
+    const [eventData, setEventData] = useState('0');
+
+    useEffect(() => {
+        // Subscribe to the channel and listen to the event
+        echo.channel(PUSH_NOTIFICATION.PUSHER_CHANNEL.CHANNEL).listen(PUSH_NOTIFICATION.PUSHER_EVENT.EVENT, (data) => {
+            setEventData(data);
+        });
+
+        // Clean up subscription when the component unmounts
+        return () => {
+            echo.leaveChannel(PUSH_NOTIFICATION.PUSHER_CHANNEL.CHANNEL);
+        };
+    }, []);
+
+    console.log("get data from pusher: ", eventData);
     return (
-        <Box sx={{ width: '100%'}}>
+        <Box sx={{ width: '100%' }}>
             <Grid container spacing={2} p={0}>
                 <Grid item xs={6}>
                     <Grid
@@ -35,7 +54,14 @@ const ScreenDisplay = () => {
                             height: '20vh',
                         }}
                     >
-                            <ActiveCounting />
+                        <ActiveCounting
+                            bgList='#3f50b5'
+                            bdrList='16px'
+                            lHeight='120px'
+                            numberTicked={`100${eventData?.message?.id}`}
+                            numCounter='COUNTER 1'
+                            fontList='h2'
+                        />
                     </Grid>
 
                     <Grid
@@ -45,9 +71,9 @@ const ScreenDisplay = () => {
                             height: '70vh',
                         }}
                     >
-                            <DemoVdo
-                                url="https://youtu.be/Q4z5K-zKY8U?si=t9qrDwDMNjExi3YL"
-                            />
+                        <DemoVdo
+                            url="https://youtu.be/Q4z5K-zKY8U?si=t9qrDwDMNjExi3YL"
+                        />
                     </Grid>
                 </Grid>
 
@@ -59,7 +85,7 @@ const ScreenDisplay = () => {
                             height: '20%',
                         }}
                     >
-                            <DemoLogo />
+                        <DemoLogo />
                     </Grid>
 
                     <Grid
@@ -68,8 +94,8 @@ const ScreenDisplay = () => {
                             ...flexStyle,
                             height: '80%',
                         }}
-                        >
-                            <PreviewCounting />
+                    >
+                        <PreviewCounting />
                     </Grid>
                 </Grid>
 
@@ -81,9 +107,9 @@ const ScreenDisplay = () => {
                             height: '10vh',
                         }}
                     >
-                            <DemoDate
-                                productTitles={productTitles}
-                            />
+                        <DemoDate
+                            productTitles={productTitles}
+                        />
                     </Grid>
 
                 </Grid>

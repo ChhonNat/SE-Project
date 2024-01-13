@@ -1,16 +1,25 @@
 import React from 'react';
 import ListWrapper from './list';
 
-const ActiveCounting = () => {
+const ActiveCounting = (props) => {
+
+  const {
+    bgList,
+    bdrList,
+    lHeight,
+    numberTicked,
+    numCounter,
+    fontList,
+  } = props;
   return (
 
     <ListWrapper
-      bgList='#3f50b5'
-      bdrList='16px'
-      lHeight='120px'
-      numberTicked='1202'
-      numCounter='COUNTER 1'
-      fontList='h2'
+      bgList={bgList}
+      bdrList={bdrList}
+      lHeight={lHeight}
+      numberTicked={numberTicked}
+      numCounter={numCounter}
+      fontList={fontList}
     />
   )
 }

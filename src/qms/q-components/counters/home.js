@@ -22,6 +22,15 @@ export default function Counter() {
         navigate("/login");
     };
 
+    // action calling
+    const handleNextCall = () => {
+
+    }
+    const handleRecall = () => {
+        console.log("Recall...");
+    }
+
+
     const [dataCounter, setDataCounter] = useState({});
     useEffect(() => {
         if (dataUser?.isAuthenticated) {
@@ -145,6 +154,7 @@ export default function Counter() {
                                     height: '10vh',
                                     width: '160px'
                                 }}
+                                onClick={handleRecall}
                             >
                                 recall
                             </Button>
@@ -155,6 +165,7 @@ export default function Counter() {
                                     height: '10vh',
                                     width: '160px'
                                 }}
+                                onClick={handleNextCall}
 
                             >
                                 Next call

@@ -69,7 +69,6 @@ const UpsertUserForm = (props) => {
           } else if (key === "permissions") {
             const tmp = user[key].split(',').map(permission => ({ name: permission.trim() }));
             const holdArr = tmp.map(item => item.name);
-            console.log(holdArr);
             setValue(key, holdArr);
           } else {
             setValue(key, user[key]);
