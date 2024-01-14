@@ -5,12 +5,14 @@ import "./App.css";
 import Navbar from "./components/Layout/navbar";
 import MainPageComponent from "./components/Layout/page-wrapper";
 import Sidebar from "./components/Layout/sidebar";
+import PageNotFound from "./pages/pageNotFound/PageNotFound";
 import Counter from "./qms/q-components/counters/home";
+import ScreenTicket from "./qms/q-components/srcree-ticket/home";
 import { PRIVATE_ROUTES } from "./routers/private_routes";
 import { PUBLIC_ROUTES } from "./routers/public_routes";
 import { isLogin } from "./store/authentication/authenticationService";
 
-const detectedRoute = ["/", "/screen/counter"];
+const detectedRoute = ["/", "/screen/counter", "/screen/ticket"];
 const publicCurrentRoutes = ["/", "/display"];
 
 const App = () => {
@@ -31,16 +33,25 @@ const App = () => {
   }, [dispatch]);
 
   const [userRole, setUserRole] = useState('');
+  const [userPermission, setUserPermission] = useState('');
 
   useEffect(() => {
     setUserRole(user?.roles[0]);
+    let tmpUerPermission = user?.permissions?.find(item => item === "user_create");
+    setUserPermission(tmpUerPermission);
+
     const defaultPath = PRIVATE_ROUTES[0]?.path;
     const loginPath = detectedRoute[0];
 
     if (detectedRoute.includes(pathname) && user?.roles[0] === "admin") {
       user?.isAuthenticated ? navigate(defaultPath) : navigate(loginPath);
     } else if (detectedRoute.includes(pathname) && user?.roles[0] === "counter") {
-      user?.isAuthenticated ? navigate(detectedRoute[1]) : navigate(loginPath);
+      if (user?.isAuthenticated && user?.permissions[2] === "user_create") {
+        navigate(detectedRoute[2])
+      } else {
+        navigate(detectedRoute[1])
+      }
+      // user?.isAuthenticated ? navigate(detectedRoute[1]) : navigate(loginPath);
     } else {
       user?.isAuthenticated
         ? navigate(pathname && pathname !== "/" ? pathname : defaultPath)
@@ -62,11 +73,21 @@ const App = () => {
       {user?.isAuthenticated ? (
         userRole === "counter"
           ?
-          <Suspense fallback={<Loading />}>
-            <Routes>
-              <Route path="/screen/counter" element={<Counter />} />
-            </Routes>
-          </Suspense>
+          userPermission === "user_create"
+            ?
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/screen/ticket" element={<ScreenTicket />} />
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
+            </Suspense>
+            :
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/screen/counter" element={<Counter />} />
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
+            </Suspense>
           :
           <>
             {/* Navbar component */}

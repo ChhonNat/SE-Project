@@ -1,8 +1,9 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import React, { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
-import { isCall } from '../../store/reduces/initNumActive';
+import { isLogout } from '../../../store/authentication/authenticationService';
 import CardClick from '../cards/cardClick';
 import DemoDate from '../screen-display/date';
 import abada_icon_1 from './../../assets/logo/abadas_logo_box_180.png';
@@ -21,26 +22,38 @@ const productTitles = [
 ];
 
 const ScreenTicket = () => {
-  const {numberActive} = useSelector((state) => (state.numberActive));
-
   const componentRef = useRef();
 
   const compenentPrint = {
-    content: ()=> componentRef.current,
+    content: () => componentRef.current,
     documentTitle: "Print Ticket",
     // onAfterPrint: ()=> alert('Printing is successfully ')
   };
 
+  const [numberActive, setNumberActive] = useState('');
+
   const printTicket = useReactToPrint(compenentPrint)
-  
-  const dispatch = useDispatch();
-  const handleClick = () =>{
-    dispatch(isCall());
+
+  const handleClick = () => {
+    alert("hello click!");
   }
 
   // useEffect(()=>{
   //   printTicket();
   // }, [numberActive])
+
+  // handle logout
+  const logout = false;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(isLogout());
+    navigate("/login");
+  };
+
+  useEffect(() => {
+    // if(isLogout) handleLogout();
+  }, [logout])
 
   return (
     <Box>
@@ -82,7 +95,7 @@ const ScreenTicket = () => {
             />
 
             <Typography ref={componentRef} variant='body1' m={4}>
-              {numberActive}
+              {numberActive ?? "1320"}
             </Typography>
           </Stack>
         </Grid>
