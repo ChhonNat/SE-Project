@@ -231,6 +231,12 @@ export const API_URL = {
         delete: `${API_LOCAL}/deleteVdo/`,
     },
 
+    service: {
+        create: `${API_LOCAL}/users/search`,
+        get: `${API_LOCAL}/service/list`,
+        edit: `${API_LOCAL}/users/`,
+    },
+
     role: {
         get: `${API_VERSION}/users/roles`
     },

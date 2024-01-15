@@ -940,31 +940,14 @@ const tblLocation = [
 
 /**Location Table */
 
-const tblCampus = [
+const tblService = [
   {
     id: "index",
     label: "No.",
   },
   {
-    id: "nameEn",
-    label: "Name(En)",
-  },
-  {
-    id: "nameKh",
-    label: "Name(KH)",
-  },
-  {
-    id: "shortName",
-    label: "Short Name",
-  },
-  {
-    id: "location",
-    label: "Location",
-    obj: { name: "nameEn" },
-  },
-  {
-    id: "address",
-    label: "Address",
+    id: "name",
+    label: "Name",
   },
   {
     id: "description",
@@ -978,6 +961,18 @@ const tblCampus = [
       [STATUS.RECORD.INACTIVE]: "Red",
     },
     label: "Status",
+  },
+  {
+    id: "created_at",
+    label: "Created At",
+    type: "date",
+    dateFormat: "MMM DD, YYYY hh:mm A",
+  },
+  {
+    id: "updated_at",
+    label: "Updated At",
+    type: "date",
+    dateFormat: "MMM DD, YYYY hh:mm A",
   },
   {
     id: "action",
@@ -1122,7 +1117,7 @@ export const TABLE_CONFIG = {
   tblPositionLevel,
   tblRecruiter,
   tblLocation,
-  tblCampus,
+  tblService,
   tbCounter,
   tblUser,
   tbDisplay

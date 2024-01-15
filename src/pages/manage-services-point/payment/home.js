@@ -13,8 +13,8 @@ const HomePayment = () => {
     return (
         <>
             <AsyncDatatable
-                asyncURL={API_URL.counter.get}
-                headers={TABLE_CONFIG.tbCounter}
+                asyncURL={API_URL.service.get}
+                headers={TABLE_CONFIG.tblService}
                 bannerText="Payment Services"
                 searchPlaceHolder="Search"
                 ordinal="asc"
