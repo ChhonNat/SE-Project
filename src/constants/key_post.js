@@ -156,14 +156,9 @@ const subBusinessUnit = [
     "status",
 ];
 
-const campus = [
-    "address",
-    "campusCode",
+const service = [
+    "name",
     "description",
-    "locationId",
-    "nameEn",
-    "nameKh",
-    "shortName",
     "status"
 ];
 
@@ -255,7 +250,7 @@ export const KEY_POST = {
     mainBusiness,
     businessUnit,
     subBusinessUnit,
-    campus,
+    service,
     headDepartment,
     committee,
     user

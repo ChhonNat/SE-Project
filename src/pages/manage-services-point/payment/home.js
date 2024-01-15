@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import AsyncDatatable from "../../../components/AsyncDataTable/async-data-table";
 import { API_URL } from "../../../constants/api_url";
+import { Service } from "../../../services/service.service";
 import { TABLE_CONFIG } from "../../../utils/table-config";
 import UpsertPaymentForm from "./form-payment.modal";
 
@@ -8,7 +10,33 @@ const HomePayment = () => {
 
     const [openModal, setOpenModal] = useState(false);
     const [isReload, setIsReload] = useState(false);
-    const [editUser, setEditUser] = useState({});
+    const [edit, setEdit] = useState({});
+
+    const handleDelete = async (id) => {
+        try {
+
+            const resp = await Service.deleteService(id);
+
+            const { data } = resp;
+            const { success, message } = data;
+
+            Swal.fire({
+                title: success ? "Success" : "Warning",
+                text: message,
+                icon: success ? "success" : "warning",
+                confirmButtonText: "OK",
+            });
+
+            if (success) {
+                setOpenModal(false);
+                setIsReload(!isReload);
+            }
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
@@ -20,16 +48,18 @@ const HomePayment = () => {
                 ordinal="asc"
                 setOrdinalBy="id"
                 useTableActions={{
-                        search: true,
-                        refresh: true,
-                        create: true,
-                        edit: true
+                    search: true,
+                    refresh: true,
+                    create: true,
+                    edit: true,
+                    delete: true
                 }}
                 onHandleAddNewEvent={() => setOpenModal(true)}
                 handleEditEvent={(data) => {
-                    setEditUser(data);
+                    setEdit(data);
                     setOpenModal(true)
                 }}
+                handleDeleteEvent={(data) => handleDelete(data.id)}
                 isReloadData={isReload ? true : false}
                 onHandleRefreshEvent={() => setIsReload(!isReload)}
             />
@@ -41,12 +71,12 @@ const HomePayment = () => {
                 <UpsertPaymentForm
                     open={openModal}
                     onCloseModal={() => {
-                        setEditUser({})
+                        setEdit({})
                         setOpenModal(false)
                     }
                     }
                     handleEventSucceed={() => setIsReload(!isReload)}
-                    user={editUser}
+                    service={edit}
                 />
             }
 

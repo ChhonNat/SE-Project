@@ -232,9 +232,10 @@ export const API_URL = {
     },
 
     service: {
-        create: `${API_LOCAL}/users/search`,
+        create: `${API_LOCAL}/service`,
         get: `${API_LOCAL}/service/list`,
-        edit: `${API_LOCAL}/users/`,
+        update: `${API_LOCAL}/service/`,
+        delete: `${API_LOCAL}/service/delete/`,
     },
 
     role: {
