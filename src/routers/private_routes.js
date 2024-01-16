@@ -11,6 +11,7 @@ import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import LanIcon from '@mui/icons-material/Lan';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import PaidIcon from '@mui/icons-material/Paid';
@@ -77,6 +78,9 @@ const SystemConfiguration = {
 const ManageServicesPoint = {
     Payment : {
         HomeComponent: lazy(() => import('../pages/manage-services-point/payment/home'))
+    },
+    Service : {
+        HomeComponent: lazy(() => import('../pages/manage-services-point/services/home'))
     },
     Information : {
         HomeComponent: lazy(() => import('../pages/manage-services-point/information/home'))
@@ -227,6 +231,14 @@ export const PRIVATE_ROUTES = [
                 component: <ManageServicesPoint.Payment.HomeComponent />,
                 icon: <PaidIcon style={{ color: appConfig.systemColor }} />,
                 isDivider: false,
+                isHide: true
+            },
+            {
+                name: "Services",
+                path: "services",
+                component: <ManageServicesPoint.Service.HomeComponent />,
+                icon: <LanIcon style={{ color: appConfig.systemColor }} />,
+                isDivider: false,
                 // isHide: true
             },
             {
@@ -235,8 +247,9 @@ export const PRIVATE_ROUTES = [
                 component: <ManageServicesPoint.Information.HomeComponent />,
                 icon: <NewspaperIcon style={{ color: appConfig.systemColor }} />,
                 isDivider: false,
-                // isHide: true
+                isHide: true
             },
+            
         ]
     },
 

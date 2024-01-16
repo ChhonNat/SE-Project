@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { Stack, Typography } from "@mui/material";
 import Collapse from '@mui/material/Collapse';
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
@@ -9,13 +10,13 @@ import List from '@mui/material/List';
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import logo from "../../qms/assets/logo/abadas_logo_box_white_180.png";
-
 import { styled, useTheme } from "@mui/material/styles";
 import { Link, useLocation } from "react-router-dom";
+import packageJson from '../../../package.json';
 import { appConfig } from "../../constants/app_cont";
 import { LOCAL_STORAGE_KEYS } from "../../constants/local_storage";
 import { LayoutContext } from "../../context/layout-context";
+import logo from "../../qms/assets/logo/abadas_logo_box_white_180.png";
 import { PRIVATE_ROUTES } from "../../routers/private_routes";
 
 const drawerWidth = 280;
@@ -255,6 +256,23 @@ const SidebarComponent = () => {
                     :
                     <></>
             }
+             <Stack
+                direction={'row'}
+                alignItems={'end'}
+                justifyContent={'center'}
+                width={'100%'}
+                height={"100%"}
+            >
+                <Typography
+                    fontSize={"0.9rem"}
+                    variant="overline"
+                    display="block"
+                    gutterBottom
+                >
+                    {toggleNavbar ? `version ${packageJson?.version}` : `v${packageJson?.version}`}
+                </Typography>
+            </Stack>
+
 
         </Drawer >
     );
