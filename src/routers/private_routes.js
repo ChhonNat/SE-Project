@@ -5,6 +5,7 @@ import React, { lazy } from "react";
  */
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArtTrackIcon from '@mui/icons-material/ArtTrack';
+import BuildIcon from '@mui/icons-material/Build';
 import BusinessIcon from '@mui/icons-material/Business';
 import MainCategoryIcon from '@mui/icons-material/Category';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
@@ -16,10 +17,8 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import PaidIcon from '@mui/icons-material/Paid';
 import RoomServiceIcon from '@mui/icons-material/RoomService';
-import SubCategoryIcon from '@mui/icons-material/Segment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SpatialAudioOffIcon from '@mui/icons-material/SpatialAudioOff';
-import SubSubCategoryIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import { appConfig } from "../constants/app_cont";
 import { USER_ROLES } from "../constants/roles";
@@ -53,41 +52,45 @@ const DocEntry = {
 };
 
 const UserManagement = {
-    Counters : {
+    Counters: {
         HomeComponent: lazy(() => import('../pages/user-management/counters/home'))
     },
 
-    User : {
+    User: {
         HomeComponent: lazy(() => import('../pages/user-management/user/home'))
     },
 
 };
 
 const SystemConfiguration = {
-    DisplaySetting : {
+    DisplaySetting: {
         HomeComponent: lazy(() => import('../pages/system-configuration/display-setting/home'))
     },
-    SoundSetting : {
+    SoundSetting: {
         HomeComponent: lazy(() => import('../pages/system-configuration/sound-setting/home'))
     },
-    TicketSetting : {
+    TicketSetting: {
         HomeComponent: lazy(() => import('../pages/system-configuration/ticket-setting/home'))
     },
 };
 
 const ManageServicesPoint = {
-    Payment : {
+    Payment: {
         HomeComponent: lazy(() => import('../pages/manage-services-point/payment/home'))
     },
-    Service : {
+    Service: {
         HomeComponent: lazy(() => import('../pages/manage-services-point/services/home'))
     },
-    Information : {
+    Information: {
         HomeComponent: lazy(() => import('../pages/manage-services-point/information/home'))
     },
 };
 
 const Settings = {
+
+    SystemConfig: {
+        HomeComponent: lazy(() => import('../pages/settings/system-configuration/home')),
+    },
 
     MainBusiness: {
         HomeComponent: lazy(() => import('../pages/settings/main-business/home'))
@@ -104,15 +107,6 @@ const Settings = {
     MainCategories: {
         HomeComponent: lazy(() => import('../pages/settings/main-categories/home')),
     },
-
-    SubCategories: {
-        HomeComponent: lazy(() => import('../pages/settings/sub-categories/home')),
-    },
-
-    SubSubCategories: {
-        HomeComponent: lazy(() => import('../pages/settings/child-sub-categories/home')),
-    },
-
 
     Department: {
         HomeComponent: lazy(() => import('../pages/settings/department/home')),
@@ -189,6 +183,7 @@ export const PRIVATE_ROUTES = [
         icon: <DisplaySettingsIcon style={{ color: appConfig.systemColor }} />,
         isDivider: false,
         permission: "admin",
+        isHide: true,
         /**Children settings */
         children: [
             {
@@ -226,20 +221,20 @@ export const PRIVATE_ROUTES = [
         /**Children settings */
         children: [
             {
-                name: "Payments",
-                path: "payment",
-                component: <ManageServicesPoint.Payment.HomeComponent />,
-                icon: <PaidIcon style={{ color: appConfig.systemColor }} />,
-                isDivider: false,
-                isHide: true
-            },
-            {
                 name: "Services",
                 path: "services",
                 component: <ManageServicesPoint.Service.HomeComponent />,
                 icon: <LanIcon style={{ color: appConfig.systemColor }} />,
                 isDivider: false,
                 // isHide: true
+            },
+            {
+                name: "Payments",
+                path: "payment",
+                component: <ManageServicesPoint.Payment.HomeComponent />,
+                icon: <PaidIcon style={{ color: appConfig.systemColor }} />,
+                isDivider: false,
+                isHide: true
             },
             {
                 name: "Information",
@@ -249,7 +244,7 @@ export const PRIVATE_ROUTES = [
                 isDivider: false,
                 isHide: true
             },
-            
+
         ]
     },
 
@@ -271,6 +266,14 @@ export const PRIVATE_ROUTES = [
         isDivider: false,
         /**Children settings */
         children: [
+            // System configuration
+            {
+                name: "System Configuration",
+                path: "system-config",
+                component: <Settings.SystemConfig.HomeComponent />,
+                icon: <BuildIcon style={{ color: appConfig.systemColor }} />,
+                isHide: false
+            },
 
             // //Department
             // {
@@ -293,22 +296,6 @@ export const PRIVATE_ROUTES = [
                 path: "main-categories",
                 component: <Settings.MainCategories.HomeComponent />,
                 icon: <MainCategoryIcon style={{ color: appConfig.systemColor }} />,
-                isHide: true
-            },
-            // Sub categories
-            {
-                name: "Sub Categories",
-                path: "sub-categories",
-                component: <Settings.SubCategories.HomeComponent />,
-                icon: <SubCategoryIcon style={{ color: appConfig.systemColor }} />,
-                isHide: true
-            },
-            // child-Sub categories
-            {
-                name: "Sub Sub Categories",
-                path: "child-sub-categories",
-                component: <Settings.SubSubCategories.HomeComponent />,
-                icon: <SubSubCategoryIcon style={{ color: appConfig.systemColor }} />,
                 isHide: true
             },
 
