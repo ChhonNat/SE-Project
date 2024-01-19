@@ -58,7 +58,7 @@ const ScreenDisplay = () => {
                             bgList='#3f50b5'
                             bdrList='16px'
                             lHeight='120px'
-                            numberTicked={`100${eventData?.message?.id}`}
+                            numberTicked={eventData?.message ?? "1000"}
                             numCounter='COUNTER 1'
                             fontList='h2'
                         />
