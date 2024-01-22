@@ -10,7 +10,7 @@ import Counter from "./qms/q-components/counters/home";
 import ScreenTicket from "./qms/q-components/srcree-ticket/home";
 import { PRIVATE_ROUTES } from "./routers/private_routes";
 import { PUBLIC_ROUTES } from "./routers/public_routes";
-import { isLogin } from "./store/authentication/authenticationService";
+import { isLogin, isLogout } from "./store/authentication/authenticationService";
 
 const detectedRoute = ["/", "/screen/counter", "/screen/ticket"];
 const publicCurrentRoutes = ["/", "/display"];
@@ -31,6 +31,11 @@ const App = () => {
   useEffect(() => {
     dispatch(isLogin());
   }, [dispatch]);
+  // handle logout
+  const handleLogout = () => {
+    dispatch(isLogout());
+    navigate("/login");
+  };
 
   const [userRole, setUserRole] = useState('');
   const [userPermission, setUserPermission] = useState('');
@@ -54,7 +59,7 @@ const App = () => {
       // user?.isAuthenticated ? navigate(detectedRoute[1]) : navigate(loginPath);
     } else {
       user?.isAuthenticated
-        ? navigate(pathname && pathname !== "/" ? pathname : defaultPath)
+        ? navigate(pathname && pathname !== "/" ? handleLogout() : defaultPath)
         : navigate(ditectPubliceRotes(pathname));
     }
   }, [user]);

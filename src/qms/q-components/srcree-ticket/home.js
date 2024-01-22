@@ -1,9 +1,6 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import { isLogout } from '../../../store/authentication/authenticationService';
 import CardClick from '../cards/cardClick';
 import DemoDate from '../screen-display/date';
 import abada_icon_1 from './../../assets/logo/abadas_logo_box_180.png';
@@ -37,23 +34,6 @@ const ScreenTicket = () => {
   const handleClick = () => {
     alert("hello click!");
   }
-
-  // useEffect(()=>{
-  //   printTicket();
-  // }, [numberActive])
-
-  // handle logout
-  const logout = false;
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch(isLogout());
-    navigate("/login");
-  };
-
-  useEffect(() => {
-    // if(isLogout) handleLogout();
-  }, [logout])
 
   return (
     <Box>
