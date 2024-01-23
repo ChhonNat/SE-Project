@@ -26,12 +26,12 @@ export const API_URL = {
         softDelete: `${API_VERSION}/sub-category/delete/`,
         restore: `${API_VERSION}/sub-category/restore/`,
     },
-    childSubCategory: {
-        get: `${API_VERSION}/sub-sub-category/list/`,
-        create: `${API_VERSION}/sub-sub-category/create`,
-        edit: `${API_VERSION}/sub-sub-category/update/`,
-        softDelete: `${API_VERSION}/sub-sub-category/delete/`,
-        restore: `${API_VERSION}/sub-sub-category/restore/`,
+    screenTicketAsync: {
+        // get: `${API_VERSION}/sub-sub-category/list/`,
+        create: `${API_LOCAL}/ticket`,
+        // edit: `${API_VERSION}/sub-sub-category/update/`,
+        // softDelete: `${API_VERSION}/sub-sub-category/delete/`,
+        // restore: `${API_VERSION}/sub-sub-category/restore/`,
     },
     /////
 

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const defaultData = {};
 
-const CounterSlice = createSlice({
+const ServiceSlice = createSlice({
     name: "counterReducer",
     initialState: defaultData,
     reducers: {
@@ -20,5 +20,5 @@ const CounterSlice = createSlice({
     }
 });
 
-export default CounterSlice.reducer;
-export const getDataPusher = CounterSlice.actions;
+export default ServiceSlice.reducer;
+export const getDataPusher = ServiceSlice.actions;

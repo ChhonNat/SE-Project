@@ -1,6 +1,7 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
+import { ScreenTicketAsyncData } from '../../../services/screen-ticket.service';
 import CardClick from '../cards/cardClick';
 import DemoDate from '../screen-display/date';
 import abada_icon_1 from './../../assets/logo/abadas_logo_box_180.png';
@@ -31,10 +32,23 @@ const ScreenTicket = () => {
 
   const printTicket = useReactToPrint(compenentPrint)
 
-  const handleClick = () => {
-    alert("hello click!");
+  const [waitingNum, setWatingNum] = useState('');
+  const handleClick = async () => {
+    const service_id = '1';
+    let submitData = {};
+
+
+    try {
+      submitData['service_id'] = service_id;
+      let responseAfterTicketed = await ScreenTicketAsyncData.create(submitData);
+      let tmp = responseAfterTicketed?.data?.data;
+      setWatingNum(tmp);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
+  console.log(waitingNum);
   return (
     <Box>
       <Grid>
@@ -75,7 +89,7 @@ const ScreenTicket = () => {
             />
 
             <Typography ref={componentRef} variant='body1' m={4}>
-              {numberActive ?? "1320"}
+              {waitingNum ?? "1000"}
             </Typography>
           </Stack>
         </Grid>
