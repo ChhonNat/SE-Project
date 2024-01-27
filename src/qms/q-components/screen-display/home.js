@@ -31,13 +31,13 @@ const ScreenDisplay = () => {
 
     useEffect(() => {
         // Subscribe to the channel and listen to the event
-        echo.channel(PUSH_NOTIFICATION.PUSHER_CHANNEL.CHANNEL).listen(PUSH_NOTIFICATION.PUSHER_EVENT.EVENT, (data) => {
+        echo.channel(PUSH_NOTIFICATION.PUSHER_CHANNEL.CHANNEL_IS_CALL).listen(PUSH_NOTIFICATION.PUSHER_EVENT.EVENT_ACITIVE_NUMBER, (data) => {
             setEventData(data);
         });
 
         // Clean up subscription when the component unmounts
         return () => {
-            echo.leaveChannel(PUSH_NOTIFICATION.PUSHER_CHANNEL.CHANNEL);
+            echo.leaveChannel(PUSH_NOTIFICATION.PUSHER_CHANNEL.CHANNEL_IS_CALL);
         };
     }, []);
 

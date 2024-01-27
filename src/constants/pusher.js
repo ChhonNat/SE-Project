@@ -3,11 +3,13 @@
     PUSHER_CLUSTER: "mt1",
 };
 const PUSHER_CHANNEL = {
-    CHANNEL: "is-call"
+    CHANNEL_IS_CALL: "is-call",
+    CHANNEL_IS_TICKETED: "is-ticketed",
 };
 
 const PUSHER_EVENT = {
-    EVENT: "NewMessage",
+    EVENT_ACITIVE_NUMBER: "NewMessage",
+    EVENT_ACTIVE_TICKETED: "IsTicketed",
 }
 
 

@@ -28,16 +28,12 @@ const ScreenTicket = () => {
     // onAfterPrint: ()=> alert('Printing is successfully ')
   };
 
-  const [numberActive, setNumberActive] = useState('');
-
   const printTicket = useReactToPrint(compenentPrint)
 
-  const [waitingNum, setWatingNum] = useState('');
+  const [waitingNum, setWatingNum] = useState('1000');
   const handleClick = async () => {
     const service_id = '1';
     let submitData = {};
-
-
     try {
       submitData['service_id'] = service_id;
       let responseAfterTicketed = await ScreenTicketAsyncData.create(submitData);
@@ -89,7 +85,7 @@ const ScreenTicket = () => {
             />
 
             <Typography ref={componentRef} variant='body1' m={4}>
-              {waitingNum ?? "1000"}
+              {waitingNum}
             </Typography>
           </Stack>
         </Grid>

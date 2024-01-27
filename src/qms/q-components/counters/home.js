@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { PUSH_NOTIFICATION } from '../../../constants/pusher';
+import echo from '../../../services/pusher.service';
 import { isLogout } from '../../../store/authentication/authenticationService';
 import logo from './../../assets/logo/Abadas_logo_verticle.png';
 import profile from './../../assets/profiles/1.jpg';
@@ -30,18 +32,28 @@ export default function Counter() {
         console.log("Recall...");
     }
 
-
-    const [dataCounter, setDataCounter] = useState({});
+    // get data from pusher
+    const [dataCounter, setDataCounter] = useState({
+        userName: dataUser?.username,
+        counterNum: dataUser?.staffId,
+    });
     useEffect(() => {
         if (dataUser?.isAuthenticated) {
-            setDataCounter({
-                ...dataCounter,
-                userName: dataUser?.username,
-                counterNum: dataUser?.staffId,
-                currentTicket: "22",
-                waitNumber: "8"
-            })
+            console.log(dataUser?.username);
+            echo
+                .channel(PUSH_NOTIFICATION.PUSHER_CHANNEL.CHANNEL_IS_TICKETED)
+                .listen(PUSH_NOTIFICATION.PUSHER_EVENT.EVENT_ACTIVE_TICKETED, (data) => {
+                    setDataCounter({
+                        ...dataCounter,
+                        waitNumber: data?.data?.waintingNum ?? "",
+                        currentTicket: data?.data?.lastTicketed ?? "0000"
+                    })
+                });
         }
+        // Clean up subscription when the component unmounts
+        return () => {
+            echo.leaveChannel(PUSH_NOTIFICATION.PUSHER_CHANNEL.CHANNEL_IS_TICKETED);
+        };
     }, [dataUser]);
 
     const {
@@ -50,7 +62,7 @@ export default function Counter() {
         currentTicket,
         waitNumber
     } = dataCounter;
-
+// console.log("Data Counter: ", dataCounter);
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -121,7 +133,7 @@ export default function Counter() {
                                         }}
                                     >
                                         <Typography variant='h6'>
-                                            Current ticket : {currentTicket ?? ""}
+                                            Current ticket : {currentTicket ?? "0000"}
                                         </Typography>
                                     </Paper>
                                     <Paper
