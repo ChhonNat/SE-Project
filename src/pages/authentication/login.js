@@ -20,11 +20,10 @@ import { appConfig } from "../../constants/app_cont";
 import { userAuthentication } from "../../store/authentication/authenticationService";
 
 /**
- * username: developer
- * pwd: dev123
+ * username: admin@gmail.com
+ * pwd: 123456
  */
-
-export default function Login() {
+const Login = () => {
   const dispatch = useDispatch();
   // const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -140,3 +139,5 @@ export default function Login() {
     </Grid>
   );
 }
+
+export default Login;

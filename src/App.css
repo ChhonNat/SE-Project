@@ -5,6 +5,11 @@
 
 ;
 
+* {
+  box-sizing: border-box !important;
+}
+
+
 html,
 body,
 #root,
@@ -16,6 +21,7 @@ h5,
 h6 {
 
   font-family: 'Roboto', sans-serif !important;
+  
 }
 
 /* .css-8344kk-MuiTableCell-root {

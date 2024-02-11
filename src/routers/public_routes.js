@@ -3,7 +3,7 @@ import React from "react";
 /**
  * Components
  */
-const Login = React.lazy(() => import('../pages/authentication/login'));
+const Login = React.lazy(() => import('../pages/authentication/loginNew'));
 const ScreenDisplay = React.lazy( () => import('../qms/q-components/screen-display/home'))
 
 
